@@ -1,0 +1,40 @@
+@use "src/Styles/_vars.scss" as c;
+
+.p-fileupload {
+  width: fit-content;
+  &-buttonbar {
+    @include c.flexJustify;
+    flex-wrap: nowrap;
+    background-color: white !important;
+    padding: 0.5rem 1rem !important;
+    .p-fileupload-choose {
+      padding: 0.25rem 0.5rem !important;
+      background: none !important;
+      border: none !important;
+      color: c.$main-color;
+      &:hover {
+        color: c.$main-color !important;
+      }
+    }
+  }
+  &-content {
+    padding: 0 1rem !important;
+    .p-progressbar {
+      height: 0;
+    }
+    .p-fileupload-row {
+      font-size: 0.7rem;
+      padding: 0.5rem;
+      .p-fileupload-file-thumbnail {
+        width: 10rem;
+      }
+      div:last-child {
+        display: none;
+      }
+    }
+  }
+  .p-fileupload-row .p-button-danger,
+  .p-fileupload-row .p-badge {
+    display: none;
+  }
+}

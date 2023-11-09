@@ -1,0 +1,39 @@
+@use "src/Styles/_vars.scss" as c;
+
+.p-dialog-mask {
+  min-width: fit-content;
+
+  //?Header
+  .p-dialog-header {
+    background: c.$main-color !important;
+
+    color: white !important;
+  }
+  .p-dialog-content {
+    button::after {
+      background-color: white;
+    }
+    button:hover {
+      color: white;
+      border: 2px solid white;
+    }
+  }
+  .p-dialog-title {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.1rem !important;
+  }
+
+  p {
+    margin: 0.5rem 0 0.5rem 0;
+  }
+  .p-inputtextarea {
+    margin: 0.5rem 0 0 0;
+    width: 80%;
+    height: 10rem;
+  }
+  .description {
+    @include c.flexCenterCol;
+    flex-wrap: wrap;
+  }
+}

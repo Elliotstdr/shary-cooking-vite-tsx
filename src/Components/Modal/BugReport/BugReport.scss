@@ -1,0 +1,46 @@
+@use "src/Styles/_vars.scss" as c;
+
+.modal-bug {
+  width: 700px !important;
+  .bug__form {
+    @include c.flexAlignCol;
+    padding: 1rem;
+    margin-top: 1rem;
+    &__field {
+      width: 70%;
+      margin-bottom: 2rem;
+      h4 {
+        margin: 0.5rem 0;
+      }
+      .p-inputtextarea,
+      .p-inputtext {
+        width: 100%;
+      }
+      &.file {
+        @include c.flexAlignCol;
+      }
+    }
+  }
+}
+
+.success_view {
+  @include c.flexCenterCol;
+  .success_message {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 2rem 0;
+  }
+  .chosen_check {
+    @include c.square(5rem);
+    color: green;
+  }
+}
+
+@media (max-width: 730px) {
+  .modal-bug {
+    width: 95% !important;
+    .bug__form__field {
+      width: 100%;
+    }
+  }
+}

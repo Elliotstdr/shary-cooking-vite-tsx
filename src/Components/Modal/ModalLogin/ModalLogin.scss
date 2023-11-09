@@ -1,0 +1,34 @@
+@use "src/Styles/_vars.scss" as c;
+
+.modal-login {
+  .login__form {
+    &__field {
+      @include c.flexAlignCol;
+      h4 {
+        margin-bottom: 0.5rem;
+      }
+      input {
+        max-width: 20rem;
+      }
+    }
+    &__button {
+      margin-top: 2rem;
+      @include c.flexJustify;
+      .bouton .loaderContainer {
+        padding: 0;
+        @include c.flexCenter;
+        .loaderContainer__loader,
+        .loaderContainer__loader::after {
+          @include c.square(2rem);
+        }
+      }
+    }
+    .forgot_password {
+      cursor: pointer;
+      text-decoration: underline;
+      text-align: right;
+      font-size: 0.8rem;
+      padding: 0.5rem;
+    }
+  }
+}

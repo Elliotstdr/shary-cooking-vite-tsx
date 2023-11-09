@@ -1,0 +1,53 @@
+@use "src/Styles/_vars.scss" as c;
+
+.recipeContainer {
+  @include c.flexCol;
+  &_cards {
+    padding: 3rem 8rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 20rem));
+    justify-content: center;
+    gap: 0rem 3rem;
+    .noCard {
+      font-size: 1.2rem;
+      line-height: 2rem;
+      margin: 6rem 0;
+    }
+  }
+  .p-paginator {
+    margin-bottom: 2rem;
+    background-color: transparent;
+    &-page {
+      color: c.$main-color !important;
+      &.p-highlight,
+      &:hover {
+        color: white !important;
+        background-color: c.$main-color !important;
+      }
+    }
+    &-element {
+      color: c.$main-color !important;
+    }
+  }
+  &_loader {
+    height: 25rem;
+    @include c.flexCenter;
+  }
+}
+
+.shopping_list_checkboxes {
+  margin-top: 2rem;
+  @include c.flexCenter;
+  span {
+    margin-right: 1rem;
+    margin-left: 0.25rem;
+  }
+}
+
+@media (max-width: 1020px) {
+  .recipeContainer {
+    &_cards {
+      padding: 2rem 1rem !important;
+    }
+  }
+}

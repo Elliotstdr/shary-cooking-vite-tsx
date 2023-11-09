@@ -1,0 +1,102 @@
+@use "src/Styles/_vars.scss" as c;
+
+.recipe__form {
+  @include c.flexCol;
+  margin: 3rem 1rem;
+  &__group {
+    @include c.flexJustify;
+    .recipe__form__field {
+      margin-right: 2rem;
+    }
+  }
+  &__field {
+    @include c.flexAlignCol;
+    margin: 1rem 0;
+    h4 {
+      margin-bottom: 0.5rem;
+    }
+    &-ingname input {
+      width: 15rem;
+    }
+    &-quantity,
+    &-unit {
+      width: 10rem;
+    }
+    &-time {
+      min-width: 5rem;
+    }
+    .checkboxes {
+      display: flex;
+      .checkbox {
+        margin: 1rem 1rem;
+        .p-radiobutton {
+          margin-right: 0.25rem;
+        }
+      }
+    }
+    .bouton {
+      border: none;
+    }
+  }
+  .bouton {
+    align-self: center;
+    margin: 2rem 0;
+  }
+  .p-divider {
+    align-self: center;
+    width: 50%;
+    &::before {
+      border-top: 3px #dee2e6;
+    }
+  }
+}
+.p-dropdown-items {
+  text-align: left;
+}
+
+.modify_recipe {
+  .recipe__form {
+    margin-top: 0;
+    button {
+      align-self: center;
+    }
+    .steps {
+      width: 60%;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .recipe__form {
+    &__group {
+      flex-direction: column;
+      .recipe__form__field {
+        margin-right: 0 !important;
+      }
+    }
+    .checkboxes {
+      flex-wrap: wrap;
+    }
+    .steps {
+      width: 90% !important;
+    }
+    .p-divider.p-divider-horizontal {
+      margin: 0.25rem 0;
+    }
+  }
+}
+@media (max-width: 650px) {
+  .recipe__form .ingredients {
+    .p-inputtext {
+      width: 4rem !important;
+    }
+    .ingredient_name {
+      .p-inputtext {
+        width: 7rem !important;
+      }
+    }
+    .recipe__form__field-unit {
+      width: 6rem !important;
+    }
+  }
+}

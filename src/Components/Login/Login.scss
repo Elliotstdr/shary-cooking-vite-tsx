@@ -1,0 +1,37 @@
+@use "src/Styles/_vars.scss" as c;
+
+.login_container {
+  height: 100vh;
+  @include c.flexCenterCol;
+  position: relative;
+  img {
+    @include c.square(100%);
+    object-fit: cover;
+    position: absolute;
+  }
+  &_box {
+    box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.3);
+    background-color: c.$fond-page;
+    padding: 1.5rem;
+    border-radius: 10px;
+    @include c.flexCenterCol;
+    z-index: 100;
+    &_title {
+      color: c.$main-color;
+      margin-bottom: 3rem;
+    }
+    &_buttons {
+      @include c.flexCol;
+      button {
+        width: 12rem;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .login_container_box {
+    margin: 0 1rem;
+  }
+}

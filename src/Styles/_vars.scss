@@ -1,0 +1,77 @@
+$main-color: #263a29; //rgb(29, 38, 113); // #132554;
+$beautifulBG: linear-gradient(to right, rgb(195, 55, 100), rgb(29, 38, 113));
+$bandeau: #e86a33;
+$fond-page: #f4f1ef; //f4ece7;
+
+$gris: #bebebe;
+$noir-rp: #000638;
+$orange: #f88c3d;
+$bleu-texte-courant: #4a5574;
+$bleu-clair: #d7d7eb;
+$blanc: #fff;
+$gris-picto: #8a8a8a;
+
+// couleurs des fonds
+$fond-page-clair: #fafafa;
+$fond-boutons-accueil: #00326e99;
+
+// tailles limites
+$large: 1480px;
+$medium: 1200px;
+$normal: 1000px;
+$small: 830px;
+$tiny: 400px;
+
+// polices
+//taille
+$font-size-small: 0.8rem;
+$font-size-x-small: 0.9rem;
+$font-size-normal: 1rem;
+$font-size-x-normal: 1.2rem;
+$font-size-medium: 1.5rem;
+$font-size-large: 2rem;
+$font-size-x-large: 2.5rem;
+
+@mixin visible($max) {
+  visibility: visible;
+  opacity: 1;
+  max-height: $max * 1rem;
+}
+@mixin hidden {
+  visibility: hidden;
+  opacity: 0;
+  max-height: 0;
+}
+@mixin flexCol {
+  display: flex;
+  flex-direction: column;
+}
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@mixin flexJustify {
+  display: flex;
+  justify-content: center;
+}
+@mixin flexAlign {
+  display: flex;
+  align-items: center;
+}
+@mixin flexCenterCol {
+  @include flexCenter;
+  flex-direction: column;
+}
+@mixin flexJustifyCol {
+  @include flexJustify;
+  flex-direction: column;
+}
+@mixin flexAlignCol {
+  @include flexAlign;
+  flex-direction: column;
+}
+@mixin square($length) {
+  width: $length;
+  height: $length;
+}

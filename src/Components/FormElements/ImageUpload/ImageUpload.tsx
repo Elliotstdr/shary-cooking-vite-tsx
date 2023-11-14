@@ -2,6 +2,7 @@ import { FileUpload } from "primereact/fileupload";
 import React from "react";
 import "./ImageUpload.scss";
 import { successToast } from "../../../Services/functions";
+import Compressor from 'compressorjs';
 
 interface Props {
   image: any,
@@ -11,13 +12,19 @@ interface Props {
 const ImageUpload = (props: Props) => {
   const uploadHandler = ({ files }: any) => {
     const file = files[0];
-    const fileReader = new FileReader();
 
-    fileReader.onload = () => {
-      props.setImage(fileReader.result);
-      successToast("L'image a bien été chargée");
-    };
-    fileReader.readAsDataURL(file);
+    new Compressor(file, {
+      quality: 0.8,
+      success: (res) => {
+        const fileReader = new FileReader();
+
+        fileReader.onload = () => {
+          props.setImage(fileReader.result);
+          successToast("L'image a bien été chargée");
+        };
+        fileReader.readAsDataURL(res);
+      },
+    });
   };
   return (
     <FileUpload

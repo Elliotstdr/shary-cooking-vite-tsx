@@ -3,6 +3,8 @@ const INITIAL_STATE: SecondaryState = {
   units: null,
   regimes: null,
   ingTypes: null,
+  ingData: null,
+  users: null
 };
 
 export const UPDATE_SECONDARYTABLES = "UPDATE_SECONDARYTABLES";

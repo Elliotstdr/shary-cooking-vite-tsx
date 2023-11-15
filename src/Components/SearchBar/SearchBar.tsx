@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./SearchBar.scss";
 import { MultiSelect } from "primereact/multiselect";
 import { useFetchGet } from "../../Services/api";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import { ClassIngredientData, ClassRestrictedUser } from "../../Types/class";
 import Loader from "../../Utils/Loader/loader";
+import { UPDATE_SECONDARYTABLES } from "../../Store/Reducers/secondaryTablesReducer";
 
 interface Props {
   startData: Array<Recipe>
@@ -22,6 +23,10 @@ interface TimeList {
 
 const SearchBar = (props: Props) => {
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
+  const dispatch = useDispatch();
+  const updateRecipe = (value: Partial<SecondaryState>) => {
+    dispatch({ type: UPDATE_SECONDARYTABLES, value });
+  };
   const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas", new ClassIngredientData());
   const usersData = useFetchGet<RestrictedUser[]>("/users", new ClassRestrictedUser());
   const [moreVisible, setMoreVisible] = useState(false);
@@ -32,6 +37,15 @@ const SearchBar = (props: Props) => {
   const [keyword, setKeyword] = useState("");
   const [time, setTime] = useState<TimeList | null>(null);
   const [ingredient, setIngredient] = useState<IngredientData[] | null>(null);
+
+  useEffect(() => {
+    ingredientData.loaded && usersData.loaded &&
+      updateRecipe({
+        users: usersData.data,
+        ingData: ingredientData.data
+      })
+    // eslint-disable-next-line
+  }, [ingredientData.loaded, usersData.loaded])
 
   useEffect(() => {
     let tempRecipes = props.startData;
@@ -128,7 +142,7 @@ const SearchBar = (props: Props) => {
 
   return (
     <>
-      {usersData.data && ingredientData.data ?
+      {secondaryTables.users && secondaryTables.ingData ?
         <div className="searchbar">
           <div
             className="searchbar__mobile"
@@ -153,7 +167,7 @@ const SearchBar = (props: Props) => {
                   onChange={(e) => {
                     setUser(e.value);
                   }}
-                  options={usersData.data.filter((user: RestrictedUser) =>
+                  options={secondaryTables.users.filter((user: RestrictedUser) =>
                     props.startData?.some(
                       (recipe) => recipe.postedByUser.id === user.id
                     )
@@ -208,7 +222,7 @@ const SearchBar = (props: Props) => {
                   onChange={(e) => {
                     setIngredient(e.value);
                   }}
-                  options={ingredientData.data}
+                  options={secondaryTables.ingData}
                   optionLabel="name"
                   filter
                   placeholder="Ingrédient"

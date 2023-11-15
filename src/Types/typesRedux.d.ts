@@ -24,4 +24,6 @@ interface SecondaryState {
     units: Array<Unit> | null,
     regimes: Array<Regime> | null,
     ingTypes: Array<IngredientType> | null,
+    ingData: Array<IngredientData> | null,
+    users: Array<RestrictedUser> | null
 }

@@ -19,6 +19,7 @@ const RecipeContainer = (props: Props) => {
   const recipe = useSelector((state: RootState) => state.recipe);
   const rows = 12;
   const [first, setFirst] = useState(0);
+  const [page, setPage] = useState(0)
   const ref = useRef(null);
   const recipesData = useFetchGet<Recipe[]>(props.dataToCall, new ClassRecipe());
   const [filteredRecipes, setFilteredRecipes] = useState<Array<Recipe>>([]);
@@ -52,6 +53,13 @@ const RecipeContainer = (props: Props) => {
     }
     // eslint-disable-next-line
   }, [boxFavorites, boxMine]);
+
+  useEffect(() => {
+    window.scroll({
+      top: -1,
+      behavior: "smooth",
+    });
+  }, [page])
 
   return (
     <div className="recipeContainer" ref={ref}>
@@ -106,10 +114,7 @@ const RecipeContainer = (props: Props) => {
           totalRecords={filteredRecipes.length}
           rows={rows}
           onPageChange={(e) => {
-            window.scroll({
-              top: (ref.current as any)?.offsetTop,
-              behavior: "smooth",
-            });
+            setPage(e.page)
             setFirst(e.first);
           }}
         ></Paginator>

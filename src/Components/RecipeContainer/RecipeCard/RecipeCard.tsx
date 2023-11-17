@@ -18,6 +18,7 @@ import { GiCook } from "react-icons/gi";
 import CreateRecipe from "../../../Pages/CreateRecipe/CreateRecipe";
 import { UPDATE_RECIPE } from "../../../Store/Reducers/recipeReducer";
 import { fetchDelete, fetchPost } from "../../../Services/api";
+import { useIntersectionObserver } from "../../../Services/intersectionObserver";
 
 interface Props {
   recipeItem: Recipe,
@@ -26,6 +27,7 @@ interface Props {
 }
 
 const RecipeCard = (props: Props) => {
+  const [intersectionRef, isVisibleIntersection] = useIntersectionObserver()
   const auth = useSelector((state: RootState) => state.auth);
   const recipe = useSelector((state: RootState) => state.recipe);
   const dispatch = useDispatch();
@@ -91,14 +93,13 @@ const RecipeCard = (props: Props) => {
   return (
     <div
       className={`recipeCard cardHover ${recipe.chosenRecipes?.length > 0 &&
-        recipe.chosenRecipes.some(
-          (recipe) => recipe.id === props.recipeItem.id
-        ) &&
+        recipe.chosenRecipes.some((recipe) => recipe.id === props.recipeItem.id) &&
         "chosen"
         }`}
       onClick={() => {
         shoppingAction();
       }}
+      ref={intersectionRef}
     >
       {recipe.chosenRecipes?.length > 0 &&
         recipe.chosenRecipes.some(
@@ -114,7 +115,7 @@ const RecipeCard = (props: Props) => {
           <span className="etiquette"> {props.recipeItem.type.label} </span>
         </div>
         <div className="recipeCard__top__image">
-          <img
+          {isVisibleIntersection && <img
             src={
               props.recipeItem.imageUrl
                 ? import.meta.env.VITE_BASE_URL_API + props.recipeItem.imageUrl
@@ -122,7 +123,7 @@ const RecipeCard = (props: Props) => {
             }
             alt="Fond news"
             loading="lazy"
-          />
+          />}
         </div>
       </div>
       <div
@@ -130,7 +131,7 @@ const RecipeCard = (props: Props) => {
         onClick={() => !recipe.shopping && setVisibleDetail(true)}
       >
         <div className="recipeCard__corps__author">
-          {props.recipeItem.postedByUser.imageUrl ? (
+          {props.recipeItem.postedByUser.imageUrl && isVisibleIntersection ? (
             <img
               src={
                 import.meta.env.VITE_BASE_URL_API +

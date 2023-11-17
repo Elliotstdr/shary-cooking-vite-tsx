@@ -15,8 +15,11 @@ import RecipeCard from "../../Components/RecipeContainer/RecipeCard/RecipeCard";
 import { UPDATE_SECONDARYTABLES } from "../../Store/Reducers/secondaryTablesReducer";
 import { ClassIngredientType, ClassRecipe, ClassRegime, ClassType, ClassUnit } from "../../Types/class";
 import { errorToast } from "../../Services/functions";
+import { useIntersectionObserver } from "../../Services/intersectionObserver";
 
 const Accueil = () => {
+  const [imageRightRef, isVisibleImageRight] = useIntersectionObserver()
+  const [imageLeftRef, isVisibleImageLeft] = useIntersectionObserver()
   const auth = useSelector((state: RootState) => state.auth);
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
   const dispatch = useDispatch();
@@ -88,7 +91,7 @@ const Accueil = () => {
                 <span>Venez ajouter votre grain de sel...</span>
               </div>
             </div>
-            <div className="second block">
+            <div className="second block" ref={imageRightRef}>
               <div className="second_text">
                 <span>
                   Partagez vos meilleures recettes, donnez vos ingrédients
@@ -99,7 +102,7 @@ const Accueil = () => {
                   btnAction={() => navigate("/create")}
                 ></Bouton>
               </div>
-              <img src={image2} alt="accueil" />
+              {isVisibleImageRight && <img src={image2} alt="accueil" />}
             </div>
             <div className="fourth block">
               <h1>Les recettes au top !</h1>
@@ -118,8 +121,8 @@ const Accueil = () => {
                 )}
               </div>
             </div>
-            <div className="third block">
-              <img src={image3} alt="accueil" />
+            <div className="third block" ref={imageLeftRef}>
+              {isVisibleImageLeft && <img src={image3} alt="accueil" />}
               <div className="third_text">
                 <span>On piocherait pas une petite recette pour ce soir ?</span>
                 <Bouton

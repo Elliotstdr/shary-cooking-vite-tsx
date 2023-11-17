@@ -46,7 +46,7 @@ const ModalForgotPassword = (props: Props) => {
     !props.visible && setIsLoging(false);
   }, [props.visible]);
   // variables du formulaire
-  const { getValues, handleSubmit, control, reset } = useForm({
+  const { getValues, handleSubmit, control, register, reset } = useForm({
     defaultValues,
   });
 
@@ -124,20 +124,13 @@ const ModalForgotPassword = (props: Props) => {
           <>
             <div className="login__form__field">
               <h4>Adresse email</h4>
-              <Controller
-                name="email"
-                control={control}
-                render={({ field }) => (
-                  <InputText
-                    {...field}
-                    placeholder="Adresse email"
-                    className="login__form__field-email"
-                    type="email"
-                  />
-                )}
+              <InputText
+                type="email"
+                {...register("email")}
+                placeholder="Adresse email"
+                className="login__form__field-email"
               />
             </div>
-            {error && <small className="p-error">{error}</small>}
             <h5>
               Renseignez l'email de votre compte, un email avec la clé de
               réinitialisation de votre mot de passe va vous être envoyé
@@ -173,9 +166,8 @@ const ModalForgotPassword = (props: Props) => {
                   <Password
                     {...field}
                     autoComplete="new-password"
-                    placeholder={"mot de passe"}
+                    placeholder="mot de passe"
                     className={"login__form__field-newPassword"}
-                    feedback={false}
                   />
                 )}
               />

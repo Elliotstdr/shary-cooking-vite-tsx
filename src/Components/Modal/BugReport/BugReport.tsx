@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./BugReport.scss";
 import Modal from "../Modal";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { InputTextarea } from "primereact/inputtextarea";
 import Loader from "../../../Utils/Loader/loader";
 import Bouton from "../../../Utils/Bouton/Bouton";
@@ -39,7 +39,7 @@ const BugReport = (props: Props) => {
   };
 
   const {
-    control,
+    register,
     getValues,
     formState: { errors },
     handleSubmit,
@@ -74,49 +74,29 @@ const BugReport = (props: Props) => {
         <form className="bug__form" onSubmit={handleSubmit(onSubmit)}>
           <div className="bug__form__field">
             <h4>Intitulé du problème :</h4>
-            <Controller
-              name="title"
-              control={control}
-              rules={{
-                required: "Le titre est obligatoire",
-              }}
-              render={({ field }) => (
-                <InputText
-                  {...field}
-                  placeholder="Problème quand je clique sur le bouton ..."
-                  className="bug__form__field-title"
-                />
-              )}
+            <InputText
+              {...register("title", { required: true })}
+              placeholder="Problème quand je clique sur le bouton ..."
+              className="bug__form__field-title"
             />
-            {errors.title && <small className="p-error">{errors.title.message}</small>}
+            {errors.title && <small className="p-error">Le titre est obligatoire</small>}
           </div>
           <div className="bug__form__field">
             <h4>Description :</h4>
-            <Controller
-              name="message"
-              control={control}
-              rules={{
-                required: "La description est obligatoire",
-              }}
-              render={({ field }) => (
-                <InputTextarea
-                  autoResize
-                  {...field}
-                  placeholder="Où? Quand? Comment?"
-                  className="bug__form__field-message"
-                />
-              )}
+            <InputTextarea
+              {...register("message", { required: true })}
+              placeholder="Où? Quand? Comment?"
+              className="bug__form__field-message"
+              autoResize
             />
-            {errors.message && <small className="p-error">{errors.message.message}</small>}
+            {errors.message && <small className="p-error">La description est obligatoire</small>}
           </div>
           <div className="bug__form__field file">
             <h4>Capture d'écran :</h4>
-            <Controller
-              name="file"
-              control={control}
-              render={() => (
-                <ImageUpload image={image} setImage={setImage}></ImageUpload>
-              )}
+            <ImageUpload
+              {...register("file")}
+              image={image}
+              setImage={setImage}
             />
           </div>
           <div className="bug__form__button">

@@ -44,6 +44,7 @@ const ModalLogin = (props: Props) => {
   const {
     control,
     getValues,
+    register,
     formState: { errors },
     handleSubmit,
   } = useForm({ defaultValues });
@@ -89,22 +90,13 @@ const ModalLogin = (props: Props) => {
       <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="login__form__field">
           <h4>Adresse email</h4>
-          <Controller
-            name="email"
-            control={control}
-            rules={{
-              required: "L'email est obligatoire",
-            }}
-            render={({ field }) => (
-              <InputText
-                {...field}
-                placeholder="Adresse email"
-                className="login__form__field-email"
-                type="email"
-              />
-            )}
-          />
-          {errors.email && <small className="p-error">{errors.email.message}</small>}
+          <InputText
+            type="email"
+            {...register("email", { required: true })}
+            placeholder="Adresse email"
+            className="login__form__field-email"
+          ></InputText>
+          {errors.email && <small className="p-error">L'email est obligatoire</small>}
         </div>
         <div className="login__form__field">
           <h4>Mot de passe</h4>
@@ -117,7 +109,7 @@ const ModalLogin = (props: Props) => {
             render={({ field }) => (
               <Password
                 {...field}
-                placeholder={"Mot de passe"}
+                placeholder="Mot de passe"
                 className="login__form__field-password"
                 feedback={false}
               />

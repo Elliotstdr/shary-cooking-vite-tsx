@@ -39,6 +39,7 @@ const Parameters = () => {
 
   const {
     control,
+    register,
     formState: { errors },
     reset,
     handleSubmit,
@@ -120,75 +121,42 @@ const Parameters = () => {
               />
             </div>
           )}
-          <Controller
-            name="image"
-            control={control}
-            render={() => (
-              <ImageUpload image={image} setImage={setImage}></ImageUpload>
-            )}
+          <ImageUpload
+            {...register("image")}
+            image={image}
+            setImage={setImage}
           />
-          {getFormErrorMessage("image")}
         </div>
         <div className="param__form__field">
           <h4>Prénom</h4>
-          <Controller
-            name="name"
-            control={control}
-            rules={{
-              required: "Le prénom est obligatoire",
-            }}
-            render={({ field }) => (
-              <InputText
-                {...field}
-                value={getValues("name")}
-                placeholder="Fanny"
-                className="param__form__field-name"
-              />
-            )}
+          <InputText
+            {...register("name", { required: true })}
+            placeholder="Fanny"
+            className="param__form__field-name"
           />
-          {getFormErrorMessage("name")}
+          {errors.name && <small className="p-error">Le prénom est obligatoire</small>}
         </div>
         <div className="param__form__field">
           <h4>Nom</h4>
-          <Controller
-            name="lastname"
-            control={control}
-            rules={{
-              required: "Le nom est obligatoire",
-            }}
-            render={({ field }) => (
-              <InputText
-                {...field}
-                value={getValues("lastname")}
-                placeholder="Lefebvre"
-                className="param__form__field-lastname"
-              />
-            )}
+          <InputText
+            {...register("lastname", { required: true })}
+            placeholder="Lefebvre"
+            className="param__form__field-lastname"
           />
-          {getFormErrorMessage("lastname")}
+          {errors.lastname && <small className="p-error">Le nom est obligatoire</small>}
         </div>
         <div className="param__form__field">
           <h4>Adresse email</h4>
-          <Controller
-            name="email"
-            control={control}
-            rules={{
-              required: "L'email est obligatoire",
-            }}
-            render={({ field }) => (
-              <InputText
-                {...field}
-                value={getValues("email")}
-                placeholder="Adresse email"
-                className="param__form__field-email"
-                type="email"
-              />
-            )}
+          <InputText
+            type="email"
+            {...register("email", { required: true })}
+            placeholder="Adresse email"
+            className="param__form__field-email"
           />
-          {getFormErrorMessage("email")}
+          {errors.email && <small className="p-error">L'email est obligatoire</small>}
         </div>
         <Bouton
-          type={"normal"}
+          type="normal"
           btnAction={(e) => {
             e.preventDefault();
             setShowMDP(!showMDP);
@@ -233,7 +201,6 @@ const Parameters = () => {
                     {...field}
                     placeholder={"Mot de passe"}
                     className="param__form__field-password"
-                    feedback={false}
                     onChange={(e) => {
                       field.onChange(e.target.value);
                       setIsEqualPassword(
@@ -244,7 +211,6 @@ const Parameters = () => {
                   />
                 )}
               />
-              {getFormErrorMessage("password")}
             </div>
             <div className="param__form__field">
               <h4>Confirmer le mot de passe</h4>

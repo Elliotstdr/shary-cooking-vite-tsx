@@ -53,6 +53,7 @@ const ModalLogin = (props: Props) => {
   const {
     control,
     getValues,
+    register,
     formState: { errors },
     handleSubmit,
   } = useForm({ defaultValues });
@@ -100,58 +101,31 @@ const ModalLogin = (props: Props) => {
       <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="login__form__field">
           <h4>Prénom</h4>
-          <Controller
-            name="name"
-            control={control}
-            rules={{
-              required: "Le prénom est obligatoire",
-            }}
-            render={({ field }) => (
-              <InputText
-                {...field}
-                placeholder="Prénom"
-                className="login__form__field-name"
-              />
-            )}
+          <InputText
+            {...register("name", { required: true })}
+            placeholder="Prénom"
+            className="login__form__field-name"
           />
-          {errors.name && <small className="p-error">{errors.name.message}</small>}
+          {errors.name && <small className="p-error">Le prénom est obligatoire</small>}
         </div>
         <div className="login__form__field">
           <h4>Nom</h4>
-          <Controller
-            name="lastname"
-            control={control}
-            rules={{
-              required: "Le nom est obligatoire",
-            }}
-            render={({ field }) => (
-              <InputText
-                {...field}
-                placeholder="Nom"
-                className="login__form__field-lastname"
-              />
-            )}
+          <InputText
+            {...register("lastname", { required: true })}
+            placeholder="Nom"
+            className="login__form__field-lastname"
           />
-          {errors.lastname && <small className="p-error">{errors.lastname.message}</small>}
+          {errors.lastname && <small className="p-error">Le nom est obligatoire</small>}
         </div>
         <div className="login__form__field">
           <h4>Adresse email</h4>
-          <Controller
-            name="email"
-            control={control}
-            rules={{
-              required: "L'email est obligatoire",
-            }}
-            render={({ field }) => (
-              <InputText
-                {...field}
-                placeholder="Adresse email"
-                className="login__form__field-email"
-                type="email"
-              />
-            )}
+          <InputText
+            type="email"
+            {...register("email", { required: true })}
+            placeholder="Adresse email"
+            className="login__form__field-email"
           />
-          {errors.email && <small className="p-error">{errors.email.message}</small>}
+          {errors.email && <small className="p-error">L'email est obligatoire</small>}
         </div>
         <div className="login__form__field">
           <h4>Mot de passe</h4>
@@ -168,9 +142,8 @@ const ModalLogin = (props: Props) => {
             render={({ field }) => (
               <Password
                 {...field}
-                placeholder={"Mot de passe"}
+                placeholder="Mot de passe"
                 className="login__form__field-password"
-                feedback={true}
                 onChange={(e) => {
                   field.onChange(e.target.value);
                   setIsEqualPassword(

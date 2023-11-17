@@ -83,10 +83,7 @@ const CreateRecipe = (props: Props) => {
       ? props.recipe.steps
         .sort((a, b) => a.stepIndex - b.stepIndex)
         .map((step) => {
-          return {
-            description: step.description,
-            stepIndex: step.stepIndex,
-          };
+          return { description: step.description, stepIndex: step.stepIndex };
         })
       : [
         {
@@ -127,6 +124,7 @@ const CreateRecipe = (props: Props) => {
 
   const {
     control,
+    register,
     getValues,
     reset,
     formState: { errors },
@@ -185,12 +183,11 @@ const CreateRecipe = (props: Props) => {
     data.postedByUser = `/api/users/${auth.userConnected?.id}`;
     data.steps = stepsList;
     data.ingredients = ingredientList.map((ingredient: FormIngredient) => {
-      const tempIngredient: PayloadIngredient = {
+      return {
         label: ingredient.label,
         quantity: Number(ingredient.quantity),
         unit: `/api/units/${ingredient?.unit?.id}`
       }
-      return tempIngredient
     });
     if (props.recipe) {
       data.id = props.recipe.id;
@@ -223,9 +220,7 @@ const CreateRecipe = (props: Props) => {
     const response = await fetchPost(`/recipes`, data);
     setIsCreating(false);
     if (response.error) {
-      errorToast(
-        "Une erreur est survenue lors de la création de votre recette"
-      );
+      errorToast("Une erreur est survenue lors de la création de votre recette");
       return;
     }
     setImage(null);
@@ -298,75 +293,44 @@ const CreateRecipe = (props: Props) => {
       <form className="recipe__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="recipe__form__field">
           <h4>Photo :</h4>
-          <Controller
-            name="image"
-            control={control}
-            render={() => (
-              <ImageUpload image={image} setImage={setImage}></ImageUpload>
-            )}
+          <ImageUpload
+            {...register("image")}
+            image={image}
+            setImage={setImage}
           />
-          {errors.image && <small className="p-error">{errors.image.message}</small>}
         </div>
         <div className="recipe__form__group">
           <div className="recipe__form__field">
             <h4>Titre de la recette</h4>
-            <Controller
-              name="title"
-              control={control}
-              rules={{
-                required: "Le titre est obligatoire",
-              }}
-              render={({ field }) => (
-                <InputText
-                  {...field}
-                  placeholder="Ma super recette"
-                  className="recipe__form__field-title"
-                />
-              )}
+            <InputText
+              {...register("title", { required: true })}
+              placeholder="Ma super recette"
+              className="recipe__form__field-title"
             />
-            {errors.title && <small className="p-error">{errors.title.message}</small>}
+            {errors.title && <small className="p-error">Le titre est obligatoire</small>}
           </div>
           <div className="recipe__form__field">
             <h4>Pour combien de personnes ?</h4>
-            <Controller
-              name="number"
-              control={control}
-              rules={{
-                required: "Le nombre est obligatoire",
-                validate: (value: any) =>
-                  value !== 0 && value !== "0"
-                    ? true
-                    : "La quantité ne peut pas être nulle",
-              }}
-              render={({ field }) => (
-                <InputText
-                  {...field}
-                  placeholder="3 personnes"
-                  className="recipe__form__field-number"
-                  keyfilter="num"
-                />
-              )}
+            <InputText
+              {...register("number", {
+                required: true,
+                validate: (value: any) => value !== 0 && value !== "0"
+              })}
+              placeholder="3 personnes"
+              className="recipe__form__field-number"
+              keyfilter="num"
             />
-            {errors.number && <small className="p-error">{errors.number.message}</small>}
+            {errors.number && <small className="p-error">Le nombre est obligatoire et différent de 0</small>}
           </div>
           <div className="recipe__form__field">
             <h4>Temps de préparation</h4>
-            <Controller
-              name="time"
-              control={control}
-              rules={{
-                required: "Le temps est obligatoire",
-              }}
-              render={({ field }) => (
-                <InputText
-                  {...field}
-                  placeholder="30 minutes"
-                  className="recipe__form__field-time"
-                  type="time"
-                />
-              )}
+            <InputText
+              {...register("time", { required: true })}
+              placeholder="30 minutes"
+              className="recipe__form__field-time"
+              type="time"
             />
-            {errors.time && <small className="p-error">{errors.time.message}</small>}
+            {errors.time && <small className="p-error">Le temps est obligatoire</small>}
           </div>
         </div>
         <div className="recipe__form__field">
@@ -425,30 +389,22 @@ const CreateRecipe = (props: Props) => {
                         activeIndex={activeIndex}
                         setActiveIndex={setActiveIndex}
                       ></IngredientsCreation>
-                      <DndContext
-                        collisionDetection={closestCenter}
-                        onDragEnd={handleDragEnd}
-                      >
-                        <SortableContext
-                          items={itemIds}
-                          strategy={verticalListSortingStrategy}
-                        >
-                          {ingredientList.map(
-                            (ingredient) =>
-                              ingredient.id !== 1 && ingredient.id && ingredientData.data && (
-                                <IngredientsCreation
-                                  key={ingredient.id}
-                                  id={ingredient.id}
-                                  ingredient={ingredient}
-                                  ingredientList={ingredientList}
-                                  setIngredientList={setIngredientList}
-                                  ingredientData={ingredientData.data}
-                                  autocompleteData={autocompleteData}
-                                  setAutocompleteData={setAutocompleteData}
-                                  activeIndex={activeIndex}
-                                  setActiveIndex={setActiveIndex}
-                                ></IngredientsCreation>
-                              )
+                      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} >
+                        <SortableContext items={itemIds} strategy={verticalListSortingStrategy} >
+                          {ingredientList.map((x) => x.id !== 1 && x.id && ingredientData.data && (
+                            <IngredientsCreation
+                              key={x.id}
+                              id={x.id}
+                              ingredient={x}
+                              ingredientList={ingredientList}
+                              setIngredientList={setIngredientList}
+                              ingredientData={ingredientData.data}
+                              autocompleteData={autocompleteData}
+                              setAutocompleteData={setAutocompleteData}
+                              activeIndex={activeIndex}
+                              setActiveIndex={setActiveIndex}
+                            ></IngredientsCreation>
+                          )
                           )}
                         </SortableContext>
                       </DndContext>

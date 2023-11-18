@@ -52,7 +52,7 @@ const RecipeCard = (props: Props) => {
       errorToast("Une erreur est survenue");
       return;
     }
-    if (actionType === "delete" && props.filteredRecipes && props.setFilteredRecipes) {
+    if (recipe.favourite && actionType === "delete" && props.filteredRecipes && props.setFilteredRecipes) {
       props.setFilteredRecipes(
         props.filteredRecipes.filter((recipe) => recipe.id !== props.recipeItem.id)
       );

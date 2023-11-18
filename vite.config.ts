@@ -10,4 +10,7 @@ export default defineConfig({
       typescript: true,
     }),
   ],
+  css: {
+    devSourcemap: true,
+  },
 })

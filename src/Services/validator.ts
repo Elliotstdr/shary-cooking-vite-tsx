@@ -1,5 +1,5 @@
 /**
- * @template { Object | Object[] } T 
+ * @template { object | object[] } T 
  * @param { any } obj 
  * @param { ElementType<T> } example as T or element of T
  * @returns { boolean }
@@ -9,7 +9,7 @@ export function isOfType<T extends object | object[]>(obj: any, example: Element
   if(!obj) return false;
   
   // On récupère la liste des clefs de l'objet example
-  const expectedKeys = Object.keys(example);
+  const expectedKeys = Object.keys(example as object);
 
   // Si la réponse API est un array on compare les clefs de son premier élément avec l'exemple
   if(Array.isArray(obj) && obj.length > 0) {

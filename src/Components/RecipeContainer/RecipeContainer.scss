@@ -29,10 +29,6 @@
       color: c.$main-color !important;
     }
   }
-  &_loader {
-    height: 25rem;
-    @include c.flexCenter;
-  }
 }
 
 .shopping_list_checkboxes {

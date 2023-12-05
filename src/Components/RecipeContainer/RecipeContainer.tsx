@@ -4,10 +4,10 @@ import "./RecipeContainer.scss";
 import SearchBar from "../SearchBar/SearchBar";
 import { useFetchGet } from "../../Services/api";
 import { Paginator } from "primereact/paginator";
-import Loader from "../../Utils/Loader/loader";
 import { useSelector } from "react-redux";
 import { Checkbox } from "primereact/checkbox";
 import { ClassRecipe } from "../../Types/class";
+import CardSkeleton from "../CardSkeleton/CardSkeleton";
 
 interface Props {
   checkboxes?: boolean,
@@ -103,9 +103,11 @@ const RecipeContainer = (props: Props) => {
             </span>
           )
         ) : (
-          <div className="recipeContainer_loader">
-            <Loader></Loader>
-          </div>
+          <>
+            <CardSkeleton></CardSkeleton>
+            <CardSkeleton></CardSkeleton>
+            <CardSkeleton></CardSkeleton>
+          </>
         )}
       </div>
       {filteredRecipes && (

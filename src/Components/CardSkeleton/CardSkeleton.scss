@@ -1,0 +1,23 @@
+@use "src/Styles/_vars.scss" as c;
+
+.skeleton {
+  @include c.flexCol;
+  width: 20rem;
+  margin-bottom: 2rem;
+  .sub-skeleton {
+    @include c.flexAlign;
+  }
+  .center {
+    align-self: center;
+  }
+  .bottom {
+    margin-top: 4rem !important;
+  }
+  .noMargin {
+    margin: 0 !important;
+  }
+  .p-skeleton {
+    margin: 0.5rem;
+    background-color: #dcdedf;
+  }
+}

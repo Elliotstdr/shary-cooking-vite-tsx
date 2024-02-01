@@ -16,7 +16,8 @@ interface RecipeState {
   chosenRecipes: Array<Recipe>,
   editable: boolean,
   shopping: boolean,
-  favourite: boolean
+  favourite: boolean,
+  savedForm: any
 }
 
 interface SecondaryState {

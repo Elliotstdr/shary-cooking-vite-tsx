@@ -10,8 +10,7 @@ import recipeReducer from "./Reducers/recipeReducer";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["recipe"],
-  whitelist: ["auth", "secondaryTables"],
+  whitelist: ["auth", "secondaryTables", "recipe"],
 };
 
 const rootReducer = combineReducers<RootState>({

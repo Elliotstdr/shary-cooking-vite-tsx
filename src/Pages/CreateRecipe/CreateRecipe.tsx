@@ -3,7 +3,7 @@ import "./CreateRecipe.scss";
 import { Controller, useForm } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
 import { Divider } from "primereact/divider";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ImageUpload from "../../Components/FormElements/ImageUpload/ImageUpload";
 import { fetchPost, fetchPut, useFetchGet } from "../../Services/api";
 import { errorToast, successToast } from "../../Services/functions";
@@ -22,6 +22,7 @@ import Loader from "../../Utils/Loader/loader";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
 import { ClassIngredientData } from "../../Types/class";
+import { UPDATE_RECIPE } from "../../Store/Reducers/recipeReducer";
 
 interface Props {
   recipe?: Recipe
@@ -55,57 +56,33 @@ type PayloadIngredient = {
 const CreateRecipe = (props: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
+  const recipe = useSelector((state: RootState) => state.recipe);
+  const dispatch = useDispatch();
+  const updateRecipe = (value: Partial<RecipeState>) => {
+    dispatch({ type: UPDATE_RECIPE, value });
+  };
+
   useEffect(() => {
+    if (props.recipe) fillForm(props.recipe)
     window.scrollTo(0, 0);
+    // eslint-disable-next-line
   }, []);
   const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas", new ClassIngredientData());
-  const [isCreating, setIsCreating] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [autocompleteData, setAutocompleteData] = useState<Array<IngredientData>>([]);
   const [image, setImage] = useState(null);
   const ref = useRef(null);
-  const [typeId, setTypeId] = useState(
-    props.recipe
-      ? props.recipe.type.id
-      : secondaryTables.types
-        ? secondaryTables.types[0]?.id
-        : 1
-  );
-  const [regimeId, setRegimeId] = useState(
-    props.recipe
-      ? props.recipe.regime.id
-      : secondaryTables.regimes
-        ? secondaryTables.regimes[0]?.id
-        : 1
-  );
-  const [stepsList, setStepsList] = useState<Array<Step>>(
-    props.recipe
-      ? props.recipe.steps
-        .sort((a, b) => a.stepIndex - b.stepIndex)
-        .map((step) => {
-          return { description: step.description, stepIndex: step.stepIndex };
-        })
-      : [
-        {
-          description: "",
-          stepIndex: 1,
-        },
-      ]
-  );
-  const [ingredientList, setIngredientList] = useState<Array<FormIngredient>>(
-    props.recipe
-      ? props.recipe.ingredients.map((ingredient, index) => {
-        return { id: index + 1, ...ingredient, quantity: ingredient.quantity.toString() };
-      })
-      : [
-        {
-          unit: null,
-          quantity: undefined,
-          label: "",
-          id: 1,
-        },
-      ]
-  );
+  const [typeId, setTypeId] = useState(secondaryTables.types![0]?.id || 1);
+  const [regimeId, setRegimeId] = useState(secondaryTables.regimes![0]?.id || 1);
+  const [stepsList, setStepsList] = useState<Array<Step>>([{ description: "", stepIndex: 1 }]);
+  const [ingredientList, setIngredientList] = useState<Array<FormIngredient>>([
+    {
+      unit: null,
+      quantity: undefined,
+      label: "",
+      id: 1,
+    },
+  ]);
   const regimeTooltips = [
     "Contient tout type de nourriture",
     "Régime sans viande ni poisson mais avec des produits d'origine animale",
@@ -113,23 +90,60 @@ const CreateRecipe = (props: Props) => {
     "Régime sans viande, poisson ou produits d'origine animale",
   ];
 
-  const defaultValues: Values = {
-    title: props.recipe ? props.recipe.title : "",
-    number: props.recipe ? props.recipe.number.toString() : "1",
-    time: props.recipe ? props.recipe.time : "00:00",
-    image: null,
-    createdAt: new Date(),
-
-  }
-
   const {
     control,
     register,
     getValues,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
-  } = useForm({ defaultValues });
+  } = useForm({
+    defaultValues: {
+      title: "",
+      number: "1",
+      time: "00:00",
+      image: null,
+      createdAt: new Date(),
+    } as Values
+  });
+
+  useEffect(() => {
+    return () => {
+      if (props.recipe || (!image && typeId === 1 && regimeId === 1 &&
+        !ingredientList[0].label && !stepsList[0].description &&
+        !getValues("title") && getValues("time") === "00:00" && getValues("number") === "1")
+      ) return
+
+      updateRecipe({
+        savedForm: {
+          ...getValues(),
+          ingredients: ingredientList,
+          steps: stepsList,
+          type: { id: typeId },
+          regime: { id: regimeId }
+        }
+      })
+    }
+    // eslint-disable-next-line
+  }, [typeId, regimeId, ingredientList, stepsList, image])
+
+  const fillForm = (payload: Recipe) => {
+    setTypeId(payload.type.id);
+    setRegimeId(payload.regime.id);
+    setStepsList(payload.steps.sort((a, b) => a.stepIndex - b.stepIndex).map((step) => {
+      return { description: step.description, stepIndex: step.stepIndex };
+    })
+    );
+    setIngredientList(payload.ingredients.map((ingredient, index) => {
+      return { id: index + 1, ...ingredient, quantity: ingredient.quantity?.toString() };
+    }))
+
+    reset({
+      title: payload.title,
+      number: payload.number.toString(),
+      time: payload.time,
+    })
+  }
 
   const checkSteps = () => {
     let response = undefined;
@@ -156,6 +170,8 @@ const CreateRecipe = (props: Props) => {
   };
 
   const resetForm = () => {
+    reset();
+    setImage(null);
     secondaryTables.types && setTypeId(secondaryTables.types[0]?.id);
     secondaryTables.regimes && setRegimeId(secondaryTables.regimes[0]?.id);
     setStepsList([
@@ -200,17 +216,16 @@ const CreateRecipe = (props: Props) => {
     return data;
   };
 
-  const onSubmit = () => {
-    setIsCreating(true);
+  const onSubmit = async () => {
     ref.current && window.scroll({
       top: (ref.current as HTMLElement)?.offsetTop,
       behavior: "smooth",
     });
 
     if (props.recipe) {
-      putRecipeFunction();
+      await putRecipeFunction();
     } else {
-      createRecipeFunction();
+      await createRecipeFunction();
     }
   };
 
@@ -218,14 +233,11 @@ const CreateRecipe = (props: Props) => {
     const data = setFields();
 
     const response = await fetchPost(`/recipes`, data);
-    setIsCreating(false);
     if (response.error) {
       errorToast("Une erreur est survenue lors de la création de votre recette");
       return;
     }
-    setImage(null);
     resetForm();
-    reset();
   };
 
   const putRecipeFunction = async () => {
@@ -234,7 +246,6 @@ const CreateRecipe = (props: Props) => {
     const data = setFields();
 
     const response = await fetchPut(`/recipes/${props.recipe.id}`, data);
-    setIsCreating(false);
     if (response.error) {
       errorToast(
         response.error?.response?.data?.detail?.includes("visiteur")
@@ -290,6 +301,10 @@ const CreateRecipe = (props: Props) => {
       ref={ref}
     >
       {!props.recipe && <NavBar></NavBar>}
+      {!props.recipe && <a
+        onClick={() => recipe.savedForm && fillForm(recipe.savedForm)}
+        style={{ textDecoration: "underline", position: "absolute", left: 0, padding: "2rem 1rem", cursor: "pointer" }}
+      >Restaurer le précedent formulaire</a>}
       <form className="recipe__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="recipe__form__field">
           <h4>Photo :</h4>
@@ -454,7 +469,7 @@ const CreateRecipe = (props: Props) => {
           {errors.steps && <small className="p-error">{errors.steps.message}</small>}
         </div>
         <Divider></Divider>
-        {isCreating ? (
+        {isSubmitting ? (
           <Loader></Loader>
         ) : (
           <button className="bouton slide">

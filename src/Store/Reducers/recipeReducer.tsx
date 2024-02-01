@@ -3,6 +3,7 @@ const INITIAL_STATE: RecipeState = {
   editable: false,
   shopping: false,
   favourite: false,
+  savedForm: null
 };
 
 export const UPDATE_RECIPE = "UPDATE_RECIPE";

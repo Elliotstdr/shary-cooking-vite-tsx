@@ -25,7 +25,9 @@ import { ClassIngredientData } from "../../Types/class";
 import { UPDATE_RECIPE } from "../../Store/Reducers/recipeReducer";
 
 interface Props {
-  recipe?: Recipe
+  recipe?: Recipe,
+  editRecipe?: (item: Recipe) => void,
+  setVisibleModif?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface Body {
@@ -67,6 +69,7 @@ const CreateRecipe = (props: Props) => {
     window.scrollTo(0, 0);
     // eslint-disable-next-line
   }, []);
+  const [currentPictureDeleted, setCurrentPictureDeleted] = useState(false)
   const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas", new ClassIngredientData());
   const [activeIndex, setActiveIndex] = useState(-1);
   const [autocompleteData, setAutocompleteData] = useState<Array<IngredientData>>([]);
@@ -241,7 +244,7 @@ const CreateRecipe = (props: Props) => {
   };
 
   const putRecipeFunction = async () => {
-    if (!props.recipe) return;
+    if (!props.recipe || !props.editRecipe || !props.setVisibleModif) return;
 
     const data = setFields();
 
@@ -254,7 +257,8 @@ const CreateRecipe = (props: Props) => {
       );
       return;
     }
-    window.location.reload();
+    props.setVisibleModif(false)
+    props.editRecipe(response.data)
   };
 
   const itemIds: number[] = useMemo(
@@ -291,6 +295,18 @@ const CreateRecipe = (props: Props) => {
     return sortedList[0].id ? sortedList[0].id + 1 : null
   }
 
+  const deletePicture = async () => {
+    if (!props.recipe || !props.editRecipe) return
+
+    const response = await fetchPost(`/recipes/${props.recipe.id}/deletePicture`, {})
+
+    if (response.error) errorToast("Une erreur est survenue")
+
+    setCurrentPictureDeleted(true)
+    successToast("Image supprimée")
+    props.editRecipe(response.data)
+  }
+
   return (
     <div
       className={props.recipe && "modify_recipe"}
@@ -303,8 +319,8 @@ const CreateRecipe = (props: Props) => {
       {!props.recipe && <NavBar></NavBar>}
       {!props.recipe && <a
         onClick={() => recipe.savedForm && fillForm(recipe.savedForm)}
-        style={{ textDecoration: "underline", position: "absolute", left: 0, padding: "2rem 1rem", cursor: "pointer" }}
-      >Restaurer le précedent formulaire</a>}
+        className="options restore"
+      > Restaurer le précedent formulaire</a>}
       <form className="recipe__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="recipe__form__field">
           <h4>Photo :</h4>
@@ -313,6 +329,11 @@ const CreateRecipe = (props: Props) => {
             image={image}
             setImage={setImage}
           />
+          {props?.recipe?.imageUrl && !currentPictureDeleted &&
+            <a onClick={() => deletePicture()} className="options">
+              Supprimer l'image actuelle
+            </a>
+          }
         </div>
         <div className="recipe__form__group">
           <div className="recipe__form__field">

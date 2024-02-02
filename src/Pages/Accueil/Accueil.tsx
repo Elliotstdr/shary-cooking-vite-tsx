@@ -23,6 +23,7 @@ const Accueil = () => {
   const updateSecondaryTables = (value: Partial<SecondaryState>) => {
     dispatch({ type: UPDATE_SECONDARYTABLES, value });
   };
+  const [recipes, setRecipes] = useState<Recipe[]>([])
   const [recipeUrl, setRecipeUrl] = useState("");
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
@@ -39,15 +40,15 @@ const Accueil = () => {
     }
   }, [auth.isConnected]);
 
+  useEffect(() => {
+    recipesData.loaded && recipesData.data && setRecipes(recipesData.data)
+    // eslint-disable-next-line
+  }, [recipesData.loaded])
+
   const typesData = useFetchGetConditional<Type[]>("/types", secondaryTables.types, new ClassType());
   const unitsData = useFetchGetConditional<Unit[]>("/units", secondaryTables.units, new ClassUnit());
-  const regimesData = useFetchGetConditional<Regime[]>(
-    "/regimes",
-    secondaryTables.regimes,
-    new ClassRegime()
-  );
-  const ingredientTypeData = useFetchGetConditional<IngredientType[]>(
-    "/ingredient_types",
+  const regimesData = useFetchGetConditional<Regime[]>("/regimes", secondaryTables.regimes, new ClassRegime());
+  const ingredientTypeData = useFetchGetConditional<IngredientType[]>("/ingredient_types",
     secondaryTables.ingTypes,
     new ClassIngredientType()
   );
@@ -104,14 +105,18 @@ const Accueil = () => {
             <div className="fourth block">
               <h1>Les recettes au top !</h1>
               <div className="fourth_recipes">
-                {recipesData.loaded && recipesData.data ? (
-                  recipesData.data
+                {recipes.length > 0 ? (
+                  recipes
                     .sort(
                       (a: Recipe, b: Recipe) => b.savedByUsers.length - a.savedByUsers.length
                     )
                     .slice(0, 3)
                     .map((recipe: Recipe, index: Key) => (
-                      <RecipeCard key={index} recipeItem={recipe}></RecipeCard>
+                      <RecipeCard
+                        key={index}
+                        recipeItem={recipe}
+                        setFilteredRecipes={setRecipes}
+                      ></RecipeCard>
                     ))
                 ) : (
                   <Loader></Loader>

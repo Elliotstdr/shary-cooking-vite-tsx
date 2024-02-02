@@ -91,7 +91,6 @@ const RecipeContainer = (props: Props) => {
                 <RecipeCard
                   key={recipe.id}
                   recipeItem={recipe}
-                  filteredRecipes={filteredRecipes}
                   setFilteredRecipes={setFilteredRecipes}
                 ></RecipeCard>
               ))

@@ -49,6 +49,18 @@
       border-top: 3px #dee2e6;
     }
   }
+  .options {
+    text-decoration: underline;
+    padding: 2rem 1rem;
+    cursor: pointer;
+  }
+  .restore {
+    text-decoration: underline;
+    position: absolute;
+    left: 0;
+    padding: 2rem 1rem;
+    cursor: pointer;
+  }
 }
 .p-dropdown-items {
   text-align: left;

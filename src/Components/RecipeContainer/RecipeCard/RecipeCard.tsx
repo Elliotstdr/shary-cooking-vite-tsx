@@ -22,8 +22,7 @@ import { useIntersectionObserver } from "../../../Services/intersectionObserver"
 
 interface Props {
   recipeItem: Recipe,
-  filteredRecipes?: Recipe[],
-  setFilteredRecipes?: React.Dispatch<React.SetStateAction<Recipe[]>>,
+  setFilteredRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>,
 }
 
 const RecipeCard = (props: Props) => {
@@ -52,10 +51,8 @@ const RecipeCard = (props: Props) => {
       errorToast("Une erreur est survenue");
       return;
     }
-    if (recipe.favourite && actionType === "delete" && props.filteredRecipes && props.setFilteredRecipes) {
-      props.setFilteredRecipes(
-        props.filteredRecipes.filter((recipe) => recipe.id !== props.recipeItem.id)
-      );
+    if (recipe.favourite && actionType === "delete") {
+      props.setFilteredRecipes((prev) => prev.filter((x) => x.id !== props.recipeItem.id));
     }
     setIsFavorite(!isFavorite);
   };
@@ -67,7 +64,7 @@ const RecipeCard = (props: Props) => {
       return;
     }
     setWantToDelete(false);
-    window.location.reload();
+    props.setFilteredRecipes((prev) => prev.filter((x) => x.id !== props.recipeItem.id));
   };
 
   const shoppingAction = () => {
@@ -90,6 +87,15 @@ const RecipeCard = (props: Props) => {
       }
     }
   };
+
+  const editRecipe = (item: Recipe) => {
+    props.setFilteredRecipes((prev) => prev.map((x) => {
+      if (x.id === item.id) {
+        return item
+      }
+      else return x
+    }));
+  }
   return (
     <div
       className={`recipeCard cardHover ${recipe.chosenRecipes?.length > 0 &&
@@ -229,7 +235,11 @@ const RecipeCard = (props: Props) => {
           header={"Modifier ma recette"}
           className={"modify_recipe_modal"}
         >
-          <CreateRecipe recipe={props.recipeItem}></CreateRecipe>
+          <CreateRecipe
+            recipe={props.recipeItem}
+            editRecipe={(item: Recipe) => editRecipe(item)}
+            setVisibleModif={setVisibleModif}
+          ></CreateRecipe>
         </Modal>
       )}
     </div>

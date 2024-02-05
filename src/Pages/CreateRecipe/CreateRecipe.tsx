@@ -70,6 +70,8 @@ const CreateRecipe = (props: Props) => {
     // eslint-disable-next-line
   }, []);
   const [currentPictureDeleted, setCurrentPictureDeleted] = useState(false)
+  const [isRestored, setIsRestored] = useState(false)
+  const [hasReseted, setHasReseted] = useState(false)
   const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas", new ClassIngredientData());
   const [activeIndex, setActiveIndex] = useState(-1);
   const [autocompleteData, setAutocompleteData] = useState<Array<IngredientData>>([]);
@@ -112,7 +114,7 @@ const CreateRecipe = (props: Props) => {
 
   useEffect(() => {
     return () => {
-      if (props.recipe || (!image && typeId === 1 && regimeId === 1 &&
+      if (hasReseted && props.recipe || (!image && typeId === 1 && regimeId === 1 &&
         !ingredientList[0].label && !stepsList[0].description &&
         !getValues("title") && getValues("time") === "00:00" && getValues("number") === "1")
       ) return
@@ -240,6 +242,8 @@ const CreateRecipe = (props: Props) => {
       errorToast("Une erreur est survenue lors de la création de votre recette");
       return;
     }
+    setHasReseted(true)
+    setIsRestored(false)
     resetForm();
   };
 
@@ -317,8 +321,13 @@ const CreateRecipe = (props: Props) => {
       ref={ref}
     >
       {!props.recipe && <NavBar></NavBar>}
-      {!props.recipe && <a
-        onClick={() => recipe.savedForm && fillForm(recipe.savedForm)}
+      {!isRestored && !props.recipe && <a
+        onClick={() => {
+          if (recipe.savedForm) {
+            setIsRestored(true);
+            fillForm(recipe.savedForm)
+          }
+        }}
         className="options restore"
       > Restaurer le précedent formulaire</a>}
       <form className="recipe__form" onSubmit={handleSubmit(onSubmit)}>

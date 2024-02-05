@@ -114,7 +114,7 @@ const CreateRecipe = (props: Props) => {
 
   useEffect(() => {
     return () => {
-      if (hasReseted && props.recipe || (!image && typeId === 1 && regimeId === 1 &&
+      if (hasReseted || props.recipe || (!image && typeId === 1 && regimeId === 1 &&
         !ingredientList[0].label && !stepsList[0].description &&
         !getValues("title") && getValues("time") === "00:00" && getValues("number") === "1")
       ) return

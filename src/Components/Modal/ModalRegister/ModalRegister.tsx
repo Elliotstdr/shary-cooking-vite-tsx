@@ -72,11 +72,7 @@ const ModalLogin = (props: Props) => {
       email: data.email,
       password: data.password,
     };
-    const subResponse = await fetchPost(
-      `/auth`,
-      dataForToken,
-      true,
-    );
+    const subResponse = await fetchPost(`/auth`, dataForToken);
     setIsLoging(false);
     if (subResponse.error) {
       errorToast("Une erreur est survenue");
@@ -86,7 +82,7 @@ const ModalLogin = (props: Props) => {
       isConnected: true,
       userConnected: response.data,
       token: subResponse.data.token,
-      newLogTime: new Date().getTime(),
+      refreshToken: subResponse.data.refresh_token,
     });
   };
 

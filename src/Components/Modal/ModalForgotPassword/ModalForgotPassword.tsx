@@ -94,7 +94,11 @@ const ModalForgotPassword = (props: Props) => {
   };
 
   const resetPassword = async (data: Partial<Values>) => {
-    const response = await fetchPost(`/users/resetPassword`, data, false, null, new ClassResetPasswordResponse());
+    const resetedUser = await fetchPost(`/users/resetPassword`, data, false, null, new ClassResetPasswordResponse());
+    const response = await fetchPost('/auth', {
+      email: data.email,
+      password: data.newPassword
+    })
     setIsLoging(false);
     if (response.error || !response.data) {
       errorToast(response.error?.response?.data?.detail ?? "");
@@ -106,8 +110,8 @@ const ModalForgotPassword = (props: Props) => {
     updateAuth({
       isConnected: true,
       token: response.data.token ?? null,
-      userConnected: response.data.user ?? null,
-      newLogTime: new Date().getTime(),
+      refreshToken: response.data.refresh_token ?? null,
+      userConnected: resetedUser.data.user ?? null,
     });
   };
 

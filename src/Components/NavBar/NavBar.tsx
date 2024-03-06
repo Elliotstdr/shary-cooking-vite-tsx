@@ -2,18 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./NavBar.scss";
 import { GiKnifeFork } from "react-icons/gi";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { GiCook } from "react-icons/gi";
 import Bouton from "../../Utils/Bouton/Bouton";
 import Nav from "./Nav/Nav";
-import { UPDATE_AUTH } from "../../Store/Reducers/authReducer";
+import { logOut } from "../../Services/setAxiosInterceptor";
 
 const NavBar = () => {
   const auth = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
-  const updateAuth = (value: Partial<AuthState>) => {
-    dispatch({ type: UPDATE_AUTH, value });
-  };
   const [showParamMenu, setShowParamMenu] = useState(false);
   const [visibleMobile, setVisibleMobile] = useState(false);
   const navigate = useNavigate();
@@ -75,12 +71,7 @@ const NavBar = () => {
           <span onClick={() => navigate("/param")}>Mon profil</span>
           <span
             onClick={() => {
-              updateAuth({
-                isConnected: false,
-                token: null,
-                userConnected: null,
-                newLogTime: null,
-              });
+              logOut()
               navigate("/");
             }}
           >

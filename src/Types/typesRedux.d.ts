@@ -7,8 +7,8 @@ interface RootState {
 interface AuthState {
   isConnected: boolean,
   token: string | null,
+  refreshToken: string | null,
   userConnected: User | null,
-  newLogTime: number | null,
   toast: MutableRefObject<null> | null
 }
 

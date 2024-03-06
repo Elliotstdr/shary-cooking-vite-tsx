@@ -53,7 +53,7 @@ const ModalLogin = (props: Props) => {
     setIsLoging(true);
     const data = getValues();
 
-    const response = await fetchPost(`/auth`, data, true);
+    const response = await fetchPost(`/auth`, data);
     if (response.error || !response.data?.token) {
       setIsLoging(false);
       errorToast("L'authentification a échoué");
@@ -74,8 +74,8 @@ const ModalLogin = (props: Props) => {
     updateAuth({
       isConnected: true,
       token: response.data.token,
+      refreshToken: response.data.refresh_token,
       userConnected: subResponse.data,
-      newLogTime: new Date().getTime(),
     });
   };
 

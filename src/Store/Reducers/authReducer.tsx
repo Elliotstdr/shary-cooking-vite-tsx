@@ -1,8 +1,8 @@
 const INITIAL_STATE: AuthState = {
   isConnected: false,
   token: null,
+  refreshToken: null,
   userConnected: null,
-  newLogTime: null,
   toast: null,
 };
 

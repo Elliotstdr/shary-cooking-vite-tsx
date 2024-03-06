@@ -12,7 +12,8 @@
       .bin {
         cursor: pointer;
         color: c.$main-color;
-        @include c.square(1.5rem);
+        width: 1.5rem;
+        height: 1.5rem;
         align-self: center;
       }
       .move_ing {

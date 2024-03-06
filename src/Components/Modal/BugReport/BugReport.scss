@@ -3,7 +3,9 @@
 .modal-bug {
   width: 700px !important;
   .bug__form {
-    @include c.flexAlignCol;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     padding: 1rem;
     margin-top: 1rem;
     &__field {
@@ -17,21 +19,27 @@
         width: 100%;
       }
       &.file {
-        @include c.flexAlignCol;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
       }
     }
   }
 }
 
 .success_view {
-  @include c.flexCenterCol;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   .success_message {
     font-weight: bold;
     font-size: 1.2rem;
     margin: 2rem 0;
   }
   .chosen_check {
-    @include c.square(5rem);
+    width: 5rem;
+    height: 5rem;
     color: green;
   }
 }

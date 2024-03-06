@@ -46,7 +46,8 @@
     background-color: white;
     border-radius: 6px;
     text-align: left;
-    @include c.flexCol;
+    display: flex;
+    flex-direction: column;
     margin: 0;
     padding: 0.5rem 0;
     transition: all 0.3s ease-in-out;
@@ -59,10 +60,14 @@
       padding: 0.5rem 1rem;
     }
     &.visible {
-      @include c.visible(50);
+      visibility: visible;
+      opacity: 1;
+      max-height: 50rem;
     }
     &.hidden {
-      @include c.hidden;
+      visibility: hidden;
+      opacity: 0;
+      max-height: 0;
     }
   }
 }

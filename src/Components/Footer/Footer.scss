@@ -6,7 +6,9 @@
   height: 12rem;
   background-color: c.$main-color;
   color: white;
-  @include c.flexCenter;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   span {
     cursor: pointer;
@@ -15,7 +17,8 @@
   img {
     position: absolute;
     top: 2rem;
-    @include c.square(8rem);
+    width: 8rem;
+    height: 8rem;
     object-fit: cover;
     &.footer__left {
       transform: rotateY(180deg);
@@ -39,7 +42,8 @@
       margin: 2rem;
     }
     img {
-      @include c.square(6rem);
+      width: 6rem;
+      height: 6rem;
       &.footer__left {
         left: 2rem;
       }
@@ -86,7 +90,8 @@
 @media (max-width: 500px) {
   .footer {
     img {
-      @include c.square(4rem);
+      width: 4rem;
+      height: 4rem;
     }
   }
 }
@@ -94,7 +99,8 @@
 @media (max-width: 340px) {
   .footer {
     img {
-      @include c.square(3rem);
+      width: 3rem;
+      height: 3rem;
     }
     &__center__bottom span {
       font-size: 0.8rem;

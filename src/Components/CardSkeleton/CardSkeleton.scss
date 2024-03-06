@@ -1,11 +1,13 @@
 @use "src/Styles/_vars.scss" as c;
 
 .skeleton {
-  @include c.flexCol;
+  display: flex;
+  flex-direction: column;
   width: 20rem;
   margin-bottom: 2rem;
   .sub-skeleton {
-    @include c.flexAlign;
+    display: flex;
+    align-items: center;
   }
   .center {
     align-self: center;

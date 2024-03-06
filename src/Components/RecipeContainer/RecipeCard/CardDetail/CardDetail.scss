@@ -1,14 +1,19 @@
 @use "src/Styles/_vars.scss" as c;
 
 .cardDetail_container {
-  @include c.flexCenterCol;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   font-size: 1.1rem;
   white-space: pre-line;
   &_image {
     width: 90%;
     height: 25rem;
     overflow: hidden;
-    @include c.flexCenter;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 10px;
     margin: 2rem;
     img {
@@ -16,7 +21,8 @@
     }
   }
   &_title {
-    @include c.flexAlign;
+    display: flex;
+    align-items: center;
     font-size: 3rem;
     width: 90%;
     .recipeCard__bottom__edit {
@@ -27,7 +33,8 @@
     display: flex;
     div {
       margin: 1rem;
-      @include c.flexAlign;
+      display: flex;
+      align-items: center;
       font-weight: bold;
       svg {
         margin-right: 0.25rem;
@@ -35,10 +42,12 @@
     }
   }
   &_author {
-    @include c.flexAlign;
+    display: flex;
+    align-items: center;
     margin-bottom: 1rem;
     img {
-      @include c.square(1.5rem);
+      width: 1.5rem;
+      height: 1.5rem;
       border-radius: 50%;
       margin-right: 0.5rem;
     }
@@ -66,7 +75,9 @@
     }
   }
   &_block {
-    @include c.flexAlignCol;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     margin-bottom: 2rem;
     width: 100%;
     &_step {
@@ -86,9 +97,12 @@
       }
     }
     &_index {
-      @include c.flexCenter;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 2rem;
-      @include c.square(4rem);
+      width: 4rem;
+      height: 4rem;
       border: 2px solid c.$bandeau;
       border-radius: 50%;
       font-weight: bold;

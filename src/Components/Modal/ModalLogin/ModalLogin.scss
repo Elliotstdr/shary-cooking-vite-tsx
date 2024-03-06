@@ -3,7 +3,9 @@
 .modal-login {
   .login__form {
     &__field {
-      @include c.flexAlignCol;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
       h4 {
         margin-bottom: 0.5rem;
       }
@@ -13,13 +15,17 @@
     }
     &__button {
       margin-top: 2rem;
-      @include c.flexJustify;
+      display: flex;
+      justify-content: center;
       .bouton .loaderContainer {
         padding: 0;
-        @include c.flexCenter;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         .loaderContainer__loader,
         .loaderContainer__loader::after {
-          @include c.square(2rem);
+          width: 2rem;
+          height: 2rem;
         }
       }
     }

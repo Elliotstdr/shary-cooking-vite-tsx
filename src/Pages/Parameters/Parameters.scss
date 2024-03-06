@@ -2,12 +2,17 @@
 
 .param__form {
   margin: 2rem;
-  @include c.flexCenterCol;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   .param_profile_picture {
     width: 15rem;
     height: 10rem;
     overflow: hidden;
-    @include c.flexCenter;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 0.5rem;
     border-radius: 5px;
     img {
@@ -20,7 +25,9 @@
     margin-top: 2rem;
   }
   &__field {
-    @include c.flexAlignCol;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     margin-bottom: 1rem;
     h4 {
       margin-bottom: 0.5rem;

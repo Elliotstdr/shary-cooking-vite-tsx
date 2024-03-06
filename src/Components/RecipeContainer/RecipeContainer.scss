@@ -1,7 +1,8 @@
 @use "src/Styles/_vars.scss" as c;
 
 .recipeContainer {
-  @include c.flexCol;
+  display: flex;
+  flex-direction: column;
   &_cards {
     padding: 3rem 8rem;
     display: grid;
@@ -33,7 +34,9 @@
 
 .shopping_list_checkboxes {
   margin-top: 2rem;
-  @include c.flexCenter;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   span {
     margin-right: 1rem;
     margin-left: 0.25rem;

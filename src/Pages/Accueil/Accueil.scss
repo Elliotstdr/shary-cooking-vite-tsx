@@ -33,7 +33,9 @@
     }
     .second,
     .third {
-      @include c.flexCenter;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       height: 500px;
       img {
         margin: 0 5rem;
@@ -43,7 +45,9 @@
         object-fit: cover;
       }
       &_text {
-        @include c.flexAlignCol;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
         margin: 0 3rem;
         width: 50%;
         span {

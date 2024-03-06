@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useState, useEffect } from "react";
 import { store } from "../Store/store";
-import { isOfType } from "./validator";
 
 /**
  * @template { Object | Object[] } T
@@ -9,10 +8,7 @@ import { isOfType } from "./validator";
  * @param { ElementType<T> } example as T or element of T
  * @return { FetchGetReturn<T> }
  */
-export const useFetchGet = <T extends object | object[]> (
-  url: string, 
-  example: ElementType<T>
-): UseFetchGetResponse<T> => {
+export const useFetchGet = <T extends object | object[]> (url: string): UseFetchGetResponse<T> => {
   const [data, setData] = useState<T|null>(null);
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
@@ -32,10 +28,6 @@ export const useFetchGet = <T extends object | object[]> (
               },
         })
         .then((response: AxiosResponse) => {
-          if (!isOfType<T>(response.data, example)) {
-            setError("La réponse de l'API ne correspond pas au type attendu.");
-            return
-          }
           setData(response.data);
         })
         .catch((error: AxiosError) => setError(error.message))
@@ -53,8 +45,7 @@ export const useFetchGet = <T extends object | object[]> (
  */
 export const useFetchGetConditional = <T extends object | object[]> (
   url: string, 
-  reduxData: T | null, 
-  example: ElementType<T>
+  reduxData: T | null
 ): UseFetchGetResponse<T> => {
   const [data, setData] = useState<T|null>(null);
   const [error, setError] = useState("");
@@ -75,10 +66,6 @@ export const useFetchGetConditional = <T extends object | object[]> (
               },
         })
         .then((response: AxiosResponse) => {
-          if (!isOfType(response.data, example)) {
-            setError("La réponse de l'API ne correspond pas au type attendu.");
-            return;
-          }
           setData(response.data);
         })
         .catch((error: AxiosError) => setError(error.message))
@@ -114,24 +101,16 @@ export const fetchDelete = async (url: string): Promise<FetchResponse> => {
 };
 
 export const fetchPost = async (
-  url: string,
-  payload: any,
-  noAPI: boolean = false,
-  forcedToken: string|null = null,
-  example: object | null = null
+  url: string, 
+  payload: any, 
+  forcedToken: string|null = null
 ): Promise<FetchResponse> => {
   let data: any = null;
   let error: any = null;
   const token = forcedToken ?? store.getState().auth.token;
 
-  let fullUrl = "";
-  if (noAPI) {
-    fullUrl = `${import.meta.env.VITE_BASE_URL_API}${url}`;
-  } else {
-    fullUrl = `${import.meta.env.VITE_BASE_URL_API}/api${url}`;
-  }
   await axios
-    .post(fullUrl, payload, {
+    .post(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, payload, {
       headers: token
         ? {
             accept: "application/json",
@@ -142,21 +121,13 @@ export const fetchPost = async (
           },
     })
     .then((response: AxiosResponse) => {
-      if(example && !isOfType(response.data, example)) {
-        error = "Votre actions a bien été effectuée mais la réponse de l'API ne correspond pas au type attendu.";
-        return;
-      }
       data = response.data
     })
     .catch((e: AxiosError) => (error = e));
   return { data, error };
 };
 
-export const fetchPut = async (
-  url: string, 
-  payload: any, 
-  example: object | null = null
-): Promise<FetchResponse> => {
+export const fetchPut = async (url: string, payload: any): Promise<FetchResponse> => {
   let data = null;
   let error: any = null;
   const token = store.getState().auth.token
@@ -173,10 +144,6 @@ export const fetchPut = async (
           },
     })
     .then((response: AxiosResponse) => {
-      if(example && !isOfType(response.data, example)) {
-        error = "Votre actions a bien été effectuée mais la réponse de l'API ne correspond pas au type attendu.";
-        return;
-      }
       data = response.data
     })
     .catch((e: AxiosError) => (error = e));

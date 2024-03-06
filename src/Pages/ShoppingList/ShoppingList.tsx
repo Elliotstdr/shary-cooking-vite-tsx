@@ -13,7 +13,6 @@ import { BiEditAlt } from "react-icons/bi";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
 import { UPDATE_RECIPE } from "../../Store/Reducers/recipeReducer";
-import { ClassIngredientData } from "../../Types/class";
 
 const ShoppingList = () => {
   const recipeR = useSelector((state: RootState) => state.recipe);
@@ -22,7 +21,7 @@ const ShoppingList = () => {
     dispatch({ type: UPDATE_RECIPE, value });
   };
 
-  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas", new ClassIngredientData());
+  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
 
   const [visibleRecipeContainer, setVisibleRecipeContainer] = useState(false);
   const [visibleExport, setVisibleExport] = useState(false);

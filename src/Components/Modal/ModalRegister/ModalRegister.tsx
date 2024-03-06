@@ -11,7 +11,6 @@ import Bouton from "../../../Utils/Bouton/Bouton";
 import { errorToast } from "../../../Services/functions";
 import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
 import { fetchPost } from "../../../Services/api";
-import { ClassUser } from "../../../Types/class";
 
 interface Props {
   visible: boolean,
@@ -62,7 +61,7 @@ const ModalLogin = (props: Props) => {
     setIsLoging(true);
     const data = getValues();
 
-    const response = await fetchPost(`/users/createAccount`, data, false, null, new ClassUser());
+    const response = await fetchPost(`/users/createAccount`, data);
     if (response.error) {
       setIsLoging(false);
       errorToast(response.error?.response?.data?.detail ?? "");

@@ -6,7 +6,6 @@ import { useFetchGet } from "../../Services/api";
 import { Paginator } from "primereact/paginator";
 import { useSelector } from "react-redux";
 import { Checkbox } from "primereact/checkbox";
-import { ClassRecipe } from "../../Types/class";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
 
 interface Props {
@@ -21,7 +20,7 @@ const RecipeContainer = (props: Props) => {
   const [first, setFirst] = useState(0);
   const [page, setPage] = useState(0)
   const ref = useRef(null);
-  const recipesData = useFetchGet<Recipe[]>(props.dataToCall, new ClassRecipe());
+  const recipesData = useFetchGet<Recipe[]>(props.dataToCall);
   const [filteredRecipes, setFilteredRecipes] = useState<Array<Recipe>>([]);
   const [boxFavorites, setBoxFavorites] = useState(false);
   const [boxMine, setBoxMine] = useState(false);

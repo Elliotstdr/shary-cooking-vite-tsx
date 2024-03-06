@@ -11,7 +11,6 @@ import Bouton from "../../../Utils/Bouton/Bouton";
 import { errorToast, successToast } from "../../../Services/functions";
 import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
 import { fetchPost } from "../../../Services/api";
-import { ClassResetPasswordResponse } from "../../../Types/class";
 
 interface Props {
   visible: boolean,
@@ -94,7 +93,7 @@ const ModalForgotPassword = (props: Props) => {
   };
 
   const resetPassword = async (data: Partial<Values>) => {
-    const resetedUser = await fetchPost(`/users/resetPassword`, data, false, null, new ClassResetPasswordResponse());
+    const resetedUser = await fetchPost(`/users/resetPassword`, data);
     const response = await fetchPost('/auth', {
       email: data.email,
       password: data.newPassword

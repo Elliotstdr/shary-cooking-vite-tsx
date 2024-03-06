@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../Utils/Loader/loader";
 import RecipeCard from "../../Components/RecipeContainer/RecipeCard/RecipeCard";
 import { UPDATE_SECONDARYTABLES } from "../../Store/Reducers/secondaryTablesReducer";
-import { ClassIngredientType, ClassRecipe, ClassRegime, ClassType, ClassUnit } from "../../Types/class";
 import { errorToast } from "../../Services/functions";
 
 const Accueil = () => {
@@ -28,7 +27,7 @@ const Accueil = () => {
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
-  const recipesData = useFetchGet<Recipe[]>(recipeUrl, new ClassRecipe());
+  const recipesData = useFetchGet<Recipe[]>(recipeUrl);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -45,12 +44,12 @@ const Accueil = () => {
     // eslint-disable-next-line
   }, [recipesData.loaded])
 
-  const typesData = useFetchGetConditional<Type[]>("/types", secondaryTables.types, new ClassType());
-  const unitsData = useFetchGetConditional<Unit[]>("/units", secondaryTables.units, new ClassUnit());
-  const regimesData = useFetchGetConditional<Regime[]>("/regimes", secondaryTables.regimes, new ClassRegime());
-  const ingredientTypeData = useFetchGetConditional<IngredientType[]>("/ingredient_types",
+  const typesData = useFetchGetConditional<Type[]>("/types", secondaryTables.types);
+  const unitsData = useFetchGetConditional<Unit[]>("/units", secondaryTables.units);
+  const regimesData = useFetchGetConditional<Regime[]>("/regimes", secondaryTables.regimes);
+  const ingredientTypeData = useFetchGetConditional<IngredientType[]>(
+    "/ingredient_types",
     secondaryTables.ingTypes,
-    new ClassIngredientType()
   );
 
   useEffect(() => {

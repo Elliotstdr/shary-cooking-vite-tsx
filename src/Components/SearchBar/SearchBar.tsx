@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
-import { ClassIngredientData, ClassRestrictedUser } from "../../Types/class";
 import Loader from "../../Utils/Loader/loader";
 import { UPDATE_SECONDARYTABLES } from "../../Store/Reducers/secondaryTablesReducer";
 
@@ -27,8 +26,8 @@ const SearchBar = (props: Props) => {
   const updateRecipe = (value: Partial<SecondaryState>) => {
     dispatch({ type: UPDATE_SECONDARYTABLES, value });
   };
-  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas", new ClassIngredientData());
-  const usersData = useFetchGet<RestrictedUser[]>("/users", new ClassRestrictedUser());
+  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
+  const usersData = useFetchGet<RestrictedUser[]>("/users");
   const [moreVisible, setMoreVisible] = useState(false);
   const [visibleMobile, setVisibleMobile] = useState(false);
   const [regime, setRegime] = useState<Regime[] | null>(null);

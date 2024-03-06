@@ -11,7 +11,6 @@ import { BiAward } from "react-icons/bi";
 import { Divider } from "primereact/divider";
 import { CiEdit } from "react-icons/ci";
 import { useSelector } from "react-redux";
-import { ClassRecipe } from "../../../../Types/class";
 
 interface Props {
   id: number,
@@ -21,7 +20,7 @@ interface Props {
 
 const CardDetail = (props: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
-  const recipeDetail = useFetchGet<Recipe>(`/recipes/${props.id}`, new ClassRecipe());
+  const recipeDetail = useFetchGet<Recipe>(`/recipes/${props.id}`);
 
   return (
     <div className="cardDetail_container">

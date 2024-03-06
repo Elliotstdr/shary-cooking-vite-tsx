@@ -13,7 +13,6 @@ import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
 import { UPDATE_AUTH } from "../../Store/Reducers/authReducer";
 import { fetchPut } from "../../Services/api";
-import { ClassUpdateUserResponse } from "../../Types/class";
 
 const Parameters = () => {
   const auth = useSelector((state: RootState) => state.auth);
@@ -80,7 +79,7 @@ const Parameters = () => {
     setIsModifying(true);
     const data = setFields();
 
-    const response = await fetchPut(`/users/${auth.userConnected.id}`, data, new ClassUpdateUserResponse());
+    const response = await fetchPut(`/users/${auth.userConnected.id}`, data);
     setIsModifying(false);
     if (response.error || !response.data) {
       errorToast(

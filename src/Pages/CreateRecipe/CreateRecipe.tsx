@@ -21,7 +21,6 @@ import {
 import Loader from "../../Utils/Loader/loader";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
-import { ClassIngredientData } from "../../Types/class";
 import { UPDATE_RECIPE } from "../../Store/Reducers/recipeReducer";
 
 interface Props {
@@ -72,7 +71,7 @@ const CreateRecipe = (props: Props) => {
   const [currentPictureDeleted, setCurrentPictureDeleted] = useState(false)
   const [isRestored, setIsRestored] = useState(false)
   const [hasReseted, setHasReseted] = useState(false)
-  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas", new ClassIngredientData());
+  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
   const [activeIndex, setActiveIndex] = useState(-1);
   const [autocompleteData, setAutocompleteData] = useState<Array<IngredientData>>([]);
   const [image, setImage] = useState(null);

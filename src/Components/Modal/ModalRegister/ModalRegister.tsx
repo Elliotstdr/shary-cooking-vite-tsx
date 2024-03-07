@@ -134,6 +134,7 @@ const ModalLogin = (props: Props) => {
             render={({ field }) => (
               <Password
                 {...field}
+                toggleMask
                 placeholder="Mot de passe"
                 className="login__form__field-password"
                 onChange={(e) => {
@@ -162,6 +163,7 @@ const ModalLogin = (props: Props) => {
             render={({ field }) => (
               <Password
                 {...field}
+                toggleMask
                 placeholder={"Mot de passe"}
                 className={
                   isEqualPassword
@@ -192,6 +194,7 @@ const ModalLogin = (props: Props) => {
             render={({ field }) => (
               <Password
                 {...field}
+                toggleMask
                 placeholder={"Clé secrète"}
                 className={"login__form__field-secretKey"}
                 feedback={false}

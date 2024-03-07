@@ -149,6 +149,7 @@ const ModalForgotPassword = (props: Props) => {
                 render={({ field }) => (
                   <Password
                     {...field}
+                    toggleMask
                     feedback={false}
                     autoComplete="new-password"
                     placeholder="Clé de réinitialisation"
@@ -165,6 +166,7 @@ const ModalForgotPassword = (props: Props) => {
                 render={({ field }) => (
                   <Password
                     {...field}
+                    toggleMask
                     autoComplete="new-password"
                     placeholder="mot de passe"
                     className={"login__form__field-newPassword"}

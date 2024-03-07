@@ -103,6 +103,7 @@ const ModalLogin = (props: Props) => {
             render={({ field }) => (
               <Password
                 {...field}
+                toggleMask
                 placeholder="Mot de passe"
                 className="login__form__field-password"
                 feedback={false}

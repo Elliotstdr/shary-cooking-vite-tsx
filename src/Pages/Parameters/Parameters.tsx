@@ -176,6 +176,7 @@ const Parameters = () => {
                 }}
                 render={({ field }) => (
                   <Password
+                    toggleMask
                     autoComplete="new-password"
                     {...field}
                     placeholder={"Ancien mot de passe"}
@@ -193,6 +194,7 @@ const Parameters = () => {
                 control={control}
                 render={({ field }) => (
                   <Password
+                    toggleMask
                     autoComplete="new-password"
                     {...field}
                     placeholder={"Mot de passe"}
@@ -225,6 +227,7 @@ const Parameters = () => {
                 }}
                 render={({ field }) => (
                   <Password
+                    toggleMask
                     autoComplete="new-password"
                     {...field}
                     placeholder={"Mot de passe"}

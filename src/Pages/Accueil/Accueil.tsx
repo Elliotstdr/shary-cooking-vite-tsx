@@ -2,7 +2,7 @@ import { Key, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Login from "../../Components/Login/Login";
 import "./Accueil.scss";
-import { useFetchGet, useFetchGetConditional } from "../../Services/api";
+import { useFetchGet, useFetchGetConditional } from "../../Hooks/api.hook";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
 import image from "../../assets/accueilHC.jpg";
@@ -12,16 +12,13 @@ import Bouton from "../../Utils/Bouton/Bouton";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Utils/Loader/loader";
 import RecipeCard from "../../Components/RecipeContainer/RecipeCard/RecipeCard";
-import { UPDATE_SECONDARYTABLES } from "../../Store/Reducers/secondaryTablesReducer";
 import { errorToast } from "../../Services/functions";
+import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
 
 const Accueil = () => {
   const auth = useSelector((state: RootState) => state.auth);
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
   const dispatch = useDispatch();
-  const updateSecondaryTables = (value: Partial<SecondaryState>) => {
-    dispatch({ type: UPDATE_SECONDARYTABLES, value });
-  };
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [recipeUrl, setRecipeUrl] = useState("");
   const [isError, setIsError] = useState(false);
@@ -61,12 +58,12 @@ const Accueil = () => {
       unitsData.loaded &&
       regimesData.loaded &&
       ingredientTypeData.loaded &&
-      updateSecondaryTables({
+      dispatch(updateSecondaryTables({
         types: typesData.data,
         units: unitsData.data,
         regimes: regimesData.data,
         ingTypes: ingredientTypeData.data,
-      });
+      }));
     // eslint-disable-next-line
   }, [
     typesData.loaded,

@@ -3,7 +3,7 @@ import RecipeContainer from "../../Components/RecipeContainer/RecipeContainer";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../Components/Footer/Footer";
 import NavBar from "../../Components/NavBar/NavBar";
-import { UPDATE_RECIPE } from "../../Store/Reducers/recipeReducer";
+import { updateRecipe } from "../../Store/Reducers/recipeReducer";
 
 interface Props {
   mine: boolean
@@ -13,22 +13,21 @@ interface Props {
 const Recipes = (props: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
-  const updateRecipe = (value: Partial<RecipeState>) => {
-    dispatch({ type: UPDATE_RECIPE, value });
-  };
 
   useEffect(() => {
-    updateRecipe({
+    dispatch(updateRecipe({
       editable: props.mine,
       favourite: props.favourite,
-    });
-    return () =>
-      updateRecipe({
+    }));
+    return () => {
+      dispatch(updateRecipe({
         editable: false,
         favourite: false,
-      });
+      }));
+    }
     // eslint-disable-next-line
   }, []);
+
   return (
     <div className="recipes">
       <NavBar></NavBar>

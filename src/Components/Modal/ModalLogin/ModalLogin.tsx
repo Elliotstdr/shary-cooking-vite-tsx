@@ -9,8 +9,8 @@ import Loader from "../../../Utils/Loader/loader";
 import { useState } from "react";
 import Bouton from "../../../Utils/Bouton/Bouton";
 import { errorToast } from "../../../Services/functions";
-import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
-import { fetchPost } from "../../../Services/api";
+import { fetchPost } from "../../../Hooks/api.hook";
+import { updateAuth } from "../../../Store/Reducers/authReducer";
 
 interface Props {
   visible: boolean,
@@ -26,9 +26,6 @@ interface Values {
 
 const ModalLogin = (props: Props) => {
   const dispatch = useDispatch();
-  const updateAuth = (value: Partial<AuthState>) => {
-    dispatch({ type: UPDATE_AUTH, value });
-  };
   const [isloging, setIsLoging] = useState(false);
 
   const defaultValues: Values = {
@@ -68,12 +65,12 @@ const ModalLogin = (props: Props) => {
       errorToast("L'authentification a échoué");
       return;
     }
-    updateAuth({
+    dispatch(updateAuth({
       isConnected: true,
       token: response.data.token,
       refreshToken: response.data.refresh_token,
       userConnected: subResponse.data,
-    });
+    }));
   };
 
   return (

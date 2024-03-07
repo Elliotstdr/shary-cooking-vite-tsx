@@ -10,7 +10,7 @@ import ImageUpload from "../../FormElements/ImageUpload/ImageUpload";
 import { errorToast } from "../../../Services/functions";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
-import { fetchPost } from "../../../Services/api";
+import { fetchPost } from "../../../Hooks/api.hook";
 
 interface Props {
   reportBugModal: boolean,

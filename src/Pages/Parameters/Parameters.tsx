@@ -11,15 +11,12 @@ import { errorToast, successToast } from "../../Services/functions";
 import Loader from "../../Utils/Loader/loader";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
-import { UPDATE_AUTH } from "../../Store/Reducers/authReducer";
-import { fetchPut } from "../../Services/api";
+import { fetchPut } from "../../Hooks/api.hook";
+import { updateAuth } from "../../Store/Reducers/authReducer";
 
 const Parameters = () => {
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
-  const updateAuth = (value: Partial<AuthState>) => {
-    dispatch({ type: UPDATE_AUTH, value });
-  };
 
   const [isModifying, setIsModifying] = useState(false);
   const [showMDP, setShowMDP] = useState(false);
@@ -90,7 +87,7 @@ const Parameters = () => {
       return;
     }
     if (response.data?.token) {
-      updateAuth({ token: response.data.token });
+      dispatch(updateAuth({ token: response.data.token }));
     }
     setShowMDP(false);
     reset()
@@ -99,7 +96,7 @@ const Parameters = () => {
     tempArray.name = data.name;
     tempArray.lastname = data.lastname;
     tempArray.imageUrl = response.data?.imageUrl ?? null;
-    updateAuth({ userConnected: tempArray });
+    dispatch(updateAuth({ userConnected: tempArray }));
     successToast("Votre profil a bien été mis à jour");
   };
 

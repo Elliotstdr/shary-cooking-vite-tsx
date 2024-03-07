@@ -9,8 +9,8 @@ import Loader from "../../../Utils/Loader/loader";
 import { useState } from "react";
 import Bouton from "../../../Utils/Bouton/Bouton";
 import { errorToast, successToast } from "../../../Services/functions";
-import { UPDATE_AUTH } from "../../../Store/Reducers/authReducer";
-import { fetchPost } from "../../../Services/api";
+import { fetchPost } from "../../../Hooks/api.hook";
+import { updateAuth } from "../../../Store/Reducers/authReducer";
 
 interface Props {
   visible: boolean,
@@ -26,9 +26,6 @@ interface Values {
 
 const ModalForgotPassword = (props: Props) => {
   const dispatch = useDispatch();
-  const updateAuth = (value: Partial<AuthState>) => {
-    dispatch({ type: UPDATE_AUTH, value });
-  };
   const [error, setError] = useState("");
   const [isloging, setIsLoging] = useState(false);
   const [isSendingMail, setIsSendingMail] = useState(true);
@@ -106,12 +103,12 @@ const ModalForgotPassword = (props: Props) => {
     reset();
     setIsSendingMail(true);
     props.setVisible(false);
-    updateAuth({
+    dispatch(updateAuth({
       isConnected: true,
       token: response.data.token ?? null,
       refreshToken: response.data.refresh_token ?? null,
       userConnected: resetedUser.data.user ?? null,
-    });
+    }));
   };
 
   return (

@@ -16,9 +16,9 @@ import SlideIn from "../../../Utils/SlideIn/SlideIn";
 import { errorToast, timeToString } from "../../../Services/functions";
 import { GiCook } from "react-icons/gi";
 import CreateRecipe from "../../../Pages/CreateRecipe/CreateRecipe";
-import { UPDATE_RECIPE } from "../../../Store/Reducers/recipeReducer";
-import { fetchDelete, fetchPost } from "../../../Services/api";
-import { useIntersectionObserver } from "../../../Services/intersectionObserver";
+import { fetchDelete, fetchPost } from "../../../Hooks/api.hook";
+import { useIntersectionObserver } from "../../../Hooks/useIntersectionObserver.hook";
+import { updateRecipe } from "../../../Store/Reducers/recipeReducer";
 
 interface Props {
   recipeItem: Recipe,
@@ -30,9 +30,6 @@ const RecipeCard = (props: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
   const recipe = useSelector((state: RootState) => state.recipe);
   const dispatch = useDispatch();
-  const updateRecipe = (value: Partial<RecipeState>) => {
-    dispatch({ type: UPDATE_RECIPE, value });
-  };
   const [visibleDetail, setVisibleDetail] = useState(false);
   const [visibleModif, setVisibleModif] = useState(false);
   const [wantToDelete, setWantToDelete] = useState(false);
@@ -75,15 +72,15 @@ const RecipeCard = (props: Props) => {
           (recipe) => recipe.id === props.recipeItem.id
         )
       ) {
-        updateRecipe({
+        dispatch(updateRecipe({
           chosenRecipes: [...recipe.chosenRecipes, props.recipeItem],
-        });
+        }));
       } else {
-        updateRecipe({
+        dispatch(updateRecipe({
           chosenRecipes: recipe.chosenRecipes.filter(
             (recipe) => recipe.id !== props.recipeItem.id
           ),
-        });
+        }));
       }
     }
   };

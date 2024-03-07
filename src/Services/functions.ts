@@ -103,7 +103,7 @@ export const timeToString = (time: string) => {
 
 export const successToast = (message: string, summary: string = "Succès") => {
   const reduxStore = store.getState();
-  reduxStore.auth.toast.current.show({
+  reduxStore.auth.toast.show({
     severity: "success",
     summary: `${summary} : `,
     detail: message,
@@ -113,7 +113,7 @@ export const successToast = (message: string, summary: string = "Succès") => {
 
 export const errorToast = (message: string, summary: string = "Erreur") => {
   const reduxStore = store.getState();
-  reduxStore.auth.toast.current.show({
+  reduxStore.auth.toast.show({
     severity: "error",
     summary: `${summary} : `,
     detail: message,

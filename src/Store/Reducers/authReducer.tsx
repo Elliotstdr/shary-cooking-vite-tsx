@@ -1,4 +1,6 @@
-const INITIAL_STATE: AuthState = {
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
+const initialState: AuthState = {
   isConnected: false,
   token: null,
   refreshToken: null,
@@ -6,19 +8,18 @@ const INITIAL_STATE: AuthState = {
   toast: null,
 };
 
-export const UPDATE_AUTH = "UPDATE_AUTH";
-
-const authReducer = (state = INITIAL_STATE, action: any): AuthState => {
-  switch (action.type) {
-    case UPDATE_AUTH: {
+export const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    updateAuth: (state, action: PayloadAction<Partial<AuthState>>) => {
       return {
         ...state,
-        ...action.value,
+        ...action.payload,
       };
     }
-    default:
-      return state;
   }
-};
+})
 
-export default authReducer;
+export const { updateAuth } = authSlice.actions
+export default authSlice.reducer;

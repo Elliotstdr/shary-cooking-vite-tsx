@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import RecipeCard from "./RecipeCard/RecipeCard";
 import "./RecipeContainer.scss";
 import SearchBar from "../SearchBar/SearchBar";
-import { useFetchGet } from "../../Services/api";
+import { useFetchGet } from "../../Hooks/api.hook";
 import { Paginator } from "primereact/paginator";
 import { useSelector } from "react-redux";
 import { Checkbox } from "primereact/checkbox";

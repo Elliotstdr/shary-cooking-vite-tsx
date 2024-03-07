@@ -1,4 +1,6 @@
-const INITIAL_STATE: SecondaryState = {
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
+const initialState: SecondaryState = {
   types: null,
   units: null,
   regimes: null,
@@ -7,19 +9,18 @@ const INITIAL_STATE: SecondaryState = {
   users: null
 };
 
-export const UPDATE_SECONDARYTABLES = "UPDATE_SECONDARYTABLES";
-
-const secondaryTablesReducer = (state = INITIAL_STATE, action: any): SecondaryState => {
-  switch (action.type) {
-    case UPDATE_SECONDARYTABLES: {
+export const secondaryTablesSlice = createSlice({
+  name: 'secondaryTables',
+  initialState,
+  reducers: {
+    updateSecondaryTables: (state, action: PayloadAction<Partial<SecondaryState>>) => {
       return {
         ...state,
-        ...action.value,
+        ...action.payload,
       };
     }
-    default:
-      return state;
   }
-};
+})
 
-export default secondaryTablesReducer;
+export const { updateSecondaryTables } = secondaryTablesSlice.actions
+export default secondaryTablesSlice.reducer;

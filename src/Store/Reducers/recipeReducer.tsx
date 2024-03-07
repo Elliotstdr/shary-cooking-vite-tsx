@@ -1,4 +1,6 @@
-const INITIAL_STATE: RecipeState = {
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
+const initialState: RecipeState = {
   chosenRecipes: [],
   editable: false,
   shopping: false,
@@ -6,19 +8,18 @@ const INITIAL_STATE: RecipeState = {
   savedForm: null
 };
 
-export const UPDATE_RECIPE = "UPDATE_RECIPE";
-
-const recipeReducer = (state = INITIAL_STATE, action: any): RecipeState => {
-  switch (action.type) {
-    case UPDATE_RECIPE: {
+export const recipeSlice = createSlice({
+  name: 'recipe',
+  initialState,
+  reducers: {
+    updateRecipe: (state, action: PayloadAction<Partial<RecipeState>>) => {
       return {
         ...state,
-        ...action.value,
+        ...action.payload,
       };
     }
-    default:
-      return state;
   }
-};
+})
 
-export default recipeReducer;
+export const { updateRecipe } = recipeSlice.actions
+export default recipeSlice.reducer;

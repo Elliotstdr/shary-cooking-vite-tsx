@@ -1,11 +1,10 @@
-import { legacy_createStore as createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 import authReducer from "./Reducers/authReducer";
 import secondaryTablesReducer from "./Reducers/secondaryTablesReducer";
 import recipeReducer from "./Reducers/recipeReducer";
+import { configureStore } from "@reduxjs/toolkit";
 
 const persistConfig = {
   key: "root",
@@ -21,5 +20,11 @@ const rootReducer = combineReducers<RootState>({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = createStore(persistedReducer, composeWithDevTools());
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    })
+});
 export const persistor = persistStore(store);

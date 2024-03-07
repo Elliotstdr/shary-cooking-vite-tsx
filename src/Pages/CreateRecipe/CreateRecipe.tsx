@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { Divider } from "primereact/divider";
 import { useDispatch, useSelector } from "react-redux";
 import ImageUpload from "../../Components/FormElements/ImageUpload/ImageUpload";
-import { fetchPost, fetchPut, useFetchGet } from "../../Services/api";
+import { fetchPost, fetchPut, useFetchGet } from "../../Hooks/api.hook";
 import { errorToast, successToast } from "../../Services/functions";
 import IngredientsCreation from "../../Components/FormElements/IngredientsCreation/IngredientsCreation";
 import StepsCreation from "../../Components/FormElements/StepsCreation/StepsCreation";
@@ -21,7 +21,7 @@ import {
 import Loader from "../../Utils/Loader/loader";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
-import { UPDATE_RECIPE } from "../../Store/Reducers/recipeReducer";
+import { updateRecipe } from "../../Store/Reducers/recipeReducer";
 
 interface Props {
   recipe?: Recipe,
@@ -59,9 +59,6 @@ const CreateRecipe = (props: Props) => {
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
   const recipe = useSelector((state: RootState) => state.recipe);
   const dispatch = useDispatch();
-  const updateRecipe = (value: Partial<RecipeState>) => {
-    dispatch({ type: UPDATE_RECIPE, value });
-  };
 
   useEffect(() => {
     if (props.recipe) fillForm(props.recipe)
@@ -118,7 +115,7 @@ const CreateRecipe = (props: Props) => {
         !getValues("title") && getValues("time") === "00:00" && getValues("number") === "1")
       ) return
 
-      updateRecipe({
+      dispatch(updateRecipe({
         savedForm: {
           ...getValues(),
           ingredients: ingredientList,
@@ -126,7 +123,7 @@ const CreateRecipe = (props: Props) => {
           type: { id: typeId },
           regime: { id: regimeId }
         }
-      })
+      }))
     }
     // eslint-disable-next-line
   }, [typeId, regimeId, ingredientList, stepsList, image])

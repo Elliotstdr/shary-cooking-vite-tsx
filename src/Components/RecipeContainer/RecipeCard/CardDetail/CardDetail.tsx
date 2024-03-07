@@ -1,6 +1,6 @@
 import React, { Key } from "react";
 import "./CardDetail.scss";
-import { useFetchGet } from "../../../../Services/api";
+import { useFetchGet } from "../../../../Hooks/api.hook";
 import { timeToString } from "../../../../Services/functions";
 import Loader from "../../../../Utils/Loader/loader";
 import default2 from "../../../../assets/default2.jpg";

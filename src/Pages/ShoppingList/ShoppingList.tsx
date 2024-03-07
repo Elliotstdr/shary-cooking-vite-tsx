@@ -5,21 +5,18 @@ import Modal from "../../Components/Modal/Modal";
 import RecipeContainer from "../../Components/RecipeContainer/RecipeContainer";
 import { InputTextarea } from "primereact/inputtextarea";
 import { exportRecipe } from "../../Services/functions";
-import { useFetchGet } from "../../Services/api";
+import { useFetchGet } from "../../Hooks/api.hook";
 import ShoppingListCard from "./ShoppingListCard/ShoppingListCard";
 import { useDispatch, useSelector } from "react-redux";
 import image from "../../assets/HCDarkOp.jpg";
 import { BiEditAlt } from "react-icons/bi";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
-import { UPDATE_RECIPE } from "../../Store/Reducers/recipeReducer";
+import { updateRecipe } from "../../Store/Reducers/recipeReducer";
 
 const ShoppingList = () => {
   const recipeR = useSelector((state: RootState) => state.recipe);
   const dispatch = useDispatch();
-  const updateRecipe = (value: Partial<RecipeState>) => {
-    dispatch({ type: UPDATE_RECIPE, value });
-  };
 
   const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
 
@@ -30,12 +27,13 @@ const ShoppingList = () => {
   const [greenButton, setGreenButton] = useState(false);
 
   useEffect(() => {
-    updateRecipe({ shopping: true });
-    return () =>
-      updateRecipe({
+    dispatch(updateRecipe({ shopping: true }));
+    return () => {
+      dispatch(updateRecipe({
         chosenRecipes: [],
         shopping: false,
-      });
+      }));
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -51,7 +49,7 @@ const ShoppingList = () => {
         element.multiplyer = word;
       }
     });
-    updateRecipe({ chosenRecipes: tempArray });
+    dispatch(updateRecipe({ chosenRecipes: tempArray }));
   };
 
   return (

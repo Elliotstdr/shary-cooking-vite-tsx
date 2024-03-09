@@ -10,6 +10,9 @@ export default defineConfig({
       typescript: true,
     }),
   ],
+  server: {
+    port: 3000
+  },
   css: {
     devSourcemap: true,
   },

@@ -1,10 +1,10 @@
-interface RootState {
+type RootState = {
   auth: AuthState,
   recipe: RecipeState,
   secondaryTables: SecondaryState
 }
 
-interface AuthState {
+type AuthState = {
   isConnected: boolean,
   token: string | null,
   refreshToken: string | null,
@@ -12,19 +12,19 @@ interface AuthState {
   toast: MutableRefObject<null> | null
 }
 
-interface RecipeState {
-  chosenRecipes: Array<Recipe>,
+type RecipeState = {
+  chosenRecipes: Recipe[],
   editable: boolean,
   shopping: boolean,
   favourite: boolean,
   savedForm: any
 }
 
-interface SecondaryState {
-    types: Array<Type> | null,
-    units: Array<Unit> | null,
-    regimes: Array<Regime> | null,
-    ingTypes: Array<IngredientType> | null,
-    ingData: Array<IngredientData> | null,
-    users: Array<RestrictedUser> | null
+type SecondaryState = {
+    types: Type[] | null,
+    units: Unit[] | null,
+    regimes: Regime[] | null,
+    ingTypes: IngredientType[] | null,
+    ingData: IngredientData[] | null,
+    users: RestrictedUser[] | null
 }

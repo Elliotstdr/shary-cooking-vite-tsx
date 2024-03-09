@@ -1,16 +1,18 @@
-interface User {
+type User = {
   id: number,
   name: string,
   lastname: string,
   email: string,
   imageUrl: string
 }
-interface RestrictedUser {
+
+type RestrictedUser = {
   id: number,
   name: string,
   imageUrl: string
 }
-interface Recipe {
+
+type Recipe = {
   id: number,
   title: string,
   time: string,
@@ -19,42 +21,49 @@ interface Recipe {
   createdAt: string,
   type: Type,
   regime: Regime,
-  savedByUsers: Array<RestrictedUser>,
+  savedByUsers: RestrictedUser[],
   postedByUser: RestrictedUser,
-  ingredients: Array<Ingredient>,
-  steps: Array<Steps>,
+  ingredients: Ingredient[],
+  steps: Steps[],
 }
 interface RecipeShopping extends Recipe {
   multiplyer?: number
 }
-interface Step {
+
+type Step = {
   id?: number,
   description: string,
   stepIndex: number
 }
-interface Ingredient {
+
+type Ingredient = {
   id?: number,
   quantity: number,
   label: string,
   unit: Unit,
 }
-interface Type {
+
+type Type = {
   id: number,
   label: string
 }
-interface Regime {
+
+type Regime = {
   id: number,
   label: string
 }
-interface Unit {
+
+type Unit = {
   id: number,
   label: string
 }
-interface IngredientType {
+
+type IngredientType = {
   id: number,
   label: string
 }
-interface IngredientData {
+
+type IngredientData = {
   id?: number,
   name: string,
   type: Type,

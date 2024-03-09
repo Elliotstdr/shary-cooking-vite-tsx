@@ -1,5 +1,5 @@
 import { Key, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Login from "../../Components/Login/Login";
 import "./Accueil.scss";
 import { useFetchGet, useFetchGetConditional } from "../../Hooks/api.hook";
@@ -13,12 +13,9 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../Utils/Loader/loader";
 import RecipeCard from "../../Components/RecipeContainer/RecipeCard/RecipeCard";
 import { errorToast } from "../../Services/functions";
-import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
 
 const Accueil = () => {
   const auth = useSelector((state: RootState) => state.auth);
-  const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
-  const dispatch = useDispatch();
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [recipeUrl, setRecipeUrl] = useState("");
   const [isError, setIsError] = useState(false);
@@ -41,36 +38,18 @@ const Accueil = () => {
     // eslint-disable-next-line
   }, [recipesData.loaded])
 
-  const typesData = useFetchGetConditional<Type[]>("/types", secondaryTables.types);
-  const unitsData = useFetchGetConditional<Unit[]>("/units", secondaryTables.units);
-  const regimesData = useFetchGetConditional<Regime[]>("/regimes", secondaryTables.regimes);
-  const ingredientTypeData = useFetchGetConditional<IngredientType[]>(
-    "/ingredient_types",
-    secondaryTables.ingTypes,
-  );
+  const typesData = useFetchGetConditional("/types", "types");
+  const unitsData = useFetchGetConditional("/units", "units");
+  const regimesData = useFetchGetConditional("/regimes", "regimes");
+  const ingredientTypeData = useFetchGetConditional("/ingredient_types", "ingTypes");
 
   useEffect(() => {
     if (typesData.error || unitsData.error || regimesData.error || ingredientTypeData.error) {
       errorToast("Le site a rencontré une erreur technique, veuillez revenir dans quelques minutes")
       setIsError(true)
     }
-    typesData.loaded &&
-      unitsData.loaded &&
-      regimesData.loaded &&
-      ingredientTypeData.loaded &&
-      dispatch(updateSecondaryTables({
-        types: typesData.data,
-        units: unitsData.data,
-        regimes: regimesData.data,
-        ingTypes: ingredientTypeData.data,
-      }));
     // eslint-disable-next-line
-  }, [
-    typesData.loaded,
-    unitsData.loaded,
-    regimesData.loaded,
-    ingredientTypeData.loaded,
-  ]);
+  }, [typesData.loaded, unitsData.loaded, regimesData.loaded, ingredientTypeData.loaded]);
 
   return (
     <div className="accueil_container">

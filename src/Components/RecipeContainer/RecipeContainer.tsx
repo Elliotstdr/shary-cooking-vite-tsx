@@ -4,9 +4,10 @@ import "./RecipeContainer.scss";
 import SearchBar from "../SearchBar/SearchBar";
 import { useFetchGet } from "../../Hooks/api.hook";
 import { Paginator } from "primereact/paginator";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Checkbox } from "primereact/checkbox";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
+import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
 
 interface Props {
   checkboxes?: boolean,
@@ -14,13 +15,19 @@ interface Props {
 }
 
 const RecipeContainer = (props: Props) => {
+  const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
   const recipe = useSelector((state: RootState) => state.recipe);
+
+  const recipesData = useFetchGet<Recipe[]>(props.dataToCall);
+  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
+  const usersData = useFetchGet<RestrictedUser[]>("/users");
+
   const rows = 12;
+  const ref = useRef(null);
+
   const [first, setFirst] = useState(0);
   const [page, setPage] = useState(0)
-  const ref = useRef(null);
-  const recipesData = useFetchGet<Recipe[]>(props.dataToCall);
   const [filteredRecipes, setFilteredRecipes] = useState<Array<Recipe>>([]);
   const [boxFavorites, setBoxFavorites] = useState(false);
   const [boxMine, setBoxMine] = useState(false);
@@ -32,6 +39,15 @@ const RecipeContainer = (props: Props) => {
       setStartData(recipesData.data);
     }
   }, [recipesData.loaded, recipesData.data]);
+
+  useEffect(() => {
+    ingredientData.loaded && usersData.loaded &&
+      dispatch(updateSecondaryTables({
+        users: usersData.data,
+        ingData: ingredientData.data
+      }))
+    // eslint-disable-next-line
+  }, [ingredientData.loaded, usersData.loaded])
 
   useEffect(() => {
     if (recipesData.loaded && recipesData.data) {

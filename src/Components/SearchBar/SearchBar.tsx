@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./SearchBar.scss";
 import { MultiSelect } from "primereact/multiselect";
-import { useFetchGet } from "../../Hooks/api.hook";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import Loader from "../../Utils/Loader/loader";
-import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
 
 interface Props {
   startData: Array<Recipe>
@@ -22,9 +20,6 @@ interface TimeList {
 
 const SearchBar = (props: Props) => {
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
-  const dispatch = useDispatch();
-  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
-  const usersData = useFetchGet<RestrictedUser[]>("/users");
   const [moreVisible, setMoreVisible] = useState(false);
   const [visibleMobile, setVisibleMobile] = useState(false);
   const [regime, setRegime] = useState<Regime[] | null>(null);
@@ -33,15 +28,6 @@ const SearchBar = (props: Props) => {
   const [keyword, setKeyword] = useState("");
   const [time, setTime] = useState<TimeList | null>(null);
   const [ingredient, setIngredient] = useState<IngredientData[] | null>(null);
-
-  useEffect(() => {
-    ingredientData.loaded && usersData.loaded &&
-      dispatch(updateSecondaryTables({
-        users: usersData.data,
-        ingData: ingredientData.data
-      }))
-    // eslint-disable-next-line
-  }, [ingredientData.loaded, usersData.loaded])
 
   useEffect(() => {
     let tempRecipes = props.startData;

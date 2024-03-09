@@ -1,11 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useState, useEffect } from "react";
 import { store } from "../Store/store";
+import { updateSecondaryTables } from "../Store/Reducers/secondaryTablesReducer";
 
 /**
  * @template { Object | Object[] } T
  * @param { string } url
- * @param { ElementType<T> } example as T or element of T
  * @return { FetchGetReturn<T> }
  */
 export const useFetchGet = <T extends object | object[]> (url: string): UseFetchGetResponse<T> => {
@@ -38,19 +38,20 @@ export const useFetchGet = <T extends object | object[]> (url: string): UseFetch
 };
 
 /**
- * @template { Object | Object[] } T
+ * @template { SecondaryState[T] } T
  * @param { string } url
- * @param { ElementType<T> } example as T or element of T
+ * @param { keyof SecondaryState } dataTarget
  * @return { FetchGetReturn<T> }
  */
-export const useFetchGetConditional = <T extends object | object[]> (
+export const useFetchGetConditional = <T extends keyof SecondaryState> (
   url: string, 
-  reduxData: T | null
-): UseFetchGetResponse<T> => {
-  const [data, setData] = useState<T|null>(null);
+  dataTarget: T
+): UseFetchGetResponse<SecondaryState[T]> => {
+  const [data, setData] = useState<SecondaryState[T]|null>(null);
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
   const token = store.getState().auth.token;
+  const reduxData = store.getState().secondaryTables[dataTarget]
 
   useEffect(() => {
     if (!reduxData || (Array.isArray(reduxData) && reduxData.length === 0)) {
@@ -66,6 +67,9 @@ export const useFetchGetConditional = <T extends object | object[]> (
               },
         })
         .then((response: AxiosResponse) => {
+          store.dispatch(updateSecondaryTables({
+            [dataTarget]: response.data
+          }))
           setData(response.data);
         })
         .catch((error: AxiosError) => setError(error.message))

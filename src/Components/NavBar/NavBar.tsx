@@ -4,7 +4,7 @@ import "./NavBar.scss";
 import { GiKnifeFork } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import { GiCook } from "react-icons/gi";
-import Bouton from "../../Utils/Bouton/Bouton";
+import Bouton from "../ui/Bouton/Bouton";
 import Nav from "./Nav/Nav";
 import { logOut } from "../../Hooks/useAxiosInterceptor.hook";
 import { useScreenSize } from "../../Hooks/useScreenSize.hook";

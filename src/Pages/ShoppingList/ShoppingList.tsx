@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./ShoppingList.scss";
-import Bouton from "../../Utils/Bouton/Bouton";
+import Bouton from "../../Components/ui/Bouton/Bouton";
 import Modal from "../../Components/Modal/Modal";
 import RecipeContainer from "../../Components/RecipeContainer/RecipeContainer";
 import { InputTextarea } from "primereact/inputtextarea";

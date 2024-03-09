@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Bouton from "../../Utils/Bouton/Bouton";
+import Bouton from "../ui/Bouton/Bouton";
 import "./Login.scss";
 import ModalLogin from "../Modal/ModalLogin/ModalLogin";
 import ModalRegister from "../Modal/ModalRegister/ModalRegister";

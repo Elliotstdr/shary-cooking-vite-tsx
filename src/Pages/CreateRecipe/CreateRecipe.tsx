@@ -10,7 +10,7 @@ import { errorToast, successToast } from "../../Services/functions";
 import IngredientsCreation from "../../Components/FormElements/IngredientsCreation/IngredientsCreation";
 import StepsCreation from "../../Components/FormElements/StepsCreation/StepsCreation";
 import { RadioButton } from "primereact/radiobutton";
-import Bouton from "../../Utils/Bouton/Bouton";
+import Bouton from "../../Components/ui/Bouton/Bouton";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import {
@@ -18,7 +18,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import Loader from "../../Utils/Loader/loader";
+import Loader from "../../Components/ui/Loader/loader";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
 import { updateRecipe } from "../../Store/Reducers/recipeReducer";

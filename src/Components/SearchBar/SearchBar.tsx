@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
-import Loader from "../../Utils/Loader/loader";
+import Loader from "../ui/Loader/loader";
 
 interface Props {
   startData: Array<Recipe>

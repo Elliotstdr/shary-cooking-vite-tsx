@@ -8,9 +8,9 @@ import Footer from "../../Components/Footer/Footer";
 import image from "../../assets/accueilHC.jpg";
 import image2 from "../../assets/accueil_second.jpg";
 import image3 from "../../assets/accueil_third.jpg";
-import Bouton from "../../Utils/Bouton/Bouton";
+import Bouton from "../../Components/ui/Bouton/Bouton";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../Utils/Loader/loader";
+import Loader from "../../Components/ui/Loader/loader";
 import RecipeCard from "../../Components/RecipeContainer/RecipeCard/RecipeCard";
 import { errorToast } from "../../Services/functions";
 

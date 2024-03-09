@@ -3,7 +3,7 @@ import "./StepsCreation.scss";
 import { InputTextarea } from "primereact/inputtextarea";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import Bouton from "../../../Utils/Bouton/Bouton";
+import Bouton from "../../ui/Bouton/Bouton";
 
 interface Props {
   stepsList: Array<Step>,

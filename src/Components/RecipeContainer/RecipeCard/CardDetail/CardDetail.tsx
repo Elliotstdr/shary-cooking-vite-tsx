@@ -2,7 +2,7 @@ import React, { Key } from "react";
 import "./CardDetail.scss";
 import { useFetchGet } from "../../../../Hooks/api.hook";
 import { timeToString } from "../../../../Services/functions";
-import Loader from "../../../../Utils/Loader/loader";
+import Loader from "../../../ui/Loader/loader";
 import default2 from "../../../../assets/default2.jpg";
 import { GiKnifeFork } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";

@@ -33,3 +33,15 @@
   right: 1.5rem !important;
   top: 70%;
 }
+
+.p-selectbutton {
+  .p-highlight {
+    background-color: c.$main-color !important;
+    border-color: c.$main-color !important;
+  }
+  .p-button {
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}

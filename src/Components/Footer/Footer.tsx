@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import image from "../../assets/white-hat.png";
-import BugReport from "../Modal/BugReport/BugReport";
+import image from "src/assets/white-hat.png";
+import BugReport from "../Modal/BugReport";
 
 // type FooterProps = {
 //   text: string,

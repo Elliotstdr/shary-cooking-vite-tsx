@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import Modal from "../../ui/Modal/Modal";
+import Modal from "../ui/Modal/Modal";
 import { useForm } from "react-hook-form";
 import { InputTextarea } from "primereact/inputtextarea";
-import Loader from "../../ui/Loader/loader";
-import Bouton from "../../ui/Bouton/Bouton";
+import Loader from "../ui/Loader/loader";
+import Bouton from "../ui/Bouton/Bouton";
 import { InputText } from "primereact/inputtext";
-import ImageUpload from "../../ui/ImageUpload/ImageUpload";
-import { errorToast } from "../../../Services/functions";
+import ImageUpload from "../ui/ImageUpload/ImageUpload";
+import { errorToast } from "../../Services/functions";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
-import { fetchPost } from "../../../Hooks/api.hook";
+import { fetchPost } from "../../Hooks/api.hook";
 
 interface Props {
   reportBugModal: boolean,
@@ -67,11 +67,11 @@ const BugReport = (props: Props) => {
       header="Report de bug"
       visible={props.reportBugModal}
       setVisible={props.setReportBugModal}
-      className={"w-11/12 desktop:w-[700px]"}
+      className={"!w-11/12 desktop:!w-[700px]"}
     >
       {!successView ? (
         <form className="flex items-center flex-col p-4 mt-4" onSubmit={handleSubmit(onSubmit)}>
-          <div className="w-full mb-8 tablet:w-1/3">
+          <div className="w-full mb-8 tablet:w-2/3">
             <h4 className="font-bold my-2">Intitulé du problème :</h4>
             <InputText
               {...register("title", { required: true })}
@@ -80,17 +80,17 @@ const BugReport = (props: Props) => {
             />
             {errors.title && <small className="p-error">Le titre est obligatoire</small>}
           </div>
-          <div className="w-full mb-8 tablet:w-1/3">
+          <div className="w-full mb-8 tablet:w-2/3">
             <h4 className="font-bold my-2">Description :</h4>
             <InputTextarea
               {...register("message", { required: true })}
               placeholder="Où? Quand? Comment?"
-              className="w-full"
+              className="!w-full"
               autoResize
             />
             {errors.message && <small className="p-error">La description est obligatoire</small>}
           </div>
-          <div className="w-full mb-8 tablet:w-1/3 flex items-center flex-col">
+          <div className="w-full mb-8 tablet:w-2/3 flex items-center flex-col">
             <h4 className="font-bold my-2">Capture d'écran :</h4>
             <ImageUpload
               {...register("file")}

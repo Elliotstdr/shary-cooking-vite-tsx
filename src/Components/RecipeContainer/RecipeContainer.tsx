@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import RecipeCard from "./RecipeCard/RecipeCard";
+import RecipeCard from "../RecipeCard/RecipeCard";
 import SearchBar from "../SearchBar/SearchBar";
 import { useFetchGet } from "../../Hooks/api.hook";
 import { Paginator } from "primereact/paginator";
-import { useDispatch, useSelector } from "react-redux";
-import { Checkbox } from "primereact/checkbox";
+import { useSelector } from "react-redux";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
-import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
+import ShoppingCheckboxes from "./ShoppingCheckboxes";
 
 interface Props {
   checkboxes?: boolean,
@@ -14,13 +13,8 @@ interface Props {
 }
 
 const RecipeContainer = (props: Props) => {
-  const dispatch = useDispatch();
-  const auth = useSelector((state: RootState) => state.auth);
   const recipe = useSelector((state: RootState) => state.recipe);
-
   const recipesData = useFetchGet<Recipe[]>(props.dataToCall);
-  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
-  const usersData = useFetchGet<RestrictedUser[]>("/users");
 
   const rows = 12;
   const ref = useRef(null);
@@ -28,8 +22,6 @@ const RecipeContainer = (props: Props) => {
   const [first, setFirst] = useState(0);
   const [page, setPage] = useState(0)
   const [filteredRecipes, setFilteredRecipes] = useState<Array<Recipe>>([]);
-  const [boxFavorites, setBoxFavorites] = useState(false);
-  const [boxMine, setBoxMine] = useState(false);
   const [startData, setStartData] = useState<Recipe[]>([]);
 
   useEffect(() => {
@@ -37,36 +29,8 @@ const RecipeContainer = (props: Props) => {
       setFilteredRecipes(recipesData.data);
       setStartData(recipesData.data);
     }
-  }, [recipesData.loaded, recipesData.data]);
-
-  useEffect(() => {
-    ingredientData.loaded && usersData.loaded &&
-      dispatch(updateSecondaryTables({
-        users: usersData.data,
-        ingData: ingredientData.data
-      }))
     // eslint-disable-next-line
-  }, [ingredientData.loaded, usersData.loaded])
-
-  useEffect(() => {
-    if (recipesData.loaded && recipesData.data) {
-      let tempArray = [...recipesData.data];
-      if (boxFavorites) {
-        tempArray = tempArray.filter((recipe) =>
-          recipe.savedByUsers.some(
-            (element: RestrictedUser) => element.id === auth.userConnected?.id
-          )
-        );
-      }
-      if (boxMine) {
-        tempArray = tempArray.filter(
-          (recipe) => recipe.postedByUser.id === auth.userConnected?.id
-        );
-      }
-      setStartData(tempArray);
-    }
-    // eslint-disable-next-line
-  }, [boxFavorites, boxMine]);
+  }, [recipesData.loaded])
 
   useEffect(() => {
     window.scroll({
@@ -76,21 +40,13 @@ const RecipeContainer = (props: Props) => {
   }, [page])
 
   return (
-    <div className={`flex flex-col ${props.checkboxes && "w-full"}`} ref={ref}>
-      {props.checkboxes && (
-        <div className="mt-8 flex items-center justify-center">
-          <Checkbox
-            onChange={(e) => setBoxFavorites(e.checked ?? false)}
-            checked={boxFavorites}
-          ></Checkbox>
-          <span className="mr-4 ml-1">Favoris</span>
-          <Checkbox
-            onChange={(e) => setBoxMine(e.checked ?? false)}
-            checked={boxMine}
-          ></Checkbox>
-          <span className="mr-4 ml-1">Mes recettes</span>
-        </div>
-      )}
+    <div id="recipes" className={`flex flex-col ${props.checkboxes ? "w-full" : ""}`} ref={ref}>
+      {props.checkboxes && recipesData.loaded &&
+        <ShoppingCheckboxes
+          recipesData={recipesData.data}
+          setStartData={setStartData}
+        ></ShoppingCheckboxes>
+      }
       <SearchBar
         startData={startData}
         setFilteredRecipes={setFilteredRecipes}

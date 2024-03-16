@@ -4,8 +4,8 @@ import Login from "../../Components/Login/Login";
 import { useFetchGetConditional } from "../../Hooks/api.hook";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
-import image2 from "../../assets/accueil_second.jpg";
-import image3 from "../../assets/accueil_third.jpg";
+import image2 from "src/assets/accueil_second.jpg";
+import image3 from "src/assets/accueil_third.jpg";
 import { errorToast } from "../../Services/functions";
 import HomeBanner from "./components/HomeBanner";
 import TopRecipes from "./components/TopRecipes";
@@ -33,11 +33,11 @@ const Accueil = () => {
   }, [typesData.loaded, unitsData.loaded, regimesData.loaded, ingredientTypeData.loaded]);
 
   return (
-    <div>
+    <>
       {auth.isConnected && !isError ? (
-        <div>
+        <>
           <NavBar></NavBar>
-          <div>
+          <div id="accueil">
             <HomeBanner />
             <SimpleBlock
               image={image2}
@@ -55,11 +55,11 @@ const Accueil = () => {
             ></SimpleBlock>
           </div>
           <Footer></Footer>
-        </div>
+        </>
       ) : (
         <Login></Login>
       )}
-    </div>
+    </>
   );
 };
 

@@ -1,8 +1,8 @@
 import React, { Key } from "react";
-import { useFetchGet } from "../../../../Hooks/api.hook";
-import { timeToString } from "../../../../Services/functions";
-import Loader from "../../../ui/Loader/loader";
-import default2 from "../../../../assets/default2.jpg";
+import { useFetchGet } from "../../Hooks/api.hook";
+import { timeToString } from "../../Services/functions";
+import Loader from "../ui/Loader/loader";
+import default2 from "src/assets/default2.jpg";
 import { GiKnifeFork } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
 import { BiTimer } from "react-icons/bi";

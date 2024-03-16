@@ -1,5 +1,5 @@
 import Loader from "../../../Components/ui/Loader/loader";
-import RecipeCard from "../../../Components/RecipeContainer/RecipeCard/RecipeCard";
+import RecipeCard from "../../../Components/RecipeCard/RecipeCard";
 import { Key, useEffect, useState } from "react";
 import { useFetchGet } from "../../../Hooks/api.hook";
 import { useSelector } from "react-redux";

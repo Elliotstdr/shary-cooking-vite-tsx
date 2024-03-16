@@ -1,7 +1,7 @@
 import { GiKnifeFork } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
 import { BiTimer } from "react-icons/bi";
-import default2 from "../../../assets/default2.jpg";
+import default2 from "src/assets/default2.jpg";
 import { Dropdown } from "primereact/dropdown";
 import { timeToString } from "../../../Services/functions";
 

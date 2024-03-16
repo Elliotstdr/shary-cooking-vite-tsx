@@ -1,4 +1,4 @@
-import image from "../../../assets/accueilHC.jpg";
+import image from "src/assets/accueilHC.jpg";
 
 const HomeBanner = () => {
   return (

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Bouton from "../ui/Bouton/Bouton";
-import ModalLogin from "../Modal/ModalLogin/ModalLogin";
-import ModalRegister from "../Modal/ModalRegister/ModalRegister";
-import image from "../../assets/accueilHC.jpg";
-import ModalForgotPassword from "../Modal/ModalForgotPassword/ModalForgotPassword";
+import ModalLogin from "../Modal/ModalLogin";
+import ModalRegister from "../Modal/ModalRegister";
+import image from "src/assets/accueilHC.jpg";
+import ModalForgotPassword from "../Modal/ModalForgotPassword";
 
 const Login = () => {
   const [visibleModalLogin, setVisibleModalLogin] = useState(false);

@@ -10,6 +10,11 @@ export default defineConfig({
       typescript: true,
     }),
   ],
+  resolve: {
+    alias: {
+      src: "/src",
+    },
+  },
   server: {
     port: 3000
   },

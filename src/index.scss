@@ -1,3 +1,10 @@
+@use "src/Styles/_vars.scss";
+@use "src/Styles/global.scss";
+@use "src/Styles/style.scss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",

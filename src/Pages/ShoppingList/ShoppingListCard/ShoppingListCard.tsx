@@ -1,4 +1,3 @@
-import "./ShoppingListCard.scss";
 import { GiKnifeFork } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
 import { BiTimer } from "react-icons/bi";
@@ -13,7 +12,7 @@ interface Props {
 
 const ShoppingListCard = (props: Props) => {
   return (
-    <div className="shoppingList_container_export_recipes_recipe">
+    <div className="rounded-lg bg-white my-4 flex flex-col w-80 laptop:flex-row laptop:w-full laptop:h-48">
       <img
         src={
           props.recipe.imageUrl
@@ -21,37 +20,37 @@ const ShoppingListCard = (props: Props) => {
             : default2
         }
         alt="Fond news"
-        className="image"
+        className="rounded-tr-xl rounded-tl-xl w-full h-64 object-cover laptop:h-48 laptop:w-72 laptop:rounded-bl-xl laptop:rounded-tr-none"
       />
-      <div className="infos">
-        <div className="infos_top">
-          <div className="infos_top_title">{props.recipe.title}</div>
-          <div className="infos_top_author">
+      <div className="flex flex-col p-6 grow justify-between laptop:py-8">
+        <div className="flex items-center justify-between mt-2 mb-8 laptop:m-0">
+          <div className="mb-4 text-xl font-bold h-fit text-left max-w-[70%] line-clamp-2 laptop:line-clamp-1 laptop:mb-0">{props.recipe.title}</div>
+          <div>
             Créé par {props.recipe.postedByUser.name}
           </div>
         </div>
-        <div className="infos_bottom">
-          <div className="infos_bottom_left">
-            <div className="infos_bottom_left_regime">
-              <span>
-                <GiKnifeFork></GiKnifeFork>
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col text-start">
+            <div>
+              <span className="flex items-center px-1">
+                <GiKnifeFork className="mr-2"></GiKnifeFork>
                 {props.recipe.regime.label}
               </span>
             </div>
-            <div className="infos_bottom_left_number">
-              <span>
-                <BsPeople></BsPeople>
+            <div>
+              <span className="flex items-center px-1">
+                <BsPeople className="mr-2"></BsPeople>
                 {props.recipe.number} personnes
               </span>
             </div>
-            <div className="infos_bottom_left_time">
-              <span>
-                <BiTimer></BiTimer>
+            <div>
+              <span className="flex items-center px-1">
+                <BiTimer className="mr-2"></BiTimer>
                 {timeToString(props.recipe.time)}
               </span>
             </div>
           </div>
-          <div className="infos_bottom_right">
+          <div>
             <Dropdown
               value={
                 props.recipe.multiplyer
@@ -68,7 +67,6 @@ const ShoppingListCard = (props: Props) => {
                 { label: props.recipe.number * 4, multiplyer: 4 },
               ]}
               optionLabel="label"
-              className="recipe__form__field-number"
               onChange={(e) => {
                 props.modifyRecipeList(e.value.multiplyer, props.recipe);
               }}

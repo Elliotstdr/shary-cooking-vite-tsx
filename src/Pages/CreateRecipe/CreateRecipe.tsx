@@ -1,10 +1,9 @@
 import { useRef, useState, useMemo, useEffect } from "react";
-import "./CreateRecipe.scss";
 import { Controller, useForm } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
 import { Divider } from "primereact/divider";
 import { useDispatch, useSelector } from "react-redux";
-import ImageUpload from "../../Components/FormElements/ImageUpload/ImageUpload";
+import ImageUpload from "../../Components/ui/ImageUpload/ImageUpload";
 import { fetchPost, fetchPut, useFetchGet } from "../../Hooks/api.hook";
 import { errorToast, successToast } from "../../Services/functions";
 import IngredientsCreation from "../../Components/FormElements/IngredientsCreation/IngredientsCreation";
@@ -324,89 +323,90 @@ const CreateRecipe = (props: Props) => {
             fillForm(recipe.savedForm)
           }
         }}
-        className="options restore"
+        className="underline py-8 px-4 cursor-pointer absolute left-0"
       > Restaurer le précedent formulaire</a>}
-      <form className="recipe__form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="recipe__form__field">
-          <h4>Photo :</h4>
+      <form className={`flex flex-col mx-4 my-12 ${props.recipe ? "mt-0" : ""}`} onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex items-center flex-col my-4">
+          <h4 className="mb-2 mt-4 font-bold">Photo :</h4>
           <ImageUpload
             {...register("image")}
             image={image}
             setImage={setImage}
+            className="!w-[244px]"
           />
           {props?.recipe?.imageUrl && !currentPictureDeleted &&
-            <a onClick={() => deletePicture()} className="options">
+            <a onClick={() => deletePicture()} className="underline py-8 px-4 cursor-pointer">
               Supprimer l'image actuelle
             </a>
           }
         </div>
-        <div className="recipe__form__group">
-          <div className="recipe__form__field">
-            <h4>Titre de la recette</h4>
+        <div className="flex justify-center flex-col laptop:flex-row">
+          <div className="flex items-center flex-col my-4 laptop:mr-8">
+            <h4 className="mb-2 mt-4 font-bold">Titre de la recette</h4>
             <InputText
               {...register("title", { required: true })}
               placeholder="Ma super recette"
-              className="recipe__form__field-title"
             />
             {errors.title && <small className="p-error">Le titre est obligatoire</small>}
           </div>
-          <div className="recipe__form__field">
-            <h4>Pour combien de personnes ?</h4>
+          <div className="flex items-center flex-col my-4 laptop:mr-8">
+            <h4 className="mb-2 mt-4 font-bold">Pour combien de personnes ?</h4>
             <InputText
               {...register("number", {
                 required: true,
                 validate: (value: any) => value !== 0 && value !== "0"
               })}
               placeholder="3 personnes"
-              className="recipe__form__field-number"
               keyfilter="num"
             />
             {errors.number && <small className="p-error">Le nombre est obligatoire et différent de 0</small>}
           </div>
-          <div className="recipe__form__field">
-            <h4>Temps de préparation</h4>
+          <div className="flex items-center flex-col my-4 laptop:mr-8">
+            <h4 className="mb-2 mt-4 font-bold">Temps de préparation</h4>
             <InputText
               {...register("time", { required: true })}
               placeholder="30 minutes"
-              className="recipe__form__field-time"
+              className="min-w-20"
               type="time"
             />
             {errors.time && <small className="p-error">Le temps est obligatoire</small>}
           </div>
         </div>
-        <div className="recipe__form__field">
-          <h4>Type de plat</h4>
-          <div className="checkboxes">
+        <div className="flex items-center flex-col my-4">
+          <h4 className="mb-2 mt-4 font-bold">Type de plat</h4>
+          <div className="flex flex-wrap">
             {secondaryTables.types && secondaryTables.types.map((type, index) => (
-              <div className="checkbox" key={index}>
+              <div className="m-4" key={index}>
                 <RadioButton
                   checked={type.id === typeId}
                   onChange={() => setTypeId(type.id)}
+                  className=" mr-1"
                 />
                 <label>{type.label}</label>
               </div>
             ))}
           </div>
         </div>
-        <div className="recipe__form__field">
-          <h4>Régime alimentaire</h4>
-          <div className="checkboxes">
+        <div className="flex items-center flex-col my-4">
+          <h4 className="mb-2 mt-4 font-bold">Régime alimentaire</h4>
+          <div className="flex flex-wrap">
             {secondaryTables.regimes && secondaryTables.regimes.map((regime, index) => (
-              <div className="checkbox" key={index}>
+              <div className="m-4" key={index}>
                 <RadioButton
                   checked={regime.id === regimeId}
                   onChange={() => setRegimeId(regime.id)}
                   tooltip={regimeTooltips[index]}
                   tooltipOptions={{ position: "bottom" }}
+                  className="mr-1"
                 />
                 <label>{regime.label}</label>
               </div>
             ))}
           </div>
         </div>
-        <Divider></Divider>
-        <div className="recipe__form__field">
-          <h4>Ingrédients</h4>
+        <Divider className="!w-1/2 self-center !my-1 laptop:my-5"></Divider>
+        <div className="flex items-center flex-col my-4">
+          <h4 className="mb-2 mt-4 font-bold">Ingrédients</h4>
           <Controller
             name="ingredients"
             control={control}
@@ -417,7 +417,7 @@ const CreateRecipe = (props: Props) => {
               <>
                 {ingredientData.data ?
                   <>
-                    <div className="ingredients">
+                    <div>
                       <IngredientsCreation
                         key={ingredientList[0].id}
                         id={ingredientList[0].id ?? 1}
@@ -452,6 +452,7 @@ const CreateRecipe = (props: Props) => {
                     </div>
                     <Bouton
                       type={"normal"}
+                      className="!border-none my-8 self-center"
                       btnAction={(e) => {
                         e.preventDefault();
                         const lastId = getLastId(ingredientList)
@@ -476,9 +477,9 @@ const CreateRecipe = (props: Props) => {
           />
           {errors.ingredients && <small className="p-error">{errors.ingredients.message}</small>}
         </div>
-        <Divider></Divider>
-        <div className="recipe__form__field">
-          <h4>Etapes</h4>
+        <Divider className="!w-1/2 self-center !my-1 laptop:my-5"></Divider>
+        <div className="flex items-center flex-col my-4">
+          <h4 className="mb-2 mt-4 font-bold">Etapes</h4>
           <Controller
             name="steps"
             control={control}
@@ -494,11 +495,11 @@ const CreateRecipe = (props: Props) => {
           />
           {errors.steps && <small className="p-error">{errors.steps.message}</small>}
         </div>
-        <Divider></Divider>
+        <Divider className="!w-1/2 self-center !my-1 laptop:my-5"></Divider>
         {isSubmitting ? (
           <Loader></Loader>
         ) : (
-          <button className="bouton slide">
+          <button className="bouton slide self-center my-8">
             {props.recipe ? "Modifier ma recette" : "Créer ma recette"}
           </button>
         )}

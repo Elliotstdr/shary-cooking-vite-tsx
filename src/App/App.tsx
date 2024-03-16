@@ -29,7 +29,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App" id="app">
+    <div className="font-apple" id="app">
       {isInterceptorActive &&
         <BrowserRouter>
           <Toast ref={toast}></Toast>

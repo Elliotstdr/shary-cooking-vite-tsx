@@ -7,6 +7,7 @@ import Compressor from 'compressorjs';
 interface Props {
   image: any,
   setImage: React.Dispatch<React.SetStateAction<any>>,
+  className?: string
 }
 
 const ImageUpload = (props: Props) => {
@@ -29,7 +30,7 @@ const ImageUpload = (props: Props) => {
   return (
     <FileUpload
       name={"image"}
-      className="upload_image"
+      className={`upload_image ${props.className || ""}`}
       customUpload={true}
       uploadHandler={uploadHandler}
       chooseLabel={props.image ? "Modifier l'image" : "Ajouter une image"}

@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./NavBar.scss";
 import { GiKnifeFork } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import { GiCook } from "react-icons/gi";
@@ -24,24 +23,29 @@ const NavBar = () => {
   useOutsideAlerter(menuRef, () => setVisibleMobile(false));
 
   return (
-    <div className="navigation">
+    <div className="font-dilgante flex flex-col items-start justify-around pt-2 pb-4 shadow-home pl-8 tablet:flex-row tablet:items-center tablet:px-0 tablet:py-8">
       {screenSize.width > 990
-        ? <Nav className="desktop"></Nav>
-        : <div className="navigation__mobile" ref={menuRef}>
+        ? <Nav className="h-12"></Nav>
+        : <div className="w-40 relative" ref={menuRef}>
           <div
-            className="navigation__mobile__header"
+            className="flex items-center cursor-pointer p-4 pb-2 text-xl font-bold !font-apple"
             onClick={() => setVisibleMobile(!visibleMobile)}
           >
-            <div className="pi pi-bars"></div>
+            <div className="pi pi-bars mr-1"></div>
             Menu
           </div>
-          <Nav className={`mobile ${visibleMobile ? "visible" : "hidden"}`}></Nav>
+          <Nav className={`absolute w-56 z-50 bg-white rounded-md text-left flex flex-col m-0 py-2 transition-all duration-300 ease-in-out ${visibleMobile ? "visible-transition" : "hidden-transition"}`}></Nav>
         </div>
       }
-      <Bouton className="first" btnAction={() => navigate("/create")}>
+      <Bouton className="font-dilgante px-4 w-48 my-2 tablet:w-unset tablet:my-0 desktop:px-0" btnAction={() => navigate("/create")}>
         <GiKnifeFork></GiKnifeFork>Créer une recette
       </Bouton>
-      <div className="navigation_parameters" ref={wrapperRef}>
+      <div
+        className="cursor-pointer absolute top-8 right-8 flex tablet:relative tablet:right-0 tablet:top-0"
+        ref={wrapperRef}
+        onMouseEnter={() => setShowParamMenu(true)}
+        onMouseLeave={() => setShowParamMenu(false)}
+      >
         {auth.userConnected?.imageUrl ? (
           <img
             src={
@@ -49,18 +53,20 @@ const NavBar = () => {
             }
             alt="ma pp"
             onClick={() => setShowParamMenu(!showParamMenu)}
+            className="object-cover size-12 rounded-full"
           ></img>
         ) : (
           <GiCook
-            className="cooker"
+            className="size-12 text-green"
             onClick={() => setShowParamMenu(!showParamMenu)}
           ></GiCook>
         )}
         <div
-          className={`navigation_parameters_menu ${showParamMenu && "visible"}`}
+          className={`absolute -right-14 top-12 w-40 bg-white text-green rounded-xl z-50 ${showParamMenu ? "flex flex-col" : "hidden"}`}
         >
-          <span onClick={() => navigate("/param")}>Mon profil</span>
+          <span onClick={() => navigate("/param")} className="p-2 rounded-xl text-base hover:bg-orange hover:text-white">Mon profil</span>
           <span
+            className="p-2 rounded-xl text-base hover:bg-orange hover:text-white"
             onClick={() => {
               logOut()
               navigate("/");

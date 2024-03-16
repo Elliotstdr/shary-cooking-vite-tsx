@@ -1,11 +1,10 @@
 import { ReactNode, useEffect, useState } from "react";
-import "./Parameters.scss";
 import { Controller, useForm } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
 import Bouton from "../../Components/ui/Bouton/Bouton";
 import { Password } from "primereact/password";
 import { Divider } from "primereact/divider";
-import ImageUpload from "../../Components/FormElements/ImageUpload/ImageUpload";
+import ImageUpload from "../../Components/ui/ImageUpload/ImageUpload";
 import { useDispatch, useSelector } from "react-redux";
 import { errorToast, successToast } from "../../Services/functions";
 import Loader from "../../Components/ui/Loader/loader";
@@ -103,17 +102,18 @@ const Parameters = () => {
   return (
     <div className="parameters">
       <NavBar></NavBar>
-      <form className="param__form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="param__form__field">
-          <h4>Photo</h4>
+      <form className="flex items-center justify-center flex-col m-8" onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex items-center flex-col mb-4">
+          <h4 className="mb-2 font-bold">Photo</h4>
           {auth.userConnected?.imageUrl && (
-            <div className="param_profile_picture">
+            <div className="flex items-center justify-center m-2 rounded-md overflow-hidden h-40 w-60">
               <img
                 src={
                   import.meta.env.VITE_BASE_URL_API +
                   auth.userConnected.imageUrl
                 }
                 alt="Fond news"
+                className="h-full"
               />
             </div>
           )}
@@ -121,37 +121,36 @@ const Parameters = () => {
             {...register("image")}
             image={image}
             setImage={setImage}
+            className="!w-[244px] border-search rounded-md"
           />
         </div>
-        <div className="param__form__field">
-          <h4>Prénom</h4>
+        <div className="flex items-center flex-col mb-4">
+          <h4 className="mb-2 font-bold">Prénom</h4>
           <InputText
             {...register("name", { required: true })}
             placeholder="Fanny"
-            className="param__form__field-name"
           />
           {errors.name && <small className="p-error">Le prénom est obligatoire</small>}
         </div>
-        <div className="param__form__field">
-          <h4>Nom</h4>
+        <div className="flex items-center flex-col mb-4">
+          <h4 className="mb-2 font-bold">Nom</h4>
           <InputText
             {...register("lastname", { required: true })}
             placeholder="Lefebvre"
-            className="param__form__field-lastname"
           />
           {errors.lastname && <small className="p-error">Le nom est obligatoire</small>}
         </div>
-        <div className="param__form__field">
-          <h4>Adresse email</h4>
+        <div className="flex items-center flex-col mb-4">
+          <h4 className="mb-2 font-bold">Adresse email</h4>
           <InputText
             type="email"
             {...register("email", { required: true })}
             placeholder="Adresse email"
-            className="param__form__field-email"
           />
           {errors.email && <small className="p-error">L'email est obligatoire</small>}
         </div>
         <Bouton
+          className="w-40 self-center mt-8"
           type="normal"
           btnAction={(e) => {
             e.preventDefault();
@@ -163,8 +162,8 @@ const Parameters = () => {
         {showMDP && (
           <div>
             <Divider></Divider>
-            <div className="param__form__field">
-              <h4>Précédent mot de passe</h4>
+            <div className="flex items-center flex-col mb-4">
+              <h4 className="mb-2 font-bold">Précédent mot de passe</h4>
               <Controller
                 name="oldPassword"
                 control={control}
@@ -180,15 +179,14 @@ const Parameters = () => {
                     autoComplete="new-password"
                     {...field}
                     placeholder={"Ancien mot de passe"}
-                    className="param__form__field-oldPassword"
                     feedback={false}
                   />
                 )}
               />
               {getFormErrorMessage("oldPassword")}
             </div>
-            <div className="param__form__field">
-              <h4>Nouveau mot de passe</h4>
+            <div className="flex items-center flex-col mb-4">
+              <h4 className="mb-2 font-bold">Nouveau mot de passe</h4>
               <Controller
                 name="password"
                 control={control}
@@ -198,7 +196,6 @@ const Parameters = () => {
                     autoComplete="new-password"
                     {...field}
                     placeholder={"Mot de passe"}
-                    className="param__form__field-password"
                     onChange={(e) => {
                       field.onChange(e.target.value);
                       setIsEqualPassword(
@@ -210,8 +207,8 @@ const Parameters = () => {
                 )}
               />
             </div>
-            <div className="param__form__field">
-              <h4>Confirmer le mot de passe</h4>
+            <div className="flex items-center flex-col mb-4">
+              <h4 className="mb-2 font-bold">Confirmer le mot de passe</h4>
               <Controller
                 name="confirmPassword"
                 control={control}
@@ -231,11 +228,7 @@ const Parameters = () => {
                     autoComplete="new-password"
                     {...field}
                     placeholder={"Mot de passe"}
-                    className={
-                      isEqualPassword
-                        ? "param__form__field-confirmpassword equal"
-                        : "param__form__field-confirmpassword nonequal"
-                    }
+                    className={isEqualPassword ? "equal" : "nonequal"}
                     feedback={false}
                     onChange={(e) => {
                       field.onChange(e.target.value);
@@ -255,7 +248,7 @@ const Parameters = () => {
         {isModifying ? (
           <Loader></Loader>
         ) : (
-          <Bouton>Valider mes modifications</Bouton>
+          <Bouton className="w-40 self-center mt-8">Valider mes modifications</Bouton>
         )}
       </form>
       <Footer></Footer>

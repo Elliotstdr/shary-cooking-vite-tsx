@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import "./BugReport.scss";
-import Modal from "../Modal";
+import Modal from "../../ui/Modal/Modal";
 import { useForm } from "react-hook-form";
 import { InputTextarea } from "primereact/inputtextarea";
 import Loader from "../../ui/Loader/loader";
 import Bouton from "../../ui/Bouton/Bouton";
 import { InputText } from "primereact/inputtext";
-import ImageUpload from "../../FormElements/ImageUpload/ImageUpload";
+import ImageUpload from "../../ui/ImageUpload/ImageUpload";
 import { errorToast } from "../../../Services/functions";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
@@ -68,47 +67,47 @@ const BugReport = (props: Props) => {
       header="Report de bug"
       visible={props.reportBugModal}
       setVisible={props.setReportBugModal}
-      className={"modal modal-bug"}
+      className={"w-11/12 desktop:w-[700px]"}
     >
       {!successView ? (
-        <form className="bug__form" onSubmit={handleSubmit(onSubmit)}>
-          <div className="bug__form__field">
-            <h4>Intitulé du problème :</h4>
+        <form className="flex items-center flex-col p-4 mt-4" onSubmit={handleSubmit(onSubmit)}>
+          <div className="w-full mb-8 tablet:w-1/3">
+            <h4 className="font-bold my-2">Intitulé du problème :</h4>
             <InputText
               {...register("title", { required: true })}
               placeholder="Problème quand je clique sur le bouton ..."
-              className="bug__form__field-title"
+              className="w-full"
             />
             {errors.title && <small className="p-error">Le titre est obligatoire</small>}
           </div>
-          <div className="bug__form__field">
-            <h4>Description :</h4>
+          <div className="w-full mb-8 tablet:w-1/3">
+            <h4 className="font-bold my-2">Description :</h4>
             <InputTextarea
               {...register("message", { required: true })}
               placeholder="Où? Quand? Comment?"
-              className="bug__form__field-message"
+              className="w-full"
               autoResize
             />
             {errors.message && <small className="p-error">La description est obligatoire</small>}
           </div>
-          <div className="bug__form__field file">
-            <h4>Capture d'écran :</h4>
+          <div className="w-full mb-8 tablet:w-1/3 flex items-center flex-col">
+            <h4 className="font-bold my-2">Capture d'écran :</h4>
             <ImageUpload
               {...register("file")}
               image={image}
               setImage={setImage}
             />
           </div>
-          <div className="bug__form__button">
+          <div>
             {sending ? <Loader /> : <Bouton>Envoyer mon rapport</Bouton>}
           </div>
         </form>
       ) : (
-        <div className="success_view">
-          <div className="success_message">
+        <div className="flex flex-col items-center justify-center">
+          <div className="font-bold text-xl my-8">
             Mail envoyé ! Merci de votre retour !
           </div>
-          <BsFillCheckCircleFill className="chosen_check"></BsFillCheckCircleFill>
+          <BsFillCheckCircleFill className="size-20 text-card-green"></BsFillCheckCircleFill>
         </div>
       )}
     </Modal>

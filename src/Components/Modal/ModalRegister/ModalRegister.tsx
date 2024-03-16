@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { InputText } from "primereact/inputtext";
-import Modal from "../Modal";
+import Modal from "../../ui/Modal/Modal";
 import { useDispatch } from "react-redux";
 import { Password } from "primereact/password";
-import "./ModalRegister.scss";
 import { Controller, useForm } from "react-hook-form";
 import Loader from "../../ui/Loader/loader";
 import { useState } from "react";
@@ -87,40 +86,39 @@ const ModalLogin = (props: Props) => {
       header="Création de compte"
       visible={props.visible}
       setVisible={props.setVisible}
-      className={"modal modal-login"}
-      width={"30rem"}
+      className="!w-11/12 tablet:!w-[30rem]"
     >
-      <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="login__form__field">
-          <h4>Prénom</h4>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col items-center">
+          <h4 className="font-bold mt-4 mb-2">Prénom</h4>
           <InputText
             {...register("name", { required: true })}
             placeholder="Prénom"
-            className="login__form__field-name"
+            className="w-64"
           />
           {errors.name && <small className="p-error">Le prénom est obligatoire</small>}
         </div>
-        <div className="login__form__field">
-          <h4>Nom</h4>
+        <div className="flex flex-col items-center">
+          <h4 className="font-bold mt-4 mb-2">Nom</h4>
           <InputText
             {...register("lastname", { required: true })}
             placeholder="Nom"
-            className="login__form__field-lastname"
+            className="w-64"
           />
           {errors.lastname && <small className="p-error">Le nom est obligatoire</small>}
         </div>
-        <div className="login__form__field">
-          <h4>Adresse email</h4>
+        <div className="flex flex-col items-center">
+          <h4 className="font-bold mt-4 mb-2">Adresse email</h4>
           <InputText
             type="email"
             {...register("email", { required: true })}
             placeholder="Adresse email"
-            className="login__form__field-email"
+            className="w-64"
           />
           {errors.email && <small className="p-error">L'email est obligatoire</small>}
         </div>
-        <div className="login__form__field">
-          <h4>Mot de passe</h4>
+        <div className="flex flex-col items-center">
+          <h4 className="font-bold mt-4 mb-2">Mot de passe</h4>
           <Controller
             name="password"
             control={control}
@@ -136,7 +134,7 @@ const ModalLogin = (props: Props) => {
                 {...field}
                 toggleMask
                 placeholder="Mot de passe"
-                className="login__form__field-password"
+                inputClassName="w-64"
                 onChange={(e) => {
                   field.onChange(e.target.value);
                   setIsEqualPassword(
@@ -149,8 +147,8 @@ const ModalLogin = (props: Props) => {
           />
           {errors.password && <small className="p-error">{errors.password.message}</small>}
         </div>
-        <div className="login__form__field">
-          <h4>Confirmer le mot de passe</h4>
+        <div className="flex flex-col items-center">
+          <h4 className="font-bold mt-4 mb-2">Confirmer le mot de passe</h4>
           <Controller
             name="confirmpassword"
             control={control}
@@ -165,11 +163,8 @@ const ModalLogin = (props: Props) => {
                 {...field}
                 toggleMask
                 placeholder={"Mot de passe"}
-                className={
-                  isEqualPassword
-                    ? "login__form__field-confirmpassword equal"
-                    : "login__form__field-confirmpassword nonequal"
-                }
+                className={isEqualPassword ? "equal" : "nonequal"}
+                inputClassName="w-64"
                 feedback={false}
                 onChange={(e) => {
                   field.onChange(e.target.value);
@@ -183,8 +178,8 @@ const ModalLogin = (props: Props) => {
           />
           {errors.confirmpassword && <small className="p-error">{errors.confirmpassword.message}</small>}
         </div>
-        <div className="login__form__field">
-          <h4>{"Clé secrète"}</h4>
+        <div className="flex flex-col items-center">
+          <h4 className="font-bold mt-4 mb-2">{"Clé secrète"}</h4>
           <Controller
             name="secretKey"
             control={control}
@@ -196,7 +191,7 @@ const ModalLogin = (props: Props) => {
                 {...field}
                 toggleMask
                 placeholder={"Clé secrète"}
-                className={"login__form__field-secretKey"}
+                inputClassName="w-64"
                 feedback={false}
                 tooltip={
                   "Cette clé doit vous être fournie par le créateur du site."
@@ -207,8 +202,8 @@ const ModalLogin = (props: Props) => {
           />
           {errors.secretKey && <small className="p-error">{errors.secretKey.message}</small>}
         </div>
-        <div className="login__form__button">
-          {isloging ? <Loader /> : <Bouton>Créer un compte</Bouton>}
+        <div className="mt-8 flex justify-center">
+          {isloging ? <Loader size="2rem" className="p-0 flex items-center justify-center" /> : <Bouton>Créer un compte</Bouton>}
         </div>
       </form>
     </Modal>

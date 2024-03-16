@@ -1,5 +1,4 @@
 import React, { Key } from "react";
-import "./CardDetail.scss";
 import { useFetchGet } from "../../../../Hooks/api.hook";
 import { timeToString } from "../../../../Services/functions";
 import Loader from "../../../ui/Loader/loader";
@@ -23,10 +22,10 @@ const CardDetail = (props: Props) => {
   const recipeDetail = useFetchGet<Recipe>(`/recipes/${props.id}`);
 
   return (
-    <div className="cardDetail_container">
+    <div className="flex items-center justify-center flex-col text-xl whitespace-pre-line">
       {recipeDetail.loaded && recipeDetail.data ? (
         <>
-          <div className="cardDetail_container_image">
+          <div className="w-11/12 max-h-[25rem] overflow-hidden flex items-center justify-center rounded-xl m-8">
             <img
               src={
                 recipeDetail.data.imageUrl
@@ -35,12 +34,13 @@ const CardDetail = (props: Props) => {
                   : default2
               }
               alt="Fond news"
+              className="w-full"
             />
           </div>
-          <h2 className="cardDetail_container_title">
+          <h2 className="font-bold my-8 text-3xl flex flex-col w-11/12 items-center laptop:flex-row laptop:text-5xl">
             {recipeDetail.data.title}
             {recipeDetail.data.postedByUser.id === auth.userConnected?.id && (
-              <div className="recipeCard__bottom__edit">
+              <div className="mt-4 ml-0 laptop:mt-0 laptop:ml-8">
                 <CiEdit
                   onClick={() => {
                     props.setVisible(false);
@@ -50,7 +50,7 @@ const CardDetail = (props: Props) => {
               </div>
             )}
           </h2>
-          <div className="cardDetail_container_author">
+          <div className="flex items-center mb-4">
             {recipeDetail.data.postedByUser.imageUrl && (
               <img
                 src={
@@ -58,30 +58,30 @@ const CardDetail = (props: Props) => {
                   recipeDetail.data.postedByUser?.imageUrl
                 }
                 alt="ma pp"
-                className="creatorPP"
+                className="size-6 rounded-full mr-2 object-cover"
               ></img>
             )}
             <span>Créée par {recipeDetail.data.postedByUser?.name}</span>
           </div>
-          <div className="cardDetail_container_group">
-            <div className="cardDetail_container_time">
-              <BiTimer></BiTimer> {timeToString(recipeDetail.data.time)}
+          <div className="flex flex-col self-start ml-8 laptop:m-0 laptop:self-center laptop:flex-row">
+            <div className="m-4 flex items-center font-bold">
+              <BiTimer className="mr-1"></BiTimer> {timeToString(recipeDetail.data.time)}
             </div>
-            <div className="cardDetail_container_number">
-              <BsPeople></BsPeople> {recipeDetail.data.number} personnes
+            <div className="m-4 flex items-center font-bold">
+              <BsPeople className="mr-1"></BsPeople> {recipeDetail.data.number} personnes
             </div>
-            <div className="cardDetail_container_infos_type">
-              <GiKnifeFork></GiKnifeFork> {recipeDetail.data.type.label}
+            <div className="m-4 flex items-center font-bold">
+              <GiKnifeFork className="mr-1"></GiKnifeFork> {recipeDetail.data.type.label}
             </div>
-            <div className="cardDetail_container_infos_regime">
-              <BiAward></BiAward> {recipeDetail.data.regime.label}
+            <div className="m-4 flex items-center font-bold">
+              <BiAward className="mr-1"></BiAward> {recipeDetail.data.regime.label}
             </div>
           </div>
-          <ul className="cardDetail_container_ingredients">
-            <h2 className="ingredient_title">Ingrédients</h2>
+          <ul className="p-4 w-11/12 rounded-xl bg-fond mt-8 mb-16 laptop:p-8 laptop:ml-8">
+            <h2 className="font-bold mb-8 w-full">Ingrédients</h2>
             {recipeDetail.data.ingredients
               .map((ingredient: Ingredient, index: Key) => (
-                <li className="cardDetail_container_ingredient" key={index}>
+                <li className="m-2 ml-8 text-xl text-left" key={index}>
                   {ingredient.unit.label === "unité"
                     ? ingredient.quantity + " "
                     : ingredient.unit.label === "un peu"
@@ -94,12 +94,12 @@ const CardDetail = (props: Props) => {
           {recipeDetail.data.steps
             .sort((a: Step, b: Step) => a.stepIndex - b.stepIndex)
             .map((step: Step, index: number) => (
-              <div className="cardDetail_container_block" key={index}>
-                <div className="cardDetail_container_block_index">
+              <div className="flex items-center flex-col mb-8 w-full" key={index}>
+                <div className="flex items-center justify-center text-3xl size-16 rounded-full font-bold text-orange border-2 border-solid border-orange">
                   {index + 1}
                 </div>
-                <Divider></Divider>
-                <div className="cardDetail_container_block_step" key={index}>
+                <Divider className="!w-1/2 !my-5 before:!border-t-orange"></Divider>
+                <div className="w-11/12 self-center p-4 bg-fond my-2 rounded-xl text-left laptop:w-1/3" key={index}>
                   {step.description}
                 </div>
               </div>

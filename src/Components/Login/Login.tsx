@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Bouton from "../ui/Bouton/Bouton";
-import "./Login.scss";
 import ModalLogin from "../Modal/ModalLogin/ModalLogin";
 import ModalRegister from "../Modal/ModalRegister/ModalRegister";
 import image from "../../assets/accueilHC.jpg";
@@ -12,18 +11,20 @@ const Login = () => {
   const [visibleModalForgot, setVisibleModalForgot] = useState(false);
 
   return (
-    <div className="login_container">
-      <img src={image} alt="background home" />
-      <div className="login_container_box">
-        <div className="login_container_box_title">
-          <h1>Bienvenue sur Shary Cooking !</h1>
+    <div className="h-screen flex items-center justify-center flex-col relative">
+      <img src={image} alt="background home" className="w-full h-full object-cover absolute" />
+      <div className="bg-fond p-6 rounded-xl flex items-center justify-center flex-col z-50 shadow-2xl mx-4 tablet:mx-0">
+        <div className="text-green mb-12">
+          <h1 className="text-[2rem] font-bold my-4">Bienvenue sur Shary Cooking !</h1>
         </div>
-        <div className="login_container_box_buttons">
+        <div className="flex flex-col">
           <Bouton
+            className="w-48 mb-4"
             btnTexte={"Se connecter"}
             btnAction={() => setVisibleModalLogin(true)}
           ></Bouton>
           <Bouton
+            className="w-48 mb-4"
             btnTexte={"Créer un compte"}
             btnAction={() => setVisibleModalRegister(true)}
           ></Bouton>

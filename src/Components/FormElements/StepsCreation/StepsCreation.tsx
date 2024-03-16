@@ -1,5 +1,4 @@
 import React from "react";
-import "./StepsCreation.scss";
 import { InputTextarea } from "primereact/inputtextarea";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlinePlusCircle } from "react-icons/ai";
@@ -13,13 +12,13 @@ interface Props {
 const StepsCreation = (props: Props) => {
   return (
     <>
-      <div className="steps">
+      <div className="w-11/12 max-w-[800px]">
         {props.stepsList.map((step, index) => (
-          <div className="step" key={index}>
+          <div className="flex justify-center w-full relative" key={index}>
             <InputTextarea
               autoResize
               placeholder="Description de l'étape"
-              className="recipe__form__field-step"
+              className="flex items-center flex-col my-4 w-full"
               value={step.description}
               onChange={(e) => {
                 const tempArray = [...props.stepsList];
@@ -33,7 +32,7 @@ const StepsCreation = (props: Props) => {
             />
             {step.stepIndex !== 1 && (
               <RiDeleteBin6Line
-                className="bin"
+                className="absolute cursor-pointer -right-12 w-6 h-6 self-center text-green"
                 onClick={(e: any) => {
                   e.preventDefault();
                   let tempArray = [...props.stepsList];
@@ -48,6 +47,7 @@ const StepsCreation = (props: Props) => {
         ))}
       </div>
       <Bouton
+        className="!border-none my-8 self-center"
         type={"normal"}
         btnAction={(e) => {
           e.preventDefault();

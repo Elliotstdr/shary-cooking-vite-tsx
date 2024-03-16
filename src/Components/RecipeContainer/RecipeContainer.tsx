@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import RecipeCard from "./RecipeCard/RecipeCard";
-import "./RecipeContainer.scss";
 import SearchBar from "../SearchBar/SearchBar";
 import { useFetchGet } from "../../Hooks/api.hook";
 import { Paginator } from "primereact/paginator";
@@ -77,26 +76,26 @@ const RecipeContainer = (props: Props) => {
   }, [page])
 
   return (
-    <div className="recipeContainer" ref={ref}>
+    <div className={`flex flex-col ${props.checkboxes && "w-full"}`} ref={ref}>
       {props.checkboxes && (
-        <div className="shopping_list_checkboxes">
+        <div className="mt-8 flex items-center justify-center">
           <Checkbox
             onChange={(e) => setBoxFavorites(e.checked ?? false)}
             checked={boxFavorites}
           ></Checkbox>
-          <span>Favoris</span>
+          <span className="mr-4 ml-1">Favoris</span>
           <Checkbox
             onChange={(e) => setBoxMine(e.checked ?? false)}
             checked={boxMine}
           ></Checkbox>
-          <span>Mes recettes</span>
+          <span className="mr-4 ml-1">Mes recettes</span>
         </div>
       )}
       <SearchBar
         startData={startData}
         setFilteredRecipes={setFilteredRecipes}
       ></SearchBar>
-      <div className="recipeContainer_cards">
+      <div className="py-8 px-4 grid justify-center grid-cols-home gap-x-12 desktop:py-12 desktop:px-32">
         {recipesData.loaded ? (
           filteredRecipes.length > 0 ? (
             filteredRecipes
@@ -110,7 +109,7 @@ const RecipeContainer = (props: Props) => {
                 ></RecipeCard>
               ))
           ) : (
-            <span className="noCard">
+            <span className="text-xl my-24">
               {recipe.favourite
                 ? "Vous n'avez pas encore sélectionné vos recettes préférées !"
                 : "Je n'ai aucune recette à vous afficher malheureusement ..."}
@@ -133,6 +132,7 @@ const RecipeContainer = (props: Props) => {
             setPage(e.page)
             setFirst(e.first);
           }}
+          className="mb-8 !bg-transparent"
         ></Paginator>
       )}
     </div>

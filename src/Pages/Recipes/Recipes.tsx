@@ -26,7 +26,7 @@ const Recipes = (props: Props) => {
       }));
     }
     // eslint-disable-next-line
-  }, []);
+  }, [props.favourite, props.mine]);
 
   return (
     <div className="recipes">

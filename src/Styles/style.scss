@@ -1,0 +1,35 @@
+@use "src/Styles/_vars.scss" as c;
+
+.p-password i {
+  display: flex;
+}
+
+.p-paginator {
+  &-page {
+    color: c.$main-color !important;
+    &.p-highlight,
+    &:hover {
+      color: white !important;
+      background-color: c.$main-color !important;
+    }
+  }
+  &-element {
+    color: c.$main-color !important;
+  }
+}
+
+.p-autocomplete-panel {
+  .p-autocomplete-items {
+    text-align: left;
+    .p-autocomplete-item:hover {
+      color: white !important;
+      background-color: c.$bandeau !important;
+    }
+  }
+}
+
+.searchbar .p-multiselect-clear-icon {
+  cursor: pointer;
+  right: 1.5rem !important;
+  top: 70%;
+}

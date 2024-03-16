@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { InputText } from "primereact/inputtext";
-import Modal from "../Modal";
+import Modal from "../../ui/Modal/Modal";
 import { useDispatch } from "react-redux";
 import { Password } from "primereact/password";
-import "./ModalLogin.scss";
 import { Controller, useForm } from "react-hook-form";
 import Loader from "../../ui/Loader/loader";
 import { useState } from "react";
@@ -78,22 +77,21 @@ const ModalLogin = (props: Props) => {
       header="Connexion"
       visible={props.visible}
       setVisible={props.setVisible}
-      className={"modal modal-login"}
-      width={"20rem"}
+      className="!w-11/12 tablet:!w-[20rem]"
     >
-      <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="login__form__field">
-          <h4>Adresse email</h4>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col items-center">
+          <h4 className="font-bold mt-4 mb-2">Adresse email</h4>
           <InputText
             type="email"
             {...register("email", { required: true })}
             placeholder="Adresse email"
-            className="login__form__field-email"
+            className="w-64"
           ></InputText>
           {errors.email && <small className="p-error">L'email est obligatoire</small>}
         </div>
-        <div className="login__form__field">
-          <h4>Mot de passe</h4>
+        <div className="flex flex-col items-center">
+          <h4 className="font-bold mt-4 mb-2">Mot de passe</h4>
           <Controller
             name="password"
             control={control}
@@ -105,15 +103,15 @@ const ModalLogin = (props: Props) => {
                 {...field}
                 toggleMask
                 placeholder="Mot de passe"
-                className="login__form__field-password"
                 feedback={false}
+                inputClassName="w-64"
               />
             )}
           />
           {errors.password && <small className="p-error">{errors.password.message}</small>}
         </div>
         <div
-          className="forgot_password"
+          className="cursor-pointer underline text-right text-sm p-2"
           onClick={() => {
             props.setVisible(false);
             props.setVisibleForgot(true);
@@ -121,8 +119,8 @@ const ModalLogin = (props: Props) => {
         >
           Mot de passe oublié ?
         </div>
-        <div className="login__form__button">
-          {isloging ? <Loader /> : <Bouton>Se connecter</Bouton>}
+        <div className="mt-8 flex justify-center">
+          {isloging ? <Loader size="2rem" className="p-0 flex items-center justify-center" /> : <Bouton>Se connecter</Bouton>}
         </div>
       </form>
     </Modal>

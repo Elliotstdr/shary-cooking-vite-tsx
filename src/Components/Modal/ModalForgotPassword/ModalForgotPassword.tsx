@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { InputText } from "primereact/inputtext";
-import Modal from "../Modal";
+import Modal from "../../ui/Modal/Modal";
 import { useDispatch } from "react-redux";
 import { Password } from "primereact/password";
-import "./ModalForgotPassword.scss";
 import { Controller, useForm } from "react-hook-form";
 import Loader from "../../ui/Loader/loader";
 import { useState } from "react";
@@ -116,33 +115,32 @@ const ModalForgotPassword = (props: Props) => {
       header="Connexion"
       visible={props.visible}
       setVisible={props.setVisible}
-      className={"modal modal-login"}
-      width={"20rem"}
+      className="!w-11/12 tablet:!w-[20rem]"
     >
-      <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         {isSendingMail ? (
           <>
-            <div className="login__form__field">
-              <h4>Adresse email</h4>
+            <div className="flex flex-col items-center">
+              <h4 className="font-bold mt-4 mb-2">Adresse email</h4>
               <InputText
                 type="email"
                 {...register("email")}
                 placeholder="Adresse email"
-                className="login__form__field-email"
+                className="w-64"
               />
             </div>
-            <h5>
+            <h5 className="font-bold my-4 text-sm">
               Renseignez l'email de votre compte, un email avec la clé de
               réinitialisation de votre mot de passe va vous être envoyé
             </h5>
-            <div className="login__form__button">
-              {isloging ? <Loader /> : <Bouton>Envoyer</Bouton>}
+            <div className="mt-8 flex justify-center">
+              {isloging ? <Loader size="2rem" className="p-0 flex items-center justify-center" /> : <Bouton>Envoyer</Bouton>}
             </div>
           </>
         ) : (
           <>
-            <div className="login__form__field">
-              <h4>Clé de réinitialisation :</h4>
+            <div className="flex flex-col items-center">
+              <h4 className="font-bold mt-4 mb-2">Clé de réinitialisation :</h4>
               <Controller
                 name="resetKey"
                 control={control}
@@ -153,13 +151,13 @@ const ModalForgotPassword = (props: Props) => {
                     feedback={false}
                     autoComplete="new-password"
                     placeholder="Clé de réinitialisation"
-                    className="login__form__field-resetKey"
+                    inputClassName="w-64"
                   />
                 )}
               />
             </div>
-            <div className="login__form__field">
-              <h4>Nouveau mot de passe</h4>
+            <div className="flex flex-col items-center">
+              <h4 className="font-bold mt-4 mb-2">Nouveau mot de passe</h4>
               <Controller
                 name="newPassword"
                 control={control}
@@ -169,20 +167,20 @@ const ModalForgotPassword = (props: Props) => {
                     toggleMask
                     autoComplete="new-password"
                     placeholder="mot de passe"
-                    className={"login__form__field-newPassword"}
+                    inputClassName="w-64"
                   />
                 )}
               />
             </div>
             <div
-              className="send_new_mail"
+              className="cursor-pointer underline text-right text-sm p-2"
               onClick={() => oldValues && sendMail(oldValues)}
             >
               Renvoyer le mail
             </div>
             {error && <small className="p-error">{error}</small>}
-            <div className="login__form__button">
-              {isloging ? <Loader /> : <Bouton>Changer de mot de passe</Bouton>}
+            <div className="mt-8 flex justify-center">
+              {isloging ? <Loader size="2rem" className="p-0 flex items-center justify-center" /> : <Bouton>Changer de mot de passe</Bouton>}
             </div>
           </>
         )}

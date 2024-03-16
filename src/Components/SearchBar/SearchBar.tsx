@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "./SearchBar.scss";
 import { MultiSelect } from "primereact/multiselect";
 import { useSelector } from "react-redux";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import Loader from "../ui/Loader/loader";
+import { useScreenSize } from "../../Hooks/useScreenSize.hook";
 
 interface Props {
   startData: Array<Recipe>
@@ -19,6 +19,7 @@ interface TimeList {
 }
 
 const SearchBar = (props: Props) => {
+  const screenSize = useScreenSize()
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
   const [moreVisible, setMoreVisible] = useState(false);
   const [visibleMobile, setVisibleMobile] = useState(false);
@@ -28,6 +29,11 @@ const SearchBar = (props: Props) => {
   const [keyword, setKeyword] = useState("");
   const [time, setTime] = useState<TimeList | null>(null);
   const [ingredient, setIngredient] = useState<IngredientData[] | null>(null);
+
+  useEffect(() => {
+    screenSize.width > 1100 && setVisibleMobile(true)
+    // eslint-disable-next-line
+  }, [])
 
   useEffect(() => {
     let tempRecipes = props.startData;
@@ -125,18 +131,19 @@ const SearchBar = (props: Props) => {
   return (
     <>
       {secondaryTables.users && secondaryTables.ingData ?
-        <div className="searchbar">
+        <div className="searchbar mt-8 flex flex-col desktop:mt-12">
           <div
-            className="searchbar__mobile"
+            className="flex items-center cursor-pointer font-bold bg-white rounded-md p-4 mx-auto border-solid border-search border-width desktop:hidden"
             onClick={() => setVisibleMobile(!visibleMobile)}
           >
-            <div className="pi pi-sliders-h"></div>
+            <div className="pi pi-sliders-h mr-2"></div>
             Filtrer
           </div>
-          <div className={`searchbar_container ${visibleMobile ? "visible" : "hidden"}`}>
-            <div className="filters">
-              <div className="group">
+          <div className={`flex flex-col items-center px-4 py-0 bg-fond transition-all duration-300 ease-in-out desktop:flex-row desktop:items-center desktop:w-[63rem] desktop:p-3 desktop:bg-white rounded-[50px] desktop:mx-auto desktop:shadow-search ${visibleMobile ? "visible-transition" : "hidden-transition"}`}>
+            <div className="flex flex-col my-4 desktop:m-0">
+              <div className="flex flex-col justify-evenly desktop:my-4 desktop:flex-row">
                 <InputText
+                  className="my-2 w-48 text-left desktop:my-0 desktop:!mx-4"
                   placeholder="Tomates farcies, ..."
                   value={keyword}
                   onChange={(e) => {
@@ -144,6 +151,7 @@ const SearchBar = (props: Props) => {
                   }}
                 ></InputText>
                 <MultiSelect
+                  className="my-2 w-48 text-left desktop:my-0 desktop:mx-4"
                   showClear
                   value={user}
                   onChange={(e) => {
@@ -161,6 +169,7 @@ const SearchBar = (props: Props) => {
                   selectedItemsLabel={user?.length + " éléments choisis"}
                 ></MultiSelect>
                 <MultiSelect
+                  className="my-2 w-48 text-left desktop:my-0 desktop:mx-4"
                   showClear
                   value={regime}
                   onChange={(e) => {
@@ -175,6 +184,7 @@ const SearchBar = (props: Props) => {
                   selectedItemsLabel={regime?.length + " éléments choisis"}
                 ></MultiSelect>
                 <MultiSelect
+                  className="my-2 w-48 text-left desktop:my-0 desktop:mx-4"
                   showClear
                   value={type}
                   onChange={(e) => {
@@ -187,8 +197,9 @@ const SearchBar = (props: Props) => {
                   placeholder="Type de plat"
                 ></MultiSelect>
               </div>
-              <div className={`group ${moreVisible}`}>
+              <div className={`flex flex-col desktop:my-4 desktop:flex-row ${moreVisible ? "mb-4" : "desktop:hidden"}`}>
                 <Dropdown
+                  className="my-2 w-48 text-left desktop:my-0 desktop:mx-4"
                   showClear
                   value={time}
                   onChange={(e) => {
@@ -199,6 +210,7 @@ const SearchBar = (props: Props) => {
                   placeholder="Temps"
                 ></Dropdown>
                 <MultiSelect
+                  className="my-2 w-48 text-left desktop:my-0 desktop:mx-4"
                   showClear
                   value={ingredient}
                   onChange={(e) => {
@@ -215,12 +227,12 @@ const SearchBar = (props: Props) => {
             </div>
             {moreVisible ? (
               <FiMinusCircle
-                className="more"
+                className="cursor-pointer text-orange ml-8 size-8"
                 onClick={() => setMoreVisible(false)}
               ></FiMinusCircle>
             ) : (
               <FiPlusCircle
-                className="more"
+                className="cursor-pointer text-orange ml-8 size-8"
                 onClick={() => setMoreVisible(true)}
               ></FiPlusCircle>
             )}

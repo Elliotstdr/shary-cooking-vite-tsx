@@ -1,5 +1,4 @@
 import React from "react";
-import "./IngredientsCreation.scss";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -65,15 +64,16 @@ const IngredientsCreation = (props: Props) => {
     transition,
   };
   return (
-    <div className="ingredient" ref={setNodeRef} style={style} {...attributes}>
+    <div className="flex relative" ref={setNodeRef} style={style} {...attributes}>
       {props.id === 1 ? (
-        <AiOutlineStop className="move_ing"></AiOutlineStop>
+        <AiOutlineStop className="cursor-pointer self-center text-2xl"></AiOutlineStop>
       ) : (
-        <BiMoveVertical className="move_ing" {...listeners}></BiMoveVertical>
+        <BiMoveVertical className="cursor-pointer self-center text-2xl" {...listeners}></BiMoveVertical>
       )}
-      <div className="ingredient_name" id="ingredient_name">
+      <div id="ingredient_name">
         <AutoComplete
-          className="recipe__form__field-ingname"
+          className="!m-1"
+          inputClassName="w-28 tablet:w-unset"
           value={props.ingredient.label}
           suggestions={props.autocompleteData}
           completeMethod={findIngredient}
@@ -94,7 +94,7 @@ const IngredientsCreation = (props: Props) => {
       </div>
       <InputText
         placeholder="3, 2.5..."
-        className="recipe__form__field-quantity"
+        className="!m-1 w-16 tablet:w-unset"
         value={props.ingredient.quantity}
         keyfilter="num"
         onChange={(e) => {
@@ -118,7 +118,7 @@ const IngredientsCreation = (props: Props) => {
         options={secondaryTables.units ?? []}
         optionLabel="label"
         placeholder="kg, unité..."
-        className="recipe__form__field-unit"
+        className="!m-1 w-24 tablet:w-unset"
         onChange={(e) => {
           const tempArray = [...props.ingredientList];
           tempArray.forEach((element) => {
@@ -134,7 +134,7 @@ const IngredientsCreation = (props: Props) => {
       ></Dropdown>
       {props.id !== 1 && (
         <RiDeleteBin6Line
-          className="bin"
+          className="cursor-pointer text-green size-6 self-center"
           onClick={(e: any) => {
             e.preventDefault();
             let tempArray = [...props.ingredientList];

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./RecipeCard.scss";
 import default2 from "../../../assets/default2.jpg";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { GiKnifeFork } from "react-icons/gi";
@@ -9,7 +8,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { CiEdit } from "react-icons/ci";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import CardDetail from "./CardDetail/CardDetail";
-import Modal from "../../Modal/Modal";
+import Modal from "../../ui/Modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import Bouton from "../../ui/Bouton/Bouton";
 import SlideIn from "../../ui/SlideIn/SlideIn";
@@ -23,6 +22,7 @@ import { updateRecipe } from "../../../Store/Reducers/recipeReducer";
 interface Props {
   recipeItem: Recipe,
   setFilteredRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>,
+  className?: string
 }
 
 const RecipeCard = (props: Props) => {
@@ -93,12 +93,14 @@ const RecipeCard = (props: Props) => {
       else return x
     }));
   }
+
+  const isSelected = () => {
+    return recipe.chosenRecipes?.length > 0 &&
+      recipe.chosenRecipes.some((recipe) => recipe.id === props.recipeItem.id)
+  }
   return (
     <div
-      className={`recipeCard cardHover ${recipe.chosenRecipes?.length > 0 &&
-        recipe.chosenRecipes.some((recipe) => recipe.id === props.recipeItem.id) &&
-        "chosen"
-        }`}
+      className={`laptop:min-h-[95%] rounded-s-md mb-8 w-80 cardHover ${props.className} ${isSelected() && "border-card-green border-solid border-4 relative"}`}
       onClick={() => {
         shoppingAction();
       }}
@@ -108,16 +110,13 @@ const RecipeCard = (props: Props) => {
         recipe.chosenRecipes.some(
           (recipe) => recipe.id === props.recipeItem.id
         ) && (
-          <BsFillCheckCircleFill className="chosen_check"></BsFillCheckCircleFill>
+          <BsFillCheckCircleFill className="absolute-centering size-20 text-card-green"></BsFillCheckCircleFill>
         )}
-      <div
-        className="recipeCard__top"
-        onClick={() => !recipe.shopping && setVisibleDetail(true)}
-      >
-        <div className="recipeCard__top__categorie">
-          <span className="etiquette"> {props.recipeItem.type.label} </span>
+      <div onClick={() => !recipe.shopping && setVisibleDetail(true)}>
+        <div className="font-bold text-picto relative flex justify-end">
+          <span className="absolute mt-4 mr-8 py-1 px-8 text-gris bg-white rounded-md"> {props.recipeItem.type.label} </span>
         </div>
-        <div className="recipeCard__top__image">
+        <div className="cursor-pointer h-48">
           {isVisibleIntersection && <img
             src={
               props.recipeItem.imageUrl
@@ -126,14 +125,15 @@ const RecipeCard = (props: Props) => {
             }
             alt="Fond news"
             loading="lazy"
+            className="w-full h-48 object-cover font-bold rounded-t-md"
           />}
         </div>
       </div>
       <div
-        className="recipeCard__corps"
+        className="flex flex-col h-[15.5rem] py-4 pl-4 items-start"
         onClick={() => !recipe.shopping && setVisibleDetail(true)}
       >
-        <div className="recipeCard__corps__author">
+        <div className="flex items-start text-sm">
           {props.recipeItem.postedByUser.imageUrl && isVisibleIntersection ? (
             <img
               src={
@@ -141,51 +141,53 @@ const RecipeCard = (props: Props) => {
                 props.recipeItem.postedByUser.imageUrl
               }
               alt="ma pp"
-              className="creatorPP"
+              className="size-6 rounded-full mr-2 object-cover"
             ></img>
           ) : (
-            <GiCook className="cooker"></GiCook>
+            <GiCook className="size-6 rounded-full mr-2 object-cover"></GiCook>
           )}
           <span>Créée par {props.recipeItem.postedByUser.name}</span>
         </div>
-        <div className="recipeCard__corps__title">{props.recipeItem.title}</div>
-        <div className="recipeCard__corps__regime">
-          <span>
-            <GiKnifeFork></GiKnifeFork>
+        <div className="cursor-pointer text-green my-6 mx-2 text-2xl line-clamp-3">{props.recipeItem.title}</div>
+        <div>
+          <span className="flex items-center">
+            <GiKnifeFork className="mx-2"></GiKnifeFork>
             {props.recipeItem.regime.label}
           </span>
         </div>
-        <div className="recipeCard__corps__number">
-          <span>
-            <BsPeople></BsPeople>
+        <div>
+          <span className="flex items-center">
+            <BsPeople className="mx-2"></BsPeople>
             {props.recipeItem.number} personnes
           </span>
         </div>
-        <div className="recipeCard__corps__time">
-          <span>
-            <BiTimer></BiTimer>
+        <div>
+          <span className="flex items-center">
+            <BiTimer className="mx-2"></BiTimer>
             {timeToString(props.recipeItem.time)}
           </span>
         </div>
       </div>
-      <div className="recipeCard__bottom">
-        <div className="recipeCard__bottom__fav">
+      <div className="flex items-center justify-around px-4 pt-2 pb-4">
+        <div className="cursor-pointer">
           {isFavorite || recipe.favourite ? (
-            <AiFillStar onClick={() => addToFavorites("delete")}></AiFillStar>
+            <AiFillStar onClick={() => addToFavorites("delete")} className="text-orange size-8"></AiFillStar>
           ) : (
             <AiOutlineStar
+              className="text-orange size-8"
               onClick={() => addToFavorites("add")}
             ></AiOutlineStar>
           )}
         </div>
         {recipe.editable && (
-          <div className="recipeCard__bottom__edit">
-            <CiEdit onClick={() => setVisibleModif(true)}></CiEdit>
+          <div className="cursor-pointer">
+            <CiEdit onClick={() => setVisibleModif(true)} className="text-green size-8"></CiEdit>
           </div>
         )}
         {recipe.editable && (
-          <div className="recipeCard__bottom__delete">
+          <div className="cursor-pointer">
             <RiDeleteBin6Line
+              className="text-green size-8"
               onClick={() => setWantToDelete(true)}
             ></RiDeleteBin6Line>
           </div>
@@ -197,15 +199,15 @@ const RecipeCard = (props: Props) => {
           setVisible={setWantToDelete}
           header={"Suppression de recette"}
         >
-          <div className="recipe_delete_modal">
-            <div className="recipe_delete_modal_question">
+          <div>
+            <div className="my-8">
               Etes vous sur de vouloir supprimer cette recette ?
             </div>
-            <div className="recipe_delete_modal_buttons">
-              <Bouton type={"normal"} btnAction={() => deleteRecipe()}>
+            <div className="flex justify-center">
+              <Bouton className="mr-4" type={"normal"} btnAction={() => deleteRecipe()}>
                 Oui
               </Bouton>
-              <Bouton type={"normal"} btnAction={() => setWantToDelete(false)}>
+              <Bouton className="mr-4" type={"normal"} btnAction={() => setWantToDelete(false)}>
                 Non
               </Bouton>
             </div>
@@ -230,7 +232,6 @@ const RecipeCard = (props: Props) => {
           visible={visibleModif}
           setVisible={setVisibleModif}
           header={"Modifier ma recette"}
-          className={"modify_recipe_modal"}
         >
           <CreateRecipe
             recipe={props.recipeItem}

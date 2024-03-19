@@ -4,7 +4,7 @@ import { GiKnifeFork } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import { GiCook } from "react-icons/gi";
 import Bouton from "../ui/Bouton/Bouton";
-import Nav from "./Nav/Nav";
+import Nav from "./Nav";
 import { logOut } from "../../Hooks/useAxiosInterceptor.hook";
 import { useScreenSize } from "../../Hooks/useScreenSize.hook";
 import { useOutsideAlerter } from "../../Hooks/useOutsideAlerter.hook";
@@ -34,7 +34,7 @@ const NavBar = () => {
             <div className="pi pi-bars mr-1"></div>
             Menu
           </div>
-          <Nav className={`absolute w-56 z-50 bg-white rounded-md text-left flex flex-col m-0 py-2 transition-all duration-300 ease-in-out ${visibleMobile ? "visible-transition" : "hidden-transition"}`}></Nav>
+          <Nav className={`absolute w-56 z-50 bg-white rounded-md text-left flex flex-col m-0 py-2 transition-300 ${visibleMobile ? "visible-transition" : "hidden-transition"}`}></Nav>
         </div>
       }
       <Bouton className="font-dilgante px-4 w-48 my-2 tablet:w-unset tablet:my-0 desktop:px-0" btnAction={() => navigate("/create")}>

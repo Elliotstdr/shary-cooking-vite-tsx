@@ -33,7 +33,7 @@ const SearchBar = (props: Props) => {
   useEffect(() => {
     screenSize.width > 1100 && setVisibleMobile(true)
     // eslint-disable-next-line
-  }, [])
+  }, [screenSize.width])
 
   useEffect(() => {
     let tempRecipes = props.startData;
@@ -133,17 +133,21 @@ const SearchBar = (props: Props) => {
       {secondaryTables.users && secondaryTables.ingData ?
         <div className="searchbar mt-8 flex flex-col desktop:mt-12">
           <div
-            className="flex items-center cursor-pointer font-bold bg-white rounded-md p-4 mx-auto border-solid border-search border-width desktop:hidden"
+            className="flex items-center cursor-pointer font-bold bg-white rounded-md p-4 mx-auto border border-search desktop:hidden"
             onClick={() => setVisibleMobile(!visibleMobile)}
           >
             <div className="pi pi-sliders-h mr-2"></div>
             Filtrer
           </div>
-          <div className={`flex flex-col items-center px-4 py-0 bg-fond transition-all duration-300 ease-in-out desktop:flex-row desktop:items-center desktop:w-[63rem] desktop:p-3 desktop:bg-white rounded-[50px] desktop:mx-auto desktop:shadow-search ${visibleMobile ? "visible-transition" : "hidden-transition"}`}>
+          <div className={`
+            flex flex-col items-center px-4 bg-fond transition-300 
+            desktop:flex-row desktop:items-center desktop:w-[63rem] desktop:p-3 desktop:bg-white rounded-[50px] desktop:mx-auto desktop:shadow-searchbar 
+            ${visibleMobile ? "visible-transition" : "hidden-transition"}
+          `}>
             <div className="flex flex-col my-4 desktop:m-0">
               <div className="flex flex-col justify-evenly desktop:my-4 desktop:flex-row">
                 <InputText
-                  className="my-2 w-48 text-left desktop:my-0 desktop:!mx-4"
+                  className="!my-2 w-48 text-left desktop:!my-0 desktop:!mx-4"
                   placeholder="Tomates farcies, ..."
                   value={keyword}
                   onChange={(e) => {

@@ -95,7 +95,7 @@ const CardDetail = (props: Props) => {
             .sort((a: Step, b: Step) => a.stepIndex - b.stepIndex)
             .map((step: Step, index: number) => (
               <div className="flex items-center flex-col mb-8 w-full" key={index}>
-                <div className="flex items-center justify-center text-3xl size-16 rounded-full font-bold text-orange border-2 border-solid border-orange">
+                <div className="flex-center text-3xl size-16 rounded-full font-bold text-orange border-detail">
                   {index + 1}
                 </div>
                 <Divider className="!w-1/2 !my-5 before:!border-t-orange"></Divider>

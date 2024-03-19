@@ -24,7 +24,7 @@ const TopRecipes = () => {
 
   return (
     <div className=" bg-white">
-      <h1 className="font-dilgante m-0 px-0 py-12 text-5xl">Les recettes au top !</h1>
+      <h1 className="font-dilgante font-bold m-0 px-0 py-12 text-5xl leading-20">Les recettes au top !</h1>
       <div className=" pb-12 grid justify-center gap-x-12 gap-y-0 grid-cols-home">
         {recipes.length > 0 ? (
           recipes

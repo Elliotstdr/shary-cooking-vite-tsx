@@ -11,9 +11,9 @@ const Login = () => {
   const [visibleModalForgot, setVisibleModalForgot] = useState(false);
 
   return (
-    <div className="h-screen flex items-center justify-center flex-col relative">
-      <img src={image} alt="background home" className="w-full h-full object-cover absolute" />
-      <div className="bg-fond p-6 rounded-xl flex items-center justify-center flex-col z-50 shadow-2xl mx-4 tablet:mx-0">
+    <div className="h-screen flex-center flex-col relative">
+      <img src={image} alt="background home" className="size-full object-cover absolute" />
+      <div className="bg-fond p-6 rounded-xl flex-center flex-col z-50 shadow-searchbar">
         <div className="text-green mb-12">
           <h1 className="text-[2rem] font-bold my-4">Bienvenue sur Shary Cooking !</h1>
         </div>

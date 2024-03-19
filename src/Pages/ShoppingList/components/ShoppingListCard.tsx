@@ -20,11 +20,11 @@ const ShoppingListCard = (props: Props) => {
             : default2
         }
         alt="Fond news"
-        className="rounded-tr-xl rounded-tl-xl w-full h-64 object-cover laptop:h-48 laptop:w-72 laptop:rounded-bl-xl laptop:rounded-tr-none"
+        className="rounded-t-xl w-full h-64 object-cover laptop:h-48 laptop:w-72 laptop:rounded-bl-xl laptop:rounded-tr-none"
       />
       <div className="flex flex-col p-6 grow justify-between laptop:py-8">
         <div className="flex items-center justify-between mt-2 mb-8 laptop:m-0">
-          <div className="mb-4 text-xl font-bold h-fit text-left max-w-[70%] line-clamp-2 laptop:line-clamp-1 laptop:mb-0">{props.recipe.title}</div>
+          <div className="text-xl font-bold max-w-[70%] line-clamp-1">{props.recipe.title}</div>
           <div>
             Créé par {props.recipe.postedByUser.name}
           </div>

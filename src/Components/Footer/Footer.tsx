@@ -25,11 +25,11 @@ const Footer = () => {
   // };
 
   return (
-    <div className="font-dilgante w-full h-32 bg-green text-white flex items-center justify-center relative laptop:h-40 desktop:h-48">
-      <img src={image} alt="" className=" invertY absolute top-4 size-12 object-cover left-4 laptop:left-8 desktop:left-16 tablet:size-24 laptop:top-8 desktop:size-32" />
-      <div className="h-full flex flex-col justify-around flex-grow-[0.5]">
-        <h1 className="text-3xl tablet:text-4xl">Shary Cooking</h1>
-        <div className="flex justify-around">
+    <div className="font-dilgante w-full py-4 bg-green text-white flex items-center justify-around relative laptop:p-8">
+      <img src={image} alt="" className=" invertY size-32 object-cover" />
+      <div className="flex flex-col gap-8 justify-around flex-grow-[0.5] laptop:gap-12">
+        <h1 className="text-3xl tablet:text-4xl !leading-12">Shary Cooking</h1>
+        <div className="flex flex-col gap-4 justify-around laptop:flex-row">
           <span
             onClick={() => navigate("/")}
             className="cursor-pointer text-sm mobile:text-base"
@@ -44,12 +44,12 @@ const Footer = () => {
           > Profil </span>
           <span
             onClick={() => setReportBugModal(true)}
-            className="hidden cursor-pointer text-sm mobile:text-base tablet:block"
+            className="cursor-pointer text-sm mobile:text-base"
           > Un problème? </span>
-          <span className="hidden cursor-pointer text-sm mobile:text-base tablet:block">Mentions légales</span>
+          <span className="cursor-pointer text-sm mobile:text-base">Mentions légales</span>
         </div>
       </div>
-      <img src={image} alt="" className="absolute top-4 size-12 object-cover right-4 laptop:right-8 desktop:right-16 tablet:size-24 laptop:top-8 desktop:size-32" />
+      <img src={image} alt="" className="size-32 object-cover" />
 
       {reportBugModal && (
         <BugReport

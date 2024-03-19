@@ -30,7 +30,7 @@ const ShoppingList = () => {
   return (
     <>
       <NavBar></NavBar>
-      <div className="my-[5%] mx-auto flex items-center justify-center">
+      <div className="my-[5%] mx-auto flex-center">
         {recipeR.chosenRecipes.length > 0 ? (
           <ShoppingListContainer
             setVisibleRecipeContainer={setVisibleRecipeContainer}

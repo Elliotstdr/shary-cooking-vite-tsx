@@ -11,7 +11,7 @@ export default {
       boxShadow: {
         home: "0px 1px 10px 0px rgba(0, 0, 0, 0.35)",
         nav: "0px 2px 20px 0px rgba(0, 0, 0, 0.4)",
-        search: "0px 1px 10px 0px rgba(0, 0, 0, 0.3)",
+        searchbar: "0px 1px 10px 0px rgba(0, 0, 0, 0.3)",
       },
       width: {
         unset: "unset",
@@ -42,6 +42,11 @@ export default {
       gris: "grey",
       transparent: "transparent",
     },
+    lineHeight: {
+      12: "3rem",
+      16: "4rem",
+      20: "5rem",
+    },
   },
   plugins: [
     plugin(function ({ addUtilities }) {
@@ -62,8 +67,19 @@ export default {
           opacity: "0",
           "max-height": "0",
         },
+        ".flex-center": {
+          display: "flex",
+          "justify-content": "center",
+          "align-items": "center",
+        },
         ".invertY": {
           transform: "rotateY(180deg)",
+        },
+        ".transition-300": {
+          transition: "all 0.3s ease-in-out",
+        },
+        ".border-detail": {
+          border: "2px solid #e86a33",
         },
       };
       addUtilities(newUtilities, ["responsive", "hover"]);

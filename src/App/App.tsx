@@ -26,7 +26,7 @@ const App = () => {
       toast: toast.current,
     }));
     // eslint-disable-next-line
-  }, []);
+  }, [toast.current]);
 
   return (
     <div className="App" id="app">

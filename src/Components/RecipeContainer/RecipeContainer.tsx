@@ -17,7 +17,6 @@ interface Props {
 const RecipeContainer = (props: Props) => {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
-  const recipe = useSelector((state: RootState) => state.recipe);
 
   const recipesData = useFetchGet<Recipe[]>(props.dataToCall);
   const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
@@ -111,7 +110,7 @@ const RecipeContainer = (props: Props) => {
               ))
           ) : (
             <span className="noCard">
-              {recipe.favourite
+              {window.location.pathname === "/fav"
                 ? "Vous n'avez pas encore sélectionné vos recettes préférées !"
                 : "Je n'ai aucune recette à vous afficher malheureusement ..."}
             </span>

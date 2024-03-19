@@ -1,9 +1,7 @@
-import { useEffect } from "react";
 import RecipeContainer from "../../Components/RecipeContainer/RecipeContainer";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Footer from "../../Components/Footer/Footer";
 import NavBar from "../../Components/NavBar/NavBar";
-import { updateRecipe } from "../../Store/Reducers/recipeReducer";
 
 interface Props {
   mine: boolean
@@ -12,21 +10,6 @@ interface Props {
 
 const Recipes = (props: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(updateRecipe({
-      editable: props.mine,
-      favourite: props.favourite,
-    }));
-    return () => {
-      dispatch(updateRecipe({
-        editable: false,
-        favourite: false,
-      }));
-    }
-    // eslint-disable-next-line
-  }, []);
 
   return (
     <div className="recipes">

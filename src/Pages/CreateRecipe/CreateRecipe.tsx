@@ -321,7 +321,7 @@ const CreateRecipe = (props: Props) => {
         onClick={() => {
           if (recipe.savedForm) {
             setIsRestored(true);
-            fillForm(recipe.savedForm)
+            fillForm({ ...recipe.savedForm })
           }
         }}
         className="options restore"

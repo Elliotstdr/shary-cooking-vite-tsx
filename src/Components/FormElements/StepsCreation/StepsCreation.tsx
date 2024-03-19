@@ -22,13 +22,14 @@ const StepsCreation = (props: Props) => {
               className="recipe__form__field-step"
               value={step.description}
               onChange={(e) => {
-                const tempArray = [...props.stepsList];
-                tempArray.forEach((element) => {
-                  if (element.stepIndex === step.stepIndex) {
-                    element.description = e.target.value;
-                  }
-                });
-                props.setStepsList(tempArray);
+                props.setStepsList((prev) => prev.map((x) => {
+                  if (x.stepIndex === step.stepIndex) {
+                    return {
+                      ...x,
+                      description: e.target.value
+                    }
+                  } else return x
+                }))
               }}
             />
             {step.stepIndex !== 1 && (
@@ -36,11 +37,9 @@ const StepsCreation = (props: Props) => {
                 className="bin"
                 onClick={(e: any) => {
                   e.preventDefault();
-                  let tempArray = [...props.stepsList];
-                  tempArray = tempArray.filter(
-                    (element) => element.stepIndex !== step.stepIndex
-                  );
-                  props.setStepsList(tempArray);
+                  props.setStepsList((prev) => prev.filter((x) =>
+                    x.stepIndex !== step.stepIndex
+                  ))
                 }}
               ></RiDeleteBin6Line>
             )}

@@ -27,11 +27,9 @@ const ShoppingList = () => {
   const [greenButton, setGreenButton] = useState(false);
 
   useEffect(() => {
-    dispatch(updateRecipe({ shopping: true }));
     return () => {
       dispatch(updateRecipe({
-        chosenRecipes: [],
-        shopping: false,
+        chosenRecipes: []
       }));
     }
     // eslint-disable-next-line

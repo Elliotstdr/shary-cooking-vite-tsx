@@ -48,7 +48,7 @@ const RecipeCard = (props: Props) => {
       errorToast("Une erreur est survenue");
       return;
     }
-    if (recipe.favourite && actionType === "delete") {
+    if (window.location.pathname === "/fav" && actionType === "delete") {
       props.setFilteredRecipes((prev) => prev.filter((x) => x.id !== props.recipeItem.id));
     }
     setIsFavorite(!isFavorite);
@@ -65,7 +65,7 @@ const RecipeCard = (props: Props) => {
   };
 
   const shoppingAction = () => {
-    if (recipe.shopping) {
+    if (window.location.pathname === "/shop") {
       if (
         recipe.chosenRecipes.length === 0 ||
         !recipe.chosenRecipes.some(
@@ -95,7 +95,7 @@ const RecipeCard = (props: Props) => {
   }
   return (
     <div
-      className={`recipeCard cardHover ${recipe.chosenRecipes?.length > 0 &&
+      className={`recipeCard cardHover ${window.location.pathname === "/shop" && recipe.chosenRecipes?.length > 0 &&
         recipe.chosenRecipes.some((recipe) => recipe.id === props.recipeItem.id) &&
         "chosen"
         }`}
@@ -104,7 +104,7 @@ const RecipeCard = (props: Props) => {
       }}
       ref={intersectionRef}
     >
-      {recipe.chosenRecipes?.length > 0 &&
+      {window.location.pathname === "/shop" && recipe.chosenRecipes?.length > 0 &&
         recipe.chosenRecipes.some(
           (recipe) => recipe.id === props.recipeItem.id
         ) && (
@@ -112,7 +112,7 @@ const RecipeCard = (props: Props) => {
         )}
       <div
         className="recipeCard__top"
-        onClick={() => !recipe.shopping && setVisibleDetail(true)}
+        onClick={() => window.location.pathname !== "/shop" && setVisibleDetail(true)}
       >
         <div className="recipeCard__top__categorie">
           <span className="etiquette"> {props.recipeItem.type.label} </span>
@@ -131,7 +131,7 @@ const RecipeCard = (props: Props) => {
       </div>
       <div
         className="recipeCard__corps"
-        onClick={() => !recipe.shopping && setVisibleDetail(true)}
+        onClick={() => window.location.pathname !== "/shop" && setVisibleDetail(true)}
       >
         <div className="recipeCard__corps__author">
           {props.recipeItem.postedByUser.imageUrl && isVisibleIntersection ? (
@@ -170,7 +170,7 @@ const RecipeCard = (props: Props) => {
       </div>
       <div className="recipeCard__bottom">
         <div className="recipeCard__bottom__fav">
-          {isFavorite || recipe.favourite ? (
+          {isFavorite || window.location.pathname === "/fav" ? (
             <AiFillStar onClick={() => addToFavorites("delete")}></AiFillStar>
           ) : (
             <AiOutlineStar
@@ -178,12 +178,12 @@ const RecipeCard = (props: Props) => {
             ></AiOutlineStar>
           )}
         </div>
-        {recipe.editable && (
+        {props.recipeItem.postedByUser.id === auth.userConnected?.id && window.location.pathname !== "/shop" && (
           <div className="recipeCard__bottom__edit">
             <CiEdit onClick={() => setVisibleModif(true)}></CiEdit>
           </div>
         )}
-        {recipe.editable && (
+        {props.recipeItem.postedByUser.id === auth.userConnected?.id && window.location.pathname !== "/shop" && (
           <div className="recipeCard__bottom__delete">
             <RiDeleteBin6Line
               onClick={() => setWantToDelete(true)}

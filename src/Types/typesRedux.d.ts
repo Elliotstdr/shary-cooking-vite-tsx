@@ -14,9 +14,6 @@ type AuthState = {
 
 type RecipeState = {
   chosenRecipes: Recipe[],
-  editable: boolean,
-  shopping: boolean,
-  favourite: boolean,
   savedForm: any
 }
 

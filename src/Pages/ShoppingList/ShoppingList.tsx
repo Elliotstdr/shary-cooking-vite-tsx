@@ -17,11 +17,9 @@ const ShoppingList = () => {
   const [stringShopping, setStringShopping] = useState("");
 
   useEffect(() => {
-    dispatch(updateRecipe({ shopping: true }));
     return () => {
       dispatch(updateRecipe({
         chosenRecipes: [],
-        shopping: false,
       }));
     }
     // eslint-disable-next-line

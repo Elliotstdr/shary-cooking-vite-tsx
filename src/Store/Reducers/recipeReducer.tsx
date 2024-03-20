@@ -2,9 +2,6 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState: RecipeState = {
   chosenRecipes: [],
-  editable: false,
-  shopping: false,
-  favourite: false,
   savedForm: null
 };
 

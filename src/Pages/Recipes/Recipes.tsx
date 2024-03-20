@@ -3,7 +3,6 @@ import RecipeContainer from "../../Components/RecipeContainer/RecipeContainer";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../Components/Footer/Footer";
 import NavBar from "../../Components/NavBar/NavBar";
-import { updateRecipe } from "../../Store/Reducers/recipeReducer";
 import { useFetchGet } from "../../Hooks/api.hook";
 import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
 
@@ -27,20 +26,6 @@ const Recipes = (props: Props) => {
       }))
     // eslint-disable-next-line
   }, [ingredientData.loaded, usersData.loaded])
-
-  useEffect(() => {
-    dispatch(updateRecipe({
-      editable: props.mine,
-      favourite: props.favourite,
-    }));
-    return () => {
-      dispatch(updateRecipe({
-        editable: false,
-        favourite: false,
-      }));
-    }
-    // eslint-disable-next-line
-  }, [props.favourite, props.mine]);
 
   return (
     <>

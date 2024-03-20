@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import default2 from "src/assets/default2.jpg";
 
 type Props = {
@@ -8,10 +7,8 @@ type Props = {
 }
 
 const RecipeCardTop = (props: Props) => {
-  const recipe = useSelector((state: RootState) => state.recipe);
-
   return (
-    <div onClick={() => !recipe.shopping && props.setVisibleDetail(true)}>
+    <div onClick={() => window.location.pathname !== "/shop" && props.setVisibleDetail(true)}>
       <div className="font-bold text-picto relative flex justify-end">
         <span className="absolute mt-4 mr-8 py-1 px-8 text-gris bg-white rounded-md"> {props.recipeItem.type.label} </span>
       </div>

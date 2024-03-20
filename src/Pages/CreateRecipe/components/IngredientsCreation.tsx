@@ -25,13 +25,14 @@ const IngredientsCreation = (props: Props) => {
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
 
   const modifyIngredientList = (word: string, ingredient: FormIngredient) => {
-    const tempArray = [...props.ingredientList];
-    tempArray.forEach((element) => {
-      if (element.id === ingredient.id) {
-        element.label = word;
-      }
-    });
-    props.setIngredientList(tempArray);
+    props.setIngredientList((prev) => prev.map((x) => {
+      if (x.id === ingredient.id) {
+        return {
+          ...x,
+          label: word
+        }
+      } else return x
+    }))
   };
   const findIngredient = (word: AutoCompleteCompleteEvent) => {
     const filteredData = props.ingredientData
@@ -98,13 +99,14 @@ const IngredientsCreation = (props: Props) => {
         value={props.ingredient.quantity}
         keyfilter="num"
         onChange={(e) => {
-          const tempArray = [...props.ingredientList];
-          tempArray.forEach((element) => {
-            if (element.id === props.id) {
-              element.quantity = e.target.value;
-            }
-          });
-          props.setIngredientList(tempArray);
+          props.setIngredientList((prev) => prev.map((x) => {
+            if (x.id === props.ingredient.id) {
+              return {
+                ...x,
+                quantity: e.target.value
+              }
+            } else return x
+          }))
         }}
         tooltip={
           props.id === 1
@@ -120,16 +122,15 @@ const IngredientsCreation = (props: Props) => {
         placeholder="kg, unité..."
         className="!m-1 w-24 tablet:w-unset"
         onChange={(e) => {
-          const tempArray = [...props.ingredientList];
-          tempArray.forEach((element) => {
-            if (element.id === props.id) {
-              element.unit = e.target.value;
-              if ((e.target.value as Unit).label === "un peu") {
-                element.quantity = "1"
+          props.setIngredientList((prev) => prev.map((x) => {
+            if (x.id === props.ingredient.id) {
+              return {
+                ...x,
+                unit: e.target.value,
+                quantity: (e.target.value as Unit).label === "un peu" ? "1" : x.quantity
               }
-            }
-          });
-          props.setIngredientList(tempArray);
+            } else return x
+          }))
         }}
       ></Dropdown>
       {props.id !== 1 && (
@@ -137,9 +138,7 @@ const IngredientsCreation = (props: Props) => {
           className="cursor-pointer text-green size-6 self-center"
           onClick={(e: any) => {
             e.preventDefault();
-            let tempArray = [...props.ingredientList];
-            tempArray = tempArray.filter((element) => element.id !== props.id);
-            props.setIngredientList(tempArray);
+            props.setIngredientList((prev) => prev.filter((x) => x.id !== props.id))
           }}
         ></RiDeleteBin6Line>
       )}

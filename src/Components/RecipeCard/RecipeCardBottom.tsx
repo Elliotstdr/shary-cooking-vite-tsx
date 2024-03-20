@@ -19,7 +19,6 @@ type Props = {
 }
 
 const RecipeCardBottom = (props: Props) => {
-  const recipe = useSelector((state: RootState) => state.recipe);
   const auth = useSelector((state: RootState) => state.auth);
   const [isFavorite, setIsFavorite] = useState(
     props.recipeItem.savedByUsers?.some(
@@ -38,7 +37,7 @@ const RecipeCardBottom = (props: Props) => {
       errorToast("Une erreur est survenue");
       return;
     }
-    if (recipe.favourite && actionType === "delete") {
+    if (window.location.pathname === "/fav" && actionType === "delete") {
       props.setFilteredRecipes((prev) => prev.filter((x) => x.id !== props.recipeItem.id));
     }
     setIsFavorite(!isFavorite);
@@ -56,7 +55,7 @@ const RecipeCardBottom = (props: Props) => {
   return (
     <div className="flex items-center justify-around px-4 pt-2 pb-4">
       <div className="cursor-pointer">
-        {isFavorite || recipe.favourite ? (
+        {isFavorite || window.location.pathname === "/fav" ? (
           <AiFillStar onClick={() => addToFavorites("delete")} className="text-orange size-8"></AiFillStar>
         ) : (
           <AiOutlineStar
@@ -65,12 +64,12 @@ const RecipeCardBottom = (props: Props) => {
           ></AiOutlineStar>
         )}
       </div>
-      {recipe.editable && (
+      {props.recipeItem.postedByUser.id === auth.userConnected?.id && window.location.pathname !== "/shop" && (
         <div className="cursor-pointer">
           <CiEdit onClick={() => setVisibleModif(true)} className="text-green size-8"></CiEdit>
         </div>
       )}
-      {recipe.editable && (
+      {props.recipeItem.postedByUser.id === auth.userConnected?.id && window.location.pathname !== "/shop" && (
         <div className="cursor-pointer">
           <RiDeleteBin6Line
             className="text-green size-8"

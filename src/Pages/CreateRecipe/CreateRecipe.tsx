@@ -320,7 +320,7 @@ const CreateRecipe = (props: Props) => {
         onClick={() => {
           if (recipe.savedForm) {
             setIsRestored(true);
-            fillForm(recipe.savedForm)
+            fillForm({ ...recipe.savedForm })
           }
         }}
         className="underline py-8 px-4 cursor-pointer absolute left-0"

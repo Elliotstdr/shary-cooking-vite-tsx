@@ -3,7 +3,6 @@ import RecipeCard from "../RecipeCard/RecipeCard";
 import SearchBar from "../SearchBar/SearchBar";
 import { useFetchGet } from "../../Hooks/api.hook";
 import { Paginator } from "primereact/paginator";
-import { useSelector } from "react-redux";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
 import ShoppingCheckboxes from "./ShoppingCheckboxes";
 
@@ -13,7 +12,6 @@ interface Props {
 }
 
 const RecipeContainer = (props: Props) => {
-  const recipe = useSelector((state: RootState) => state.recipe);
   const recipesData = useFetchGet<Recipe[]>(props.dataToCall);
 
   const rows = 12;
@@ -66,7 +64,7 @@ const RecipeContainer = (props: Props) => {
               ))
           ) : (
             <span className="text-xl my-24">
-              {recipe.favourite
+              {window.location.pathname === "/fav"
                 ? "Vous n'avez pas encore sélectionné vos recettes préférées !"
                 : "Je n'ai aucune recette à vous afficher malheureusement ..."}
             </span>

@@ -3,7 +3,6 @@ import { BsPeople } from "react-icons/bs";
 import { BiTimer } from "react-icons/bi";
 import { GiCook } from "react-icons/gi";
 import { timeToString } from "../../Services/functions";
-import { useSelector } from "react-redux";
 
 type Props = {
   isVisibleIntersection: boolean
@@ -12,12 +11,10 @@ type Props = {
 }
 
 const RecipeCardMiddle = (props: Props) => {
-  const recipe = useSelector((state: RootState) => state.recipe);
-
   return (
     <div
       className="flex flex-col h-[15.5rem] py-4 pl-4 items-start"
-      onClick={() => !recipe.shopping && props.setVisibleDetail(true)}
+      onClick={() => window.location.pathname !== "/shop" && props.setVisibleDetail(true)}
     >
       <div className="flex items-start text-sm">
         {props.recipeItem.postedByUser.imageUrl && props.isVisibleIntersection ? (

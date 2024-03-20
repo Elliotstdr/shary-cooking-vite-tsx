@@ -21,13 +21,14 @@ const StepsCreation = (props: Props) => {
               className="flex items-center flex-col my-4 w-full"
               value={step.description}
               onChange={(e) => {
-                const tempArray = [...props.stepsList];
-                tempArray.forEach((element) => {
-                  if (element.stepIndex === step.stepIndex) {
-                    element.description = e.target.value;
-                  }
-                });
-                props.setStepsList(tempArray);
+                props.setStepsList((prev) => prev.map((x) => {
+                  if (x.stepIndex === step.stepIndex) {
+                    return {
+                      ...x,
+                      description: e.target.value
+                    }
+                  } else return x
+                }))
               }}
             />
             {step.stepIndex !== 1 && (
@@ -35,11 +36,7 @@ const StepsCreation = (props: Props) => {
                 className="absolute cursor-pointer -right-12 w-6 h-6 self-center text-green"
                 onClick={(e: any) => {
                   e.preventDefault();
-                  let tempArray = [...props.stepsList];
-                  tempArray = tempArray.filter(
-                    (element) => element.stepIndex !== step.stepIndex
-                  );
-                  props.setStepsList(tempArray);
+                  props.setStepsList((prev) => prev.filter((x) => x.stepIndex !== step.stepIndex))
                 }}
               ></RiDeleteBin6Line>
             )}

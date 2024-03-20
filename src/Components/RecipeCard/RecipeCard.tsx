@@ -20,7 +20,7 @@ const RecipeCard = (props: Props) => {
   const [visibleDetail, setVisibleDetail] = useState(false);
 
   const shoppingAction = () => {
-    if (recipe.shopping) {
+    if (window.location.pathname === "/shop") {
       if (
         recipe.chosenRecipes.length === 0 ||
         !recipe.chosenRecipes.some(
@@ -41,7 +41,7 @@ const RecipeCard = (props: Props) => {
   };
 
   const isSelected = () => {
-    return recipe.chosenRecipes?.length > 0 &&
+    return window.location.pathname === "/shop" && recipe.chosenRecipes?.length > 0 &&
       recipe.chosenRecipes.some((recipe) => recipe.id === props.recipeItem.id)
   }
 
@@ -53,7 +53,7 @@ const RecipeCard = (props: Props) => {
       }}
       ref={intersectionRef}
     >
-      {recipe.chosenRecipes?.length > 0 &&
+      {window.location.pathname === "/shop" && recipe.chosenRecipes?.length > 0 &&
         recipe.chosenRecipes.some(
           (recipe) => recipe.id === props.recipeItem.id
         ) && (

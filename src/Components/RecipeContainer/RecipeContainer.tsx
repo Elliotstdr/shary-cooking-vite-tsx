@@ -28,7 +28,7 @@ const RecipeContainer = (props: Props) => {
       setStartData(recipesData.data);
     }
     // eslint-disable-next-line
-  }, [recipesData.loaded])
+  }, [recipesData])
 
   useEffect(() => {
     window.scroll({

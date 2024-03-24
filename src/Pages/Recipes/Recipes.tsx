@@ -16,16 +16,14 @@ const Recipes = (props: Props) => {
   const dispatch = useDispatch();
 
   const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
-  const usersData = useFetchGet<RestrictedUser[]>("/users");
 
   useEffect(() => {
-    ingredientData.loaded && usersData.loaded &&
+    ingredientData.loaded && ingredientData.data &&
       dispatch(updateSecondaryTables({
-        users: usersData.data,
         ingData: ingredientData.data
       }))
     // eslint-disable-next-line
-  }, [ingredientData.loaded, usersData.loaded])
+  }, [ingredientData.loaded, ingredientData.data])
 
   return (
     <>

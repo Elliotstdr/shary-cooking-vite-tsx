@@ -3,7 +3,7 @@ import { MultiSelect } from "primereact/multiselect";
 import { useSelector } from "react-redux";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
-import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
+import { GrPowerReset } from "react-icons/gr";
 import Loader from "../ui/Loader/loader";
 import { useScreenSize } from "../../Hooks/useScreenSize.hook";
 
@@ -21,11 +21,10 @@ interface TimeList {
 const SearchBar = (props: Props) => {
   const screenSize = useScreenSize()
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
-  const [moreVisible, setMoreVisible] = useState(false);
   const [visibleMobile, setVisibleMobile] = useState(false);
+  const [reset, setReset] = useState(false)
   const [regime, setRegime] = useState<Regime[] | null>(null);
   const [type, setType] = useState<Type[] | null>(null);
-  const [user, setUser] = useState<RestrictedUser[] | null>(null);
   const [keyword, setKeyword] = useState("");
   const [time, setTime] = useState<TimeList | null>(null);
   const [ingredient, setIngredient] = useState<IngredientData[] | null>(null);
@@ -37,11 +36,6 @@ const SearchBar = (props: Props) => {
 
   useEffect(() => {
     let tempRecipes = props.startData;
-    if (user && user?.length > 0) {
-      tempRecipes = tempRecipes.filter((recipe) =>
-        user.some((user) => user.id === recipe.postedByUser.id)
-      );
-    }
     if (regime && regime?.length > 0) {
       tempRecipes = tempRecipes.filter((recipe) =>
         regime.some((reg) => reg.id === recipe.regime.id)
@@ -67,19 +61,20 @@ const SearchBar = (props: Props) => {
     }
 
     if (
-      (!user || user?.length === 0) &&
       (!regime || regime?.length === 0) &&
       (!type || type?.length === 0) &&
       (!time) &&
       (!ingredient || ingredient?.length === 0) &&
       keyword === ""
     ) {
+      setReset(false)
       props.setFilteredRecipes(props.startData);
     } else {
+      setReset(true)
       props.setFilteredRecipes(tempRecipes);
     }
     // eslint-disable-next-line
-  }, [user, regime, type, keyword, time, ingredient, props.startData]);
+  }, [regime, type, keyword, time, ingredient, props.startData]);
 
   const timeList: TimeList[] = [
     {
@@ -130,7 +125,7 @@ const SearchBar = (props: Props) => {
 
   return (
     <>
-      {secondaryTables.users && secondaryTables.ingData ?
+      {secondaryTables.ingData ?
         <div className="searchbar mt-8 flex flex-col desktop:mt-12">
           <div
             className="flex items-center cursor-pointer font-bold bg-white rounded-md p-4 mx-auto border border-search desktop:hidden"
@@ -141,13 +136,12 @@ const SearchBar = (props: Props) => {
           </div>
           <div className={`
             flex flex-col items-center px-4 bg-fond transition-300 
-            desktop:flex-row desktop:items-center desktop:w-[63rem] desktop:p-3 desktop:bg-white rounded-[50px] desktop:mx-auto desktop:shadow-searchbar 
+            desktop:flex-row desktop:items-center desktop:py-2 desktop:px-6 desktop:bg-white rounded-[12px] desktop:mx-auto desktop:shadow-searchbar 
             ${visibleMobile ? "visible-transition" : "hidden-transition"}
           `}>
-            <div className="flex flex-col my-4 desktop:m-0">
-              <div className="flex flex-col justify-evenly desktop:my-4 desktop:flex-row">
+            <div className="flex flex-col my-4 desktop:m-0 desktop:gap-4 desktop:py-4">
+              <div className="flex flex-col desktop:flex-row gap-4 relative desktop:gap-8">
                 <InputText
-                  className="!my-2 w-48 text-left desktop:!my-0 desktop:!mx-4"
                   placeholder="Tomates farcies, ..."
                   value={keyword}
                   onChange={(e) => {
@@ -155,25 +149,6 @@ const SearchBar = (props: Props) => {
                   }}
                 ></InputText>
                 <MultiSelect
-                  className="my-2 w-48 text-left desktop:my-0 desktop:mx-4"
-                  showClear
-                  value={user}
-                  onChange={(e) => {
-                    setUser(e.value);
-                  }}
-                  options={secondaryTables.users.filter((user: RestrictedUser) =>
-                    props.startData?.some(
-                      (recipe) => recipe.postedByUser.id === user.id
-                    )
-                  )}
-                  optionLabel="name"
-                  filter
-                  placeholder="Créée par"
-                  maxSelectedLabels={2}
-                  selectedItemsLabel={user?.length + " éléments choisis"}
-                ></MultiSelect>
-                <MultiSelect
-                  className="my-2 w-48 text-left desktop:my-0 desktop:mx-4"
                   showClear
                   value={regime}
                   onChange={(e) => {
@@ -182,13 +157,11 @@ const SearchBar = (props: Props) => {
                   options={secondaryTables?.regimes?.filter((regime) =>
                     props.startData?.some((recipe) => recipe.regime.id === regime.id)
                   )}
-                  optionLabel="label"
                   placeholder="Régime alimentaire"
                   maxSelectedLabels={2}
                   selectedItemsLabel={regime?.length + " éléments choisis"}
                 ></MultiSelect>
                 <MultiSelect
-                  className="my-2 w-48 text-left desktop:my-0 desktop:mx-4"
                   showClear
                   value={type}
                   onChange={(e) => {
@@ -197,24 +170,18 @@ const SearchBar = (props: Props) => {
                   options={secondaryTables?.types?.filter((type) =>
                     props.startData?.some((recipe) => recipe.type.id === type.id)
                   )}
-                  optionLabel="label"
                   placeholder="Type de plat"
                 ></MultiSelect>
-              </div>
-              <div className={`flex flex-col desktop:my-4 desktop:flex-row ${moreVisible ? "mb-4" : "desktop:hidden"}`}>
                 <Dropdown
-                  className="my-2 w-48 text-left desktop:my-0 desktop:mx-4"
                   showClear
                   value={time}
                   onChange={(e) => {
                     setTime(e.value);
                   }}
                   options={timeList}
-                  optionLabel="label"
                   placeholder="Temps"
                 ></Dropdown>
                 <MultiSelect
-                  className="my-2 w-48 text-left desktop:my-0 desktop:mx-4"
                   showClear
                   value={ingredient}
                   onChange={(e) => {
@@ -227,19 +194,20 @@ const SearchBar = (props: Props) => {
                   maxSelectedLabels={2}
                   selectedItemsLabel={ingredient?.length + " éléments choisis"}
                 ></MultiSelect>
+                {reset &&
+                  <GrPowerReset
+                    className="reset cursor-pointer size-8 self-center"
+                    onClick={() => {
+                      setKeyword("")
+                      setRegime(null)
+                      setIngredient(null)
+                      setTime(null)
+                      setType(null)
+                    }}
+                  ></GrPowerReset>
+                }
               </div>
             </div>
-            {moreVisible ? (
-              <FiMinusCircle
-                className="cursor-pointer text-orange ml-8 size-8"
-                onClick={() => setMoreVisible(false)}
-              ></FiMinusCircle>
-            ) : (
-              <FiPlusCircle
-                className="cursor-pointer text-orange ml-8 size-8"
-                onClick={() => setMoreVisible(true)}
-              ></FiPlusCircle>
-            )}
           </div>
         </div>
         : <Loader></Loader>

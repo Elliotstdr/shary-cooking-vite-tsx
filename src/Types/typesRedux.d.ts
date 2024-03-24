@@ -23,5 +23,4 @@ type SecondaryState = {
     regimes: Regime[] | null,
     ingTypes: IngredientType[] | null,
     ingData: IngredientData[] | null,
-    users: RestrictedUser[] | null
 }

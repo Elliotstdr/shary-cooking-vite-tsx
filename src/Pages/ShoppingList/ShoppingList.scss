@@ -75,6 +75,18 @@
       }
     }
   }
+  .p-dialog-header .header-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .bouton {
+      background-color: white !important;
+      border-radius: 12px !important;
+      &:hover {
+        color: c.$main-color !important;
+      }
+    }
+  }
 }
 
 .recipeCard.cardHover.chosen {

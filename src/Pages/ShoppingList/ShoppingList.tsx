@@ -106,21 +106,19 @@ const ShoppingList = () => {
         <Modal
           visible={visibleRecipeContainer}
           setVisible={setVisibleRecipeContainer}
-          header={"Je choisis mes recettes"}
+          header={
+            <div className="header-button">
+              <Bouton
+                type={"normal"}
+                btnTexte={"Valider"}
+                btnAction={() => setVisibleRecipeContainer(false)}
+              ></Bouton>
+            </div>
+          }
           className={"choose_recipe"}
         >
           <>
-            <Bouton
-              type={"normal"}
-              btnTexte={"Valider ma sélection"}
-              btnAction={() => setVisibleRecipeContainer(false)}
-            ></Bouton>
             <RecipeContainer dataToCall="/recipes" checkboxes></RecipeContainer>
-            <Bouton
-              type={"normal"}
-              btnTexte={"Valider ma sélection"}
-              btnAction={() => setVisibleRecipeContainer(false)}
-            ></Bouton>
           </>
         </Modal>
       )}

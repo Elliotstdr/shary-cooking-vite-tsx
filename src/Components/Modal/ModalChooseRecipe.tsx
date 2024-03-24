@@ -12,24 +12,22 @@ const ModalChooseRecipe = (props: Props) => {
     <Modal
       visible={props.visible}
       setVisible={props.setVisible}
-      header={"Je choisis mes recettes"}
-      className={"mt-12 !w-full tablet:p-6"}
+      header={
+        <div className="flex-center gap-8">
+          {/* <span>Je choisis mes recettes</span> */}
+          <Bouton
+            className="!bg-white !rounded-xl hover:!text-green"
+            type={"normal"}
+            btnTexte={"Valider"}
+            btnAction={(e) => { e.preventDefault(); props.setVisible(false) }}
+          ></Bouton>
+        </div>
+      }
+      className={"!w-full tablet:p-6"}
       contentClassName="flex items-center flex-col !bg-fond !pb-16"
     >
       <>
-        <Bouton
-          className=" mt-12 !p-6"
-          type={"normal"}
-          btnTexte={"Valider ma sélection"}
-          btnAction={() => props.setVisible(false)}
-        ></Bouton>
         <RecipeContainer dataToCall="/recipes" checkboxes></RecipeContainer>
-        <Bouton
-          className="mt-12 !p-6"
-          type={"normal"}
-          btnTexte={"Valider ma sélection"}
-          btnAction={() => props.setVisible(false)}
-        ></Bouton>
       </>
     </Modal>
   );

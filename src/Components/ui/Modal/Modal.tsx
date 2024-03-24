@@ -1,11 +1,11 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import "./Modal.scss";
 import { Dialog } from "primereact/dialog";
 
 interface Props {
   visible: boolean,
   setVisible: React.Dispatch<React.SetStateAction<boolean>>,
-  header?: string,
+  header?: string | ReactNode,
   className?: string,
   width?: string,
   height?: string,

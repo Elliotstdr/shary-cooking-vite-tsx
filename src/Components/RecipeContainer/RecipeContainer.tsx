@@ -39,16 +39,16 @@ const RecipeContainer = (props: Props) => {
 
   return (
     <div id="recipes" className={`flex flex-col ${props.checkboxes ? "w-full" : ""}`} ref={ref}>
+      <SearchBar
+        startData={startData}
+        setFilteredRecipes={setFilteredRecipes}
+      ></SearchBar>
       {props.checkboxes && recipesData.loaded &&
         <ShoppingCheckboxes
           recipesData={recipesData.data}
           setStartData={setStartData}
         ></ShoppingCheckboxes>
       }
-      <SearchBar
-        startData={startData}
-        setFilteredRecipes={setFilteredRecipes}
-      ></SearchBar>
       <div className="py-8 px-4 grid justify-center grid-cols-home gap-x-12 desktop:py-12 desktop:px-32">
         {recipesData.loaded ? (
           filteredRecipes.length > 0 ? (

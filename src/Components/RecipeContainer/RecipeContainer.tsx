@@ -4,10 +4,9 @@ import "./RecipeContainer.scss";
 import SearchBar from "../SearchBar/SearchBar";
 import { useFetchGet } from "../../Hooks/api.hook";
 import { Paginator } from "primereact/paginator";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Checkbox } from "primereact/checkbox";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
-import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
 
 interface Props {
   checkboxes?: boolean,
@@ -15,11 +14,9 @@ interface Props {
 }
 
 const RecipeContainer = (props: Props) => {
-  const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
 
   const recipesData = useFetchGet<Recipe[]>(props.dataToCall);
-  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
 
   const rows = 12;
   const ref = useRef(null);
@@ -37,14 +34,6 @@ const RecipeContainer = (props: Props) => {
       setStartData(recipesData.data);
     }
   }, [recipesData.loaded, recipesData.data]);
-
-  useEffect(() => {
-    ingredientData.loaded && ingredientData.data &&
-      dispatch(updateSecondaryTables({
-        ingData: ingredientData.data
-      }))
-    // eslint-disable-next-line
-  }, [ingredientData.loaded, ingredientData.data])
 
   useEffect(() => {
     if (recipesData.loaded && recipesData.data) {

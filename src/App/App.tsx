@@ -10,6 +10,8 @@ import { Toast } from "primereact/toast";
 import Recipes from "../Pages/Recipes/Recipes";
 import { useAxiosInterceptors } from "../Hooks/useAxiosInterceptor.hook";
 import { updateAuth } from "../Store/Reducers/authReducer";
+import Favorites from "../Pages/Favorites/Favorites";
+import MyRecipes from "../Pages/MyRecipes/MyRecipes";
 
 const App = () => {
   const isInterceptorActive = useAxiosInterceptors();
@@ -37,9 +39,9 @@ const App = () => {
             <Route path="/" element={<Accueil />}></Route>
             {auth.isConnected && (
               <>
-                <Route path="/all" element={<Recipes key={document.location.href} />}></Route>
-                <Route path="/fav" element={<Recipes favourite key={document.location.href} />}></Route>
-                <Route path="/myrecipes" element={<Recipes mine key={document.location.href} />}></Route>
+                <Route path="/all" element={<Recipes />}></Route>
+                <Route path="/fav" element={<Favorites />}></Route>
+                <Route path="/myrecipes" element={<MyRecipes />}></Route>
                 <Route path="/shop" element={<ShoppingList />}></Route>
                 <Route path="/param" element={<Parameters />}></Route>
                 <Route path="/create" element={<CreateRecipe />}></Route>

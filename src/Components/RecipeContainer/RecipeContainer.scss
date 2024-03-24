@@ -18,17 +18,6 @@
   .p-paginator {
     margin-bottom: 2rem;
     background-color: transparent;
-    &-page {
-      color: c.$main-color !important;
-      &.p-highlight,
-      &:hover {
-        color: white !important;
-        background-color: c.$main-color !important;
-      }
-    }
-    &-element {
-      color: c.$main-color !important;
-    }
   }
 }
 

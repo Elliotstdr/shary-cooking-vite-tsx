@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { GrPowerReset } from "react-icons/gr";
-import Loader from "../ui/Loader/loader";
 import { useScreenSize } from "../../Hooks/useScreenSize.hook";
 
 interface Props {
@@ -124,90 +123,85 @@ const SearchBar = (props: Props) => {
   };
 
   return (
-    <>
-      {secondaryTables.ingData ?
-        <div className="searchbar mt-8 flex flex-col desktop:mt-12 gap-2">
-          <div
-            className="flex items-center cursor-pointer font-bold bg-white rounded-md p-4 mx-auto border border-search desktop:hidden"
-            onClick={() => setVisibleMobile(!visibleMobile)}
-          >
-            <div className="pi pi-sliders-h mr-2"></div>
-            Filtrer
-          </div>
-          <div className={`flex flex-col items-center px-4 bg-fond transition-300 gap-2 relative
+    <div className="searchbar mt-8 flex flex-col desktop:mt-12 gap-2">
+      <div
+        className="flex items-center cursor-pointer font-bold bg-white rounded-md p-4 mx-auto border border-search desktop:hidden"
+        onClick={() => setVisibleMobile(!visibleMobile)}
+      >
+        <div className="pi pi-sliders-h mr-2"></div>
+        Filtrer
+      </div>
+      <div className={`flex flex-col items-center px-4 bg-fond transition-300 gap-2 relative
             desktop:flex-row desktop:p-6 desktop:bg-white rounded-[12px] desktop:mx-auto desktop:shadow-searchbar desktop:gap-8
             ${visibleMobile ? "visible-transition" : "hidden-transition"}
           `}>
-            <InputText
-              placeholder="Tomates farcies, ..."
-              value={keyword}
-              onChange={(e) => {
-                setKeyword(e.target.value);
-              }}
-            ></InputText>
-            <MultiSelect
-              showClear
-              value={regime}
-              onChange={(e) => {
-                setRegime(e.value);
-              }}
-              options={secondaryTables?.regimes?.filter((regime) =>
-                props.startData?.some((recipe) => recipe.regime.id === regime.id)
-              )}
-              placeholder="Régime alimentaire"
-              maxSelectedLabels={2}
-              selectedItemsLabel={regime?.length + " éléments choisis"}
-            ></MultiSelect>
-            <MultiSelect
-              showClear
-              value={type}
-              onChange={(e) => {
-                setType(e.value);
-              }}
-              options={secondaryTables?.types?.filter((type) =>
-                props.startData?.some((recipe) => recipe.type.id === type.id)
-              )}
-              placeholder="Type de plat"
-            ></MultiSelect>
-            <Dropdown
-              showClear
-              value={time}
-              onChange={(e) => {
-                setTime(e.value);
-              }}
-              options={timeList}
-              placeholder="Temps"
-            ></Dropdown>
-            <MultiSelect
-              showClear
-              value={ingredient}
-              onChange={(e) => {
-                setIngredient(e.value);
-              }}
-              options={secondaryTables.ingData}
-              optionLabel="name"
-              filter
-              placeholder="Ingrédient"
-              maxSelectedLabels={2}
-              selectedItemsLabel={ingredient?.length + " éléments choisis"}
-            ></MultiSelect>
-            {reset &&
-              <GrPowerReset
-                className="reset cursor-pointer size-8 self-center"
-                onClick={() => {
-                  setKeyword("")
-                  setRegime(null)
-                  setIngredient(null)
-                  setTime(null)
-                  setType(null)
-                }}
-              ></GrPowerReset>
-            }
-          </div>
-        </div>
-        : <Loader></Loader>
-      }
-    </>
+        <InputText
+          placeholder="Tomates farcies, ..."
+          value={keyword}
+          onChange={(e) => {
+            setKeyword(e.target.value);
+          }}
+        ></InputText>
+        <MultiSelect
+          showClear
+          value={regime}
+          onChange={(e) => {
+            setRegime(e.value);
+          }}
+          options={secondaryTables?.regimes?.filter((regime) =>
+            props.startData?.some((recipe) => recipe.regime.id === regime.id)
+          )}
+          placeholder="Régime alimentaire"
+          maxSelectedLabels={2}
+          selectedItemsLabel={regime?.length + " éléments choisis"}
+        ></MultiSelect>
+        <MultiSelect
+          showClear
+          value={type}
+          onChange={(e) => {
+            setType(e.value);
+          }}
+          options={secondaryTables?.types?.filter((type) =>
+            props.startData?.some((recipe) => recipe.type.id === type.id)
+          )}
+          placeholder="Type de plat"
+        ></MultiSelect>
+        <Dropdown
+          showClear
+          value={time}
+          onChange={(e) => {
+            setTime(e.value);
+          }}
+          options={timeList}
+          placeholder="Temps"
+        ></Dropdown>
+        <MultiSelect
+          showClear
+          value={ingredient}
+          onChange={(e) => {
+            setIngredient(e.value);
+          }}
+          options={secondaryTables.ingData || []}
+          optionLabel="name"
+          filter
+          placeholder="Ingrédient"
+          maxSelectedLabels={2}
+          selectedItemsLabel={ingredient?.length + " éléments choisis"}
+        ></MultiSelect>
+        {reset &&
+          <GrPowerReset
+            className="reset cursor-pointer size-8 self-center"
+            onClick={() => {
+              setKeyword("")
+              setRegime(null)
+              setIngredient(null)
+              setTime(null)
+              setType(null)
+            }}
+          ></GrPowerReset>
+        }
+      </div>
+    </div>
   );
 };
 

@@ -20,44 +20,36 @@
   .searchbar_container {
     display: flex;
     align-items: center;
-    width: 63rem;
-    padding: 0.75rem;
+    justify-content: space-evenly;
+    gap: 2rem;
+    padding: 1.5rem;
+    position: relative;
     background-color: white;
-    border-radius: 50px;
+    border-radius: 12px;
     box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.3);
     margin: 0 auto;
-    .filters {
-      display: flex;
-      flex-direction: column;
-      .group {
-        margin: 1rem 0;
-        display: flex;
-        justify-content: space-evenly;
-        &.false {
-          display: none;
-        }
-        &.true {
-          justify-content: unset;
-        }
-      }
-    }
-    .more {
+    .reset {
       cursor: pointer;
       color: c.$bandeau;
-      margin-left: 2rem;
       width: 2rem;
       height: 2rem;
+      align-self: center;
     }
     .p-multiselect,
     .p-inputtext,
     .p-dropdown {
-      margin: 0 1rem;
-      width: 12rem;
-      .p-multiselect-clear-icon {
-        cursor: pointer;
-        right: 1.5rem;
-        top: 70%;
+      width: 11rem;
+      text-align: left;
+      &-label {
+        padding: 0.75rem !important;
       }
+      &:focus,
+      &.p-focus {
+        box-shadow: none !important;
+      }
+    }
+    .reset path {
+      stroke: c.$bandeau;
     }
     .p-accordion {
       display: none;
@@ -65,21 +57,39 @@
   }
 }
 
+@media (min-width: 1021px) {
+  .searchbar {
+    .p-multiselect,
+    .p-inputtext,
+    .p-dropdown {
+      border-right-width: 0px !important;
+      border-top-width: 0px !important;
+      border-left-width: 0px !important;
+      border-radius: 0px !important;
+    }
+  }
+}
 @media (max-width: 1020px) {
   .searchbar {
     flex-direction: column;
     margin-top: 2rem;
+    gap: 0.5rem;
     &__mobile {
       display: flex;
       align-items: center;
     }
     .searchbar_container {
       width: unset;
+      margin: 0 !important;
       flex-direction: column;
+      gap: 0.5rem;
       padding: 0rem 1rem;
       background-color: c.$fond-page;
       box-shadow: unset;
       transition: all 0.3s ease-in-out;
+      .p-dropdown-label {
+        margin: 0;
+      }
       &.visible {
         visibility: visible;
         opacity: 1;
@@ -89,28 +99,6 @@
         visibility: hidden;
         opacity: 0;
         max-height: 0;
-      }
-      .p-multiselect,
-      .p-inputtext,
-      .p-dropdown {
-        margin: 0.5rem 0;
-        width: 12rem !important;
-        text-align: left;
-      }
-      .filters {
-        flex-direction: column;
-        margin: 1rem 0;
-        .group {
-          margin: 0 !important;
-          flex-direction: column;
-          &.true {
-            margin: 0;
-            margin-bottom: 1rem;
-          }
-          .p-dropdown-label {
-            margin: 0;
-          }
-        }
       }
     }
   }

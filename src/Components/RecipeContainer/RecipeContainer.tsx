@@ -20,7 +20,6 @@ const RecipeContainer = (props: Props) => {
 
   const recipesData = useFetchGet<Recipe[]>(props.dataToCall);
   const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
-  const usersData = useFetchGet<RestrictedUser[]>("/users");
 
   const rows = 12;
   const ref = useRef(null);
@@ -40,13 +39,12 @@ const RecipeContainer = (props: Props) => {
   }, [recipesData.loaded, recipesData.data]);
 
   useEffect(() => {
-    ingredientData.loaded && usersData.loaded &&
+    ingredientData.loaded && ingredientData.data &&
       dispatch(updateSecondaryTables({
-        users: usersData.data,
         ingData: ingredientData.data
       }))
     // eslint-disable-next-line
-  }, [ingredientData.loaded, usersData.loaded])
+  }, [ingredientData.loaded, ingredientData.data])
 
   useEffect(() => {
     if (recipesData.loaded && recipesData.data) {
@@ -77,6 +75,10 @@ const RecipeContainer = (props: Props) => {
 
   return (
     <div className="recipeContainer" ref={ref}>
+      <SearchBar
+        startData={startData}
+        setFilteredRecipes={setFilteredRecipes}
+      ></SearchBar>
       {props.checkboxes && (
         <div className="shopping_list_checkboxes">
           <Checkbox
@@ -91,10 +93,6 @@ const RecipeContainer = (props: Props) => {
           <span>Mes recettes</span>
         </div>
       )}
-      <SearchBar
-        startData={startData}
-        setFilteredRecipes={setFilteredRecipes}
-      ></SearchBar>
       <div className="recipeContainer_cards">
         {recipesData.loaded ? (
           filteredRecipes.length > 0 ? (

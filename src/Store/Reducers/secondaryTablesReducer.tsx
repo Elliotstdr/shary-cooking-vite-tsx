@@ -6,7 +6,6 @@ const initialState: SecondaryState = {
   regimes: null,
   ingTypes: null,
   ingData: null,
-  users: null
 };
 
 export const secondaryTablesSlice = createSlice({

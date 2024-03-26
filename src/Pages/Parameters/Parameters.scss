@@ -1,5 +1,10 @@
 @use "src/Styles/_vars.scss" as c;
 
+.parameters {
+  .p-selectbutton {
+    margin-top: 4rem;
+  }
+}
 .param__form {
   margin: 2rem;
   display: flex;
@@ -30,7 +35,7 @@
     flex-direction: column;
     margin-bottom: 1rem;
     h4 {
-      margin-bottom: 0.5rem;
+      margin: 0.5rem 0;
     }
     .p-inputtext {
       width: 15rem;

@@ -14,6 +14,8 @@ export const exportRecipe = (chosenRecipes: Array<RecipeShopping>, data: Array<I
         updatedElement.quantity = recipe.multiplyer
           ? updatedElement.quantity * recipe.multiplyer
           : updatedElement.quantity;
+
+        if(updatedElement.quantity === 0.99) updatedElement.quantity = 1
         return updatedElement;
       });
 

@@ -41,10 +41,15 @@ const ShoppingList = () => {
   }, [visibleRecipeContainer, recipeR.chosenRecipes.length]);
 
   const modifyRecipeList = (word: number, recipe: RecipeShopping) => {
-    const tempArray: RecipeShopping[] = [...recipeR.chosenRecipes];
-    tempArray.forEach((element) => {
+    const tempArray: RecipeShopping[] = [];
+    recipeR.chosenRecipes.forEach((element) => {
       if (element.id === recipe.id) {
-        element.multiplyer = word;
+        tempArray.push({
+          ...element,
+          multiplyer: word
+        });
+      } else {
+        tempArray.push({ ...element })
       }
     });
     dispatch(updateRecipe({ chosenRecipes: tempArray }));

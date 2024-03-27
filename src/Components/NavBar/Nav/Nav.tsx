@@ -42,7 +42,7 @@ const Nav = (props: Props) => {
         className={(nav) => (nav.isActive ? "nav-active" : "")}
       >
         <li>
-          <strong>Ma liste de courses</strong>
+          <strong>Mes courses</strong>
         </li>
       </NavLink>
       <NavLink

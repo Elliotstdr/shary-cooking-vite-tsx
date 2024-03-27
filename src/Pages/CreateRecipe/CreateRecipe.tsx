@@ -22,6 +22,7 @@ import Loader from "../../Components/ui/Loader/loader";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
 import { updateRecipe } from "../../Store/Reducers/recipeReducer";
+import { checkIngredients, checkSteps, getLastId, regimeTooltips } from "../../Services/createRecipeFunctions";
 
 interface Props {
   recipe?: Recipe,
@@ -60,6 +61,7 @@ const CreateRecipe = (props: Props) => {
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
   const recipe = useSelector((state: RootState) => state.recipe);
   const dispatch = useDispatch();
+  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
 
   useEffect(() => {
     if (props.recipe) fillForm(props.recipe)
@@ -70,9 +72,6 @@ const CreateRecipe = (props: Props) => {
   const [currentPictureDeleted, setCurrentPictureDeleted] = useState(false)
   const [isRestored, setIsRestored] = useState(false)
   const [hasReseted, setHasReseted] = useState(false)
-  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
-  const [activeIndex, setActiveIndex] = useState(-1);
-  const [autocompleteData, setAutocompleteData] = useState<Array<IngredientData>>([]);
   const [image, setImage] = useState(null);
   const ref = useRef(null);
   const [typeId, setTypeId] = useState(secondaryTables.types![0]?.id || 1);
@@ -86,12 +85,6 @@ const CreateRecipe = (props: Props) => {
       id: 1,
     },
   ]);
-  const regimeTooltips = [
-    "Contient tout type de nourriture",
-    "Régime sans viande ni poisson mais avec des produits d'origine animale",
-    "Régime végétarien à l'exception des produits de la mer",
-    "Régime sans viande, poisson ou produits d'origine animale",
-  ];
 
   const {
     control,
@@ -148,30 +141,6 @@ const CreateRecipe = (props: Props) => {
       time: payload.time,
     })
   }
-
-  const checkSteps = () => {
-    let response = undefined;
-    stepsList.forEach((step) => {
-      if (step.description === "") {
-        response = `L'étape ${step.stepIndex} est vide, veuillez la supprimer`;
-      }
-    });
-    return response;
-  };
-
-  const checkIngredients = () => {
-    let response = undefined;
-    ingredientList.forEach((ing) => {
-      if (
-        ing.label === "" ||
-        ing.quantity === "0" ||
-        !ing.unit
-      ) {
-        response = "Un ou plusieurs ingrédient n'est pas correctement rempli";
-      }
-    });
-    return response;
-  };
 
   const resetForm = () => {
     reset();
@@ -290,18 +259,6 @@ const CreateRecipe = (props: Props) => {
     }
   };
 
-  const getLastId = (ingredientArray: FormIngredient[]) => {
-    if (!ingredientArray) return null;
-    let sortedList = [...ingredientArray]
-    sortedList = sortedList.sort((a, b) => {
-      if (a.id === undefined && b.id === undefined) { return 0 }
-      if (a.id === undefined) { return 1 }
-      if (b.id === undefined) { return -1 }
-      return b.id - a.id;
-    })
-    return sortedList[0].id ? sortedList[0].id + 1 : null
-  }
-
   const deletePicture = async () => {
     if (!props.recipe || !props.editRecipe) return
 
@@ -315,14 +272,7 @@ const CreateRecipe = (props: Props) => {
   }
 
   return (
-    <div
-      className={(props.recipe || props.HFFillRecipe) && "modify_recipe"}
-      onClick={() => {
-        setAutocompleteData([]);
-        setActiveIndex(-1);
-      }}
-      ref={ref}
-    >
+    <div className={(props.recipe || props.HFFillRecipe) && "modify_recipe"} ref={ref}>
       {!props.recipe && !props.HFFillRecipe && <NavBar></NavBar>}
       {!isRestored && !props.recipe && !props.HFFillRecipe && <a
         onClick={() => {
@@ -418,66 +368,51 @@ const CreateRecipe = (props: Props) => {
             name="ingredients"
             control={control}
             rules={{
-              validate: () => checkIngredients(),
+              validate: () => checkIngredients(ingredientList),
             }}
             render={() =>
               <>
-                {ingredientData.data ?
-                  <>
-                    <div className="ingredients">
-                      <IngredientsCreation
-                        key={ingredientList[0].id}
-                        id={ingredientList[0].id ?? 1}
-                        ingredient={ingredientList[0]}
-                        ingredientList={ingredientList}
-                        setIngredientList={setIngredientList}
-                        ingredientData={ingredientData.data}
-                        autocompleteData={autocompleteData}
-                        setAutocompleteData={setAutocompleteData}
-                        activeIndex={activeIndex}
-                        setActiveIndex={setActiveIndex}
-                      ></IngredientsCreation>
-                      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} >
-                        <SortableContext items={itemIds} strategy={verticalListSortingStrategy} >
-                          {ingredientList.map((x) => x.id !== 1 && x.id && ingredientData.data && (
-                            <IngredientsCreation
-                              key={x.id}
-                              id={x.id}
-                              ingredient={x}
-                              ingredientList={ingredientList}
-                              setIngredientList={setIngredientList}
-                              ingredientData={ingredientData.data}
-                              autocompleteData={autocompleteData}
-                              setAutocompleteData={setAutocompleteData}
-                              activeIndex={activeIndex}
-                              setActiveIndex={setActiveIndex}
-                            ></IngredientsCreation>
-                          )
-                          )}
-                        </SortableContext>
-                      </DndContext>
-                    </div>
-                    <Bouton
-                      type={"normal"}
-                      btnAction={(e) => {
-                        e.preventDefault();
-                        const lastId = getLastId(ingredientList)
-                        lastId && setIngredientList([
-                          ...ingredientList,
-                          {
-                            unit: null,
-                            label: "",
-                            quantity: undefined,
-                            id: lastId
-                          },
-                        ]);
-                      }}
-                    >
-                      <AiOutlinePlusCircle />
-                      Ajouter un ingrédient
-                    </Bouton>
-                  </>
-                  : <Loader></Loader>}
+                <div className="ingredients">
+                  <IngredientsCreation
+                    ingredient={ingredientList[0]}
+                    ingredientList={ingredientList}
+                    setIngredientList={setIngredientList}
+                    ingredientData={ingredientData.data}
+                  ></IngredientsCreation>
+                  <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} >
+                    <SortableContext items={itemIds} strategy={verticalListSortingStrategy} >
+                      {ingredientList.map((x) => x.id !== 1 && x.id && ingredientData.data && (
+                        <IngredientsCreation
+                          key={x.id}
+                          ingredient={x}
+                          ingredientList={ingredientList}
+                          setIngredientList={setIngredientList}
+                          ingredientData={ingredientData.data}
+                        ></IngredientsCreation>
+                      )
+                      )}
+                    </SortableContext>
+                  </DndContext>
+                </div>
+                <Bouton
+                  type={"normal"}
+                  btnAction={(e) => {
+                    e.preventDefault();
+                    const lastId = getLastId(ingredientList)
+                    lastId && setIngredientList([
+                      ...ingredientList,
+                      {
+                        unit: null,
+                        label: "",
+                        quantity: undefined,
+                        id: lastId
+                      },
+                    ]);
+                  }}
+                >
+                  <AiOutlinePlusCircle />
+                  Ajouter un ingrédient
+                </Bouton>
               </>
             }
           />
@@ -490,7 +425,7 @@ const CreateRecipe = (props: Props) => {
             name="steps"
             control={control}
             rules={{
-              validate: () => checkSteps(),
+              validate: () => checkSteps(stepsList),
             }}
             render={() => (
               <StepsCreation

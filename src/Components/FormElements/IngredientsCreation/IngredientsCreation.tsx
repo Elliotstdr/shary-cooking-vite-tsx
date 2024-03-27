@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./IngredientsCreation.scss";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
@@ -11,19 +11,15 @@ import { BiMoveVertical } from "react-icons/bi";
 import { AiOutlineStop } from "react-icons/ai";
 
 interface Props {
-  id: number,
   ingredientList: Array<FormIngredient>,
   setIngredientList: React.Dispatch<React.SetStateAction<Array<FormIngredient>>>,
-  autocompleteData: Array<IngredientData>,
-  setAutocompleteData: React.Dispatch<React.SetStateAction<Array<IngredientData>>>,
-  activeIndex: number,
-  setActiveIndex: React.Dispatch<React.SetStateAction<number>>,
-  ingredientData: Array<IngredientData>,
+  ingredientData: Array<IngredientData> | null,
   ingredient: FormIngredient
 }
 
 const IngredientsCreation = (props: Props) => {
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
+  const [autocompleteData, setAutocompleteData] = useState<Array<IngredientData>>([]);
 
   const modifyIngredientList = (word: string, ingredient: FormIngredient) => {
     props.setIngredientList((prev) => prev.map((x) => {
@@ -36,6 +32,10 @@ const IngredientsCreation = (props: Props) => {
     }))
   };
   const findIngredient = (word: AutoCompleteCompleteEvent) => {
+    if (!props.ingredientData) {
+      setAutocompleteData([])
+      return
+    }
     const filteredData = props.ingredientData
       .filter((element) =>
         element.name
@@ -55,11 +55,11 @@ const IngredientsCreation = (props: Props) => {
         if (b.frequency === null) { return -1 }
         return b.frequency - a.frequency;
       });
-    props.setAutocompleteData(filteredData);
+    setAutocompleteData(filteredData);
   };
 
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: props.id });
+    useSortable({ id: props.ingredient.id || 1 });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -67,7 +67,7 @@ const IngredientsCreation = (props: Props) => {
   };
   return (
     <div className="ingredient" ref={setNodeRef} style={style} {...attributes}>
-      {props.id === 1 ? (
+      {props.ingredient.id === 1 ? (
         <AiOutlineStop className="move_ing"></AiOutlineStop>
       ) : (
         <BiMoveVertical className="move_ing" {...listeners}></BiMoveVertical>
@@ -76,17 +76,16 @@ const IngredientsCreation = (props: Props) => {
         <AutoComplete
           className="recipe__form__field-ingname"
           value={props.ingredient.label}
-          suggestions={props.autocompleteData}
+          suggestions={autocompleteData}
           completeMethod={findIngredient}
           field="name"
           placeholder="Tomates, Boeuf, ..."
           onChange={(e) =>
             modifyIngredientList(e.target.value, props.ingredient)
           }
-          onClick={() => props.setActiveIndex(props.id)}
           onSelect={(e) => modifyIngredientList(e.value.name, props.ingredient)}
           tooltip={
-            props.id === 1
+            props.ingredient.id === 1
               ? "Privilégiez la sélection des ingrédients proposés pour une meilleure performance du site"
               : undefined
           }
@@ -109,7 +108,7 @@ const IngredientsCreation = (props: Props) => {
           }))
         }}
         tooltip={
-          props.id === 1
+          props.ingredient.id === 1
             ? "Pour les décimaux utilisez le point et non la virgule"
             : undefined
         }
@@ -133,13 +132,13 @@ const IngredientsCreation = (props: Props) => {
           }))
         }}
       ></Dropdown>
-      {props.id !== 1 && (
+      {props.ingredient.id !== 1 && (
         <RiDeleteBin6Line
           className="bin"
           onClick={(e: any) => {
             e.preventDefault();
             props.setIngredientList((prev) => prev.filter((x) =>
-              x.id !== props.id
+              x.id !== props.ingredient.id
             ))
           }}
         ></RiDeleteBin6Line>

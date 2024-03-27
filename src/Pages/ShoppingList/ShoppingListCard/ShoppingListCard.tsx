@@ -2,9 +2,9 @@ import "./ShoppingListCard.scss";
 import { GiKnifeFork } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
 import { BiTimer } from "react-icons/bi";
-import default2 from "../../../assets/default2.jpg";
 import { Dropdown } from "primereact/dropdown";
 import { timeToString } from "../../../Services/functions";
+import RecipePicture from "../../../Components/RecipePicture/RecipePicture";
 
 interface Props {
   recipe: RecipeShopping,
@@ -14,15 +14,7 @@ interface Props {
 const ShoppingListCard = (props: Props) => {
   return (
     <div className="shoppingList_container_export_recipes_recipe">
-      <img
-        src={
-          props.recipe.imageUrl
-            ? import.meta.env.VITE_BASE_URL_API + props.recipe.imageUrl
-            : default2
-        }
-        alt="Fond news"
-        className="image"
-      />
+      <RecipePicture url={props.recipe.imageUrl}></RecipePicture>
       <div className="infos">
         <div className="infos_top">
           <div className="infos_top_title">{props.recipe.title}</div>

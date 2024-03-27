@@ -45,6 +45,14 @@ const Nav = (props: Props) => {
           <strong>Ma liste de courses</strong>
         </li>
       </NavLink>
+      <NavLink
+        to="/hf"
+        className={(nav) => (nav.isActive ? "nav-active" : "")}
+      >
+        <li>
+          <strong>Hello Fresh</strong>
+        </li>
+      </NavLink>
     </ul>
   );
 };

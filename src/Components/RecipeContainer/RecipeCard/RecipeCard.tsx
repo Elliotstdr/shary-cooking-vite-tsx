@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./RecipeCard.scss";
-import default2 from "../../../assets/default2.jpg";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { GiKnifeFork } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
@@ -19,6 +18,7 @@ import CreateRecipe from "../../../Pages/CreateRecipe/CreateRecipe";
 import { fetchDelete, fetchPost } from "../../../Hooks/api.hook";
 import { useIntersectionObserver } from "../../../Hooks/useIntersectionObserver.hook";
 import { updateRecipe } from "../../../Store/Reducers/recipeReducer";
+import RecipePicture from "../../RecipePicture/RecipePicture";
 
 interface Props {
   recipeItem: Recipe,
@@ -118,15 +118,9 @@ const RecipeCard = (props: Props) => {
           <span className="etiquette"> {props.recipeItem.type.label} </span>
         </div>
         <div className="recipeCard__top__image">
-          {isVisibleIntersection && <img
-            src={
-              props.recipeItem.imageUrl
-                ? import.meta.env.VITE_BASE_URL_API + props.recipeItem.imageUrl
-                : default2
-            }
-            alt="Fond news"
-            loading="lazy"
-          />}
+          {isVisibleIntersection &&
+            <RecipePicture url={props.recipeItem.imageUrl}></RecipePicture>
+          }
         </div>
       </div>
       <div

@@ -3,7 +3,6 @@ import "./CardDetail.scss";
 import { useFetchGet } from "../../../../Hooks/api.hook";
 import { timeToString } from "../../../../Services/functions";
 import Loader from "../../../ui/Loader/loader";
-import default2 from "../../../../assets/default2.jpg";
 import { GiKnifeFork } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
 import { BiTimer } from "react-icons/bi";
@@ -11,6 +10,7 @@ import { BiAward } from "react-icons/bi";
 import { Divider } from "primereact/divider";
 import { CiEdit } from "react-icons/ci";
 import { useSelector } from "react-redux";
+import RecipePicture from "../../../RecipePicture/RecipePicture";
 
 interface Props {
   id: number,
@@ -27,15 +27,7 @@ const CardDetail = (props: Props) => {
       {recipeDetail.loaded && recipeDetail.data ? (
         <>
           <div className="cardDetail_container_image">
-            <img
-              src={
-                recipeDetail.data.imageUrl
-                  ? import.meta.env.VITE_BASE_URL_API +
-                  recipeDetail.data.imageUrl
-                  : default2
-              }
-              alt="Fond news"
-            />
+            <RecipePicture url={recipeDetail.data.imageUrl}></RecipePicture>
           </div>
           <h2 className="cardDetail_container_title">
             {recipeDetail.data.title}

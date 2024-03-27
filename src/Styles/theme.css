@@ -71,6 +71,8 @@
 }
 
 .p-error {
+  font-weight: bold;
+  font-size: 1rem;
   color: #e24c4c;
 }
 

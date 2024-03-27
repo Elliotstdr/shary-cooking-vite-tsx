@@ -26,7 +26,8 @@ import { updateRecipe } from "../../Store/Reducers/recipeReducer";
 interface Props {
   recipe?: Recipe,
   editRecipe?: (item: Recipe) => void,
-  setVisibleModif?: React.Dispatch<React.SetStateAction<boolean>>
+  setVisibleModif?: React.Dispatch<React.SetStateAction<boolean>>,
+  HFFillRecipe?: HFFillRecipe
 }
 
 interface Body {
@@ -62,6 +63,7 @@ const CreateRecipe = (props: Props) => {
 
   useEffect(() => {
     if (props.recipe) fillForm(props.recipe)
+    if (props.HFFillRecipe) fillForm(props.HFFillRecipe)
     window.scrollTo(0, 0);
     // eslint-disable-next-line
   }, []);
@@ -110,9 +112,10 @@ const CreateRecipe = (props: Props) => {
 
   useEffect(() => {
     return () => {
-      if (hasReseted || props.recipe || (!image && typeId === 1 && regimeId === 1 &&
-        !ingredientList[0].label && !stepsList[0].description &&
-        !getValues("title") && getValues("time") === "00:00" && getValues("number") === "1")
+      if (hasReseted || props.recipe || props.HFFillRecipe ||
+        (!image && typeId === 1 && regimeId === 1 &&
+          !ingredientList[0].label && !stepsList[0].description &&
+          !getValues("title") && getValues("time") === "00:00" && getValues("number") === "1")
       ) return
 
       dispatch(updateRecipe({
@@ -128,7 +131,7 @@ const CreateRecipe = (props: Props) => {
     // eslint-disable-next-line
   }, [typeId, regimeId, ingredientList, stepsList, image])
 
-  const fillForm = (payload: Recipe) => {
+  const fillForm = (payload: Recipe | HFFillRecipe) => {
     setTypeId(payload.type.id);
     setRegimeId(payload.regime.id);
     setStepsList(payload.steps.sort((a, b) => a.stepIndex - b.stepIndex).map((step) => {
@@ -211,6 +214,8 @@ const CreateRecipe = (props: Props) => {
     }
     if (image) {
       data.image = image;
+    } else if (props.HFFillRecipe) {
+      data.image = props.HFFillRecipe.image
     } else {
       data.image = null;
     }
@@ -241,6 +246,8 @@ const CreateRecipe = (props: Props) => {
     setHasReseted(true)
     setIsRestored(false)
     resetForm();
+
+    props.setVisibleModif && props.setVisibleModif(false)
   };
 
   const putRecipeFunction = async () => {
@@ -309,15 +316,15 @@ const CreateRecipe = (props: Props) => {
 
   return (
     <div
-      className={props.recipe && "modify_recipe"}
+      className={(props.recipe || props.HFFillRecipe) && "modify_recipe"}
       onClick={() => {
         setAutocompleteData([]);
         setActiveIndex(-1);
       }}
       ref={ref}
     >
-      {!props.recipe && <NavBar></NavBar>}
-      {!isRestored && !props.recipe && <a
+      {!props.recipe && !props.HFFillRecipe && <NavBar></NavBar>}
+      {!isRestored && !props.recipe && !props.HFFillRecipe && <a
         onClick={() => {
           if (recipe.savedForm) {
             setIsRestored(true);
@@ -327,7 +334,7 @@ const CreateRecipe = (props: Props) => {
         className="options restore"
       > Restaurer le précedent formulaire</a>}
       <form className="recipe__form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="recipe__form__field">
+        {!props.HFFillRecipe && <div className="recipe__form__field">
           <h4>Photo :</h4>
           <ImageUpload
             {...register("image")}
@@ -339,7 +346,7 @@ const CreateRecipe = (props: Props) => {
               Supprimer l'image actuelle
             </a>
           }
-        </div>
+        </div>}
         <div className="recipe__form__group">
           <div className="recipe__form__field">
             <h4>Titre de la recette</h4>
@@ -502,8 +509,9 @@ const CreateRecipe = (props: Props) => {
             {props.recipe ? "Modifier ma recette" : "Créer ma recette"}
           </button>
         )}
+        {Object.keys(errors).length > 0 && <small className="p-error">Il y a une erreur dans le formulaire</small>}
       </form>
-      {!props.recipe && <Footer></Footer>}
+      {!props.recipe && !props.HFFillRecipe && <Footer></Footer>}
     </div>
   );
 };

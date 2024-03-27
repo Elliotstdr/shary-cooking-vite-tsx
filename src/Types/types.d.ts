@@ -79,3 +79,51 @@ type FormIngredient = {
   quantity: string | undefined,
   unit: Unit | null,
 }
+
+type HFFillRecipe = {
+  title: string,
+  time: string,
+  number: number,
+  image: string,
+  type: Type,
+  regime: Regime,
+  steps: Step[],
+  ingredients: FormIngredient[]
+}
+
+type HFRecipe = {
+  id: string,
+  imagePath: string
+  name: string
+  prepTime: string
+  ingredients: HFIngredient[]
+  steps: HFStep[]
+  tags: HFTag[]
+  yields: HFYield[]
+  averageRating: number
+}
+
+type HFIngredient = {
+  id: string,
+  name: string
+}
+
+type HFStep = {
+  index: number,
+  instructions: string
+}
+
+type HFTag = {
+  type: string,
+}
+
+type HFYield = {
+  yields: number,
+  ingredients: HFYieldsIngredient[]
+}
+
+type HFYieldsIngredient = {
+  id: string,
+  amount: number | null,
+  unit: string
+}

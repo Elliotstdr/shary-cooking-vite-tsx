@@ -1,5 +1,5 @@
 import { Key, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Login from "../../Components/Login/Login";
 import "./Accueil.scss";
 import { useFetchGet, useFetchGetConditional } from "../../Hooks/api.hook";
@@ -13,8 +13,10 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../Components/ui/Loader/loader";
 import RecipeCard from "../../Components/RecipeContainer/RecipeCard/RecipeCard";
 import { errorToast } from "../../Services/functions";
+import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
 
 const Accueil = () => {
+  const dispatch = useDispatch()
   const auth = useSelector((state: RootState) => state.auth);
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const [recipeUrl, setRecipeUrl] = useState("");
@@ -38,8 +40,8 @@ const Accueil = () => {
     // eslint-disable-next-line
   }, [recipesData.loaded])
 
+  const unitsData = useFetchGet<Unit[]>("/units");
   const typesData = useFetchGetConditional("/types", "types");
-  const unitsData = useFetchGetConditional("/units", "units");
   const regimesData = useFetchGetConditional("/regimes", "regimes");
   const ingredientTypeData = useFetchGetConditional("/ingredient_types", "ingTypes");
 
@@ -47,6 +49,12 @@ const Accueil = () => {
     if (typesData.error || unitsData.error || regimesData.error || ingredientTypeData.error) {
       errorToast("Le site a rencontré une erreur technique, veuillez revenir dans quelques minutes")
       setIsError(true)
+    }
+
+    if (unitsData.loaded && unitsData.data) {
+      dispatch(updateSecondaryTables({
+        units: unitsData.data
+      }))
     }
     // eslint-disable-next-line
   }, [typesData.loaded, unitsData.loaded, regimesData.loaded, ingredientTypeData.loaded]);

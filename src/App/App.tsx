@@ -12,6 +12,7 @@ import { useAxiosInterceptors } from "../Hooks/useAxiosInterceptor.hook";
 import { updateAuth } from "../Store/Reducers/authReducer";
 import Favorites from "../Pages/Favorites/Favorites";
 import MyRecipes from "../Pages/MyRecipes/MyRecipes";
+import HelloF from "../Pages/HelloF/HelloF";
 
 const App = () => {
   const isInterceptorActive = useAxiosInterceptors();
@@ -45,6 +46,7 @@ const App = () => {
                 <Route path="/shop" element={<ShoppingList />}></Route>
                 <Route path="/param" element={<Parameters />}></Route>
                 <Route path="/create" element={<CreateRecipe />}></Route>
+                <Route path="/hf" element={<HelloF />}></Route>
               </>
             )}
           </Routes>

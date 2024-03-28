@@ -65,8 +65,8 @@ const CreateRecipe = (props: Props) => {
 
   useEffect(() => {
     if (props.recipe) fillForm(props.recipe)
-    if (props.HFFillRecipe) fillForm(props.HFFillRecipe)
-    window.scrollTo(0, 0);
+    else if (props.HFFillRecipe) fillForm(props.HFFillRecipe)
+    else window.scrollTo(0, 0);
     // eslint-disable-next-line
   }, []);
   const [currentPictureDeleted, setCurrentPictureDeleted] = useState(false)

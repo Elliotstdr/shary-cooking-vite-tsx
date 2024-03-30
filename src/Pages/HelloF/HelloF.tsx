@@ -9,6 +9,7 @@ import CreateRecipe from "../CreateRecipe/CreateRecipe";
 import Modal from "../../Components/Modal/Modal";
 import HelloFCard from "./HelloFCard";
 import { useFetchGet } from "../../Hooks/api.hook";
+import Loader from "../../Components/ui/Loader/loader";
 
 const HelloF = () => {
   const externalToken = useFetchGet("/external_tokens")
@@ -84,7 +85,7 @@ const HelloF = () => {
               ></HelloFCard>
             ))
             : value.length === 0
-              ? <span className="empty">Indiquez un nom de recette pour trouver votre bonheur !</span>
+              ? <Loader></Loader>
               : <span className="empty">Malheureusement je ne trouve rien qui corresponde à votre recherche...</span>
           }
         </div>

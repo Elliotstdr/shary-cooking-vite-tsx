@@ -8,24 +8,37 @@ import { InputText } from "primereact/inputtext";
 import CreateRecipe from "../CreateRecipe/CreateRecipe";
 import Modal from "../../Components/Modal/Modal";
 import HelloFCard from "./HelloFCard";
+import { useFetchGet } from "../../Hooks/api.hook";
 
 const HelloF = () => {
+  const externalToken = useFetchGet("/external_tokens")
+
+  const [token, setToken] = useState("")
   const [value, setValue] = useState("")
   const [data, setData] = useState<HFRecipe[]>([])
   const [visibleRecipeForm, setVisibleRecipeForm] = useState(false)
   const [filledRecipe, setFilledRecipe] = useState<HFFillRecipe | null>(null)
 
   useEffect(() => {
-    search()
+    if (externalToken.loaded && externalToken.data) {
+      setToken(Array.isArray(externalToken.data)
+        ? externalToken.data[0].value
+        : (externalToken.data as any).value)
+    }
     // eslint-disable-next-line
-  }, [])
+  }, [externalToken.loaded])
+
+  useEffect(() => {
+    if (token) search()
+    // eslint-disable-next-line
+  }, [token])
 
   const search = () => {
     axios
-      .get(`${import.meta.env.VITE_BASE_HF_URL}?country=FR&locale=fr-FR&limit=20&order=-date&order=-rating&q=${value}`, {
+      .get(`${import.meta.env.VITE_BASE_HF_URL}&limit=20&order=-date&order=-rating&q=${value}`, {
         headers: {
           accept: "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_BASE_HF_TOKEN}`,
+          Authorization: `Bearer ${token}`,
         }
       })
       .then((response) => {

@@ -215,7 +215,11 @@ const CreateRecipe = (props: Props) => {
 
     const response = await fetchPost(`/recipes`, data);
     if (response.error) {
-      errorToast("Une erreur est survenue lors de la création de votre recette");
+      errorToast(
+        response.error?.response?.data?.detail?.includes("visiteur")
+          ? response.error.response.data.detail
+          : "Une erreur est survenue lors de la création de votre recette"
+      );
       return;
     }
     setHasReseted(true)
@@ -270,7 +274,14 @@ const CreateRecipe = (props: Props) => {
 
     const response = await fetchPost(`/recipes/${props.recipe.id}/deletePicture`, {})
 
-    if (response.error) errorToast("Une erreur est survenue")
+    if (response.error) {
+      errorToast(
+        response.error?.response?.data?.detail?.includes("visiteur")
+          ? response.error.response.data.detail
+          : "Une erreur est survenue lors de la modification de votre recette"
+      );
+      return
+    }
 
     setCurrentPictureDeleted(true)
     successToast("Image supprimée")

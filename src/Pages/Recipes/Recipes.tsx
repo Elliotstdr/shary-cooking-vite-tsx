@@ -21,7 +21,7 @@ const Recipes = () => {
   return (
     <div className="recipes">
       <NavBar></NavBar>
-      <RecipeContainer dataToCall={"/recipes"}></RecipeContainer>
+      <RecipeContainer></RecipeContainer>
       <Footer></Footer>
     </div>
   );

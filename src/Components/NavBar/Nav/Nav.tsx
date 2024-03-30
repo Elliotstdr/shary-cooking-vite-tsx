@@ -21,7 +21,7 @@ const Nav = (props: Props) => {
           <strong>Galerie</strong>
         </li>
       </NavLink>
-      <NavLink
+      {/* <NavLink
         to="/fav"
         className={(nav) => (nav.isActive ? "nav-active" : "")}
       >
@@ -36,13 +36,13 @@ const Nav = (props: Props) => {
         <li>
           <strong>Mes recettes</strong>
         </li>
-      </NavLink>
+      </NavLink> */}
       <NavLink
         to="/shop"
         className={(nav) => (nav.isActive ? "nav-active" : "")}
       >
         <li>
-          <strong>Mes courses</strong>
+          <strong>Ma liste de courses</strong>
         </li>
       </NavLink>
       <NavLink

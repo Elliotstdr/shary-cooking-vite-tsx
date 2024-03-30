@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { GrPowerReset } from "react-icons/gr";
+import { Checkbox } from "primereact/checkbox";
 
 interface Props {
   startData: Array<Recipe>
@@ -19,6 +20,7 @@ interface TimeList {
 
 const SearchBar = (props: Props) => {
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
+  const auth = useSelector((state: RootState) => state.auth);
   const [reset, setReset] = useState(false);
   const [visibleMobile, setVisibleMobile] = useState(false);
   const [regime, setRegime] = useState<Regime[] | null>(null);
@@ -26,9 +28,23 @@ const SearchBar = (props: Props) => {
   const [keyword, setKeyword] = useState("");
   const [time, setTime] = useState<TimeList | null>(null);
   const [ingredient, setIngredient] = useState<IngredientData[] | null>(null);
+  const [boxFavorites, setBoxFavorites] = useState(false);
+  const [boxMine, setBoxMine] = useState(false);
 
   useEffect(() => {
     let tempRecipes = props.startData;
+    if (boxFavorites) {
+      tempRecipes = tempRecipes.filter((recipe) =>
+        recipe.savedByUsers.some(
+          (element: RestrictedUser) => element.id === auth.userConnected?.id
+        )
+      );
+    }
+    if (boxMine) {
+      tempRecipes = tempRecipes.filter(
+        (recipe) => recipe.postedByUser.id === auth.userConnected?.id
+      );
+    }
     if (regime && regime?.length > 0) {
       tempRecipes = tempRecipes.filter((recipe) =>
         regime.some((reg) => reg.id === recipe.regime.id)
@@ -58,6 +74,7 @@ const SearchBar = (props: Props) => {
       (!type || type?.length === 0) &&
       (!time) &&
       (!ingredient || ingredient?.length === 0) &&
+      !boxMine && !boxFavorites &&
       keyword === ""
     ) {
       setReset(false)
@@ -67,7 +84,7 @@ const SearchBar = (props: Props) => {
       props.setFilteredRecipes(tempRecipes);
     }
     // eslint-disable-next-line
-  }, [regime, type, keyword, time, ingredient, props.startData]);
+  }, [regime, type, keyword, time, ingredient, boxFavorites, boxMine, props.startData]);
 
   const timeList: TimeList[] = [
     {
@@ -126,71 +143,91 @@ const SearchBar = (props: Props) => {
         Filtrer
       </div>
       <div className={`searchbar_container ${visibleMobile ? "visible" : "hidden"}`}>
-        <InputText
-          placeholder="Tomates farcies, ..."
-          value={keyword}
-          onChange={(e) => {
-            setKeyword(e.target.value);
-          }}
-        ></InputText>
-        <MultiSelect
-          showClear
-          value={regime}
-          onChange={(e) => {
-            setRegime(e.value);
-          }}
-          options={secondaryTables?.regimes?.filter((regime) =>
-            props.startData?.some((recipe) => recipe.regime.id === regime.id)
-          )}
-          placeholder="Régime alimentaire"
-          maxSelectedLabels={2}
-          selectedItemsLabel={regime?.length + " éléments choisis"}
-        ></MultiSelect>
-        <MultiSelect
-          showClear
-          value={type}
-          onChange={(e) => {
-            setType(e.value);
-          }}
-          options={secondaryTables?.types?.filter((type) =>
-            props.startData?.some((recipe) => recipe.type.id === type.id)
-          )}
-          placeholder="Type de plat"
-        ></MultiSelect>
-        <Dropdown
-          showClear
-          value={time}
-          onChange={(e) => {
-            setTime(e.value);
-          }}
-          options={timeList}
-          placeholder="Temps"
-        ></Dropdown>
-        <MultiSelect
-          showClear
-          value={ingredient}
-          onChange={(e) => {
-            setIngredient(e.value);
-          }}
-          options={secondaryTables.ingData || []}
-          optionLabel="name"
-          filter
-          placeholder="Ingrédient"
-          maxSelectedLabels={2}
-          selectedItemsLabel={ingredient?.length + " éléments choisis"}
-        ></MultiSelect>
-        {reset &&
-          <GrPowerReset
-            className="reset"
-            onClick={() => {
-              setKeyword("")
-              setRegime(null)
-              setIngredient(null)
-              setTime(null)
-              setType(null)
+        <div className="searchbar_container__top">
+          <InputText
+            placeholder="Tomates farcies, ..."
+            value={keyword}
+            onChange={(e) => {
+              setKeyword(e.target.value);
             }}
-          ></GrPowerReset>
-        }
+          ></InputText>
+          <MultiSelect
+            showClear
+            value={regime}
+            onChange={(e) => {
+              setRegime(e.value);
+            }}
+            options={secondaryTables?.regimes?.filter((regime) =>
+              props.startData?.some((recipe) => recipe.regime.id === regime.id)
+            )}
+            placeholder="Régime alimentaire"
+            maxSelectedLabels={2}
+            selectedItemsLabel={regime?.length + " éléments choisis"}
+          ></MultiSelect>
+          <MultiSelect
+            showClear
+            value={type}
+            onChange={(e) => {
+              setType(e.value);
+            }}
+            options={secondaryTables?.types?.filter((type) =>
+              props.startData?.some((recipe) => recipe.type.id === type.id)
+            )}
+            placeholder="Type de plat"
+          ></MultiSelect>
+          <Dropdown
+            showClear
+            value={time}
+            onChange={(e) => {
+              setTime(e.value);
+            }}
+            options={timeList}
+            placeholder="Temps"
+          ></Dropdown>
+          <MultiSelect
+            showClear
+            value={ingredient}
+            onChange={(e) => {
+              setIngredient(e.value);
+            }}
+            options={secondaryTables.ingData || []}
+            optionLabel="name"
+            filter
+            placeholder="Ingrédient"
+            maxSelectedLabels={2}
+            selectedItemsLabel={ingredient?.length + " éléments choisis"}
+          ></MultiSelect>
+        </div>
+        <div className="searchbar_container__bottom">
+          <div>
+            <Checkbox
+              onChange={(e) => setBoxMine(e.checked ?? false)}
+              checked={boxMine}
+            ></Checkbox>
+            <span>Mes recettes</span>
+          </div>
+          <div>
+            <Checkbox
+              onChange={(e) => setBoxFavorites(e.checked ?? false)}
+              checked={boxFavorites}
+            ></Checkbox>
+            <span>Mes favoris</span>
+          </div>
+          {reset &&
+            <GrPowerReset
+              className="reset"
+              onClick={() => {
+                setKeyword("")
+                setRegime(null)
+                setIngredient(null)
+                setTime(null)
+                setType(null)
+                setBoxMine(false)
+                setBoxFavorites(false)
+              }}
+            ></GrPowerReset>
+          }
+        </div>
       </div>
     </div>
   );

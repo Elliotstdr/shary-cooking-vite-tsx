@@ -4,19 +4,10 @@ import "./RecipeContainer.scss";
 import SearchBar from "../SearchBar/SearchBar";
 import { useFetchGet } from "../../Hooks/api.hook";
 import { Paginator } from "primereact/paginator";
-import { useSelector } from "react-redux";
-import { Checkbox } from "primereact/checkbox";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
 
-interface Props {
-  checkboxes?: boolean,
-  dataToCall: string
-}
-
-const RecipeContainer = (props: Props) => {
-  const auth = useSelector((state: RootState) => state.auth);
-
-  const recipesData = useFetchGet<Recipe[]>(props.dataToCall);
+const RecipeContainer = () => {
+  const recipesData = useFetchGet<Recipe[]>("/recipes");
 
   const rows = 12;
   const ref = useRef(null);
@@ -24,8 +15,6 @@ const RecipeContainer = (props: Props) => {
   const [first, setFirst] = useState(0);
   const [page, setPage] = useState(0)
   const [filteredRecipes, setFilteredRecipes] = useState<Array<Recipe>>([]);
-  const [boxFavorites, setBoxFavorites] = useState(false);
-  const [boxMine, setBoxMine] = useState(false);
   const [startData, setStartData] = useState<Recipe[]>([]);
 
   useEffect(() => {
@@ -34,26 +23,6 @@ const RecipeContainer = (props: Props) => {
       setStartData(recipesData.data);
     }
   }, [recipesData.loaded, recipesData.data]);
-
-  useEffect(() => {
-    if (recipesData.loaded && recipesData.data) {
-      let tempArray = [...recipesData.data];
-      if (boxFavorites) {
-        tempArray = tempArray.filter((recipe) =>
-          recipe.savedByUsers.some(
-            (element: RestrictedUser) => element.id === auth.userConnected?.id
-          )
-        );
-      }
-      if (boxMine) {
-        tempArray = tempArray.filter(
-          (recipe) => recipe.postedByUser.id === auth.userConnected?.id
-        );
-      }
-      setStartData(tempArray);
-    }
-    // eslint-disable-next-line
-  }, [boxFavorites, boxMine]);
 
   useEffect(() => {
     window.scroll({
@@ -68,20 +37,6 @@ const RecipeContainer = (props: Props) => {
         startData={startData}
         setFilteredRecipes={setFilteredRecipes}
       ></SearchBar>
-      {props.checkboxes && (
-        <div className="shopping_list_checkboxes">
-          <Checkbox
-            onChange={(e) => setBoxFavorites(e.checked ?? false)}
-            checked={boxFavorites}
-          ></Checkbox>
-          <span>Favoris</span>
-          <Checkbox
-            onChange={(e) => setBoxMine(e.checked ?? false)}
-            checked={boxMine}
-          ></Checkbox>
-          <span>Mes recettes</span>
-        </div>
-      )}
       <div className="recipeContainer_cards">
         {recipesData.loaded ? (
           filteredRecipes.length > 0 ? (

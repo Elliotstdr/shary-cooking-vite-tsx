@@ -123,7 +123,7 @@ const ShoppingList = () => {
           className={"choose_recipe"}
         >
           <>
-            <RecipeContainer dataToCall="/recipes" checkboxes></RecipeContainer>
+            <RecipeContainer></RecipeContainer>
           </>
         </Modal>
       )}

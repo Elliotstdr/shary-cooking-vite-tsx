@@ -16,7 +16,7 @@ const HelloFCard = (props: Props) => {
       title: HFRecipe.name,
       time: getTime(HFRecipe.prepTime),
       number: 2,
-      image: `${import.meta.env.VITE_BASE_HF_IMAGE_URL}${HFRecipe?.imagePath}`,
+      image: HFRecipe?.imagePath,
       type: secondaryTables?.types?.find((x) => x.label === "Plat") || { id: 2, label: "Plat" },
       regime: findRegime(HFRecipe.tags),
       steps: HFRecipe.steps.map((x) => {
@@ -31,7 +31,7 @@ const HelloFCard = (props: Props) => {
 
   return (
     <div className="HF__container__items__item">
-      <img src={`${import.meta.env.VITE_BASE_HF_IMAGE_URL}${props.recipe?.imagePath}`} alt="" />
+      <img src={props.recipe?.imagePath} alt="" />
       <div className="name">{props.recipe.name}</div>
       <Bouton btnTexte="Ajouter au site" btnAction={() => {
         fillRecipeForm(props.recipe);

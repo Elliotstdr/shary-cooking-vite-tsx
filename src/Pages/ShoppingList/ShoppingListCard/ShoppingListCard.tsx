@@ -14,7 +14,10 @@ interface Props {
 const ShoppingListCard = (props: Props) => {
   return (
     <div className="shoppingList_container_export_recipes_recipe">
-      <RecipePicture url={props.recipe.imageUrl}></RecipePicture>
+      <RecipePicture
+        url={props.recipe.imageUrl}
+        isFromHellof={props.recipe.fromHellof}
+      ></RecipePicture>
       <div className="infos">
         <div className="infos_top">
           <div className="infos_top_title">{props.recipe.title}</div>

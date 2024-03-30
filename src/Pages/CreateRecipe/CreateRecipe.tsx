@@ -41,7 +41,8 @@ interface Body {
   regime?: string,
   postedByUser?: string,
   steps?: Array<Step>,
-  ingredients?: Array<PayloadIngredient>
+  ingredients?: Array<PayloadIngredient>,
+  fromHellof?: boolean
 }
 interface Values extends Body {
   number: string,
@@ -188,6 +189,11 @@ const CreateRecipe = (props: Props) => {
     } else {
       data.image = null;
     }
+
+    if (!props.recipe) {
+      data.fromHellof = !!props.HFFillRecipe
+    }
+
     return data;
   };
 
@@ -284,7 +290,7 @@ const CreateRecipe = (props: Props) => {
         className="options restore"
       > Restaurer le précedent formulaire</a>}
       <form className="recipe__form" onSubmit={handleSubmit(onSubmit)}>
-        {!props.HFFillRecipe && <div className="recipe__form__field">
+        {!props.HFFillRecipe && !props.recipe?.fromHellof && <div className="recipe__form__field">
           <h4>Photo :</h4>
           <ImageUpload
             {...register("image")}

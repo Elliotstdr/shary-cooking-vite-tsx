@@ -119,7 +119,10 @@ const RecipeCard = (props: Props) => {
         </div>
         <div className="recipeCard__top__image">
           {isVisibleIntersection &&
-            <RecipePicture url={props.recipeItem.imageUrl}></RecipePicture>
+            <RecipePicture
+              url={props.recipeItem.imageUrl}
+              isFromHellof={props.recipeItem.fromHellof}
+            ></RecipePicture>
           }
         </div>
       </div>

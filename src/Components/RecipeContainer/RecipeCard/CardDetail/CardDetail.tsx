@@ -27,7 +27,10 @@ const CardDetail = (props: Props) => {
       {recipeDetail.loaded && recipeDetail.data ? (
         <>
           <div className="cardDetail_container_image">
-            <RecipePicture url={recipeDetail.data.imageUrl}></RecipePicture>
+            <RecipePicture
+              url={recipeDetail.data.imageUrl}
+              isFromHellof={recipeDetail.data.fromHellof}
+            ></RecipePicture>
           </div>
           <h2 className="cardDetail_container_title">
             {recipeDetail.data.title}

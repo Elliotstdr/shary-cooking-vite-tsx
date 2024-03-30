@@ -25,6 +25,7 @@ type Recipe = {
   postedByUser: RestrictedUser,
   ingredients: Ingredient[],
   steps: Steps[],
+  fromHellof: boolean
 }
 interface RecipeShopping extends Recipe {
   multiplyer?: number

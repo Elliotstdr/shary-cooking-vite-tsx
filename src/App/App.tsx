@@ -31,9 +31,9 @@ const App = () => {
 
   return (
     <div className="App" id="app">
-      {isInterceptorActive &&
-        <BrowserRouter>
-          <Toast ref={toast}></Toast>
+      <BrowserRouter>
+        <Toast ref={toast}></Toast>
+        {isInterceptorActive &&
           <Routes>
             <Route path="/" element={<Accueil />}></Route>
             {auth.isConnected && (
@@ -47,8 +47,8 @@ const App = () => {
               </>
             )}
           </Routes>
-        </BrowserRouter>
-      }
+        }
+      </BrowserRouter>
     </div>
   );
 };

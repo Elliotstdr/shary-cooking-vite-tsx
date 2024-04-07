@@ -1,137 +1,90 @@
 import React, { useEffect, useState } from "react";
 import "./SearchBar.scss";
 import { MultiSelect } from "primereact/multiselect";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { GrPowerReset } from "react-icons/gr";
 import { Checkbox } from "primereact/checkbox";
+import { resetSearch, updateSearch } from "../../Store/Reducers/searchReducer";
+import {
+  fillAvailableIngredientsOnly,
+  fillAvailableRegimesOnly,
+  fillAvailableTypesOnly,
+  filterByIngredient,
+  filterByTime,
+  timeList
+} from "../../Services/searchBarFunctions";
 
-interface Props {
-  startData: Array<Recipe>
-  setFilteredRecipes: React.Dispatch<React.SetStateAction<Array<Recipe>>>,
-  className?: string
-}
-
-interface TimeList {
-  code: string,
-  label: string
+type Props = {
+  startData: Recipe[]
+  setFilteredRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>
 }
 
 const SearchBar = (props: Props) => {
-  const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
+  const dispatch = useDispatch()
+  const search = useSelector((state: RootState) => state.search);
   const auth = useSelector((state: RootState) => state.auth);
-  const [reset, setReset] = useState(false);
   const [visibleMobile, setVisibleMobile] = useState(false);
-  const [regime, setRegime] = useState<Regime[] | null>(null);
-  const [type, setType] = useState<Type[] | null>(null);
-  const [keyword, setKeyword] = useState("");
-  const [time, setTime] = useState<TimeList | null>(null);
-  const [ingredient, setIngredient] = useState<IngredientData[] | null>(null);
-  const [boxFavorites, setBoxFavorites] = useState(false);
-  const [boxMine, setBoxMine] = useState(false);
 
   useEffect(() => {
     let tempRecipes = props.startData;
-    if (boxFavorites) {
+    if (search.boxFavorites) {
       tempRecipes = tempRecipes.filter((recipe) =>
         recipe.savedByUsers.some(
           (element: RestrictedUser) => element.id === auth.userConnected?.id
         )
       );
     }
-    if (boxMine) {
+    if (search.boxMine) {
       tempRecipes = tempRecipes.filter(
         (recipe) => recipe.postedByUser.id === auth.userConnected?.id
       );
     }
-    if (regime && regime?.length > 0) {
+
+    if (search.regime && search.regime?.length > 0) {
+      const regimeSet: Set<number> = new Set();
+      search.regime.forEach((regime) => regimeSet.add(regime.id))
+      tempRecipes = tempRecipes.filter((recipe) => regimeSet.has(recipe.regime.id));
+    }
+
+    if (search.type && search.type?.length > 0) {
+      const typeSet: Set<number> = new Set();
+      search.type.forEach((type) => typeSet.add(type.id))
+      tempRecipes = tempRecipes.filter((recipe) => typeSet.has(recipe.type.id));
+    }
+
+    if (search.keyword.length > 0) {
       tempRecipes = tempRecipes.filter((recipe) =>
-        regime.some((reg) => reg.id === recipe.regime.id)
+        recipe.title.toLowerCase().includes(search.keyword.toLowerCase())
       );
     }
-    if (type && type?.length > 0) {
-      tempRecipes = tempRecipes.filter((recipe) =>
-        type.some((typ) => typ.id === recipe.type.id)
-      );
+    if (search.ingredient && search.ingredient?.length > 0) {
+      tempRecipes = tempRecipes.filter((recipe) => filterByIngredient(recipe.ingredients));
     }
-    if (keyword.length > 0) {
-      tempRecipes = tempRecipes.filter((recipe) =>
-        recipe.title.toLowerCase().includes(keyword.toLowerCase())
-      );
-    }
-    if (ingredient && ingredient?.length > 0) {
-      tempRecipes = tempRecipes.filter((recipe) =>
-        filterByIngredient(recipe, ingredient)
-      );
-    }
-    if (time) {
-      tempRecipes = tempRecipes.filter((recipe) => filterByTime(recipe, time));
+    if (search.time) {
+      tempRecipes = tempRecipes.filter((recipe) => filterByTime(recipe.time));
     }
 
     if (
-      (!regime || regime?.length === 0) &&
-      (!type || type?.length === 0) &&
-      (!time) &&
-      (!ingredient || ingredient?.length === 0) &&
-      !boxMine && !boxFavorites &&
-      keyword === ""
+      (!search.regime || search.regime?.length === 0) &&
+      (!search.type || search.type?.length === 0) &&
+      (!search.time) &&
+      (!search.ingredient || search.ingredient?.length === 0) &&
+      !search.boxMine && !search.boxFavorites &&
+      search.keyword === ""
     ) {
-      setReset(false)
+      dispatch(updateSearch({ isSearch: false }))
       props.setFilteredRecipes(props.startData);
     } else {
-      setReset(true)
+      dispatch(updateSearch({ isSearch: true }))
       props.setFilteredRecipes(tempRecipes);
     }
     // eslint-disable-next-line
-  }, [regime, type, keyword, time, ingredient, boxFavorites, boxMine, props.startData]);
-
-  const timeList: TimeList[] = [
-    {
-      code: "rapide",
-      label: "Rapide (< 30 minutes)",
-    },
-    {
-      code: "moyen",
-      label: "Moyen (30 minutes à 1h)",
-    },
-    {
-      code: "long",
-      label: "Un peu long (1h à 1h30)",
-    },
-    {
-      code: "infini",
-      label: "Long (> 1h30)",
-    },
-  ];
-
-  const filterByIngredient = (recipe: Recipe, ingredients: IngredientData[]) => {
-    let isIn = true;
-    ingredients.forEach((ingredient) => {
-      if (!recipe.ingredients.some((ing) => ing.label === ingredient.name)) {
-        isIn = false;
-      }
-    });
-    return isIn;
-  };
-
-  const filterByTime = (recipe: Recipe, time: TimeList) => {
-    const splittedTime = recipe.time.split(":");
-    const hours = Number(splittedTime[0]);
-    const minutes = Number(splittedTime[1]);
-    switch (time.code) {
-      case "rapide":
-        return hours === 0 && minutes <= 30;
-      case "moyen":
-        return hours === 0 && minutes > 30;
-      case "long":
-        return hours === 1 && minutes <= 30;
-      case "infini":
-        return (hours === 1 && minutes > 30) || hours > 1;
-      default:
-        return false;
-    }
-  };
+  }, [
+    search.regime, search.type, search.keyword, search.time, search.ingredient,
+    search.boxFavorites, search.boxMine, props.startData
+  ]);
 
   return (
     <div className="searchbar">
@@ -146,84 +99,64 @@ const SearchBar = (props: Props) => {
         <div className="searchbar_container__top">
           <InputText
             placeholder="Tomates farcies, ..."
-            value={keyword}
-            onChange={(e) => {
-              setKeyword(e.target.value);
-            }}
+            value={search.keyword}
+            onChange={(e) => dispatch(updateSearch({ keyword: e.target.value }))}
           ></InputText>
           <MultiSelect
             showClear
-            value={regime}
-            onChange={(e) => {
-              setRegime(e.value);
-            }}
-            options={secondaryTables?.regimes?.filter((regime) =>
-              props.startData?.some((recipe) => recipe.regime.id === regime.id)
-            )}
+            value={search.regime}
+            onChange={(e) => dispatch(updateSearch({ regime: e.value }))}
+            options={fillAvailableRegimesOnly(props.startData)}
             placeholder="Régime alimentaire"
             maxSelectedLabels={2}
-            selectedItemsLabel={regime?.length + " éléments choisis"}
+            selectedItemsLabel={search.regime?.length + " éléments choisis"}
           ></MultiSelect>
           <MultiSelect
             showClear
-            value={type}
-            onChange={(e) => {
-              setType(e.value);
-            }}
-            options={secondaryTables?.types?.filter((type) =>
-              props.startData?.some((recipe) => recipe.type.id === type.id)
-            )}
+            value={search.type}
+            onChange={(e) => dispatch(updateSearch({ type: e.value }))}
+            options={fillAvailableTypesOnly(props.startData)}
             placeholder="Type de plat"
           ></MultiSelect>
           <Dropdown
             showClear
-            value={time}
-            onChange={(e) => {
-              setTime(e.value);
-            }}
+            value={search.time}
+            onChange={(e) => dispatch(updateSearch({ time: e.value }))}
             options={timeList}
             placeholder="Temps"
           ></Dropdown>
           <MultiSelect
             showClear
-            value={ingredient}
-            onChange={(e) => {
-              setIngredient(e.value);
-            }}
-            options={secondaryTables.ingData || []}
+            value={search.ingredient}
+            onChange={(e) => dispatch(updateSearch({ ingredient: e.value }))}
+            options={fillAvailableIngredientsOnly(props.startData)}
             optionLabel="name"
             filter
             placeholder="Ingrédient"
             maxSelectedLabels={2}
-            selectedItemsLabel={ingredient?.length + " éléments choisis"}
+            selectedItemsLabel={search.ingredient?.length + " éléments choisis"}
           ></MultiSelect>
         </div>
         <div className="searchbar_container__bottom">
           <div>
             <Checkbox
-              onChange={(e) => setBoxMine(e.checked ?? false)}
-              checked={boxMine}
+              onChange={(e) => dispatch(updateSearch({ boxMine: e.checked || false }))}
+              checked={search.boxMine}
             ></Checkbox>
             <span>Mes recettes</span>
           </div>
           <div>
             <Checkbox
-              onChange={(e) => setBoxFavorites(e.checked ?? false)}
-              checked={boxFavorites}
+              onChange={(e) => dispatch(updateSearch({ boxFavorites: e.checked || false }))}
+              checked={search.boxFavorites}
             ></Checkbox>
             <span>Mes favoris</span>
           </div>
-          {reset &&
+          {search.isSearch &&
             <GrPowerReset
               className="reset"
               onClick={() => {
-                setKeyword("")
-                setRegime(null)
-                setIngredient(null)
-                setTime(null)
-                setType(null)
-                setBoxMine(false)
-                setBoxFavorites(false)
+                dispatch(resetSearch())
               }}
             ></GrPowerReset>
           }

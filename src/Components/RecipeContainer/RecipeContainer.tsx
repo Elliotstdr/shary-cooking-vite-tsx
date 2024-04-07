@@ -47,14 +47,12 @@ const RecipeContainer = () => {
                 <RecipeCard
                   key={recipe.id}
                   recipeItem={recipe}
-                  setFilteredRecipes={setFilteredRecipes}
+                  setRecipes={setStartData}
                 ></RecipeCard>
               ))
           ) : (
             <span className="noCard">
-              {window.location.pathname === "/fav"
-                ? "Vous n'avez pas encore sélectionné vos recettes préférées !"
-                : "Je n'ai aucune recette à vous afficher malheureusement ..."}
+              {"Je n'ai aucune recette à vous afficher malheureusement ..."}
             </span>
           )
         ) : (

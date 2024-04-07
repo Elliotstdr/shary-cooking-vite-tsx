@@ -5,17 +5,18 @@ import authReducer from "./Reducers/authReducer";
 import secondaryTablesReducer from "./Reducers/secondaryTablesReducer";
 import recipeReducer from "./Reducers/recipeReducer";
 import { configureStore } from "@reduxjs/toolkit";
+import searchReducer from "./Reducers/searchReducer";
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "secondaryTables", "recipe"],
 };
 
 const rootReducer = combineReducers<RootState>({
   auth: authReducer,
   recipe: recipeReducer,
   secondaryTables: secondaryTablesReducer,
+  search: searchReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -22,7 +22,7 @@ import RecipePicture from "../../RecipePicture/RecipePicture";
 
 interface Props {
   recipeItem: Recipe,
-  setFilteredRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>,
+  setRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>,
 }
 
 const RecipeCard = (props: Props) => {
@@ -48,9 +48,10 @@ const RecipeCard = (props: Props) => {
       errorToast("Une erreur est survenue");
       return;
     }
-    if (window.location.pathname === "/fav" && actionType === "delete") {
-      props.setFilteredRecipes((prev) => prev.filter((x) => x.id !== props.recipeItem.id));
-    }
+
+    props.setRecipes((prev) => prev.map((x) => {
+      return x.id === props.recipeItem.id ? response.data : x
+    }));
     setIsFavorite(!isFavorite);
   };
 
@@ -61,7 +62,7 @@ const RecipeCard = (props: Props) => {
       return;
     }
     setWantToDelete(false);
-    props.setFilteredRecipes((prev) => prev.filter((x) => x.id !== props.recipeItem.id));
+    props.setRecipes((prev) => prev.filter((x) => x.id !== props.recipeItem.id));
   };
 
   const shoppingAction = () => {
@@ -86,11 +87,8 @@ const RecipeCard = (props: Props) => {
   };
 
   const editRecipe = (item: Recipe) => {
-    props.setFilteredRecipes((prev) => prev.map((x) => {
-      if (x.id === item.id) {
-        return item
-      }
-      else return x
+    props.setRecipes((prev) => prev.map((x) => {
+      return x.id === item.id ? item : x
     }));
   }
   return (
@@ -167,7 +165,7 @@ const RecipeCard = (props: Props) => {
       </div>
       <div className="recipeCard__bottom">
         <div className="recipeCard__bottom__fav">
-          {isFavorite || window.location.pathname === "/fav" ? (
+          {isFavorite ? (
             <AiFillStar onClick={() => addToFavorites("delete")}></AiFillStar>
           ) : (
             <AiOutlineStar

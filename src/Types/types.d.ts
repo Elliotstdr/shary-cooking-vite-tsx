@@ -74,6 +74,11 @@ type IngredientData = {
 /**
  * Specific types
  */
+type TimeList = {
+  code: string,
+  label: string
+}
+
 type FormIngredient = {
   id?: number,
   label: string,

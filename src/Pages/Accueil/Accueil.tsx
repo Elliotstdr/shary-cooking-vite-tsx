@@ -98,7 +98,7 @@ const Accueil = () => {
                       <RecipeCard
                         key={index}
                         recipeItem={recipe}
-                        setFilteredRecipes={setRecipes}
+                        setRecipes={setRecipes}
                       ></RecipeCard>
                     ))
                 ) : (

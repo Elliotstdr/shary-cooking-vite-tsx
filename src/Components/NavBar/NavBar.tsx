@@ -2,16 +2,17 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./NavBar.scss";
 import { GiKnifeFork } from "react-icons/gi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GiCook } from "react-icons/gi";
 import Bouton from "../ui/Bouton/Bouton";
 import Nav from "./Nav/Nav";
-import { logOut } from "../../Hooks/useAxiosInterceptor.hook";
 import { useScreenSize } from "../../Hooks/useScreenSize.hook";
 import { useOutsideAlerter } from "../../Hooks/useOutsideAlerter.hook";
+import { logOut } from "../../Store/Reducers/authReducer";
 
 const NavBar = () => {
   const screenSize = useScreenSize()
+  const dispatch = useDispatch()
   const auth = useSelector((state: RootState) => state.auth);
   const [showParamMenu, setShowParamMenu] = useState(false);
   const [visibleMobile, setVisibleMobile] = useState(false);
@@ -62,7 +63,7 @@ const NavBar = () => {
           <span onClick={() => navigate("/param")}>Mon profil</span>
           <span
             onClick={() => {
-              logOut()
+              dispatch(logOut())
               navigate("/");
             }}
           >

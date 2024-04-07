@@ -1,18 +1,9 @@
 import axios from "axios";
 import { store } from "../Store/store";
-import { updateAuth } from "../Store/Reducers/authReducer";
+import { logOut, updateAuth } from "../Store/Reducers/authReducer";
 import { useEffect, useState } from "react";
 
 type RefreshSubscriber = (newToken: string) => void;
-
-export const logOut = () => {
-  store.dispatch(updateAuth({
-    token: null,
-    refreshToken: null,
-    isConnected: false,
-    userConnected: null,
-  }));
-}
 
 export const useAxiosInterceptors = () => {
   // State pour suivre si l'intercepteur est actif
@@ -71,7 +62,7 @@ export const useAxiosInterceptors = () => {
               return axios(originalRequest);
             } catch (err) {
               // En cas d'erreur lors du rafraîchissement du token, déconnexion de l'utilisateur
-              logOut();
+              store.dispatch(logOut());
               // Renvoi de l'erreur pour la traiter au niveau supérieur
               return Promise.reject(err);
             } finally {

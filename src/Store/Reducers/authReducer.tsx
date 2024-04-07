@@ -17,9 +17,15 @@ export const authSlice = createSlice({
         ...state,
         ...action.payload,
       };
+    },
+    logOut: (state) => {
+      return {
+        ...initialState,
+        toast: state.toast
+      }
     }
   }
 })
 
-export const { updateAuth } = authSlice.actions
+export const { updateAuth, logOut } = authSlice.actions
 export default authSlice.reducer;

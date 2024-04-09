@@ -70,9 +70,10 @@ const CreateRecipe = (props: Props) => {
     else window.scrollTo(0, 0);
     // eslint-disable-next-line
   }, []);
+  const isFilled = props.recipe || props.HFFillRecipe
   const [currentPictureDeleted, setCurrentPictureDeleted] = useState(false)
   const [isRestored, setIsRestored] = useState(false)
-  const [hasReseted, setHasReseted] = useState(false)
+  const [availableToReset, setAvailableToReset] = useState(false)
   const [image, setImage] = useState(null);
   const ref = useRef(null);
   const [typeId, setTypeId] = useState(secondaryTables.types![0]?.id || 1);
@@ -92,6 +93,7 @@ const CreateRecipe = (props: Props) => {
     register,
     getValues,
     reset,
+    watch,
     formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm({
@@ -105,25 +107,35 @@ const CreateRecipe = (props: Props) => {
   });
 
   useEffect(() => {
-    return () => {
-      if (hasReseted || props.recipe || props.HFFillRecipe ||
-        (!image && typeId === 1 && regimeId === 1 &&
-          !ingredientList[0].label && !stepsList[0].description &&
-          !getValues("title") && getValues("time") === "00:00" && getValues("number") === "1")
-      ) return
-
-      dispatch(updateRecipe({
-        savedForm: {
-          ...getValues(),
-          ingredients: ingredientList,
-          steps: stepsList,
-          type: { id: typeId },
-          regime: { id: regimeId }
-        }
-      }))
+    if(availableToReset) {
+      setIsRestored(false)
+      resetForm();
     }
+  }, [availableToReset]);
+
+  useEffect(() => {
+    if(availableToReset) {
+      setAvailableToReset(false)
+      return
+    }
+    
+    if (isFilled ||
+      (!image && typeId === 1 && regimeId === 1 &&
+        !ingredientList[0].label && !stepsList[0].description &&
+        !getValues("title") && getValues("time") === "00:00" && getValues("number") === "1")
+    ) return
+
+    dispatch(updateRecipe({
+      savedForm: {
+        ...getValues(),
+        ingredients: ingredientList,
+        steps: stepsList,
+        type: { id: typeId },
+        regime: { id: regimeId }
+      }
+    }))
     // eslint-disable-next-line
-  }, [typeId, regimeId, ingredientList, stepsList, image])
+  }, [typeId, regimeId, ingredientList, stepsList, image, watch("title"), watch("time"), watch("number")])
 
   const fillForm = (payload: Recipe | HFFillRecipe) => {
     setTypeId(payload.type.id);
@@ -144,7 +156,11 @@ const CreateRecipe = (props: Props) => {
   }
 
   const resetForm = () => {
-    reset();
+    reset({
+      title: "",
+      number: "1",
+      time: "00:00"
+    });
     setImage(null);
     secondaryTables.types && setTypeId(secondaryTables.types[0]?.id);
     secondaryTables.regimes && setRegimeId(secondaryTables.regimes[0]?.id);
@@ -157,7 +173,7 @@ const CreateRecipe = (props: Props) => {
     setIngredientList([
       {
         unit: null,
-        quantity: undefined,
+        quantity: "",
         label: "",
         id: 1,
       },
@@ -222,11 +238,12 @@ const CreateRecipe = (props: Props) => {
       );
       return;
     }
-    setHasReseted(true)
-    setIsRestored(false)
-    resetForm();
 
-    props.setVisibleModif && props.setVisibleModif(false)
+    if(props.setVisibleModif) {
+      props.setVisibleModif(false)
+    } else {
+      setAvailableToReset(true)
+    }
   };
 
   const putRecipeFunction = async () => {
@@ -289,9 +306,9 @@ const CreateRecipe = (props: Props) => {
   }
 
   return (
-    <div className={(props.recipe || props.HFFillRecipe) && "modify_recipe"} ref={ref}>
-      {!props.recipe && !props.HFFillRecipe && <NavBar></NavBar>}
-      {!isRestored && !props.recipe && !props.HFFillRecipe && <a
+    <div className={isFilled && "modify_recipe"} ref={ref}>
+      {!isFilled && <NavBar></NavBar>}
+      {!isRestored && !isFilled && recipe.savedForm && <a
         onClick={() => {
           if (recipe.savedForm) {
             setIsRestored(true);
@@ -463,7 +480,7 @@ const CreateRecipe = (props: Props) => {
         )}
         {Object.keys(errors).length > 0 && <small className="p-error">Il y a une erreur dans le formulaire</small>}
       </form>
-      {!props.recipe && !props.HFFillRecipe && <Footer></Footer>}
+      {!isFilled && <Footer></Footer>}
     </div>
   );
 };

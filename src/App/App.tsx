@@ -30,7 +30,6 @@ const App = () => {
     dispatch(updateAuth({
       toast: toast.current,
     }));
-    // eslint-disable-next-line
   }, [toast.current]);
 
 
@@ -40,7 +39,7 @@ const App = () => {
       dispatch(logOut())
     }
 
-    if(staticData.loaded && staticData.data) {
+    if (staticData.loaded && staticData.data) {
       dispatch(updateSecondaryTables({
         regimes: staticData.data.regimes,
         types: staticData.data.types,
@@ -48,7 +47,6 @@ const App = () => {
         units: staticData.data.units
       }))
     }
-    // eslint-disable-next-line
   }, [staticData.loaded]);
 
   return (

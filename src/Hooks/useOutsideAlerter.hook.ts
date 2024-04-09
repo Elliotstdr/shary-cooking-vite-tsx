@@ -10,6 +10,6 @@ export const useOutsideAlerter = (ref: any, command: () => void) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-    }; // eslint-disable-next-line
+    };
   }, [ref]);
 };

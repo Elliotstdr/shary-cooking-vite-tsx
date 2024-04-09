@@ -31,7 +31,6 @@ export const useFetchGet = <T extends object | object[]> (url: string): UseFetch
         })
         .catch((error: AxiosError) => setError(error.message))
         .finally(() => setLoaded(true));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
   return { data, error, loaded };
 };

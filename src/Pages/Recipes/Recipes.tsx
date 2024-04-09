@@ -15,7 +15,6 @@ const Recipes = () => {
       dispatch(updateSecondaryTables({
         ingData: ingredientData.data
       }))
-    // eslint-disable-next-line
   }, [ingredientData.loaded, ingredientData.data])
 
   return (

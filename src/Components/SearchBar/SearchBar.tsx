@@ -80,7 +80,6 @@ const SearchBar = (props: Props) => {
       dispatch(updateSearch({ isSearch: true }))
       props.setFilteredRecipes(tempRecipes);
     }
-    // eslint-disable-next-line
   }, [
     search.regime, search.type, search.keyword, search.time, search.ingredient,
     search.boxFavorites, search.boxMine, props.startData

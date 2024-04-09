@@ -18,7 +18,6 @@ const HelloF = () => {
 
   useEffect(() => {
     search()
-    // eslint-disable-next-line
   }, [])
 
   const search = async () => {

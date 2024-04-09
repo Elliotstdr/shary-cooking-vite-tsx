@@ -23,7 +23,6 @@ export const useIntersectionObserver = (): [MutableRefObject<any>, boolean] => {
 
     return () => {
       if (targetRef.current) {
-        // eslint-disable-next-line
         observer.unobserve(targetRef.current);
       }
     };

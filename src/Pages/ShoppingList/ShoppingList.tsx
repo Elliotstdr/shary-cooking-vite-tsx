@@ -32,7 +32,6 @@ const ShoppingList = () => {
         chosenRecipes: []
       }));
     }
-    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

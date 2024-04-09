@@ -26,7 +26,6 @@ const Accueil = () => {
 
   useEffect(() => {
     recipesData.loaded && recipesData.data && setRecipes(recipesData.data)
-    // eslint-disable-next-line
   }, [recipesData.loaded])
 
   return (

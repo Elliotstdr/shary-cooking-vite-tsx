@@ -68,7 +68,6 @@ const CreateRecipe = (props: Props) => {
     if (props.recipe) fillForm(props.recipe)
     else if (props.HFFillRecipe) fillForm(props.HFFillRecipe)
     else window.scrollTo(0, 0);
-    // eslint-disable-next-line
   }, []);
   const isFilled = props.recipe || props.HFFillRecipe
   const [currentPictureDeleted, setCurrentPictureDeleted] = useState(false)
@@ -107,18 +106,18 @@ const CreateRecipe = (props: Props) => {
   });
 
   useEffect(() => {
-    if(availableToReset) {
+    if (availableToReset) {
       setIsRestored(false)
       resetForm();
     }
   }, [availableToReset]);
 
   useEffect(() => {
-    if(availableToReset) {
+    if (availableToReset) {
       setAvailableToReset(false)
       return
     }
-    
+
     if (isFilled ||
       (!image && typeId === 1 && regimeId === 1 &&
         !ingredientList[0].label && !stepsList[0].description &&
@@ -134,16 +133,16 @@ const CreateRecipe = (props: Props) => {
         regime: { id: regimeId }
       }
     }))
-    // eslint-disable-next-line
   }, [typeId, regimeId, ingredientList, stepsList, image, watch("title"), watch("time"), watch("number")])
 
   const fillForm = (payload: Recipe | HFFillRecipe) => {
     setTypeId(payload.type.id);
     setRegimeId(payload.regime.id);
-    setStepsList(payload.steps.sort((a, b) => a.stepIndex - b.stepIndex).map((step) => {
+
+    const steps = [...payload.steps]
+    setStepsList(steps.sort((a, b) => a.stepIndex - b.stepIndex).map((step) => {
       return { description: step.description, stepIndex: step.stepIndex };
-    })
-    );
+    }));
     setIngredientList(payload.ingredients.map((ingredient, index) => {
       return { id: index + 1, ...ingredient, quantity: ingredient.quantity?.toString() };
     }))
@@ -239,7 +238,7 @@ const CreateRecipe = (props: Props) => {
       return;
     }
 
-    if(props.setVisibleModif) {
+    if (props.setVisibleModif) {
       props.setVisibleModif(false)
     } else {
       setAvailableToReset(true)

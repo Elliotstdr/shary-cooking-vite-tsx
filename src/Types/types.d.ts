@@ -24,7 +24,7 @@ type Recipe = {
   savedByUsers: RestrictedUser[],
   postedByUser: RestrictedUser,
   ingredients: Ingredient[],
-  steps: Steps[],
+  steps: Step[],
   fromHellof: boolean
 }
 interface RecipeShopping extends Recipe {

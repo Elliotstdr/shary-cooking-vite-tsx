@@ -21,6 +21,8 @@ export const checkIngredients = (ingredients: FormIngredient[]) => {
     if (
       ing.label === "" ||
       ing.quantity === "0" ||
+      ing.quantity === "" ||
+      ing.quantity === undefined ||
       !ing.unit
     ) {
       response = "Un ou plusieurs ingrédient n'est pas correctement rempli";

@@ -9,14 +9,18 @@ import { useEffect, useRef } from "react";
 import { Toast } from "primereact/toast";
 import Recipes from "../Pages/Recipes/Recipes";
 import { useAxiosInterceptors } from "../Hooks/useAxiosInterceptor.hook";
-import { updateAuth } from "../Store/Reducers/authReducer";
+import { logOut, updateAuth } from "../Store/Reducers/authReducer";
 import HelloF from "../Pages/HelloF/HelloF";
+import { useFetchGet } from "../Hooks/api.hook";
+import { errorToast } from "../Services/functions";
+import { updateSecondaryTables } from "../Store/Reducers/secondaryTablesReducer";
 
 const App = () => {
   const isInterceptorActive = useAxiosInterceptors();
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.auth);
   const toast = useRef(null);
+  const staticData = useFetchGet<Partial<SecondaryState>>("/retrieveStaticData")
 
   useEffect(() => {
     if (!auth.isConnected && window.location.pathname !== "/") window.location.replace("/")
@@ -28,6 +32,24 @@ const App = () => {
     }));
     // eslint-disable-next-line
   }, [toast.current]);
+
+
+  useEffect(() => {
+    if (staticData.error) {
+      errorToast("Le site a rencontré une erreur technique, veuillez revenir dans quelques minutes")
+      dispatch(logOut())
+    }
+
+    if(staticData.loaded && staticData.data) {
+      dispatch(updateSecondaryTables({
+        regimes: staticData.data.regimes,
+        types: staticData.data.types,
+        ingTypes: staticData.data.ingTypes,
+        units: staticData.data.units
+      }))
+    }
+    // eslint-disable-next-line
+  }, [staticData.loaded]);
 
   return (
     <div className="App" id="app">

@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useState, useEffect } from "react";
 import { store } from "../Store/store";
-import { updateSecondaryTables } from "../Store/Reducers/secondaryTablesReducer";
 
 /**
  * @template { Object | Object[] } T
@@ -34,52 +33,6 @@ export const useFetchGet = <T extends object | object[]> (url: string): UseFetch
         .finally(() => setLoaded(true));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
-  return { data, error, loaded };
-};
-
-/**
- * @template { SecondaryState[T] } T
- * @param { string } url
- * @param { keyof SecondaryState } dataTarget
- * @return { FetchGetReturn<T> }
- */
-export const useFetchGetConditional = <T extends keyof SecondaryState> (
-  url: string, 
-  dataTarget: T
-): UseFetchGetResponse<SecondaryState[T]> => {
-  const [data, setData] = useState<SecondaryState[T]|null>(null);
-  const [error, setError] = useState("");
-  const [loaded, setLoaded] = useState(false);
-  const token = store.getState().auth.token;
-  const reduxData = store.getState().secondaryTables[dataTarget]
-
-  useEffect(() => {
-    if (!reduxData || (Array.isArray(reduxData) && reduxData.length === 0)) {
-      axios
-        .get(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, {
-          headers: token
-            ? {
-                accept: "application/json",
-                Authorization: `Bearer ${token}`,
-              }
-            : {
-                accept: "application/json",
-              },
-        })
-        .then((response: AxiosResponse) => {
-          store.dispatch(updateSecondaryTables({
-            [dataTarget]: response.data
-          }))
-          setData(response.data);
-        })
-        .catch((error: AxiosError) => setError(error.message))
-        .finally(() => setLoaded(true));
-    } else {
-      setData(reduxData);
-      setLoaded(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   return { data, error, loaded };
 };
 

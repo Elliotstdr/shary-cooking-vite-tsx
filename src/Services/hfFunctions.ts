@@ -79,6 +79,9 @@ const adaptYields = (yields: HFYieldsIngredient[]) => {
       case "paquet(s)":
         yieldItem.unit = "paquet";
         break;
+      case "tranche(s)":
+        yieldItem.unit = "tranche";
+        break;
       case "g":
         yieldItem.unit = "grammes";
         break;

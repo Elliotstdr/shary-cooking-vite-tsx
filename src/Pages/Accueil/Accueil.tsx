@@ -10,13 +10,15 @@ import image2 from "../../assets/accueil_second.jpg";
 import image3 from "../../assets/accueil_third.jpg";
 import Bouton from "../../Components/ui/Bouton/Bouton";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../Components/ui/Loader/loader";
 import RecipeCard from "../../Components/RecipeContainer/RecipeCard/RecipeCard";
+import CardSkeleton from "../../Components/CardSkeleton/CardSkeleton";
+import { useScreenSize } from "../../Hooks/useScreenSize.hook";
 
 const Accueil = () => {
   const auth = useSelector((state: RootState) => state.auth);
   const [recipes, setRecipes] = useState<Recipe[]>([])
   const navigate = useNavigate();
+  const screenSize = useScreenSize()
 
   const recipesData = useFetchGet<Recipe[]>(auth.isConnected ? "/recipes" : "");
 
@@ -71,7 +73,11 @@ const Accueil = () => {
                       ></RecipeCard>
                     ))
                 ) : (
-                  <Loader></Loader>
+                  <>
+                    <CardSkeleton></CardSkeleton>
+                    {screenSize.width > 1055 && <CardSkeleton></CardSkeleton>}
+                    {screenSize.width > 687 && <CardSkeleton></CardSkeleton>}
+                  </>
                 )}
               </div>
             </div>

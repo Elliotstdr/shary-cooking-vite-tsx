@@ -5,9 +5,11 @@ import SearchBar from "../SearchBar/SearchBar";
 import { useFetchGet } from "../../Hooks/api.hook";
 import { Paginator } from "primereact/paginator";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
+import { useScreenSize } from "../../Hooks/useScreenSize.hook";
 
 const RecipeContainer = () => {
   const recipesData = useFetchGet<Recipe[]>("/recipes");
+  const screenSize = useScreenSize()
 
   const rows = 12;
   const ref = useRef(null);
@@ -58,8 +60,8 @@ const RecipeContainer = () => {
         ) : (
           <>
             <CardSkeleton></CardSkeleton>
-            <CardSkeleton></CardSkeleton>
-            <CardSkeleton></CardSkeleton>
+            {screenSize.width > 1310 && <CardSkeleton></CardSkeleton>}
+            {screenSize.width >= 720 && <CardSkeleton></CardSkeleton>}
           </>
         )}
       </div>

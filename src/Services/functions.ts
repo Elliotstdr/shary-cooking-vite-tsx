@@ -3,7 +3,10 @@ import { store } from "../Store/store";
 interface ExtendedIngredient extends Ingredient {
   type: string
 }
-export const exportRecipe = (chosenRecipes: Array<RecipeShopping>, data: Array<IngredientData>) => {
+export const exportRecipe = (chosenRecipes: Array<RecipeShopping>) => {
+  const data = store.getState().secondaryTables.ingData
+  if(!data) return ""
+
   let ingredientList: Array<Ingredient> = [];
   const finalList: Array<ExtendedIngredient> = [];
 

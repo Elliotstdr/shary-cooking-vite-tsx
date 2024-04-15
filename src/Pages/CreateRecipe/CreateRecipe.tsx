@@ -4,11 +4,11 @@ import { Controller, useForm } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
 import { Divider } from "primereact/divider";
 import { useDispatch, useSelector } from "react-redux";
-import ImageUpload from "../../Components/FormElements/ImageUpload/ImageUpload";
+import ImageUpload from "../../Components/ui/ImageUpload/ImageUpload";
 import { fetchPost, fetchPut, useFetchGet } from "../../Hooks/api.hook";
 import { errorToast, successToast } from "../../Services/functions";
-import IngredientsCreation from "../../Components/FormElements/IngredientsCreation/IngredientsCreation";
-import StepsCreation from "../../Components/FormElements/StepsCreation/StepsCreation";
+import IngredientsCreation from "./components/IngredientsCreation";
+import StepsCreation from "./components/StepsCreation";
 import { RadioButton } from "primereact/radiobutton";
 import Bouton from "../../Components/ui/Bouton/Bouton";
 import { AiOutlinePlusCircle } from "react-icons/ai";
@@ -26,7 +26,6 @@ import { checkIngredients, checkSteps, getLastId, regimeTooltips } from "../../S
 
 interface Props {
   recipe?: Recipe,
-  editRecipe?: (item: Recipe) => void,
   setVisibleModif?: React.Dispatch<React.SetStateAction<boolean>>,
   HFFillRecipe?: HFFillRecipe
 }
@@ -239,6 +238,7 @@ const CreateRecipe = (props: Props) => {
     }
 
     if (props.setVisibleModif) {
+      successToast("Recette créée !")
       props.setVisibleModif(false)
     } else {
       setAvailableToReset(true)
@@ -246,7 +246,7 @@ const CreateRecipe = (props: Props) => {
   };
 
   const putRecipeFunction = async () => {
-    if (!props.recipe || !props.editRecipe || !props.setVisibleModif) return;
+    if (!props.recipe || !props.setVisibleModif) return;
 
     const data = setFields();
 
@@ -260,7 +260,11 @@ const CreateRecipe = (props: Props) => {
       return;
     }
     props.setVisibleModif(false)
-    props.editRecipe(response.data)
+    dispatch(updateRecipe({
+      recipes: recipe.recipes.map((x) => {
+        return x.id === response.data.id ? response.data : x
+      })
+    }))
   };
 
   const itemIds: number[] = useMemo(
@@ -286,7 +290,7 @@ const CreateRecipe = (props: Props) => {
   };
 
   const deletePicture = async () => {
-    if (!props.recipe || !props.editRecipe) return
+    if (!props.recipe) return
 
     const response = await fetchPost(`/recipes/${props.recipe.id}/deletePicture`, {})
 
@@ -301,7 +305,11 @@ const CreateRecipe = (props: Props) => {
 
     setCurrentPictureDeleted(true)
     successToast("Image supprimée")
-    props.editRecipe(response.data)
+    dispatch(updateRecipe({
+      recipes: recipe.recipes.map((x) => {
+        return x.id === response.data.id ? response.data : x
+      })
+    }))
   }
 
   return (

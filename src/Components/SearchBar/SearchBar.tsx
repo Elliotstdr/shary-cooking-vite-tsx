@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./SearchBar.scss";
 import { MultiSelect } from "primereact/multiselect";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,20 +15,19 @@ import {
   filterByTime,
   timeList
 } from "../../Services/searchBarFunctions";
+import { updateRecipe } from "../../Store/Reducers/recipeReducer";
 
-type Props = {
-  startData: Recipe[]
-  setFilteredRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>
-}
-
-const SearchBar = (props: Props) => {
+const SearchBar = () => {
   const dispatch = useDispatch()
   const search = useSelector((state: RootState) => state.search);
   const auth = useSelector((state: RootState) => state.auth);
+  const recipe = useSelector((state: RootState) => state.recipe);
   const [visibleMobile, setVisibleMobile] = useState(false);
 
   useEffect(() => {
-    let tempRecipes = props.startData;
+    let tempRecipes = recipe.recipes;
+    if (tempRecipes.length === 0) return
+
     if (search.boxFavorites) {
       tempRecipes = tempRecipes.filter((recipe) =>
         recipe.savedByUsers.some(
@@ -75,14 +74,14 @@ const SearchBar = (props: Props) => {
       search.keyword === ""
     ) {
       dispatch(updateSearch({ isSearch: false }))
-      props.setFilteredRecipes(props.startData);
+      dispatch(updateRecipe({ filteredRecipes: [...recipe.recipes] }))
     } else {
       dispatch(updateSearch({ isSearch: true }))
-      props.setFilteredRecipes(tempRecipes);
+      dispatch(updateRecipe({ filteredRecipes: tempRecipes }))
     }
   }, [
     search.regime, search.type, search.keyword, search.time, search.ingredient,
-    search.boxFavorites, search.boxMine, props.startData
+    search.boxFavorites, search.boxMine, recipe.recipes
   ]);
 
   return (
@@ -105,7 +104,7 @@ const SearchBar = (props: Props) => {
             showClear
             value={search.regime}
             onChange={(e) => dispatch(updateSearch({ regime: e.value }))}
-            options={fillAvailableRegimesOnly(props.startData)}
+            options={fillAvailableRegimesOnly()}
             placeholder="Régime alimentaire"
             maxSelectedLabels={2}
             selectedItemsLabel={search.regime?.length + " éléments choisis"}
@@ -114,7 +113,7 @@ const SearchBar = (props: Props) => {
             showClear
             value={search.type}
             onChange={(e) => dispatch(updateSearch({ type: e.value }))}
-            options={fillAvailableTypesOnly(props.startData)}
+            options={fillAvailableTypesOnly()}
             placeholder="Type de plat"
           ></MultiSelect>
           <Dropdown
@@ -128,7 +127,7 @@ const SearchBar = (props: Props) => {
             showClear
             value={search.ingredient}
             onChange={(e) => dispatch(updateSearch({ ingredient: e.value }))}
-            options={fillAvailableIngredientsOnly(props.startData)}
+            options={fillAvailableIngredientsOnly()}
             optionLabel="name"
             filter
             placeholder="Ingrédient"

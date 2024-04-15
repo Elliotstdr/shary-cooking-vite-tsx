@@ -3,8 +3,8 @@ import "./Parameters.scss"
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
 import { SelectButton } from "primereact/selectbutton";
-import InformationsForm from "../../Components/Parameters/InformationsForm";
-import PasswordForm from "../../Components/Parameters/PasswordForm";
+import InformationsForm from "./components/InformationsForm";
+import PasswordForm from "./components/PasswordForm";
 
 const Parameters = () => {
   const items = [

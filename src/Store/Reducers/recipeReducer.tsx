@@ -2,7 +2,9 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState: RecipeState = {
   chosenRecipes: [],
-  savedForm: null
+  savedForm: null,
+  recipes: [],
+  filteredRecipes: null
 };
 
 export const recipeSlice = createSlice({

@@ -3,8 +3,8 @@ import { GiKnifeFork } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
 import { BiTimer } from "react-icons/bi";
 import { Dropdown } from "primereact/dropdown";
-import { timeToString } from "../../../Services/functions";
-import RecipePicture from "../../../Components/RecipePicture/RecipePicture";
+import { timeToString } from "../../Services/functions";
+import RecipePicture from "../RecipePicture/RecipePicture";
 
 interface Props {
   recipe: RecipeShopping,

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./IngredientsCreation.scss";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { RiDeleteBin6Line } from "react-icons/ri";

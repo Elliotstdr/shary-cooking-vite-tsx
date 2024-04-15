@@ -2,7 +2,7 @@
 
 .accueil {
   &_connected {
-    .first {
+    .home__banner {
       font-family: "Dilgante Rocks", sans-serif;
       position: relative;
       height: 600px;
@@ -31,12 +31,14 @@
         }
       }
     }
-    .second,
-    .third {
+    .home__redirect__block {
       display: flex;
       align-items: center;
       justify-content: center;
       height: 500px;
+      &.reverse {
+        flex-direction: row-reverse;
+      }
       img {
         margin: 0 5rem;
         border-radius: 10px;
@@ -44,7 +46,7 @@
         width: 70%;
         object-fit: cover;
       }
-      &_text {
+      &__text {
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -57,7 +59,7 @@
         }
       }
     }
-    .fourth {
+    .top__recipes {
       background-color: white;
       h1 {
         font-family: "Dilgante Rocks", sans-serif;
@@ -65,7 +67,7 @@
         padding: 3rem 0;
         font-size: 3rem;
       }
-      &_recipes {
+      &__recipes {
         padding-bottom: 3rem;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(18rem, 20rem));
@@ -82,11 +84,48 @@
   }
 }
 
+.login_container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+  }
+  &_box {
+    box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.3);
+    background-color: c.$fond-page;
+    padding: 1.5rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 100;
+    &_title {
+      color: c.$main-color;
+      margin-bottom: 3rem;
+    }
+    &_buttons {
+      display: flex;
+      flex-direction: column;
+      button {
+        width: 12rem;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
 @media (max-width: 1000px) {
   .accueil_connected {
-    .second,
-    .third {
-      &_text,
+    .home__redirect__block {
+      &__text,
       img {
         margin: 0 2rem !important;
       }
@@ -94,9 +133,15 @@
   }
 }
 
+@media (max-width: 700px) {
+  .login_container_box {
+    margin: 0 1rem;
+  }
+}
+
 @media (max-width: 650px) {
   .accueil_connected {
-    .first {
+    .home__banner {
       div {
         h1 {
           font-size: 3rem !important;
@@ -106,10 +151,9 @@
         }
       }
     }
-    .second,
-    .third {
-      flex-direction: column;
-      &_text {
+    .home__redirect__block {
+      flex-direction: column !important;
+      &__text {
         width: 100%;
         span {
           font-size: 1.2rem !important;
@@ -120,9 +164,6 @@
         height: 200px;
         margin-bottom: 2rem !important;
       }
-    }
-    .second {
-      flex-direction: column-reverse;
     }
   }
 }

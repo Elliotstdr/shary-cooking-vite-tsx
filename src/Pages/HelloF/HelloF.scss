@@ -27,32 +27,6 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 2rem;
-      &__item {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        background-color: white;
-        border-radius: 8px;
-        width: 20rem;
-        padding-bottom: 1rem;
-        .name {
-          padding: 1rem;
-          font-weight: bold;
-        }
-        img {
-          width: 20rem;
-          max-height: 15rem;
-          object-fit: cover;
-          border-top-left-radius: 8px;
-          border-top-right-radius: 8px;
-        }
-        .bouton {
-          align-self: center;
-          &:after {
-            background-color: white !important;
-          }
-        }
-      }
       .loaderContainer {
         margin: 6rem 0;
       }

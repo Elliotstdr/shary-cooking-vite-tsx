@@ -1,8 +1,8 @@
 import { Controller, useForm } from "react-hook-form";
-import Loader from "../ui/Loader/loader";
-import Bouton from "../ui/Bouton/Bouton";
-import { errorToast, successToast } from "../../Services/functions";
-import { fetchPost } from "../../Hooks/api.hook";
+import Loader from "../../../Components/ui/Loader/loader";
+import Bouton from "../../../Components/ui/Bouton/Bouton";
+import { errorToast, successToast } from "../../../Services/functions";
+import { fetchPost } from "../../../Hooks/api.hook";
 import { useSelector } from "react-redux";
 import { ReactNode, useState } from "react";
 import { Password } from "primereact/password";

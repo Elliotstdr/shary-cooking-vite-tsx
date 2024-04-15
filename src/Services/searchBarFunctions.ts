@@ -49,26 +49,32 @@ export const filterByTime = (recipeTime: string) => {
   }
 };
 
-export const fillAvailableTypesOnly = (data: Recipe[]): Type[] => {
+export const fillAvailableTypesOnly = (): Type[] => {
   const secondaryTables = store.getState().secondaryTables;
+  const recipes = store.getState().recipe.recipes;
+
   const typesSet = new Set()
-  data.forEach((recipe) => typesSet.add(recipe.type.id))
+  recipes.forEach((recipe) => typesSet.add(recipe.type.id))
 
   return secondaryTables?.types?.filter((type) => typesSet.has(type.id)) || []
 }
 
-export const fillAvailableRegimesOnly = (data: Recipe[]): Regime[] => {
+export const fillAvailableRegimesOnly = (): Regime[] => {
   const secondaryTables = store.getState().secondaryTables;
+  const recipes = store.getState().recipe.recipes;
+
   const regimesSet = new Set()
-  data.forEach((recipe) => regimesSet.add(recipe.regime.id))
+  recipes.forEach((recipe) => regimesSet.add(recipe.regime.id))
 
   return secondaryTables?.regimes?.filter((type) => regimesSet.has(type.id)) || []
 }
 
-export const fillAvailableIngredientsOnly = (data: Recipe[]): IngredientData[] => {
+export const fillAvailableIngredientsOnly = (): IngredientData[] => {
   const secondaryTables = store.getState().secondaryTables;
+  const recipes = store.getState().recipe.recipes;
+
   const ingredientsSet = new Set()
-  data.forEach((recipe) =>
+  recipes.forEach((recipe) =>
     recipe.ingredients.forEach((ingredient) => ingredientsSet.add(ingredient.label))
   )
 

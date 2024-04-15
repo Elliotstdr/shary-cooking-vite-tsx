@@ -1,13 +1,13 @@
 import { InputText } from "primereact/inputtext";
-import Loader from "../ui/Loader/loader";
-import Bouton from "../ui/Bouton/Bouton";
-import { errorToast, successToast } from "../../Services/functions";
-import { fetchPut } from "../../Hooks/api.hook";
-import ImageUpload from "../FormElements/ImageUpload/ImageUpload";
+import Loader from "../../../Components/ui/Loader/loader";
+import Bouton from "../../../Components/ui/Bouton/Bouton";
+import { errorToast, successToast } from "../../../Services/functions";
+import { fetchPut } from "../../../Hooks/api.hook";
+import ImageUpload from "../../../Components/ui/ImageUpload/ImageUpload";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { updateAuth } from "../../Store/Reducers/authReducer";
+import { updateAuth } from "../../../Store/Reducers/authReducer";
 
 const InformationsForm = () => {
   const auth = useSelector((state: RootState) => state.auth);

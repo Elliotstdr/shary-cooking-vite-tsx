@@ -6,7 +6,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import Loader from "../../ui/Loader/loader";
 import Bouton from "../../ui/Bouton/Bouton";
 import { InputText } from "primereact/inputtext";
-import ImageUpload from "../../FormElements/ImageUpload/ImageUpload";
+import ImageUpload from "../../ui/ImageUpload/ImageUpload";
 import { errorToast } from "../../../Services/functions";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useSelector } from "react-redux";

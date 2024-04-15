@@ -15,7 +15,9 @@ type AuthState = {
 
 type RecipeState = {
   chosenRecipes: Recipe[],
-  savedForm: any
+  savedForm: any,
+  recipes: Recipe[]
+  filteredRecipes: Recipe[] | null
 }
 
 type SecondaryState = {

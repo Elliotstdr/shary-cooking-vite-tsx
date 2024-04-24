@@ -1,3 +1,21 @@
+export const defaultValues = {
+  title: "",
+  number: "1",
+  time: "00:00"
+}
+
+export const defaultStep = {
+  description: "",
+  stepIndex: 1
+}
+
+export const defaultIngredient = {
+  unit: null,
+  quantity: undefined,
+  label: "",
+  id: 1
+}
+
 export const regimeTooltips = [
   "Contient tout type de nourriture",
   "Régime sans viande ni poisson mais avec des produits d'origine animale",

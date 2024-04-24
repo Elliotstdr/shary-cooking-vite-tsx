@@ -1,28 +1,21 @@
-import { useRef, useState, useMemo, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import "./CreateRecipe.scss";
 import { Controller, useForm } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
 import { Divider } from "primereact/divider";
 import { useDispatch, useSelector } from "react-redux";
 import ImageUpload from "../../Components/ui/ImageUpload/ImageUpload";
-import { fetchPost, fetchPut, useFetchGet } from "../../Hooks/api.hook";
+import { fetchPost, fetchPut } from "../../Hooks/api.hook";
 import { errorToast, successToast } from "../../Services/functions";
-import IngredientsCreation from "./components/IngredientsCreation";
 import StepsCreation from "./components/StepsCreation";
-import { RadioButton } from "primereact/radiobutton";
-import Bouton from "../../Components/ui/Bouton/Bouton";
-import { AiOutlinePlusCircle } from "react-icons/ai";
-import { DndContext, closestCenter } from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
 import Loader from "../../Components/ui/Loader/loader";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
 import { editRecipeInRecipes, updateRecipe } from "../../Store/Reducers/recipeReducer";
-import { checkIngredients, checkSteps, getLastId, regimeTooltips } from "../../Services/createRecipeFunctions";
+import { checkIngredients, checkSteps, defaultIngredient, defaultStep, defaultValues } from "../../Services/createRecipeFunctions";
+import Ingredients from "./components/Ingredients";
+import Regimes from "./components/Regimes";
+import Types from "./components/Types";
 
 type Props = {
   recipe?: Recipe,
@@ -61,13 +54,13 @@ const CreateRecipe = (props: Props) => {
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
   const recipe = useSelector((state: RootState) => state.recipe);
   const dispatch = useDispatch();
-  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
 
   useEffect(() => {
     if (props.recipe) fillForm(props.recipe)
     else if (props.HFFillRecipe) fillForm(props.HFFillRecipe)
     else window.scrollTo(0, 0);
   }, []);
+
   const isFilled = props.recipe || props.HFFillRecipe
   const [currentPictureDeleted, setCurrentPictureDeleted] = useState(false)
   const [isRestored, setIsRestored] = useState(false)
@@ -76,15 +69,8 @@ const CreateRecipe = (props: Props) => {
   const ref = useRef(null);
   const [typeId, setTypeId] = useState(secondaryTables.types![0]?.id || 1);
   const [regimeId, setRegimeId] = useState(secondaryTables.regimes![0]?.id || 1);
-  const [stepsList, setStepsList] = useState<Array<Step>>([{ description: "", stepIndex: 1 }]);
-  const [ingredientList, setIngredientList] = useState<Array<FormIngredient>>([
-    {
-      unit: null,
-      quantity: undefined,
-      label: "",
-      id: 1,
-    },
-  ]);
+  const [stepsList, setStepsList] = useState<Step[]>([defaultStep]);
+  const [ingredientList, setIngredientList] = useState<FormIngredient[]>([defaultIngredient]);
 
   const {
     control,
@@ -94,15 +80,7 @@ const CreateRecipe = (props: Props) => {
     watch,
     formState: { errors, isSubmitting },
     handleSubmit,
-  } = useForm({
-    defaultValues: {
-      title: "",
-      number: "1",
-      time: "00:00",
-      image: null,
-      createdAt: new Date(),
-    } as Values
-  });
+  } = useForm({ defaultValues: defaultValues as Values });
 
   useEffect(() => {
     if (availableToReset) {
@@ -154,28 +132,12 @@ const CreateRecipe = (props: Props) => {
   }
 
   const resetForm = () => {
-    reset({
-      title: "",
-      number: "1",
-      time: "00:00"
-    });
+    reset(defaultValues);
     setImage(null);
     secondaryTables.types && setTypeId(secondaryTables.types[0]?.id);
     secondaryTables.regimes && setRegimeId(secondaryTables.regimes[0]?.id);
-    setStepsList([
-      {
-        description: "",
-        stepIndex: 1,
-      },
-    ]);
-    setIngredientList([
-      {
-        unit: null,
-        quantity: "",
-        label: "",
-        id: 1,
-      },
-    ]);
+    setStepsList([defaultStep]);
+    setIngredientList([defaultIngredient]);
     successToast("Votre recette a bien été créée");
   };
 
@@ -229,11 +191,7 @@ const CreateRecipe = (props: Props) => {
 
     const response = await fetchPost(`/recipes`, data);
     if (response.error) {
-      errorToast(
-        response.error?.response?.data?.detail?.includes("visiteur")
-          ? response.error.response.data.detail
-          : "Une erreur est survenue lors de la création de votre recette"
-      );
+      errorToast(errorMessage(response.error));
       return;
     }
 
@@ -252,37 +210,11 @@ const CreateRecipe = (props: Props) => {
 
     const response = await fetchPut(`/recipes/${props.recipe.id}`, data);
     if (response.error) {
-      errorToast(
-        response.error?.response?.data?.detail?.includes("visiteur")
-          ? response.error.response.data.detail
-          : "Une erreur est survenue lors de la modification de votre recette"
-      );
+      errorToast(errorMessage(response.error));
       return;
     }
     props.setVisibleModif(false)
     dispatch(editRecipeInRecipes(response.data))
-  };
-
-  const itemIds: number[] = useMemo(
-    () => ingredientList.map((item) => item.id ? item.id : 1),
-    [ingredientList]
-  );
-
-  const handleDragEnd = (event: { active: any, over: any }) => {
-    const { active, over } = event;
-
-    if (over && active.id !== over.id) {
-      setIngredientList((ingredientList) => {
-        const oldIndex = ingredientList.findIndex(
-          (item) => item.id === active.id
-        );
-        const newIndex = ingredientList.findIndex(
-          (item) => item.id === over.id
-        );
-
-        return arrayMove(ingredientList, oldIndex, newIndex);
-      });
-    }
   };
 
   const deletePicture = async () => {
@@ -291,17 +223,19 @@ const CreateRecipe = (props: Props) => {
     const response = await fetchPost(`/recipes/${props.recipe.id}/deletePicture`, {})
 
     if (response.error) {
-      errorToast(
-        response.error?.response?.data?.detail?.includes("visiteur")
-          ? response.error.response.data.detail
-          : "Une erreur est survenue lors de la modification de votre recette"
-      );
+      errorToast(errorMessage(response.error));
       return
     }
 
     setCurrentPictureDeleted(true)
     successToast("Image supprimée")
     dispatch(editRecipeInRecipes(response.data))
+  }
+
+  const errorMessage = (error: any) => {
+    return error?.response?.data?.detail?.includes("visiteur")
+      ? error.response.data.detail
+      : "Une erreur est survenue lors de la modification de votre recette"
   }
 
   return (
@@ -363,36 +297,14 @@ const CreateRecipe = (props: Props) => {
             {errors.time && <small className="p-error">Le temps est obligatoire</small>}
           </div>
         </div>
-        <div className="recipe__form__field">
-          <h4>Type de plat</h4>
-          <div className="checkboxes">
-            {secondaryTables.types && secondaryTables.types.map((type, index) => (
-              <div className="checkbox" key={index}>
-                <RadioButton
-                  checked={type.id === typeId}
-                  onChange={() => setTypeId(type.id)}
-                />
-                <label>{type.label}</label>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="recipe__form__field">
-          <h4>Régime alimentaire</h4>
-          <div className="checkboxes">
-            {secondaryTables.regimes && secondaryTables.regimes.map((regime, index) => (
-              <div className="checkbox" key={index}>
-                <RadioButton
-                  checked={regime.id === regimeId}
-                  onChange={() => setRegimeId(regime.id)}
-                  tooltip={regimeTooltips[index]}
-                  tooltipOptions={{ position: "bottom" }}
-                />
-                <label>{regime.label}</label>
-              </div>
-            ))}
-          </div>
-        </div>
+        <Types
+          typeId={typeId}
+          setTypeId={setTypeId}
+        ></Types>
+        <Regimes
+          regimeId={regimeId}
+          setRegimeId={setRegimeId}
+        ></Regimes>
         <Divider></Divider>
         <div className="recipe__form__field">
           <h4>Ingrédients</h4>
@@ -403,49 +315,10 @@ const CreateRecipe = (props: Props) => {
               validate: () => checkIngredients(ingredientList),
             }}
             render={() =>
-              <>
-                <div className="ingredients">
-                  <IngredientsCreation
-                    ingredient={ingredientList[0]}
-                    ingredientList={ingredientList}
-                    setIngredientList={setIngredientList}
-                    ingredientData={ingredientData.data}
-                  ></IngredientsCreation>
-                  <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} >
-                    <SortableContext items={itemIds} strategy={verticalListSortingStrategy} >
-                      {ingredientList.map((x) => x.id !== 1 && x.id && ingredientData.data && (
-                        <IngredientsCreation
-                          key={x.id}
-                          ingredient={x}
-                          ingredientList={ingredientList}
-                          setIngredientList={setIngredientList}
-                          ingredientData={ingredientData.data}
-                        ></IngredientsCreation>
-                      )
-                      )}
-                    </SortableContext>
-                  </DndContext>
-                </div>
-                <Bouton
-                  type={"normal"}
-                  btnAction={(e) => {
-                    e.preventDefault();
-                    const lastId = getLastId(ingredientList)
-                    lastId && setIngredientList([
-                      ...ingredientList,
-                      {
-                        unit: null,
-                        label: "",
-                        quantity: undefined,
-                        id: lastId
-                      },
-                    ]);
-                  }}
-                >
-                  <AiOutlinePlusCircle />
-                  Ajouter un ingrédient
-                </Bouton>
-              </>
+              <Ingredients
+                ingredientList={ingredientList}
+                setIngredientList={setIngredientList}
+              ></Ingredients>
             }
           />
           {errors.ingredients && <small className="p-error">{errors.ingredients.message}</small>}

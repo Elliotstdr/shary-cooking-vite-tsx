@@ -1,8 +1,7 @@
 import { BiEditAlt } from "react-icons/bi";
 import Bouton from "../../../Components/ui/Bouton/Bouton";
 import ShoppingListCard from "../../../Components/ShoppingListCard/ShoppingListCard";
-import { useDispatch, useSelector } from "react-redux";
-import { updateRecipe } from "../../../Store/Reducers/recipeReducer";
+import { useSelector } from "react-redux";
 import ModalShoppingResult from "./ModalShoppingResult";
 import { useState } from "react";
 
@@ -11,24 +10,8 @@ type Props = {
 }
 
 const ShoppingContainer = (props: Props) => {
-  const recipeR = useSelector((state: RootState) => state.recipe);
-  const dispatch = useDispatch()
+  const recipe = useSelector((state: RootState) => state.recipe);
   const [visibleList, setVisibleList] = useState<boolean>(false);
-
-  const modifyRecipeList = (word: number, recipe: RecipeShopping) => {
-    const tempArray: RecipeShopping[] = [];
-    recipeR.chosenRecipes.forEach((element) => {
-      if (element.id === recipe.id) {
-        tempArray.push({
-          ...element,
-          multiplyer: word
-        });
-      } else {
-        tempArray.push({ ...element })
-      }
-    });
-    dispatch(updateRecipe({ chosenRecipes: tempArray }));
-  };
 
   return (
     <div className="shoppingList_container_export">
@@ -45,13 +28,10 @@ const ShoppingContainer = (props: Props) => {
         </Bouton>
       </div>
       <div className="shoppingList_container_export_recipes">
-        {(recipeR.chosenRecipes as RecipeShopping[]).map((recipe, index) => (
+        {(recipe.chosenRecipes as RecipeShopping[]).map((recipe) => (
           <ShoppingListCard
             recipe={recipe}
-            modifyRecipeList={(word, recipe) =>
-              modifyRecipeList(word, recipe)
-            }
-            key={index}
+            key={recipe.id}
           ></ShoppingListCard>
         ))}
       </div>

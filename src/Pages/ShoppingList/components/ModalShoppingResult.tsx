@@ -10,9 +10,9 @@ type Props = {
 }
 
 const ModalShoppingResult = (props: Props) => {
-  const recipeR = useSelector((state: RootState) => state.recipe);
+  const recipe = useSelector((state: RootState) => state.recipe);
   const [greenButton, setGreenButton] = useState(false);
-  const [stringShopping, setStringShopping] = useState(exportRecipe(recipeR.chosenRecipes));
+  const [stringShopping, setStringShopping] = useState(exportRecipe(recipe.chosenRecipes));
 
   return (
     <Modal

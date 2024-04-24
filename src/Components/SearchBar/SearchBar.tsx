@@ -74,7 +74,7 @@ const SearchBar = () => {
       search.keyword === ""
     ) {
       dispatch(updateSearch({ isSearch: false }))
-      dispatch(updateRecipe({ filteredRecipes: [...recipe.recipes] }))
+      dispatch(updateRecipe({ filteredRecipes: recipe.recipes }))
     } else {
       dispatch(updateSearch({ isSearch: true }))
       dispatch(updateRecipe({ filteredRecipes: tempRecipes }))

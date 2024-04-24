@@ -30,6 +30,7 @@ const HelloSearch = (props: Props) => {
       <div className="pi pi-search"></div>
       <InputText
         type="text"
+        autoFocus
         value={props.value}
         onChange={(e) => props.setValue(e.target.value)}
         onKeyDown={(e) => {

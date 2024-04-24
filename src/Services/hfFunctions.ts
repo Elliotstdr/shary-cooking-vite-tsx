@@ -14,6 +14,13 @@ export const getTime = (time: string) => {
   }
 }
 
+export const findType = () => {
+  const secondaryTables = store.getState().secondaryTables
+  const defaultType = { id: 2, label: "Plat" }
+  
+  return secondaryTables?.types?.find((x) => x.label === "Plat") || defaultType
+}
+
 export const findRegime = (recipeTags: HFTag[]) => {
   const secondaryTables = store.getState().secondaryTables
   const defaultRegime = { id: 1, label: "Omnivore" }

@@ -21,16 +21,16 @@ import {
 import Loader from "../../Components/ui/Loader/loader";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
-import { updateRecipe } from "../../Store/Reducers/recipeReducer";
+import { editRecipeInRecipes, updateRecipe } from "../../Store/Reducers/recipeReducer";
 import { checkIngredients, checkSteps, getLastId, regimeTooltips } from "../../Services/createRecipeFunctions";
 
-interface Props {
+type Props = {
   recipe?: Recipe,
   setVisibleModif?: React.Dispatch<React.SetStateAction<boolean>>,
   HFFillRecipe?: HFFillRecipe
 }
 
-interface Body {
+type Body = {
   title: string,
   time: string,
   image: string | null,
@@ -43,10 +43,10 @@ interface Body {
   ingredients?: Array<PayloadIngredient>,
   fromHellof?: boolean
 }
-interface Values extends Body {
+type Values = Body & {
   number: string,
 }
-interface Payload extends Body {
+type Payload = Body & {
   number: number,
 }
 
@@ -260,11 +260,7 @@ const CreateRecipe = (props: Props) => {
       return;
     }
     props.setVisibleModif(false)
-    dispatch(updateRecipe({
-      recipes: recipe.recipes.map((x) => {
-        return x.id === response.data.id ? response.data : x
-      })
-    }))
+    dispatch(editRecipeInRecipes(response.data))
   };
 
   const itemIds: number[] = useMemo(
@@ -305,11 +301,7 @@ const CreateRecipe = (props: Props) => {
 
     setCurrentPictureDeleted(true)
     successToast("Image supprimée")
-    dispatch(updateRecipe({
-      recipes: recipe.recipes.map((x) => {
-        return x.id === response.data.id ? response.data : x
-      })
-    }))
+    dispatch(editRecipeInRecipes(response.data))
   }
 
   return (
@@ -317,10 +309,8 @@ const CreateRecipe = (props: Props) => {
       {!isFilled && <NavBar></NavBar>}
       {!isRestored && !isFilled && recipe.savedForm && <a
         onClick={() => {
-          if (recipe.savedForm) {
-            setIsRestored(true);
-            fillForm({ ...recipe.savedForm })
-          }
+          setIsRestored(true);
+          fillForm({ ...recipe.savedForm })
         }}
         className="options restore"
       > Restaurer le précedent formulaire</a>}
@@ -345,6 +335,7 @@ const CreateRecipe = (props: Props) => {
               {...register("title", { required: true })}
               placeholder="Ma super recette"
               className="recipe__form__field-title"
+              autoFocus
             />
             {errors.title && <small className="p-error">Le titre est obligatoire</small>}
           </div>

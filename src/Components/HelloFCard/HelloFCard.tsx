@@ -1,6 +1,5 @@
-import { useSelector } from "react-redux";
 import Bouton from "../ui/Bouton/Bouton";
-import { fillIngredient, findRegime, getTime } from "../../Services/hfFunctions";
+import { fillIngredient, findRegime, findType, getTime } from "../../Services/hfFunctions";
 import "./HelloFCard.scss"
 import { useState } from "react";
 import Modal from "../Modal/Modal";
@@ -14,7 +13,6 @@ type Props = {
 const HelloFCard = (props: Props) => {
   const [visibleRecipeForm, setVisibleRecipeForm] = useState(false)
   const [filledRecipe, setFilledRecipe] = useState<HFFillRecipe | null>(null)
-  const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
 
   const fillRecipeForm = (HFRecipe: HFRecipe) => {
     setFilledRecipe({
@@ -22,7 +20,7 @@ const HelloFCard = (props: Props) => {
       time: getTime(HFRecipe.prepTime),
       number: 2,
       image: HFRecipe?.imagePath,
-      type: secondaryTables?.types?.find((x) => x.label === "Plat") || { id: 2, label: "Plat" },
+      type: findType(),
       regime: findRegime(HFRecipe.tags),
       steps: HFRecipe.steps.map((x) => {
         return {

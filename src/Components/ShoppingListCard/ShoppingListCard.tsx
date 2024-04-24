@@ -5,13 +5,32 @@ import { BiTimer } from "react-icons/bi";
 import { Dropdown } from "primereact/dropdown";
 import { timeToString } from "../../Services/functions";
 import RecipePicture from "../RecipePicture/RecipePicture";
+import { useDispatch, useSelector } from "react-redux";
+import { updateRecipe } from "../../Store/Reducers/recipeReducer";
 
 interface Props {
   recipe: RecipeShopping,
-  modifyRecipeList: (word: number, recipe: RecipeShopping) => void
 }
 
 const ShoppingListCard = (props: Props) => {
+  const recipe = useSelector((state: RootState) => state.recipe);
+  const dispatch = useDispatch()
+
+  const modifyRecipeList = (multiplyer: number, item: RecipeShopping) => {
+    const tempArray: RecipeShopping[] = [];
+    recipe.chosenRecipes.forEach((element) => {
+      if (element.id === item.id) {
+        tempArray.push({
+          ...element,
+          multiplyer: multiplyer
+        });
+      } else {
+        tempArray.push({ ...element })
+      }
+    });
+    dispatch(updateRecipe({ chosenRecipes: tempArray }));
+  };
+
   return (
     <div className="shoppingList_container_export_recipes_recipe">
       <RecipePicture
@@ -65,7 +84,7 @@ const ShoppingListCard = (props: Props) => {
               optionLabel="label"
               className="recipe__form__field-number"
               onChange={(e) => {
-                props.modifyRecipeList(e.value.multiplyer, props.recipe);
+                modifyRecipeList(e.value.multiplyer, props.recipe);
               }}
             ></Dropdown>
           </div>

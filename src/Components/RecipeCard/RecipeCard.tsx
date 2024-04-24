@@ -4,8 +4,7 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import RecipeCardDetail from "../RecipeCardDetail/RecipeCardDetail";
 import { useDispatch, useSelector } from "react-redux";
 import SlideIn from "../ui/SlideIn/SlideIn";
-import { useIntersectionObserver } from "../../Hooks/useIntersectionObserver.hook";
-import { updateRecipe } from "../../Store/Reducers/recipeReducer";
+import { addRecipeInChosenRecipes, removeRecipeInChosenRecipes } from "../../Store/Reducers/recipeReducer";
 import RecipeCardTop from "./components/RecipeCardTop";
 import RecipeCardMiddle from "./components/RecipeCardMiddle";
 import RecipeCardBottom from "./components/RecipeCardBottom";
@@ -15,7 +14,6 @@ interface Props {
 }
 
 const RecipeCard = (props: Props) => {
-  const [intersectionRef, isVisibleIntersection] = useIntersectionObserver()
   const recipe = useSelector((state: RootState) => state.recipe);
   const dispatch = useDispatch();
   const [visibleDetail, setVisibleDetail] = useState(false);
@@ -28,15 +26,9 @@ const RecipeCard = (props: Props) => {
           (recipe) => recipe.id === props.recipeItem.id
         )
       ) {
-        dispatch(updateRecipe({
-          chosenRecipes: [...recipe.chosenRecipes, props.recipeItem],
-        }));
+        dispatch(addRecipeInChosenRecipes(props.recipeItem))
       } else {
-        dispatch(updateRecipe({
-          chosenRecipes: recipe.chosenRecipes.filter(
-            (recipe) => recipe.id !== props.recipeItem.id
-          ),
-        }));
+        dispatch(removeRecipeInChosenRecipes(props.recipeItem))
       }
     }
   };
@@ -50,7 +42,6 @@ const RecipeCard = (props: Props) => {
       onClick={() => {
         shoppingAction();
       }}
-      ref={intersectionRef}
     >
       {window.location.pathname === "/shop" && recipe.chosenRecipes?.length > 0 &&
         recipe.chosenRecipes.some(
@@ -61,12 +52,10 @@ const RecipeCard = (props: Props) => {
       <RecipeCardTop
         setVisibleDetail={setVisibleDetail}
         recipeItem={props.recipeItem}
-        isVisibleIntersection={isVisibleIntersection}
       ></RecipeCardTop>
       <RecipeCardMiddle
         setVisibleDetail={setVisibleDetail}
         recipeItem={props.recipeItem}
-        isVisibleIntersection={isVisibleIntersection}
       ></RecipeCardMiddle>
       <RecipeCardBottom
         recipeItem={props.recipeItem}

@@ -11,7 +11,7 @@ import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReduc
 import { useFetchGet } from "../../Hooks/api.hook";
 
 const ShoppingList = () => {
-  const recipeR = useSelector((state: RootState) => state.recipe);
+  const recipe = useSelector((state: RootState) => state.recipe);
   const dispatch = useDispatch();
   const [visibleRecipeContainer, setVisibleRecipeContainer] = useState(false);
   const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
@@ -35,7 +35,7 @@ const ShoppingList = () => {
     <div className="shopping">
       <NavBar></NavBar>
       <div className="shoppingList_container">
-        {recipeR.chosenRecipes.length === 0 ? (
+        {recipe.chosenRecipes.length === 0 ? (
           <ShoppingHome
             setVisibleRecipeContainer={setVisibleRecipeContainer}
           ></ShoppingHome>

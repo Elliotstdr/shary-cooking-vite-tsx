@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../../Modal/Modal";
 import Bouton from "../../ui/Bouton/Bouton";
-import { updateRecipe } from "../../../Store/Reducers/recipeReducer";
+import { editRecipeInRecipes, removeRecipeInRecipes } from "../../../Store/Reducers/recipeReducer";
 import CreateRecipe from "../../../Pages/CreateRecipe/CreateRecipe";
 
 type Props = {
@@ -16,7 +16,6 @@ type Props = {
 
 const RecipeCardBottom = (props: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
-  const recipe = useSelector((state: RootState) => state.recipe);
   const dispatch = useDispatch();
   const [wantToDelete, setWantToDelete] = useState(false);
   const [visibleModif, setVisibleModif] = useState(false);
@@ -37,12 +36,7 @@ const RecipeCardBottom = (props: Props) => {
       errorToast("Une erreur est survenue");
       return;
     }
-
-    dispatch(updateRecipe({
-      recipes: recipe.recipes.map((x) => {
-        return x.id === props.recipeItem.id ? response.data : x
-      })
-    }))
+    dispatch(editRecipeInRecipes(response.data))
     setIsFavorite(!isFavorite);
   };
 
@@ -53,9 +47,7 @@ const RecipeCardBottom = (props: Props) => {
       return;
     }
     setWantToDelete(false);
-    dispatch(updateRecipe({
-      recipes: recipe.recipes.filter((x) => x.id !== props.recipeItem.id)
-    }))
+    dispatch(removeRecipeInRecipes(props.recipeItem))
   };
 
   return (

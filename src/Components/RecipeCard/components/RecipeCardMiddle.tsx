@@ -2,21 +2,24 @@ import { BiTimer } from "react-icons/bi";
 import { BsPeople } from "react-icons/bs";
 import { GiCook, GiKnifeFork } from "react-icons/gi";
 import { timeToString } from "../../../Services/functions";
+import { useIntersectionObserver } from "../../../Hooks/useIntersectionObserver.hook";
 
 type Props = {
-  isVisibleIntersection: boolean
   recipeItem: Recipe
   setVisibleDetail: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const RecipeCardMiddle = (props: Props) => {
+  const [intersectionRef, isVisibleIntersection] = useIntersectionObserver()
+
   return (
     <div
       className="recipeCard__corps"
       onClick={() => window.location.pathname !== "/shop" && props.setVisibleDetail(true)}
+      ref={intersectionRef}
     >
       <div className="recipeCard__corps__author">
-        {props.recipeItem.postedByUser.imageUrl && props.isVisibleIntersection ? (
+        {props.recipeItem.postedByUser.imageUrl && isVisibleIntersection ? (
           <img
             src={
               import.meta.env.VITE_BASE_URL_API +

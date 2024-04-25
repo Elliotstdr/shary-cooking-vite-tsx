@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 type Props = {
   regimeId: number,
-  setRegimeId: React.Dispatch<React.SetStateAction<number>>,
+  setRegimeId: (id: number) => void,
 }
 
 const Regimes = (props: Props) => {

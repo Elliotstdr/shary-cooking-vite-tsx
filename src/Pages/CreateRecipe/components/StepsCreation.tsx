@@ -1,12 +1,11 @@
-import React from "react";
 import { InputTextarea } from "primereact/inputtextarea";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Bouton from "../../../Components/ui/Bouton/Bouton";
 
 interface Props {
-  stepsList: Array<Step>,
-  setStepsList: React.Dispatch<React.SetStateAction<Array<Step>>>
+  stepsList: Step[],
+  setStepsList: (steps: Step[]) => void
 }
 
 const StepsCreation = (props: Props) => {
@@ -21,7 +20,7 @@ const StepsCreation = (props: Props) => {
               className="recipe__form__field-step"
               value={step.description}
               onChange={(e) => {
-                props.setStepsList((prev) => prev.map((x) => {
+                props.setStepsList(props.stepsList.map((x) => {
                   if (x.stepIndex === step.stepIndex) {
                     return {
                       ...x,
@@ -36,7 +35,7 @@ const StepsCreation = (props: Props) => {
                 className="bin"
                 onClick={(e: any) => {
                   e.preventDefault();
-                  props.setStepsList((prev) => prev.filter((x) =>
+                  props.setStepsList(props.stepsList.filter((x) =>
                     x.stepIndex !== step.stepIndex
                   ))
                 }}

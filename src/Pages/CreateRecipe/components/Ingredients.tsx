@@ -8,8 +8,8 @@ import { useMemo } from "react";
 import { getLastId } from "../../../Services/createRecipeFunctions";
 
 type Props = {
-  ingredientList: Array<FormIngredient>,
-  setIngredientList: React.Dispatch<React.SetStateAction<Array<FormIngredient>>>,
+  ingredientList: FormIngredient[],
+  setIngredientList: (ingredients: FormIngredient[]) => void,
 }
 
 const Ingredients = ({ ingredientList, setIngredientList }: Props) => {
@@ -24,16 +24,14 @@ const Ingredients = ({ ingredientList, setIngredientList }: Props) => {
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      setIngredientList((ingredientList) => {
-        const oldIndex = ingredientList.findIndex(
-          (item) => item.id === active.id
-        );
-        const newIndex = ingredientList.findIndex(
-          (item) => item.id === over.id
-        );
+      const oldIndex = ingredientList.findIndex(
+        (item) => item.id === active.id
+      );
+      const newIndex = ingredientList.findIndex(
+        (item) => item.id === over.id
+      );
 
-        return arrayMove(ingredientList, oldIndex, newIndex);
-      });
+      setIngredientList(arrayMove(ingredientList, oldIndex, newIndex));
     }
   };
 

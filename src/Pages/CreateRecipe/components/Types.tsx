@@ -1,10 +1,9 @@
 import { RadioButton } from "primereact/radiobutton";
-import "./Types.scss";
 import { useSelector } from "react-redux";
 
 type Props = {
   typeId: number,
-  setTypeId: React.Dispatch<React.SetStateAction<number>>,
+  setTypeId: (id: number) => void,
 }
 
 const Types = (props: Props) => {

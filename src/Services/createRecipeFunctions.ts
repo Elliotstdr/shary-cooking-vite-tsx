@@ -1,19 +1,26 @@
-export const defaultValues = {
-  title: "",
-  number: "1",
-  time: "00:00"
-}
+import { store } from "../Store/store";
 
-export const defaultStep = {
-  description: "",
-  stepIndex: 1
-}
+export const defaultValues = () => {
+  const secondaryTables = store.getState().secondaryTables
 
-export const defaultIngredient = {
-  unit: null,
-  quantity: undefined,
-  label: "",
-  id: 1
+  return {
+    title: "",
+    number: "1",
+    time: "00:00",
+    image: null,
+    type: secondaryTables.types![0]?.id || 1,
+    regime: secondaryTables.regimes![0]?.id || 1,
+    steps: [{
+      description: "",
+      stepIndex: 1
+    }],
+    ingredients: [{
+      unit: null,
+      quantity: "",
+      label: "",
+      id: 1
+    }]
+  }
 }
 
 export const regimeTooltips = [

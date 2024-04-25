@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -10,8 +10,8 @@ import { BiMoveVertical } from "react-icons/bi";
 import { AiOutlineStop } from "react-icons/ai";
 
 interface Props {
-  ingredientList: Array<FormIngredient>,
-  setIngredientList: React.Dispatch<React.SetStateAction<Array<FormIngredient>>>,
+  ingredientList: FormIngredient[],
+  setIngredientList: (ingredients: FormIngredient[]) => void,
   ingredientData: Array<IngredientData> | null,
   ingredient: FormIngredient
 }
@@ -21,7 +21,7 @@ const IngredientsCreation = (props: Props) => {
   const [autocompleteData, setAutocompleteData] = useState<Array<IngredientData>>([]);
 
   const modifyIngredientList = (word: string, ingredient: FormIngredient) => {
-    props.setIngredientList((prev) => prev.map((x) => {
+    props.setIngredientList(props.ingredientList.map((x) => {
       if (x.id === ingredient.id) {
         return {
           ...x,
@@ -97,7 +97,7 @@ const IngredientsCreation = (props: Props) => {
         value={props.ingredient.quantity}
         keyfilter="num"
         onChange={(e) => {
-          props.setIngredientList((prev) => prev.map((x) => {
+          props.setIngredientList(props.ingredientList.map((x) => {
             if (x.id === props.ingredient.id) {
               return {
                 ...x,
@@ -120,7 +120,7 @@ const IngredientsCreation = (props: Props) => {
         placeholder="kg, unité..."
         className="recipe__form__field-unit"
         onChange={(e) => {
-          props.setIngredientList((prev) => prev.map((x) => {
+          props.setIngredientList(props.ingredientList.map((x) => {
             if (x.id === props.ingredient.id) {
               return {
                 ...x,
@@ -136,7 +136,7 @@ const IngredientsCreation = (props: Props) => {
           className="bin"
           onClick={(e: any) => {
             e.preventDefault();
-            props.setIngredientList((prev) => prev.filter((x) =>
+            props.setIngredientList(props.ingredientList.filter((x) =>
               x.id !== props.ingredient.id
             ))
           }}

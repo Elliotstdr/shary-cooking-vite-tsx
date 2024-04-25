@@ -12,7 +12,7 @@ import Loader from "../../Components/ui/Loader/loader";
 import NavBar from "../../Components/NavBar/NavBar";
 import Footer from "../../Components/Footer/Footer";
 import { editRecipeInRecipes, updateRecipe } from "../../Store/Reducers/recipeReducer";
-import { checkIngredients, checkSteps, defaultIngredient, defaultStep, defaultValues } from "../../Services/createRecipeFunctions";
+import { checkIngredients, checkSteps, defaultValues } from "../../Services/createRecipeFunctions";
 import Ingredients from "./components/Ingredients";
 import Regimes from "./components/Regimes";
 import Types from "./components/Types";
@@ -23,35 +23,23 @@ type Props = {
   HFFillRecipe?: HFFillRecipe
 }
 
-type Body = {
+type Values = {
   title: string,
   time: string,
   image: string | null,
   createdAt: Date,
   id?: number,
-  type?: string,
-  regime?: string,
   postedByUser?: string,
-  steps?: Array<Step>,
-  ingredients?: Array<PayloadIngredient>,
-  fromHellof?: boolean
-}
-type Values = Body & {
+  type?: number,
+  regime?: number,
   number: string,
-}
-type Payload = Body & {
-  number: number,
-}
-
-type PayloadIngredient = {
-  label: string,
-  quantity: number | undefined,
-  unit: string
+  ingredients: FormIngredient[],
+  steps: Step[],
+  fromHellof?: boolean
 }
 
 const CreateRecipe = (props: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
-  const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
   const recipe = useSelector((state: RootState) => state.recipe);
   const dispatch = useDispatch();
 
@@ -62,108 +50,78 @@ const CreateRecipe = (props: Props) => {
   }, []);
 
   const isFilled = props.recipe || props.HFFillRecipe
-  const [currentPictureDeleted, setCurrentPictureDeleted] = useState(false)
   const [isRestored, setIsRestored] = useState(false)
-  const [availableToReset, setAvailableToReset] = useState(false)
-  const [image, setImage] = useState(null);
   const ref = useRef(null);
-  const [typeId, setTypeId] = useState(secondaryTables.types![0]?.id || 1);
-  const [regimeId, setRegimeId] = useState(secondaryTables.regimes![0]?.id || 1);
-  const [stepsList, setStepsList] = useState<Step[]>([defaultStep]);
-  const [ingredientList, setIngredientList] = useState<FormIngredient[]>([defaultIngredient]);
 
   const {
     control,
     register,
+    setValue,
     getValues,
     reset,
     watch,
     formState: { errors, isSubmitting },
     handleSubmit,
-  } = useForm({ defaultValues: defaultValues as Values });
+  } = useForm({
+    defaultValues: defaultValues() as Values
+  });
 
   useEffect(() => {
-    if (availableToReset) {
-      setIsRestored(false)
-      resetForm();
-    }
-  }, [availableToReset]);
+    const watchedValues = watch((values) => {
+      if (isFilled || (JSON.stringify(values) === JSON.stringify(defaultValues()))) return
 
-  useEffect(() => {
-    if (availableToReset) {
-      setAvailableToReset(false)
-      return
-    }
+      dispatch(updateRecipe({
+        savedForm: {
+          ...values,
+          type: { id: getValues('type') },
+          regime: { id: getValues('regime') }
+        },
+      }))
+    })
 
-    if (isFilled ||
-      (!image && typeId === 1 && regimeId === 1 &&
-        !ingredientList[0].label && !stepsList[0].description &&
-        !getValues("title") && getValues("time") === "00:00" && getValues("number") === "1")
-    ) return
-
-    dispatch(updateRecipe({
-      savedForm: {
-        ...getValues(),
-        ingredients: ingredientList,
-        steps: stepsList,
-        type: { id: typeId },
-        regime: { id: regimeId }
-      }
-    }))
-  }, [typeId, regimeId, ingredientList, stepsList, image, watch("title"), watch("time"), watch("number")])
+    return () => watchedValues.unsubscribe()
+  }, [watch()])
 
   const fillForm = (payload: Recipe | HFFillRecipe) => {
-    setTypeId(payload.type.id);
-    setRegimeId(payload.regime.id);
-
-    const steps = [...payload.steps]
-    setStepsList(steps.sort((a, b) => a.stepIndex - b.stepIndex).map((step) => {
-      return { description: step.description, stepIndex: step.stepIndex };
-    }));
-    setIngredientList(payload.ingredients.map((ingredient, index) => {
-      return { id: index + 1, ...ingredient, quantity: ingredient.quantity?.toString() };
-    }))
-
     reset({
       title: payload.title,
       number: payload.number.toString(),
       time: payload.time,
+      type: payload.type.id,
+      regime: payload.regime.id,
+      steps: [...payload.steps].sort((a, b) => a.stepIndex - b.stepIndex).map((step) => {
+        return { description: step.description, stepIndex: step.stepIndex };
+      }),
+      ingredients: payload.ingredients.map((ingredient, index) => {
+        return { id: index + 1, ...ingredient, quantity: ingredient.quantity?.toString() };
+      })
     })
   }
 
-  const resetForm = () => {
-    reset(defaultValues);
-    setImage(null);
-    secondaryTables.types && setTypeId(secondaryTables.types[0]?.id);
-    secondaryTables.regimes && setRegimeId(secondaryTables.regimes[0]?.id);
-    setStepsList([defaultStep]);
-    setIngredientList([defaultIngredient]);
-    successToast("Votre recette a bien été créée");
-  };
-
   const setFields = () => {
-    const data: Payload = { ...getValues(), number: Number(getValues("number")) };
-    data.createdAt = new Date();
-    data.type = `/api/types/${typeId}`;
-    data.regime = `/api/regimes/${regimeId}`;
-    data.postedByUser = `/api/users/${auth.userConnected?.id}`;
-    data.steps = stepsList;
-    data.ingredients = ingredientList.map((ingredient: FormIngredient) => {
-      return {
-        label: ingredient.label,
-        quantity: Number(ingredient.quantity),
-        unit: `/api/units/${ingredient?.unit?.id}`
-      }
-    });
+    const data = {
+      ...getValues(),
+      type: `/api/types/${getValues('type')}`,
+      regime: `/api/regimes/${getValues('regime')}`,
+      number: Number(getValues("number")),
+      ingredients: getValues('ingredients').map((ingredient: FormIngredient) => {
+        return {
+          label: ingredient.label,
+          quantity: Number(ingredient.quantity),
+          unit: `/api/units/${ingredient?.unit?.id}`
+        }
+      }),
+      createdAt: new Date(),
+      postedByUser: `/api/users/${auth.userConnected?.id}`,
+      image: getValues('image')
+        ? getValues('image')
+        : props.HFFillRecipe
+          ? props.HFFillRecipe.image
+          : null
+    };
+
     if (props.recipe) {
       data.id = props.recipe.id;
-    }
-    if (image) {
-      data.image = image;
-    } else if (props.HFFillRecipe) {
-      data.image = props.HFFillRecipe.image
-    } else {
-      data.image = null;
     }
 
     if (!props.recipe) {
@@ -199,7 +157,9 @@ const CreateRecipe = (props: Props) => {
       successToast("Recette créée !")
       props.setVisibleModif(false)
     } else {
-      setAvailableToReset(true)
+      setIsRestored(false)
+      reset(defaultValues());
+      successToast("Votre recette a bien été créée");
     }
   };
 
@@ -227,7 +187,6 @@ const CreateRecipe = (props: Props) => {
       return
     }
 
-    setCurrentPictureDeleted(true)
     successToast("Image supprimée")
     dispatch(editRecipeInRecipes(response.data))
   }
@@ -253,10 +212,10 @@ const CreateRecipe = (props: Props) => {
           <h4>Photo :</h4>
           <ImageUpload
             {...register("image")}
-            image={image}
-            setImage={setImage}
+            image={getValues('image')}
+            setImage={(image) => setValue('image', image)}
           />
-          {props?.recipe?.imageUrl && !currentPictureDeleted &&
+          {props?.recipe?.imageUrl &&
             <a onClick={() => deletePicture()} className="options">
               Supprimer l'image actuelle
             </a>
@@ -268,7 +227,6 @@ const CreateRecipe = (props: Props) => {
             <InputText
               {...register("title", { required: true })}
               placeholder="Ma super recette"
-              className="recipe__form__field-title"
               autoFocus
             />
             {errors.title && <small className="p-error">Le titre est obligatoire</small>}
@@ -281,7 +239,6 @@ const CreateRecipe = (props: Props) => {
                 validate: (value: any) => value !== 0 && value !== "0"
               })}
               placeholder="3 personnes"
-              className="recipe__form__field-number"
               keyfilter="num"
             />
             {errors.number && <small className="p-error">Le nombre est obligatoire et différent de 0</small>}
@@ -291,19 +248,18 @@ const CreateRecipe = (props: Props) => {
             <InputText
               {...register("time", { required: true })}
               placeholder="30 minutes"
-              className="recipe__form__field-time"
               type="time"
             />
             {errors.time && <small className="p-error">Le temps est obligatoire</small>}
           </div>
         </div>
         <Types
-          typeId={typeId}
-          setTypeId={setTypeId}
+          typeId={getValues('type') || 1}
+          setTypeId={(newId) => setValue('type', newId)}
         ></Types>
         <Regimes
-          regimeId={regimeId}
-          setRegimeId={setRegimeId}
+          regimeId={getValues('regime') || 1}
+          setRegimeId={(newId) => setValue('regime', newId)}
         ></Regimes>
         <Divider></Divider>
         <div className="recipe__form__field">
@@ -312,12 +268,12 @@ const CreateRecipe = (props: Props) => {
             name="ingredients"
             control={control}
             rules={{
-              validate: () => checkIngredients(ingredientList),
+              validate: () => checkIngredients(getValues('ingredients')),
             }}
             render={() =>
               <Ingredients
-                ingredientList={ingredientList}
-                setIngredientList={setIngredientList}
+                ingredientList={getValues('ingredients')}
+                setIngredientList={(ingredients) => setValue('ingredients', ingredients)}
               ></Ingredients>
             }
           />
@@ -330,12 +286,12 @@ const CreateRecipe = (props: Props) => {
             name="steps"
             control={control}
             rules={{
-              validate: () => checkSteps(stepsList),
+              validate: () => checkSteps(getValues('steps')),
             }}
             render={() => (
               <StepsCreation
-                stepsList={stepsList}
-                setStepsList={setStepsList}
+                stepsList={getValues('steps')}
+                setStepsList={(steps) => setValue('steps', steps)}
               ></StepsCreation>
             )}
           />

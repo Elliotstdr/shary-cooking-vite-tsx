@@ -12,50 +12,35 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { fetchPost } from "../../../Hooks/api.hook";
 
-interface Props {
+type Props = {
   reportBugModal: boolean,
   setReportBugModal: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-interface Values {
-  title: string,
-  message: string,
-  file: string | null,
-  firstname?: string,
-  lastname?: string
-}
-
 const BugReport = (props: Props) => {
-  const [sending, setSending] = useState(false);
-  const [image, setImage] = useState(null);
   const [successView, setSuccessView] = useState(false);
-
   const auth = useSelector((state: RootState) => state.auth);
-
-  const defaultValues: Values = {
-    title: "",
-    message: "",
-    file: null
-  };
 
   const {
     register,
     getValues,
-    formState: { errors },
+    setValue,
+    formState: { errors, isSubmitting },
     handleSubmit,
-  } = useForm({ defaultValues });
+  } = useForm({
+    defaultValues: {
+      title: "",
+      message: "",
+      image: null
+    }
+  });
 
   const onSubmit = async () => {
-    setSending(true);
-    const data = getValues();
-    data.firstname = auth.userConnected?.name;
-    data.lastname = auth.userConnected?.lastname;
-    if (image) {
-      data.file = image;
-    }
-
-    const response = await fetchPost(`/users/sendReport`, data);
-    setSending(false);
+    const response = await fetchPost(`/users/sendReport`, {
+      ...getValues(),
+      firstname: auth.userConnected?.name,
+      lastname: auth.userConnected?.lastname
+    });
     if (response.error) {
       errorToast("Une erreur est survenue lors de l'envoi du mail");
       return;
@@ -94,13 +79,13 @@ const BugReport = (props: Props) => {
           <div className="bug__form__field file">
             <h4>Capture d'écran :</h4>
             <ImageUpload
-              {...register("file")}
-              image={image}
-              setImage={setImage}
+              {...register("image")}
+              image={getValues('image')}
+              setImage={(image) => setValue('image', image)}
             />
           </div>
           <div className="bug__form__button">
-            {sending ? <Loader /> : <Bouton>Envoyer mon rapport</Bouton>}
+            {isSubmitting ? <Loader /> : <Bouton>Envoyer mon rapport</Bouton>}
           </div>
         </form>
       ) : (

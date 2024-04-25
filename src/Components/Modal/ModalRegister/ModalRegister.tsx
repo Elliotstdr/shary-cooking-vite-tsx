@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { InputText } from "primereact/inputtext";
 import Modal from "../Modal";
 import { useDispatch } from "react-redux";
@@ -18,58 +18,41 @@ interface Props {
   header: string
 }
 
-interface Values {
-  name: string,
-  lastname: string,
-  email: string,
-  password: string,
-  confirmpassword: string,
-  secretKey: string,
-}
-
 const ModalLogin = (props: Props) => {
   const dispatch = useDispatch();
-  const [isloging, setIsLoging] = useState(false);
   const [isEqualPassword, setIsEqualPassword] = useState(false);
 
-  const defaultValues: Values = {
-    name: "",
-    lastname: "",
-    email: "",
-    password: "",
-    confirmpassword: "",
-    secretKey: "",
-  };
-
-  useEffect(() => {
-    !props.visible && setIsLoging(false);
-  }, [props.visible]);
-
-  // variables du formulaire
   const {
     control,
     getValues,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
-  } = useForm({ defaultValues });
+  } = useForm({
+    defaultValues: {
+      name: "",
+      lastname: "",
+      email: "",
+      password: "",
+      confirmpassword: "",
+      secretKey: "",
+    }
+  });
 
   const onSubmit = async () => {
-    setIsLoging(true);
     const data = getValues();
 
     const response = await fetchPost(`/users/createAccount`, data);
     if (response.error) {
-      setIsLoging(false);
       errorToast(response.error?.response?.data?.detail ?? "");
       return;
     }
+
     const dataForToken = {
       email: data.email,
       password: data.password,
     };
     const subResponse = await fetchPost(`/auth`, dataForToken);
-    setIsLoging(false);
     if (subResponse.error) {
       errorToast("Une erreur est survenue");
       return;
@@ -208,7 +191,7 @@ const ModalLogin = (props: Props) => {
           {errors.secretKey && <small className="p-error">{errors.secretKey.message}</small>}
         </div>
         <div className="login__form__button">
-          {isloging ? <Loader /> : <Bouton>Créer un compte</Bouton>}
+          {isSubmitting ? <Loader /> : <Bouton>Créer un compte</Bouton>}
         </div>
       </form>
     </Modal>

@@ -19,7 +19,6 @@ interface Props {
 
 interface Values {
   email: string
-  secretKey: string,
   resetKey: string,
   newPassword: string
 }
@@ -33,7 +32,6 @@ const ModalForgotPassword = (props: Props) => {
 
   const defaultValues: Values = {
     email: "",
-    secretKey: "",
     resetKey: "",
     newPassword: "",
   };
@@ -53,7 +51,6 @@ const ModalForgotPassword = (props: Props) => {
       setIsLoging(true);
       const sendMailData = {
         email: data.email,
-        secretKey: data.secretKey,
       };
       sendMail(sendMailData);
       setError("");

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { InputText } from "primereact/inputtext";
 import Modal from "../Modal";
 import { useDispatch } from "react-redux";
@@ -6,7 +6,6 @@ import { Password } from "primereact/password";
 import "./ModalLogin.scss";
 import { Controller, useForm } from "react-hook-form";
 import Loader from "../../ui/Loader/loader";
-import { useState } from "react";
 import Bouton from "../../ui/Bouton/Bouton";
 import { errorToast } from "../../../Services/functions";
 import { fetchPost } from "../../../Hooks/api.hook";
@@ -19,48 +18,36 @@ interface Props {
   header: string
 }
 
-interface Values {
-  email: string
-  password: string,
-}
-
 const ModalLogin = (props: Props) => {
   const dispatch = useDispatch();
-  const [isloging, setIsLoging] = useState(false);
 
-  const defaultValues: Values = {
-    email: "",
-    password: "",
-  };
-
-  useEffect(() => {
-    !props.visible && setIsLoging(false);
-  }, [props.visible]);
-  // variables du formulaire
   const {
     control,
     getValues,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
-  } = useForm({ defaultValues });
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    }
+  });
 
   const onSubmit = async () => {
-    setIsLoging(true);
     const data = getValues();
 
     const response = await fetchPost(`/auth`, data);
     if (response.error || !response.data?.token) {
-      setIsLoging(false);
       errorToast("L'authentification a échoué");
       return;
     }
+
     const subResponse = await fetchPost(
       `/users/by_email`,
       {},
       response.data.token
     );
-    setIsLoging(false);
     if (subResponse.error) {
       errorToast("L'authentification a échoué");
       return;
@@ -122,7 +109,7 @@ const ModalLogin = (props: Props) => {
           Mot de passe oublié ?
         </div>
         <div className="login__form__button">
-          {isloging ? <Loader /> : <Bouton>Se connecter</Bouton>}
+          {isSubmitting ? <Loader /> : <Bouton>Se connecter</Bouton>}
         </div>
       </form>
     </Modal>

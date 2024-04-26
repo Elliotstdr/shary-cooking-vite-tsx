@@ -4,6 +4,16 @@
   display: flex;
   flex-direction: column;
   margin: 3rem 1rem;
+  position: relative;
+  &.modify_recipe {
+    margin-top: 0;
+    button {
+      align-self: center;
+    }
+    .steps {
+      width: 60%;
+    }
+  }
   &__group {
     display: flex;
     justify-content: center;
@@ -46,9 +56,6 @@
   .p-divider {
     align-self: center;
     width: 50%;
-    &::before {
-      border-top: 3px #dee2e6;
-    }
   }
   .ingredients {
     .ingredient {
@@ -102,21 +109,10 @@
 .restore {
   position: absolute;
   left: 0;
+  top: -2rem;
 }
 .p-dropdown-items {
   text-align: left;
-}
-
-.modify_recipe {
-  .recipe__form {
-    margin-top: 0;
-    button {
-      align-self: center;
-    }
-    .steps {
-      width: 60%;
-    }
-  }
 }
 
 @media (max-width: 900px) {

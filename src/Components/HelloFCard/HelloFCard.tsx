@@ -3,8 +3,8 @@ import { fillIngredient, findRegime, findType, getTime } from "../../Services/hf
 import "./HelloFCard.scss"
 import { useState } from "react";
 import Modal from "../Modal/Modal";
-import CreateRecipe from "../../Pages/CreateRecipe/CreateRecipe";
 import default2 from "/src/assets/default2.jpg";
+import CreateRecipeContainer from "../CreateRecipeContainer/CreateRecipeContainer";
 
 type Props = {
   recipe: HFRecipe
@@ -48,10 +48,10 @@ const HelloFCard = (props: Props) => {
           setVisible={setVisibleRecipeForm}
           className={"modify_recipe_modal"}
         >
-          <CreateRecipe
+          <CreateRecipeContainer
             HFFillRecipe={filledRecipe}
             setVisibleModif={setVisibleRecipeForm}
-          ></CreateRecipe>
+          ></CreateRecipeContainer>
         </Modal>
       )}
     </>

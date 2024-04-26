@@ -1,5 +1,5 @@
-import IngredientsCreation from "../components/IngredientsCreation";
-import Bouton from "../../../Components/ui/Bouton/Bouton";
+import Ingredient from "./Ingredient";
+import Bouton from "../../ui/Bouton/Bouton";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
@@ -12,7 +12,7 @@ type Props = {
   setIngredientList: (ingredients: FormIngredient[]) => void,
 }
 
-const Ingredients = ({ ingredientList, setIngredientList }: Props) => {
+const IngredientsCreation = ({ ingredientList, setIngredientList }: Props) => {
   const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
 
   const itemIds: number[] = useMemo(
@@ -38,22 +38,22 @@ const Ingredients = ({ ingredientList, setIngredientList }: Props) => {
   return (
     <>
       <div className="ingredients">
-        <IngredientsCreation
+        <Ingredient
           ingredient={ingredientList[0]}
           ingredientList={ingredientList}
           setIngredientList={setIngredientList}
           ingredientData={ingredientData.data}
-        ></IngredientsCreation>
+        ></Ingredient>
         <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} >
           <SortableContext items={itemIds} strategy={verticalListSortingStrategy} >
             {ingredientList.map((x) => x.id !== 1 && x.id && ingredientData.data && (
-              <IngredientsCreation
+              <Ingredient
                 key={x.id}
                 ingredient={x}
                 ingredientList={ingredientList}
                 setIngredientList={setIngredientList}
                 ingredientData={ingredientData.data}
-              ></IngredientsCreation>
+              ></Ingredient>
             )
             )}
           </SortableContext>
@@ -82,4 +82,4 @@ const Ingredients = ({ ingredientList, setIngredientList }: Props) => {
   );
 };
 
-export default Ingredients;
+export default IngredientsCreation;

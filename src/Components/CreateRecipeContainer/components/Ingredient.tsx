@@ -16,7 +16,7 @@ interface Props {
   ingredient: FormIngredient
 }
 
-const IngredientsCreation = (props: Props) => {
+const Ingredient = (props: Props) => {
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
   const [autocompleteData, setAutocompleteData] = useState<Array<IngredientData>>([]);
 
@@ -146,4 +146,4 @@ const IngredientsCreation = (props: Props) => {
   );
 };
 
-export default IngredientsCreation;
+export default Ingredient;

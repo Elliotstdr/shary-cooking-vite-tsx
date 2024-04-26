@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "../../Modal/Modal";
 import Bouton from "../../ui/Bouton/Bouton";
 import { editRecipeInRecipes, removeRecipeInRecipes } from "../../../Store/Reducers/recipeReducer";
-import CreateRecipe from "../../../Pages/CreateRecipe/CreateRecipe";
+import CreateRecipeContainer from "../../CreateRecipeContainer/CreateRecipeContainer";
 
 type Props = {
   recipeItem: Recipe,
@@ -101,10 +101,10 @@ const RecipeCardBottom = (props: Props) => {
           header={"Modifier ma recette"}
           className={"modify_recipe_modal"}
         >
-          <CreateRecipe
+          <CreateRecipeContainer
             recipe={props.recipeItem}
             setVisibleModif={setVisibleModif}
-          ></CreateRecipe>
+          ></CreateRecipeContainer>
         </Modal>
       )}
     </div>

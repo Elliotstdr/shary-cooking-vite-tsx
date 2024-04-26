@@ -1,7 +1,7 @@
 import { useState } from "react";
-import CreateRecipe from "../../../Pages/CreateRecipe/CreateRecipe";
 import Modal from "../../Modal/Modal";
 import { CiEdit } from "react-icons/ci";
+import CreateRecipeContainer from "../../CreateRecipeContainer/CreateRecipeContainer";
 
 type Props = {
   editable: boolean
@@ -32,10 +32,10 @@ const RecipeDetailTitle = ({ editable, recipe }: Props) => {
           header={"Modifier ma recette"}
           className={"modify_recipe_modal"}
         >
-          <CreateRecipe
+          <CreateRecipeContainer
             recipe={recipe}
             setVisibleModif={setVisibleModif}
-          ></CreateRecipe>
+          ></CreateRecipeContainer>
         </Modal>
       )}
     </>

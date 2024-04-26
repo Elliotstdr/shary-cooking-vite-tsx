@@ -26,9 +26,4 @@ const Recipes = () => {
   );
 };
 
-Recipes.defaultProps = {
-  mine: false,
-  favourite: false,
-};
-
 export default Recipes;

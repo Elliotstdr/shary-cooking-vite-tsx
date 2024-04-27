@@ -14,11 +14,11 @@ const RecipeCardMiddle = (props: Props) => {
 
   return (
     <div
-      className="recipeCard__corps"
+      className="flex flex-col h-[15.5rem] py-4 pl-4 items-start"
       onClick={() => window.location.pathname !== "/shop" && props.setVisibleDetail(true)}
       ref={intersectionRef}
     >
-      <div className="recipeCard__corps__author">
+      <div className="flex items-start text-sm">
         {props.recipeItem.postedByUser.imageUrl && isVisibleIntersection ? (
           <img
             src={
@@ -26,29 +26,29 @@ const RecipeCardMiddle = (props: Props) => {
               props.recipeItem.postedByUser.imageUrl
             }
             alt="ma pp"
-            className="creatorPP"
+            className="size-6 rounded-full mr-2 object-cover"
           ></img>
         ) : (
-          <GiCook className="cooker"></GiCook>
+          <GiCook className="size-6 rounded-full mr-2 object-cover"></GiCook>
         )}
         <span>Créée par {props.recipeItem.postedByUser.name}</span>
       </div>
-      <div className="recipeCard__corps__title">{props.recipeItem.title}</div>
-      <div className="recipeCard__corps__regime">
-        <span>
-          <GiKnifeFork></GiKnifeFork>
+      <div className="cursor-pointer text-green my-6 mx-2 text-2xl line-clamp-2 self-center">{props.recipeItem.title}</div>
+      <div>
+        <span className="flex items-center">
+          <GiKnifeFork className="mx-2"></GiKnifeFork>
           {props.recipeItem.regime.label}
         </span>
       </div>
-      <div className="recipeCard__corps__number">
-        <span>
-          <BsPeople></BsPeople>
+      <div>
+        <span className="flex items-center">
+          <BsPeople className="mx-2"></BsPeople>
           {props.recipeItem.number} personnes
         </span>
       </div>
-      <div className="recipeCard__corps__time">
-        <span>
-          <BiTimer></BiTimer>
+      <div>
+        <span className="flex items-center">
+          <BiTimer className="mx-2"></BiTimer>
           {timeToString(props.recipeItem.time)}
         </span>
       </div>

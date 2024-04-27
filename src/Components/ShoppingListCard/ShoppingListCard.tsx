@@ -1,4 +1,3 @@
-import "./ShoppingListCard.scss";
 import { GiKnifeFork } from "react-icons/gi";
 import { BsPeople } from "react-icons/bs";
 import { BiTimer } from "react-icons/bi";
@@ -32,62 +31,63 @@ const ShoppingListCard = (props: Props) => {
   };
 
   return (
-    <div className="shoppingList_container_export_recipes_recipe">
+    <div className="w-80 rounded-lg bg-white my-4 flex flex-col laptop:h-48 laptop:w-full laptop:flex-row">
       <RecipePicture
         url={props.recipe.imageUrl}
         isFromHellof={props.recipe.fromHellof}
+        className="rounded-t-lg w-full h-64 object-cover laptop:w-80 laptop:h-48 laptop:rounded-bl-xl laptop:rounded-tr-none"
       ></RecipePicture>
-      <div className="infos">
-        <div className="infos_top">
-          <div className="infos_top_title">{props.recipe.title}</div>
-          <div className="infos_top_author">
+      <div className="flex flex-col p-6 grow justify-between laptop:py-8">
+        <div className="flex flex-col items-center justify-between mt-2 mb-8 laptop:m-0 laptop:flex-row">
+          <div className="text-xl mb-4 font-bold max-w-[70%] line-clamp-2 laptop:line-clamp-1 laptop:m-0">
+            {props.recipe.title}
+          </div>
+          <div>
             Créé par {props.recipe.postedByUser.name}
           </div>
         </div>
-        <div className="infos_bottom">
-          <div className="infos_bottom_left">
-            <div className="infos_bottom_left_regime">
-              <span>
-                <GiKnifeFork></GiKnifeFork>
+        <div className="flex items-center justify-between">
+          <div className="flex flex-col text-start">
+            <div>
+              <span className="flex items-center p-1">
+                <GiKnifeFork className="mr-2"></GiKnifeFork>
                 {props.recipe.regime.label}
               </span>
             </div>
-            <div className="infos_bottom_left_number">
-              <span>
-                <BsPeople></BsPeople>
+            <div>
+              <span className="flex items-center p-1">
+                <BsPeople className="mr-2"></BsPeople>
                 {props.recipe.number} personnes
               </span>
             </div>
-            <div className="infos_bottom_left_time">
-              <span>
-                <BiTimer></BiTimer>
+            <div>
+              <span className="flex items-center p-1">
+                <BiTimer className="mr-2"></BiTimer>
                 {timeToString(props.recipe.time)}
               </span>
             </div>
           </div>
-          <div className="infos_bottom_right">
-            <Dropdown
-              value={
-                props.recipe.multiplyer
-                  ? {
-                    label: props.recipe.number * props.recipe.multiplyer,
-                    multiplyer: 1 * props.recipe.multiplyer,
-                  }
-                  : { label: props.recipe.number, multiplyer: 1 }
-              }
-              options={[
-                { label: props.recipe.number, multiplyer: 1 },
-                { label: props.recipe.number * 2, multiplyer: 2 },
-                { label: props.recipe.number * 3, multiplyer: 3 },
-                { label: props.recipe.number * 4, multiplyer: 4 },
-              ]}
-              optionLabel="label"
-              className="recipe__form__field-number"
-              onChange={(e) => {
-                modifyRecipeList(e.value.multiplyer, props.recipe);
-              }}
-            ></Dropdown>
-          </div>
+          <Dropdown
+            value={
+              props.recipe.multiplyer
+                ? {
+                  label: props.recipe.number * props.recipe.multiplyer,
+                  multiplyer: 1 * props.recipe.multiplyer,
+                }
+                : { label: props.recipe.number, multiplyer: 1 }
+            }
+            options={[
+              { label: props.recipe.number, multiplyer: 1 },
+              { label: props.recipe.number * 2, multiplyer: 2 },
+              { label: props.recipe.number * 3, multiplyer: 3 },
+              { label: props.recipe.number * 4, multiplyer: 4 },
+            ]}
+            optionLabel="label"
+            className="recipe__form__field-number"
+            onChange={(e) => {
+              modifyRecipeList(e.value.multiplyer, props.recipe);
+            }}
+          ></Dropdown>
         </div>
       </div>
     </div>

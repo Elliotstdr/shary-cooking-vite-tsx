@@ -65,35 +65,33 @@ const Ingredient = (props: Props) => {
     transition,
   };
   return (
-    <div className="ingredient" ref={setNodeRef} style={style} {...attributes}>
+    <div className="flex relative" ref={setNodeRef} style={style} {...attributes}>
       {props.ingredient.id === 1 ? (
-        <AiOutlineStop className="move_ing"></AiOutlineStop>
+        <AiOutlineStop className="text-2xl self-center cursor-pointer"></AiOutlineStop>
       ) : (
-        <BiMoveVertical className="move_ing" {...listeners}></BiMoveVertical>
+        <BiMoveVertical className="text-2xl self-center cursor-pointer" {...listeners}></BiMoveVertical>
       )}
-      <div className="ingredient_name" id="ingredient_name">
-        <AutoComplete
-          className="recipe__form__field-ingname"
-          value={props.ingredient.label}
-          suggestions={autocompleteData}
-          completeMethod={findIngredient}
-          field="name"
-          placeholder="Tomates, Boeuf, ..."
-          onChange={(e) =>
-            modifyIngredientList(e.target.value, props.ingredient)
-          }
-          onSelect={(e) => modifyIngredientList(e.value.name, props.ingredient)}
-          tooltip={
-            props.ingredient.id === 1
-              ? "Privilégiez la sélection des ingrédients proposés pour une meilleure performance du site"
-              : undefined
-          }
-          tooltipOptions={{ position: "top" }}
-        ></AutoComplete>
-      </div>
+      <AutoComplete
+        value={props.ingredient.label}
+        suggestions={autocompleteData}
+        completeMethod={findIngredient}
+        field="name"
+        placeholder="Tomates, Boeuf, ..."
+        onChange={(e) =>
+          modifyIngredientList(e.target.value, props.ingredient)
+        }
+        onSelect={(e) => modifyIngredientList(e.value.name, props.ingredient)}
+        tooltip={
+          props.ingredient.id === 1
+            ? "Privilégiez la sélection des ingrédients proposés pour une meilleure performance du site"
+            : undefined
+        }
+        tooltipOptions={{ position: "top" }}
+        inputClassName="w-28 tablet:w-60 !m-1"
+      ></AutoComplete>
       <InputText
         placeholder="3, 2.5..."
-        className="recipe__form__field-quantity"
+        className="w-16 tablet:w-40 !m-1"
         value={props.ingredient.quantity}
         keyfilter="num"
         onChange={(e) => {
@@ -118,7 +116,7 @@ const Ingredient = (props: Props) => {
         options={secondaryTables.units ?? []}
         optionLabel="label"
         placeholder="kg, unité..."
-        className="recipe__form__field-unit"
+        className="w-24 tablet:w-40 !m-1"
         onChange={(e) => {
           props.setIngredientList(props.ingredientList.map((x) => {
             if (x.id === props.ingredient.id) {
@@ -133,7 +131,7 @@ const Ingredient = (props: Props) => {
       ></Dropdown>
       {props.ingredient.id !== 1 && (
         <RiDeleteBin6Line
-          className="bin"
+          className="text-green size-6 self-center cursor-pointer"
           onClick={(e: any) => {
             e.preventDefault();
             props.setIngredientList(props.ingredientList.filter((x) =>

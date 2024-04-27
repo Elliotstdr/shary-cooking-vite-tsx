@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./SearchBar.scss";
 import { MultiSelect } from "primereact/multiselect";
 import { useDispatch, useSelector } from "react-redux";
 import { InputText } from "primereact/inputtext";
@@ -16,8 +15,10 @@ import {
   timeList
 } from "../../Services/searchBarFunctions";
 import { updateRecipe } from "../../Store/Reducers/recipeReducer";
+import { useScreenSize } from "../../Hooks/useScreenSize.hook";
 
 const SearchBar = () => {
+  const screenSize = useScreenSize()
   const dispatch = useDispatch()
   const search = useSelector((state: RootState) => state.search);
   const auth = useSelector((state: RootState) => state.auth);
@@ -85,16 +86,20 @@ const SearchBar = () => {
   ]);
 
   return (
-    <div className="searchbar">
+    <div className="searchbar flex flex-col items-center mt-8 gap-2 desktop:flex-row desktop:mt-12">
       <div
-        className="searchbar__mobile"
+        className="flex items-center cursor-pointer font-bold bg-white border border-search rounded-md p-4 mx-auto desktop:hidden"
         onClick={() => setVisibleMobile(!visibleMobile)}
       >
-        <div className="pi pi-sliders-h"></div>
+        <div className="pi pi-sliders-h mr-2"></div>
         Filtrer
       </div>
-      <div className={`searchbar_container ${visibleMobile ? "visible" : "hidden"}`}>
-        <div className="searchbar_container__top">
+      <div className={`
+        flex justify-center flex-col gap-4 px-4 transition-300 relative rounded-xl 
+        desktop:shadow-searchbar mx-auto desktop:gap-6 desktop:px-6 desktop:py-4 desktop:bg-white 
+        ${visibleMobile || screenSize.width > 1100 ? "visible-transition" : "hidden-transition"}
+      `}>
+        <div className="flex flex-col justify-evenly gap-4 desktop:flex-row desktop:gap-8">
           <InputText
             placeholder="Tomates farcies, ..."
             value={search.keyword}
@@ -135,24 +140,24 @@ const SearchBar = () => {
             selectedItemsLabel={search.ingredient?.length + " éléments choisis"}
           ></MultiSelect>
         </div>
-        <div className="searchbar_container__bottom">
-          <div>
+        <div className="w-full flex flex-col items-start gap-4 desktop:h-6 desktop:flex-row">
+          <div className="flex items-center">
             <Checkbox
               onChange={(e) => dispatch(updateSearch({ boxMine: e.checked || false }))}
               checked={search.boxMine}
             ></Checkbox>
-            <span>Mes recettes</span>
+            <span className="mr-4 ml-1 text-sm">Mes recettes</span>
           </div>
-          <div>
+          <div className="flex items-center">
             <Checkbox
               onChange={(e) => dispatch(updateSearch({ boxFavorites: e.checked || false }))}
               checked={search.boxFavorites}
             ></Checkbox>
-            <span>Mes favoris</span>
+            <span className="mr-4 ml-1 text-sm">Mes favoris</span>
           </div>
           {search.isSearch &&
             <GrPowerReset
-              className="reset"
+              className="reset ml-4 cursor-pointer text-orange self-center size-8 desktop:size-6"
               onClick={() => {
                 dispatch(resetSearch())
               }}

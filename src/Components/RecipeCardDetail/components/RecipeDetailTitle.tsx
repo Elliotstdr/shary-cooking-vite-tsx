@@ -13,10 +13,10 @@ const RecipeDetailTitle = ({ editable, recipe }: Props) => {
 
   return (
     <>
-      <h2 className="cardDetail_container_title">
+      <h2 className="flex font-bold items-center text-3xl flex-col w-11/12 laptop:flex-row laptop:text-5xl">
         {recipe.title}
         {editable && (
-          <div className="recipeCard__bottom__edit">
+          <div className="mt-4 ml-8 laptop:mt-0">
             <CiEdit
               onClick={() => {
                 setVisibleModif(true);

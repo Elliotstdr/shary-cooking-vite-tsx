@@ -51,24 +51,32 @@ const RecipeCardBottom = (props: Props) => {
   };
 
   return (
-    <div className="recipeCard__bottom">
-      <div className="recipeCard__bottom__fav">
+    <div className="flex items-center justify-around px-4 pt-2 pb-4">
+      <div className="cursor-pointer">
         {isFavorite ? (
-          <AiFillStar onClick={() => addToFavorites("delete")}></AiFillStar>
+          <AiFillStar
+            onClick={() => addToFavorites("delete")}
+            className="text-orange size-8"
+          ></AiFillStar>
         ) : (
           <AiOutlineStar
             onClick={() => addToFavorites("add")}
+            className="text-orange size-8"
           ></AiOutlineStar>
         )}
       </div>
       {allowActions && (
-        <div className="recipeCard__bottom__edit">
-          <CiEdit onClick={() => setVisibleModif(true)}></CiEdit>
+        <div className="cursor-pointer">
+          <CiEdit
+            className="text-green size-8"
+            onClick={() => setVisibleModif(true)}
+          ></CiEdit>
         </div>
       )}
       {allowActions && (
-        <div className="recipeCard__bottom__delete">
+        <div className="cursor-pointer">
           <RiDeleteBin6Line
+            className="text-green size-8"
             onClick={() => setWantToDelete(true)}
           ></RiDeleteBin6Line>
         </div>
@@ -84,10 +92,10 @@ const RecipeCardBottom = (props: Props) => {
               Etes vous sur de vouloir supprimer cette recette ?
             </div>
             <div className="recipe_delete_modal_buttons">
-              <Bouton type={"normal"} btnAction={() => deleteRecipe()}>
+              <Bouton type="normal" btnAction={() => deleteRecipe()}>
                 Oui
               </Bouton>
-              <Bouton type={"normal"} btnAction={() => setWantToDelete(false)}>
+              <Bouton type="normal" btnAction={() => setWantToDelete(false)}>
                 Non
               </Bouton>
             </div>
@@ -99,7 +107,7 @@ const RecipeCardBottom = (props: Props) => {
           visible={visibleModif}
           setVisible={setVisibleModif}
           header={"Modifier ma recette"}
-          className={"modify_recipe_modal"}
+          className="min-w-[70%] max-w-[90%]"
         >
           <CreateRecipeContainer
             recipe={props.recipeItem}

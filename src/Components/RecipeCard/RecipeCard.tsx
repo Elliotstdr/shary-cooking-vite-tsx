@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./RecipeCard.scss";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import RecipeCardDetail from "../RecipeCardDetail/RecipeCardDetail";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +10,7 @@ import RecipeCardBottom from "./components/RecipeCardBottom";
 
 interface Props {
   recipeItem: Recipe,
+  className?: string
 }
 
 const RecipeCard = (props: Props) => {
@@ -33,22 +33,21 @@ const RecipeCard = (props: Props) => {
     }
   };
 
+  const isSelected = () => {
+    return window.location.pathname === "/shop" && recipe.chosenRecipes?.length > 0 &&
+      recipe.chosenRecipes.some((recipe) => recipe.id === props.recipeItem.id)
+  }
+
   return (
     <div
-      className={`recipeCard cardHover ${window.location.pathname === "/shop" && recipe.chosenRecipes?.length > 0 &&
-        recipe.chosenRecipes.some((recipe) => recipe.id === props.recipeItem.id) &&
-        "chosen"
-        }`}
+      className={`laptop:min-h-[95%] rounded-md mb-8 w-80 cardHover ${props.className} ${isSelected() && "border-card-green border-4 relative"}`}
       onClick={() => {
         shoppingAction();
       }}
     >
-      {window.location.pathname === "/shop" && recipe.chosenRecipes?.length > 0 &&
-        recipe.chosenRecipes.some(
-          (recipe) => recipe.id === props.recipeItem.id
-        ) && (
-          <BsFillCheckCircleFill className="chosen_check"></BsFillCheckCircleFill>
-        )}
+      {isSelected() && (
+        <BsFillCheckCircleFill className="absolute-centering size-20 text-card-green"></BsFillCheckCircleFill>
+      )}
       <RecipeCardTop
         setVisibleDetail={setVisibleDetail}
         recipeItem={props.recipeItem}
@@ -64,7 +63,7 @@ const RecipeCard = (props: Props) => {
         <SlideIn
           setVisible={setVisibleDetail}
           visible={visibleDetail}
-          width={"70%"}
+          className="!w-11/12 laptop:!w-2/3"
         >
           <RecipeCardDetail
             recipeDetail={props.recipeItem}

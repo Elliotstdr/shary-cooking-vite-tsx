@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import "./Modal.scss";
 import { Dialog } from "primereact/dialog";
 
 interface Props {
@@ -11,7 +10,8 @@ interface Props {
   height?: string,
   footer?: any,
   children: any,
-  blockScroll?: boolean
+  blockScroll?: boolean,
+  contentClassName?: string
 }
 
 const Modal = (props: Props) => {
@@ -32,6 +32,7 @@ const Modal = (props: Props) => {
       footer={props.footer && <RenderFooter footer={props.footer} />}
       className={props.className}
       blockScroll={props.blockScroll}
+      contentClassName={props.contentClassName}
     >
       {props.children}
     </Dialog>

@@ -1,12 +1,12 @@
 import { FileUpload } from "primereact/fileupload";
 import React from "react";
-import "./ImageUpload.scss";
 import { successToast } from "../../../Services/functions";
 import Compressor from 'compressorjs';
 
 interface Props {
   image: any,
   setImage: React.Dispatch<React.SetStateAction<any>>,
+  headerClassName?: string
 }
 
 const ImageUpload = (props: Props) => {
@@ -29,13 +29,14 @@ const ImageUpload = (props: Props) => {
   return (
     <FileUpload
       name={"image"}
-      className="upload_image"
+      // className="upload_image"
       customUpload={true}
       uploadHandler={uploadHandler}
       chooseLabel={props.image ? "Modifier l'image" : "Ajouter une image"}
       auto
       maxFileSize={5000000}
       accept="image/*"
+      headerClassName={props.headerClassName || ""}
     ></FileUpload>
   );
 };

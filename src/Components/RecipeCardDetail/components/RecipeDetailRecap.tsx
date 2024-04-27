@@ -11,28 +11,28 @@ type Props = {
 const RecipeDetailRecap = ({ recipeDetail }: Props) => {
   return (
     <>
-      <div className="cardDetail_container_author">
+      <div className="flex items-center">
         {recipeDetail.postedByUser?.imageUrl && (
           <img
             src={import.meta.env.VITE_BASE_URL_API + recipeDetail.postedByUser?.imageUrl}
             alt="ma pp"
-            className="creatorPP"
+            className=" size-6 rounded-full mr-2 object-cover"
           ></img>
         )}
         <span>Créée par {recipeDetail.postedByUser?.name}</span>
       </div>
-      <div className="cardDetail_container_group">
-        <div className="cardDetail_container_time">
-          <BiTimer></BiTimer> {timeToString(recipeDetail.time)}
+      <div className="flex flex-col self-start ml-8 laptop:flex-row laptop:self-center laptop:ml-0">
+        <div className="m-4 flex items-center font-bold">
+          <BiTimer className="mr-1"></BiTimer> {timeToString(recipeDetail.time)}
         </div>
-        <div className="cardDetail_container_number">
-          <BsPeople></BsPeople> {recipeDetail.number} personnes
+        <div className="m-4 flex items-center font-bold">
+          <BsPeople className="mr-1"></BsPeople> {recipeDetail.number} personnes
         </div>
-        <div className="cardDetail_container_infos_type">
-          <GiKnifeFork></GiKnifeFork> {recipeDetail.type?.label}
+        <div className="m-4 flex items-center font-bold">
+          <GiKnifeFork className="mr-1"></GiKnifeFork> {recipeDetail.type?.label}
         </div>
-        <div className="cardDetail_container_infos_regime">
-          <BiAward></BiAward> {recipeDetail.regime?.label}
+        <div className="m-4 flex items-center font-bold">
+          <BiAward className="mr-1"></BiAward> {recipeDetail.regime?.label}
         </div>
       </div>
     </>

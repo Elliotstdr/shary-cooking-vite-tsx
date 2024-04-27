@@ -1,4 +1,3 @@
-import "./App.scss";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Accueil from "../Pages/Accueil/Accueil";
 import ShoppingList from "../Pages/ShoppingList/ShoppingList";
@@ -14,6 +13,8 @@ import HelloF from "../Pages/HelloF/HelloF";
 import { useFetchGet } from "../Hooks/api.hook";
 import { errorToast } from "../Services/functions";
 import { updateSecondaryTables } from "../Store/Reducers/secondaryTablesReducer";
+import NavBar from "../Components/NavBar/NavBar";
+import Footer from "../Components/Footer/Footer";
 
 const App = () => {
   const isInterceptorActive = useAxiosInterceptors();
@@ -53,6 +54,7 @@ const App = () => {
     <div className="App" id="app">
       <BrowserRouter>
         <Toast ref={toast}></Toast>
+        {auth.isConnected && <NavBar></NavBar>}
         {isInterceptorActive &&
           <Routes>
             <Route path="/" element={<Accueil />}></Route>
@@ -68,6 +70,7 @@ const App = () => {
             )}
           </Routes>
         }
+        {auth.isConnected && <Footer></Footer>}
       </BrowserRouter>
     </div>
   );

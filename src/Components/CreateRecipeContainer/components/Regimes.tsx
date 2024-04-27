@@ -11,16 +11,17 @@ const Regimes = (props: Props) => {
   const secondaryTables = useSelector((state: RootState) => state.secondaryTables);
 
   return (
-    <div className="recipe__form__field">
-      <h4>Régime alimentaire</h4>
-      <div className="checkboxes">
+    <div className="flex items-center flex-col">
+      <h4 className="mb-2 mt-5 font-bold">Régime alimentaire</h4>
+      <div className="flex flex-wrap">
         {secondaryTables.regimes && secondaryTables.regimes.map((regime, index) => (
-          <div className="checkbox" key={index}>
+          <div className="m-4" key={index}>
             <RadioButton
               checked={regime.id === props.regimeId}
               onChange={() => props.setRegimeId(regime.id)}
               tooltip={regimeTooltips[index]}
               tooltipOptions={{ position: "bottom" }}
+              className="mr-1"
             />
             <label>{regime.label}</label>
           </div>

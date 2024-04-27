@@ -13,15 +13,17 @@ const ModalChooseRecipe = (props: Props) => {
       visible={props.visible}
       setVisible={props.setVisible}
       header={
-        <div className="header-button">
+        <div className="flex-center">
           <Bouton
             type={"normal"}
             btnTexte={"Valider"}
             btnAction={() => props.setVisible(false)}
+            className="!bg-white !rounded-xl hover:!text-green"
           ></Bouton>
         </div>
       }
-      className={"choose_recipe"}
+      className="!w-full"
+      contentClassName="flex items-center flex-col !bg-fond !pb-16 !px-2"
     >
       <>
         <RecipeContainer></RecipeContainer>

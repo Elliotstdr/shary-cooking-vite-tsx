@@ -1,3 +1,9 @@
+@import url("../src/Styles/global.css"); 
+@import url("https://fonts.cdnfonts.com/css/dilgante-rocks");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -5,6 +11,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  background-color: #f4f1ef;
+  color: #263a29;
 }
 
 code {

@@ -26,8 +26,8 @@ const HelloSearch = (props: Props) => {
   }
 
   return (
-    <div className="HF__container__search">
-      <div className="pi pi-search"></div>
+    <div className="flex gap-4 relative">
+      <div className="pi pi-search absolute text-gris left-2 top-1/2 -translate-y-1/2"></div>
       <InputText
         type="text"
         autoFocus
@@ -38,6 +38,7 @@ const HelloSearch = (props: Props) => {
             search()
           }
         }}
+        className="!pl-8"
       />
       <Bouton
         btnAction={() => search()}

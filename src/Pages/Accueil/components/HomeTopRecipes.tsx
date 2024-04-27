@@ -11,15 +11,16 @@ const HomeTopRecipes = () => {
   const topRecipes = useFetchGet<Recipe[]>(auth.isConnected ? "/topRecipes/recipes" : "");
 
   return (
-    <div className="top__recipes">
-      <h1>Les recettes au top !</h1>
-      <div className="top__recipes__recipes">
+    <div className="bg-white">
+      <h1 className="py-12 text-5xl font-dilgante">Les recettes au top !</h1>
+      <div className="grid pb-12 grid-cols-home justify-center gap-x-12">
         {topRecipes.data && topRecipes.data.length > 0 ? (
           topRecipes.data
             .map((recipe: Recipe, index) => (
               <RecipeCard
                 key={index}
                 recipeItem={recipe}
+                className="shadow-home"
               ></RecipeCard>
             ))
         ) : (

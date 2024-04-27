@@ -11,18 +11,18 @@ const RecipeCardTop = (props: Props) => {
 
   return (
     <div
-      className="recipeCard__top"
       onClick={() => window.location.pathname !== "/shop" && props.setVisibleDetail(true)}
       ref={intersectionRef}
     >
-      <div className="recipeCard__top__categorie">
-        <span className="etiquette"> {props.recipeItem.type.label} </span>
+      <div className="font-bold text-picto relative flex justify-end">
+        <span className="absolute mt-4 mr-8 py-1 px-8 text-gris bg-white rounded-md"> {props.recipeItem.type.label} </span>
       </div>
-      <div className="recipeCard__top__image">
+      <div className="cursor-pointer h-48">
         {isVisibleIntersection &&
           <RecipePicture
             url={props.recipeItem.imageUrl}
             isFromHellof={props.recipeItem.fromHellof}
+            className="w-full h-48 object-cover font-bold rounded-t-md"
           ></RecipePicture>
         }
       </div>

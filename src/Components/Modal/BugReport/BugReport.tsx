@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./BugReport.scss";
 import Modal from "../Modal";
 import { useForm } from "react-hook-form";
 import { InputTextarea } from "primereact/inputtextarea";
@@ -53,31 +52,31 @@ const BugReport = (props: Props) => {
       header="Report de bug"
       visible={props.reportBugModal}
       setVisible={props.setReportBugModal}
-      className={"modal modal-bug"}
+      className={"modal !w-11/12 tablet:!w-[640px]"}
     >
       {!successView ? (
-        <form className="bug__form" onSubmit={handleSubmit(onSubmit)}>
-          <div className="bug__form__field">
-            <h4>Intitulé du problème :</h4>
+        <form className="flex items-center flex-col p-4 mt-4" onSubmit={handleSubmit(onSubmit)}>
+          <div className="w-full mb-8 tablet:w-2/3">
+            <h4 className="font-bold my-2">Intitulé du problème :</h4>
             <InputText
               {...register("title", { required: true })}
               placeholder="Problème quand je clique sur le bouton ..."
-              className="bug__form__field-title"
+              className="!w-full"
             />
             {errors.title && <small className="p-error">Le titre est obligatoire</small>}
           </div>
-          <div className="bug__form__field">
-            <h4>Description :</h4>
+          <div className="w-full mb-8 tablet:w-2/3">
+            <h4 className="font-bold my-2">Description :</h4>
             <InputTextarea
               {...register("message", { required: true })}
               placeholder="Où? Quand? Comment?"
-              className="bug__form__field-message"
+              className="!w-full"
               autoResize
             />
             {errors.message && <small className="p-error">La description est obligatoire</small>}
           </div>
-          <div className="bug__form__field file">
-            <h4>Capture d'écran :</h4>
+          <div className="w-full mb-8 tablet:w-2/3 flex items-center flex-col">
+            <h4 className="font-bold my-2">Capture d'écran :</h4>
             <ImageUpload
               {...register("image")}
               image={getValues('image')}
@@ -89,11 +88,11 @@ const BugReport = (props: Props) => {
           </div>
         </form>
       ) : (
-        <div className="success_view">
-          <div className="success_message">
+        <div className="flex-center flex-col">
+          <div className="font-bold text-xl my-8">
             Mail envoyé ! Merci de votre retour !
           </div>
-          <BsFillCheckCircleFill className="chosen_check"></BsFillCheckCircleFill>
+          <BsFillCheckCircleFill className="size-20 text-card-green"></BsFillCheckCircleFill>
         </div>
       )}
     </Modal>

@@ -1,76 +1,18 @@
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./NavBar.scss";
-import { GiKnifeFork } from "react-icons/gi";
-import { useDispatch, useSelector } from "react-redux";
-import { GiCook } from "react-icons/gi";
-import Bouton from "../ui/Bouton/Bouton";
-import Nav from "./Nav/Nav";
+import Nav from "./components/Nav";
 import { useScreenSize } from "../../Hooks/useScreenSize.hook";
-import { useOutsideAlerter } from "../../Hooks/useOutsideAlerter.hook";
-import { logOut } from "../../Store/Reducers/authReducer";
+import Profil from "./components/Profil";
+import NavMobile from "./components/NavMobile";
 
 const NavBar = () => {
   const screenSize = useScreenSize()
-  const dispatch = useDispatch()
-  const auth = useSelector((state: RootState) => state.auth);
-  const [showParamMenu, setShowParamMenu] = useState(false);
-  const [visibleMobile, setVisibleMobile] = useState(false);
-  const navigate = useNavigate();
-
-  const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, () => setShowParamMenu(false));
-
-  const menuRef = useRef(null);
-  useOutsideAlerter(menuRef, () => setVisibleMobile(false));
 
   return (
-    <div className="navigation">
+    <div className="font-dilgante flex flex-col items-start justify-around pt-2 pb-4 shadow-home pl-8 tablet:flex-row tablet:items-center tablet:px-0 tablet:py-8">
       {screenSize.width > 990
-        ? <Nav className="desktop"></Nav>
-        : <div className="navigation__mobile" ref={menuRef}>
-          <div
-            className="navigation__mobile__header"
-            onClick={() => setVisibleMobile(!visibleMobile)}
-          >
-            <div className="pi pi-bars"></div>
-            Menu
-          </div>
-          <Nav className={`mobile ${visibleMobile ? "visible" : "hidden"}`}></Nav>
-        </div>
+        ? <Nav className="h-12"></Nav>
+        : <NavMobile></NavMobile>
       }
-      <Bouton className="first" btnAction={() => navigate("/create")}>
-        <GiKnifeFork></GiKnifeFork>Créer une recette
-      </Bouton>
-      <div className="navigation_parameters" ref={wrapperRef}>
-        {auth.userConnected?.imageUrl ? (
-          <img
-            src={
-              import.meta.env.VITE_BASE_URL_API + auth.userConnected.imageUrl
-            }
-            alt="ma pp"
-            onClick={() => setShowParamMenu(!showParamMenu)}
-          ></img>
-        ) : (
-          <GiCook
-            className="cooker"
-            onClick={() => setShowParamMenu(!showParamMenu)}
-          ></GiCook>
-        )}
-        <div
-          className={`navigation_parameters_menu ${showParamMenu && "visible"}`}
-        >
-          <span onClick={() => navigate("/param")}>Mon profil</span>
-          <span
-            onClick={() => {
-              dispatch(logOut())
-              navigate("/");
-            }}
-          >
-            Se déconnecter
-          </span>
-        </div>
-      </div>
+      <Profil></Profil>
     </div>
   );
 };

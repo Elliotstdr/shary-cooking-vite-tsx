@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from "react";
-import "./CreateRecipeContainer.scss";
 import { Controller, useForm } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
 import { Divider } from "primereact/divider";
@@ -14,6 +13,7 @@ import { checkIngredients, checkSteps, defaultValues } from "../../Services/crea
 import IngredientsCreation from "./components/IngredientsCreation";
 import Regimes from "./components/Regimes";
 import Types from "./components/Types";
+import Bouton from "../ui/Bouton/Bouton";
 
 type Props = {
   recipe?: Recipe,
@@ -197,7 +197,7 @@ const CreateRecipeContainer = (props: Props) => {
 
   return (
     <form
-      className={`recipe__form ${isFilled ? "modify_recipe" : ""}`}
+      className={`flex flex-col gap-4 my-12 mx-4 relative ${isFilled && "mt-0"}`}
       onSubmit={handleSubmit(onSubmit)}
       ref={ref}
     >
@@ -207,24 +207,25 @@ const CreateRecipeContainer = (props: Props) => {
           setIsRestored(true);
           fillForm({ ...recipe.savedForm })
         }}
-        className="options restore"
+        className="underline py-8 px-4 cursor-pointer absolute left-0 -top-8"
       > Restaurer le précedent formulaire</a>}
-      {!props.HFFillRecipe && !props.recipe?.fromHellof && <div className="recipe__form__field">
-        <h4>Photo :</h4>
-        <ImageUpload
-          {...register("image")}
-          image={getValues('image')}
-          setImage={(image) => setValue('image', image)}
-        />
-        {props?.recipe?.imageUrl &&
-          <a onClick={() => deletePicture()} className="options">
-            Supprimer l'image actuelle
-          </a>
-        }
-      </div>}
-      <div className="recipe__form__group">
-        <div className="recipe__form__field">
-          <h4>Titre de la recette</h4>
+      {!props.HFFillRecipe && !props.recipe?.fromHellof &&
+        <div className="flex items-center flex-col">
+          <h4 className="mb-2 mt-5 font-bold">Photo :</h4>
+          <ImageUpload
+            {...register("image")}
+            image={getValues('image')}
+            setImage={(image) => setValue('image', image)}
+          />
+          {props?.recipe?.imageUrl &&
+            <a onClick={() => deletePicture()} className="underline py-8 px-4 cursor-pointer">
+              Supprimer l'image actuelle
+            </a>
+          }
+        </div>}
+      <div className="flex flex-col justify-center laptop:flex-row">
+        <div className="flex items-center flex-col laptop:mr-8">
+          <h4 className="mb-2 mt-5 font-bold">Titre de la recette</h4>
           <InputText
             {...register("title", { required: true })}
             placeholder="Ma super recette"
@@ -232,8 +233,8 @@ const CreateRecipeContainer = (props: Props) => {
           />
           {errors.title && <small className="p-error">Le titre est obligatoire</small>}
         </div>
-        <div className="recipe__form__field">
-          <h4>Pour combien de personnes ?</h4>
+        <div className="flex items-center flex-col laptop:mr-8">
+          <h4 className="mb-2 mt-5 font-bold">Pour combien de personnes ?</h4>
           <InputText
             {...register("number", {
               required: true,
@@ -244,8 +245,8 @@ const CreateRecipeContainer = (props: Props) => {
           />
           {errors.number && <small className="p-error">Le nombre est obligatoire et différent de 0</small>}
         </div>
-        <div className="recipe__form__field">
-          <h4>Temps de préparation</h4>
+        <div className="flex items-center flex-col laptop:mr-8">
+          <h4 className="mb-2 mt-5 font-bold">Temps de préparation</h4>
           <InputText
             {...register("time", { required: true })}
             placeholder="30 minutes"
@@ -262,9 +263,9 @@ const CreateRecipeContainer = (props: Props) => {
         regimeId={getValues('regime') || 1}
         setRegimeId={(newId) => setValue('regime', newId)}
       ></Regimes>
-      <Divider></Divider>
-      <div className="recipe__form__field">
-        <h4>Ingrédients</h4>
+      <Divider className="self-center w-1/2"></Divider>
+      <div className="flex items-center flex-col">
+        <h4 className="my-2 font-bold">Ingrédients</h4>
         <Controller
           name="ingredients"
           control={control}
@@ -280,9 +281,9 @@ const CreateRecipeContainer = (props: Props) => {
         />
         {errors.ingredients && <small className="p-error">{errors.ingredients.message}</small>}
       </div>
-      <Divider></Divider>
-      <div className="recipe__form__field">
-        <h4>Etapes</h4>
+      <Divider className="self-center w-1/2"></Divider>
+      <div className="flex items-center flex-col">
+        <h4 className="my-2 font-bold">Etapes</h4>
         <Controller
           name="steps"
           control={control}
@@ -298,13 +299,13 @@ const CreateRecipeContainer = (props: Props) => {
         />
         {errors.steps && <small className="p-error">{errors.steps.message}</small>}
       </div>
-      <Divider></Divider>
+      <Divider className="self-center w-1/2"></Divider>
       {isSubmitting ? (
         <Loader></Loader>
       ) : (
-        <button className="bouton slide">
+        <Bouton className="self-center my-4">
           {props.recipe ? "Modifier ma recette" : "Créer ma recette"}
-        </button>
+        </Bouton>
       )}
       {Object.keys(errors).length > 0 && <small className="p-error">Il y a une erreur dans le formulaire</small>}
     </form>

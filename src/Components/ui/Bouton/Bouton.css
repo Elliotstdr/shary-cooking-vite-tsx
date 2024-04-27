@@ -1,0 +1,70 @@
+.bouton {
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 2px solid #263a29;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.5rem;
+  border-radius: 10rem;
+  color: #263a29;
+  font-size: 1rem;
+  transition: all 0.3s;
+  position: relative;
+  z-index: 1;
+  font-weight: 700;
+  height: 3rem;
+  min-width: fit-content;
+}
+.bouton:hover {
+  color: #f4f1ef;
+  border: 2px solid #f4f1ef;
+}
+.bouton:hover:before {
+  width: 100% !important;
+}
+.bouton svg {
+  margin-right: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.bouton.slide:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border-radius: 10rem;
+  z-index: -2;
+}
+.bouton.slide:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: #263a29;
+  transition: all 0.5s;
+  border-radius: 10rem;
+  z-index: -1;
+}
+.bouton.normal {
+  background-color: transparent;
+  border: 2px solid #263a29;
+  transition: all 0.5s;
+}
+.bouton.normal:hover {
+  background-color: #263a29;
+  color: white;
+}
+
+@media (max-width: 500px) {
+  .bouton {
+    height: 2.5rem !important;
+    font-size: 14px !important;
+  }
+}

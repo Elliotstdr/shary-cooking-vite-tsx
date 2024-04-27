@@ -3,6 +3,7 @@ import Modal from "../../../Components/Modal/Modal";
 import { useState } from "react";
 import { exportRecipe } from "../../../Services/functions";
 import { useSelector } from "react-redux";
+import Bouton from "../../../Components/ui/Bouton/Bouton";
 
 type Props = {
   visible: boolean,
@@ -20,23 +21,25 @@ const ModalShoppingResult = (props: Props) => {
       setVisible={props.setVisible}
       header={"Ma liste"}
       width={"40%"}
-      className={"modal_liste_courses_modal"}
+      className={"w-11/12 tablet:w-unset"}
     >
-      <div className="modal_liste_courses">
+      <div className="flex items-center flex-col">
         <InputTextarea
           autoResize
           value={stringShopping}
           onChange={(e) => setStringShopping(e.target.value)}
+          className="resize-y"
         ></InputTextarea>
-        <button
-          className={`bouton normal ${greenButton && "copied"}`}
-          onClick={() => {
+        <Bouton
+          className={`mt-4 ${greenButton && "!border-card-green !bg-card-green !text-white"}`}
+          btnAction={() => {
             navigator.clipboard.writeText(stringShopping);
             setGreenButton(true);
           }}
+          type="normal"
         >
           {greenButton ? "Copié" : "Copier"}
-        </button>
+        </Bouton>
       </div>
     </Modal>
   );

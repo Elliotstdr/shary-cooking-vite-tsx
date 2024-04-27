@@ -8,7 +8,7 @@ type Props = {
 
 const HelloContainer = (props: Props) => {
   return (
-    <div className="HF__container__items">
+    <div className="flex flex-wrap justify-center gap-8">
       {props.data.length > 0 ?
         props.data.map((x) => (
           <HelloFCard
@@ -17,8 +17,10 @@ const HelloContainer = (props: Props) => {
           ></HelloFCard>
         ))
         : props.value.length === 0
-          ? <Loader></Loader>
-          : <span className="empty">Malheureusement je ne trouve rien qui corresponde à votre recherche...</span>
+          ? <Loader className="my-24"></Loader>
+          : <span className="my-40 text-xl font-bold">
+            Malheureusement je ne trouve rien qui corresponde à votre recherche...
+          </span>
       }
     </div>
   );

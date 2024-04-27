@@ -13,10 +13,14 @@ const HomeRedirectBlock = (props: Props) => {
   const navigate = useNavigate()
 
   return (
-    <div className={`home__redirect__block ${props.reverse ? "reverse" : ""}`}>
-      <img src={props.image} alt="accueil" />
-      <div className="home__redirect__block__text">
-        <span>{props.text}</span>
+    <div className={`flex-center flex-col h-[500px] tablet:flex-row ${props.reverse ? "tablet:flex-row-reverse" : ""}`}>
+      <img
+        src={props.image}
+        alt="accueil"
+        className="w-11/12 h-52 mb-8 rounded-lg object-cover tablet:w-4/6 tablet:h-80 tablet:mx-8 tablet:my-0 laptop:mx-20"
+      />
+      <div className="flex items-center flex-col mx-12 w-full tablet:w-1/2">
+        <span className="w-11/12 mb-6 text-xl tablet:text-2xl">{props.text}</span>
         <Bouton
           btnTexte={props.btnText}
           btnAction={() => navigate(props.to)}

@@ -37,7 +37,7 @@ const IngredientsCreation = ({ ingredientList, setIngredientList }: Props) => {
 
   return (
     <>
-      <div className="ingredients">
+      <div>
         <Ingredient
           ingredient={ingredientList[0]}
           ingredientList={ingredientList}
@@ -74,6 +74,7 @@ const IngredientsCreation = ({ ingredientList, setIngredientList }: Props) => {
             },
           ]);
         }}
+        className="!border-0 my-6"
       >
         <AiOutlinePlusCircle />
         Ajouter un ingrédient

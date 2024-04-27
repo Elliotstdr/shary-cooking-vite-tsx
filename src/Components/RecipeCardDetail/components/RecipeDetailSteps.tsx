@@ -6,21 +6,21 @@ type Props = {
 
 const RecipeDetailSteps = ({ steps }: Props) => {
   return (
-    <>
+    <div className="my-8">
       {[...steps]
         .sort((a: Step, b: Step) => a.stepIndex - b.stepIndex)
         .map((step: Step, index: number) => (
-          <div className="cardDetail_container_block" key={index}>
-            <div className="cardDetail_container_block_index">
+          <div className="flex items-center flex-col mb-8 w-full" key={index}>
+            <div className="flex-center text-3xl size-16 rounded-full font-bold text-orange border-2 border-orange">
               {index + 1}
             </div>
-            <Divider></Divider>
-            <div className="cardDetail_container_block_step" key={index}>
+            <Divider className="!w-1/2 before:!border-t-orange"></Divider>
+            <div className="w-11/12 self-center bg-fond p-4 my-2 rounded-lg text-left" key={index}>
               {step.description}
             </div>
           </div>
         ))}
-    </>
+    </div>
   );
 };
 

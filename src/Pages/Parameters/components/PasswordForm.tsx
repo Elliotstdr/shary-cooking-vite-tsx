@@ -58,9 +58,9 @@ const PasswordForm = () => {
   };
 
   return (
-    <form className="param__form" onSubmit={handleSubmit(onSubmit)}>
-      <div className="param__form__field">
-        <h4>Précédent mot de passe</h4>
+    <form className="flex-center flex-col m-8" onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex items-center flex-col mb-4">
+        <h4 className="my-2 font-bold">Précédent mot de passe</h4>
         <Controller
           name="oldPassword"
           control={control}
@@ -77,13 +77,14 @@ const PasswordForm = () => {
               {...field}
               placeholder={"Ancien mot de passe"}
               feedback={false}
+              inputClassName="w-60"
             />
           )}
         />
         {getFormErrorMessage("oldPassword")}
       </div>
-      <div className="param__form__field">
-        <h4>Nouveau mot de passe</h4>
+      <div className="flex items-center flex-col mb-4">
+        <h4 className="my-2 font-bold">Nouveau mot de passe</h4>
         <Controller
           name="password"
           control={control}
@@ -100,12 +101,13 @@ const PasswordForm = () => {
                   e.target.value === getValues("confirmPassword")
                 );
               }}
+              inputClassName="w-60"
             />
           )}
         />
       </div>
-      <div className="param__form__field">
-        <h4>Confirmer le mot de passe</h4>
+      <div className="flex items-center flex-col mb-4">
+        <h4 className="my-2 font-bold">Confirmer le mot de passe</h4>
         <Controller
           name="confirmPassword"
           control={control}
@@ -134,6 +136,7 @@ const PasswordForm = () => {
                   e.target.value === getValues("password")
                 );
               }}
+              inputClassName="w-60"
             />
           )}
         />
@@ -142,7 +145,7 @@ const PasswordForm = () => {
       {isSubmitting ? (
         <Loader></Loader>
       ) : (
-        <Bouton>Valider mes modifications</Bouton>
+        <Bouton className="w-40 self-center mt-8">Valider mes modifications</Bouton>
       )}
     </form>
   );

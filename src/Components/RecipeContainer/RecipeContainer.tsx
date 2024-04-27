@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import RecipeCard from "../RecipeCard/RecipeCard";
-import "./RecipeContainer.scss";
 import SearchBar from "../SearchBar/SearchBar";
 import { useFetchGet } from "../../Hooks/api.hook";
 import { Paginator } from "primereact/paginator";
@@ -8,18 +7,27 @@ import CardSkeleton from "../CardSkeleton/CardSkeleton";
 import { useScreenSize } from "../../Hooks/useScreenSize.hook";
 import { useDispatch, useSelector } from "react-redux";
 import { updateRecipe } from "../../Store/Reducers/recipeReducer";
+import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
 
 const RecipeContainer = () => {
   const recipe = useSelector((state: RootState) => state.recipe);
   const recipesData = useFetchGet<Recipe[]>("/recipes");
   const screenSize = useScreenSize()
   const dispatch = useDispatch()
+  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
 
   const rows = 12;
   const ref = useRef(null);
 
   const [first, setFirst] = useState(0);
   const [page, setPage] = useState(0)
+
+  useEffect(() => {
+    ingredientData.loaded && ingredientData.data &&
+      dispatch(updateSecondaryTables({
+        ingData: ingredientData.data
+      }))
+  }, [ingredientData.loaded, ingredientData.data])
 
   useEffect(() => {
     if (recipesData.loaded && recipesData.data) {
@@ -35,9 +43,9 @@ const RecipeContainer = () => {
   }, [page])
 
   return (
-    <div className="recipeContainer" ref={ref}>
+    <div className={`flex flex-col ${window.location.pathname === "/shop" && "w-full"}`} ref={ref}>
       <SearchBar></SearchBar>
-      <div className="recipeContainer_cards">
+      <div className="grid grid-cols-home justify-center gap-x-12 py-8 px-4 desktop:py-12 desktop:px-32">
         {recipe.filteredRecipes ? (
           recipe.filteredRecipes.length > 0 ? (
             [...recipe.filteredRecipes]
@@ -50,7 +58,7 @@ const RecipeContainer = () => {
                 ></RecipeCard>
               ))
           ) : (
-            <span className="noCard">
+            <span className="text-xl my-24">
               {"Je n'ai aucune recette à vous afficher malheureusement ..."}
             </span>
           )
@@ -71,6 +79,7 @@ const RecipeContainer = () => {
             setPage(e.page)
             setFirst(e.first);
           }}
+          className="!mb-8 !bg-transparent"
         ></Paginator>
       )}
     </div>

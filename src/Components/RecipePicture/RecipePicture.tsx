@@ -3,9 +3,10 @@ import default2 from "/src/assets/default2.jpg";
 type Props = {
   url: string,
   isFromHellof: boolean
+  className?: string
 }
 
-const RecipePicture = ({ url, isFromHellof }: Props) => {
+const RecipePicture = ({ url, isFromHellof, className }: Props) => {
   return (
     <img
       src={
@@ -18,6 +19,7 @@ const RecipePicture = ({ url, isFromHellof }: Props) => {
       alt="Fond news"
       loading="lazy"
       onError={(e) => e.currentTarget.src = default2}
+      className={className || ""}
     />
   );
 };

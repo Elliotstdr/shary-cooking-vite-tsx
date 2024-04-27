@@ -67,14 +67,15 @@ const InformationsForm = () => {
   };
 
   return (
-    <form className="param__form" onSubmit={handleSubmit(onSubmit)}>
-      <div className="param__form__field">
-        <h4>Photo</h4>
+    <form className="flex-center flex-col m-8" onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex items-center flex-col mb-4">
+        <h4 className="my-2 font-bold">Photo</h4>
         {auth.userConnected?.imageUrl && (
-          <div className="param_profile_picture">
+          <div className="w-60 h-40 overflow-hidden flex-center m-2 rounded-md">
             <img
               src={import.meta.env.VITE_BASE_URL_API + auth.userConnected.imageUrl}
               alt="Fond news"
+              className="h-full"
             />
           </div>
         )}
@@ -82,37 +83,41 @@ const InformationsForm = () => {
           {...register("image")}
           image={image}
           setImage={setImage}
+          headerClassName="w-60 rounded-md border !border-search"
         />
       </div>
-      <div className="param__form__field">
-        <h4>Prénom</h4>
+      <div className="flex items-center flex-col mb-4">
+        <h4 className="my-2 font-bold">Prénom</h4>
         <InputText
           {...register("name", { required: true })}
           placeholder="Fanny"
+          className="w-60"
         />
         {errors.name && <small className="p-error">Le prénom est obligatoire</small>}
       </div>
-      <div className="param__form__field">
-        <h4>Nom</h4>
+      <div className="flex items-center flex-col mb-4">
+        <h4 className="my-2 font-bold">Nom</h4>
         <InputText
           {...register("lastname", { required: true })}
           placeholder="Lefebvre"
+          className="w-60"
         />
         {errors.lastname && <small className="p-error">Le nom est obligatoire</small>}
       </div>
-      <div className="param__form__field">
-        <h4>Adresse email</h4>
+      <div className="flex items-center flex-col mb-4">
+        <h4 className="my-2 font-bold">Adresse email</h4>
         <InputText
           type="email"
           {...register("email", { required: true })}
           placeholder="Adresse email"
+          className="w-60"
         />
         {errors.email && <small className="p-error">L'email est obligatoire</small>}
       </div>
       {isSubmitting ? (
         <Loader></Loader>
       ) : (
-        <Bouton>Valider mes modifications</Bouton>
+        <Bouton className="w-40 self-center mt-8">Valider mes modifications</Bouton>
       )}
     </form>
   );

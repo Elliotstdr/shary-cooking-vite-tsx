@@ -1,13 +1,11 @@
 import React from "react";
-import "./SlideIn.scss";
 import { Sidebar } from "primereact/sidebar";
 
 interface Props {
   visible: boolean,
   setVisible: React.Dispatch<React.SetStateAction<boolean>>,
   className?: string,
-  children?: any,
-  width?: string
+  children?: any
 }
 
 const SlideIn = (props: Props) => {
@@ -19,7 +17,6 @@ const SlideIn = (props: Props) => {
       position="left"
       showCloseIcon
       closeOnEscape
-      style={{ width: props.width ? props.width : "fit-content" }}
     >
       {props.children}
     </Sidebar>

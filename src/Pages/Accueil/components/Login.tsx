@@ -11,20 +11,22 @@ const Login = () => {
   const [visibleModalForgot, setVisibleModalForgot] = useState(false);
 
   return (
-    <div className="login_container">
-      <img src={image} alt="background home" />
-      <div className="login_container_box">
-        <div className="login_container_box_title">
-          <h1>Bienvenue sur Shary Cooking !</h1>
+    <div className="flex-center flex-col relative h-screen">
+      <img src={image} alt="background home" className="size-full object-cover absolute" />
+      <div className="flex-center flex-col z-50 shadow-searchbar bg-fond p-6 rounded-lg mx-4 tablet:mx-0">
+        <div className="text-green mb-12">
+          <h1 className="font-bold text-4xl my-6">Bienvenue sur Shary Cooking !</h1>
         </div>
-        <div className="login_container_box_buttons">
+        <div className="flex flex-col">
           <Bouton
             btnTexte={"Se connecter"}
             btnAction={() => setVisibleModalLogin(true)}
+            className="w-48 mb-4"
           ></Bouton>
           <Bouton
             btnTexte={"Créer un compte"}
             btnAction={() => setVisibleModalRegister(true)}
+            className="w-48 mb-4"
           ></Bouton>
         </div>
       </div>

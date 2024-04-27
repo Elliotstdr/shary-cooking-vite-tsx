@@ -1,4 +1,3 @@
-import "./RecipeCardDetail.scss";
 import { useSelector } from "react-redux";
 import RecipePicture from "../RecipePicture/RecipePicture";
 import RecipeDetailIngredients from "./components/RecipeDetailIngredients";
@@ -15,11 +14,12 @@ const RecipeCardDetail = (props: Props) => {
   const recipeDetail = props.recipeDetail;
 
   return (
-    <div className="cardDetail_container">
-      <div className="cardDetail_container_image">
+    <div className="flex-center flex-col text-lg whitespace-pre-line gap-6">
+      <div className="flex-center w-11/12 max-h-96 overflow-hidden rounded-lg my-4 mx-8">
         <RecipePicture
           url={recipeDetail.imageUrl}
           isFromHellof={recipeDetail.fromHellof}
+          className="w-full"
         ></RecipePicture>
       </div>
       <RecipeDetailTitle

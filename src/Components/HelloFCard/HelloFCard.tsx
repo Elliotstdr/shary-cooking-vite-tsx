@@ -1,6 +1,5 @@
 import Bouton from "../ui/Bouton/Bouton";
 import { fillIngredient, findRegime, findType, getTime } from "../../Services/hfFunctions";
-import "./HelloFCard.scss"
 import { useState } from "react";
 import Modal from "../Modal/Modal";
 import default2 from "/src/assets/default2.jpg";
@@ -34,13 +33,22 @@ const HelloFCard = (props: Props) => {
 
   return (
     <>
-      <div className="HF__card">
-        <img src={props.recipe?.imagePath} alt="" onError={(e) => e.currentTarget.src = default2} />
-        <div className="name">{props.recipe.name}</div>
-        <Bouton btnTexte="Ajouter au site" btnAction={() => {
-          fillRecipeForm(props.recipe);
-          setVisibleRecipeForm(true)
-        }}></Bouton>
+      <div className="flex flex-col justify-between bg-white rounded-lg w-80 pb-4">
+        <img
+          src={props.recipe?.imagePath}
+          alt=""
+          onError={(e) => e.currentTarget.src = default2}
+          className="w-80 max-h-60 object-cover rounded-t-lg"
+        />
+        <div className="p-4 font-bold">{props.recipe.name}</div>
+        <Bouton
+          btnTexte="Ajouter au site"
+          btnAction={() => {
+            fillRecipeForm(props.recipe);
+            setVisibleRecipeForm(true)
+          }}
+          className="self-center after:!bg-white"
+        ></Bouton>
       </div>
       {visibleRecipeForm && filledRecipe && (
         <Modal

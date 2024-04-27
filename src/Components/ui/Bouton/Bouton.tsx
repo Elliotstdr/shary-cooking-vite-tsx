@@ -1,9 +1,9 @@
 import React from "react";
-import "./Bouton.scss";
+import "./Bouton.css";
 
 interface Props {
   className?: string,
-  type?: string,
+  type?: "slide" | "normal",
   btnAction?: React.MouseEventHandler<HTMLButtonElement>,
   children?: any,
   btnTexte?: string

@@ -52,7 +52,7 @@ const BugReport = (props: Props) => {
       header="Report de bug"
       visible={props.reportBugModal}
       setVisible={props.setReportBugModal}
-      className={"modal !w-11/12 tablet:!w-[640px]"}
+      className={"!w-11/12 tablet:!w-[640px]"}
     >
       {!successView ? (
         <form className="flex items-center flex-col p-4 mt-4" onSubmit={handleSubmit(onSubmit)}>
@@ -83,7 +83,7 @@ const BugReport = (props: Props) => {
               setImage={(image) => setValue('image', image)}
             />
           </div>
-          <div className="bug__form__button">
+          <div>
             {isSubmitting ? <Loader /> : <Bouton>Envoyer mon rapport</Bouton>}
           </div>
         </form>

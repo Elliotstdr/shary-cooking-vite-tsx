@@ -11,7 +11,7 @@ interface Props {
 const SlideIn = (props: Props) => {
   return (
     <Sidebar
-      className={`sidebar ${props.className}`}
+      className={props.className}
       visible={props.visible}
       onHide={() => props.setVisible(false)}
       position="left"

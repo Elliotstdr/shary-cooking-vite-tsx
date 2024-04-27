@@ -83,7 +83,6 @@ const ShoppingListCard = (props: Props) => {
               { label: props.recipe.number * 4, multiplyer: 4 },
             ]}
             optionLabel="label"
-            className="recipe__form__field-number"
             onChange={(e) => {
               modifyRecipeList(e.value.multiplyer, props.recipe);
             }}

@@ -51,7 +51,7 @@ const App = () => {
   }, [staticData.loaded]);
 
   return (
-    <div className="App" id="app">
+    <div id="app">
       <BrowserRouter>
         <Toast ref={toast}></Toast>
         {auth.isConnected && <NavBar></NavBar>}

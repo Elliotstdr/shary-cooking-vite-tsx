@@ -112,7 +112,7 @@ const ModalForgotPassword = (props: Props) => {
       header="Connexion"
       visible={props.visible}
       setVisible={props.setVisible}
-      className={"modal !w-11/12 tablet:!w-80"}
+      className={"!w-11/12 tablet:!w-80"}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         {isSendingMail ? (

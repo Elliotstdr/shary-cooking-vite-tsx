@@ -11,7 +11,7 @@ interface Props {
 const StepsCreation = (props: Props) => {
   return (
     <>
-      <div className="flex flex-col w-11/12 laptop:w-[600px] gap-4">
+      <div className="flex flex-col w-11/12 laptop:w-150 gap-4">
         {props.stepsList.map((step, index) => (
           <div className="flex w-full relative" key={index}>
             <InputTextarea
@@ -59,7 +59,7 @@ const StepsCreation = (props: Props) => {
         }}
         className="!border-0 my-6"
       >
-        <AiOutlinePlusCircle />
+        <AiOutlinePlusCircle className="bouton-svg" />
         Ajouter une étape
       </Bouton>
     </>

@@ -7,7 +7,7 @@ type Props = {
 
 const ShoppingHome = (props: Props) => {
   return (
-    <div className="w-[40rem] h-[25rem] my-20 flex-center relative">
+    <div className="w-160 h-100 my-20 flex-center relative">
       <img src={image} alt="background shopping" className="absolute size-full object-cover rounded-lg" />
       <Bouton
         btnTexte={"Choisir mes recettes"}

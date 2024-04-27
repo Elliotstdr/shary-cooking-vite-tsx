@@ -14,7 +14,7 @@ const RecipeCardMiddle = (props: Props) => {
 
   return (
     <div
-      className="flex flex-col h-[15.5rem] py-4 pl-4 items-start"
+      className="flex flex-col h-62 py-4 pl-4 items-start"
       onClick={() => window.location.pathname !== "/shop" && props.setVisibleDetail(true)}
       ref={intersectionRef}
     >

@@ -16,6 +16,19 @@ export default {
       },
       width: {
         unset: "unset",
+        120: "480px",
+        150: "600px",
+        160: "640px",
+      },
+      height: {
+        62: "248px",
+        100: "400px",
+        125: "500px",
+        150: "600px",
+      },
+      zIndex: {
+        1: 1,
+        2: 2,
       },
       animation: {
         loader: "rotation 1s linear infinite",
@@ -97,6 +110,11 @@ export default {
         },
         ".border-detail": {
           border: "2px solid #e86a33",
+        },
+        ".bouton-svg": {
+          "margin-right": "0.5rem",
+          width: "1.5rem",
+          height: "1.5rem",
         },
       };
       addUtilities(newUtilities, ["responsive", "hover"]);

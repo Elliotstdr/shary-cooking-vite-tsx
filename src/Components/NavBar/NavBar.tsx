@@ -16,8 +16,8 @@ const NavBar = () => {
         ? <Nav className="h-12"></Nav>
         : <NavMobile></NavMobile>
       }
-      <Bouton className="font-dilgante px-4 w-48 my-2 tablet:w-unset tablet:my-0 desktop:px-0" btnAction={() => navigate("/create")}>
-        <GiKnifeFork></GiKnifeFork>Créer une recette
+      <Bouton className="font-dilgante px-4 w-48 my-2 tablet:w-unset tablet:my-0" btnAction={() => navigate("/create")}>
+        <GiKnifeFork className="bouton-svg"></GiKnifeFork>Créer une recette
       </Bouton>
       <Profil></Profil>
     </div>

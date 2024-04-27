@@ -76,7 +76,7 @@ const IngredientsCreation = ({ ingredientList, setIngredientList }: Props) => {
         }}
         className="!border-0 my-6"
       >
-        <AiOutlinePlusCircle />
+        <AiOutlinePlusCircle className="bouton-svg" />
         Ajouter un ingrédient
       </Bouton>
     </>

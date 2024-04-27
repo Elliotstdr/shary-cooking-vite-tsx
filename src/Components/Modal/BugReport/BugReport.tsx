@@ -52,7 +52,7 @@ const BugReport = (props: Props) => {
       header="Report de bug"
       visible={props.reportBugModal}
       setVisible={props.setReportBugModal}
-      className={"!w-11/12 tablet:!w-[640px]"}
+      className={"!w-11/12 tablet:!w-160"}
     >
       {!successView ? (
         <form className="flex items-center flex-col p-4 mt-4" onSubmit={handleSubmit(onSubmit)}>

@@ -69,7 +69,7 @@ const ModalLogin = (props: Props) => {
       header="Création de compte"
       visible={props.visible}
       setVisible={props.setVisible}
-      className={"!w-11/12 tablet:!w-[30rem]"}
+      className={"!w-11/12 tablet:!w-120"}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex items-center flex-col">

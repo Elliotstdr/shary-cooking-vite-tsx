@@ -13,7 +13,7 @@ const HomeRedirectBlock = (props: Props) => {
   const navigate = useNavigate()
 
   return (
-    <div className={`flex-center flex-col h-[500px] tablet:flex-row ${props.reverse ? "tablet:flex-row-reverse" : ""}`}>
+    <div className={`flex-center flex-col h-125 tablet:flex-row ${props.reverse ? "tablet:flex-row-reverse" : ""}`}>
       <img
         src={props.image}
         alt="accueil"

@@ -25,7 +25,7 @@ const ShoppingContainer = (props: Props) => {
           btnAction={() => props.setVisibleRecipeContainer(true)}
           className="!h-8 self-center"
         >
-          <BiEditAlt className="font-bold"></BiEditAlt>
+          <BiEditAlt className="font-bold bouton-svg"></BiEditAlt>
         </Bouton>
       </div>
       <div className="flex flex-col items-center laptop:items-start">

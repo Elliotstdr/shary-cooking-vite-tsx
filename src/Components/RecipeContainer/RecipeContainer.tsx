@@ -43,7 +43,7 @@ const RecipeContainer = () => {
   }, [page])
 
   return (
-    <div className={`flex flex-col ${window.location.pathname === "/shop" && "w-full"}`} ref={ref}>
+    <div className={`flex flex-col ${window.location.pathname === "/shop" ? "w-full" : ""}`} ref={ref} id="recipes">
       <SearchBar></SearchBar>
       <div className="grid grid-cols-home justify-center gap-x-12 py-8 px-4 desktop:py-12 desktop:px-32">
         {recipe.filteredRecipes ? (

@@ -19,7 +19,7 @@ const ShoppingList = () => {
   }, []);
 
   return (
-    <div className="flex-center my-[5%] mx-auto">
+    <div id="shopping" className="flex-center my-[5%] mx-auto">
       {recipe.chosenRecipes.length === 0 ? (
         <ShoppingHome
           setVisibleRecipeContainer={setVisibleRecipeContainer}

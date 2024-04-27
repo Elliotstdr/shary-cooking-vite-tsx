@@ -12,7 +12,7 @@ const Parameters = () => {
   const [value, setValue] = useState<1 | 2>(1)
 
   return (
-    <>
+    <div id="params">
       <SelectButton
         value={value}
         onChange={(e) => e.value && setValue(e.value)}
@@ -22,7 +22,7 @@ const Parameters = () => {
       ></SelectButton>
       {value === 1 && <InformationsForm />}
       {value === 2 && <PasswordForm />}
-    </>
+    </div>
   );
 };
 

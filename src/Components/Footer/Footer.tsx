@@ -8,7 +8,7 @@ const Footer = () => {
   const [reportBugModal, setReportBugModal] = useState(false);
 
   return (
-    <div className="font-dilgante w-full py-4 bg-green text-white flex items-center justify-around relative laptop:p-8">
+    <div id="footer" className="font-dilgante w-full py-4 bg-green text-white flex items-center justify-around relative laptop:p-8">
       <img src={image} alt="" className=" invertY size-32 object-cover" />
       <div className="flex flex-col gap-8 justify-around flex-grow-[0.5] laptop:gap-12">
         <h1 className="text-3xl tablet:text-4xl !leading-12">Shary Cooking</h1>

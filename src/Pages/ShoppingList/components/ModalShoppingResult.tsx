@@ -20,15 +20,14 @@ const ModalShoppingResult = (props: Props) => {
       visible={props.visible}
       setVisible={props.setVisible}
       header={"Ma liste"}
-      width={"40%"}
-      className={"w-11/12 tablet:w-unset"}
+      className={"w-11/12 tablet:w-unset tablet:min-w-[40%]"}
     >
       <div className="flex items-center flex-col">
         <InputTextarea
           autoResize
           value={stringShopping}
           onChange={(e) => setStringShopping(e.target.value)}
-          className="resize-y"
+          className="resize-y !my-2 w-10/12"
         ></InputTextarea>
         <Bouton
           className={`mt-4 ${greenButton && "!border-card-green !bg-card-green !text-white"}`}

@@ -16,7 +16,7 @@ const RecipeDetailTitle = ({ editable, recipe }: Props) => {
       <h2 className="flex font-bold items-center text-3xl flex-col w-11/12 laptop:flex-row laptop:text-5xl">
         {recipe.title}
         {editable && (
-          <div className="mt-4 ml-8 laptop:mt-0">
+          <div className="mt-4 ml-8 laptop:mt-0 cursor-pointer">
             <CiEdit
               onClick={() => {
                 setVisibleModif(true);
@@ -30,7 +30,7 @@ const RecipeDetailTitle = ({ editable, recipe }: Props) => {
           visible={visibleModif}
           setVisible={setVisibleModif}
           header={"Modifier ma recette"}
-          className={"modify_recipe_modal"}
+          className="min-w-[70%]"
         >
           <CreateRecipeContainer
             recipe={recipe}

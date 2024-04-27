@@ -87,15 +87,15 @@ const RecipeCardBottom = (props: Props) => {
           setVisible={setWantToDelete}
           header={"Suppression de recette"}
         >
-          <div className="recipe_delete_modal">
-            <div className="recipe_delete_modal_question">
+          <div>
+            <div className="my-8">
               Etes vous sur de vouloir supprimer cette recette ?
             </div>
-            <div className="recipe_delete_modal_buttons">
-              <Bouton type="normal" btnAction={() => deleteRecipe()}>
+            <div className="flex justify-center">
+              <Bouton type="normal" btnAction={() => deleteRecipe()} className="mr-4">
                 Oui
               </Bouton>
-              <Bouton type="normal" btnAction={() => setWantToDelete(false)}>
+              <Bouton type="normal" btnAction={() => setWantToDelete(false)} className="mr-4">
                 Non
               </Bouton>
             </div>

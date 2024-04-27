@@ -263,7 +263,7 @@ const CreateRecipeContainer = (props: Props) => {
         regimeId={getValues('regime') || 1}
         setRegimeId={(newId) => setValue('regime', newId)}
       ></Regimes>
-      <Divider className="self-center w-1/2"></Divider>
+      <Divider className="self-center !w-1/2"></Divider>
       <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Ingrédients</h4>
         <Controller
@@ -281,7 +281,7 @@ const CreateRecipeContainer = (props: Props) => {
         />
         {errors.ingredients && <small className="p-error">{errors.ingredients.message}</small>}
       </div>
-      <Divider className="self-center w-1/2"></Divider>
+      <Divider className="self-center !w-1/2"></Divider>
       <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Etapes</h4>
         <Controller
@@ -299,7 +299,7 @@ const CreateRecipeContainer = (props: Props) => {
         />
         {errors.steps && <small className="p-error">{errors.steps.message}</small>}
       </div>
-      <Divider className="self-center w-1/2"></Divider>
+      <Divider className="self-center !w-1/2"></Divider>
       {isSubmitting ? (
         <Loader></Loader>
       ) : (

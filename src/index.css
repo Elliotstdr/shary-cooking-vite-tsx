@@ -1,4 +1,3 @@
-@import url("../src/Styles/global.css"); 
 @import url("https://fonts.cdnfonts.com/css/dilgante-rocks");
 @tailwind base;
 @tailwind components;
@@ -19,4 +18,52 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.reset path {
+  stroke: #e86a33;
+}
+
+/* Primeract custom style */
+.searchbar .p-multiselect,
+.searchbar .p-dropdown,
+.searchbar .p-inputtext {
+  width: 11rem;
+  text-align: left;
+}
+.searchbar .p-multiselect-label,
+.searchbar .p-dropdown-label,
+.searchbar .p-inputtext-label {
+  padding: 0.75rem !important;
+}
+
+.searchbar .p-multiselect:focus,
+.searchbar .p-dropdown:focus,
+.searchbar .p-inputtext:focus,
+.searchbar .p-multiselect.p-focus,
+.searchbar .p-dropdown.p-focus,
+.searchbar .p-inputtext.p-focus {
+  box-shadow: none !important;
+}
+
+.searchbar .p-inputtext.p-component::placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+
+.p-checkbox,
+.p-checkbox-box {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+@media (min-width: 1100px) {
+  .searchbar .p-multiselect,
+  .searchbar .p-dropdown,
+  .searchbar .p-inputtext {
+    border-right-width: 0px !important;
+    border-top-width: 0px !important;
+    border-left-width: 0px !important;
+    border-radius: 0px !important;
+  }
 }

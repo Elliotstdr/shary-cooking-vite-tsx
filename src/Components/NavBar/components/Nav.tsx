@@ -12,7 +12,9 @@ type ItemProps = {
 const Nav = (props: Props) => {
   const NavItem = ({ text, to }: ItemProps) => {
     return (
-      <NavLink to={to} className={(nav) => (nav.isActive ? "nav-active" : "") + ` my-2 mx-5 w-fit`}>
+      <NavLink to={to} className={(nav) => (nav.isActive
+        ? "my-2 mx-5 w-fit relative after:content-[''] after:h-1 after:w-0 after:bg-orange after:absolute after:rounded-lg after:left-1/2 after:-translate-x-1/2 after:animate-navbar" : "my-2 mx-5 w-fit")
+      }>
         <li className={`text-green cursor-pointer duration-200 text-[1.1rem] w-fit nav:text-[1.4rem]`}>
           <strong>{text}</strong>
         </li>

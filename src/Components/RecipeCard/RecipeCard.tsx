@@ -40,7 +40,11 @@ const RecipeCard = (props: Props) => {
 
   return (
     <div
-      className={`laptop:min-h-[95%] rounded-md mb-8 w-80 cardHover ${props.className} ${isSelected() && "border-card-green border-4 relative"}`}
+      className={`
+        laptop:min-h-[95%] rounded-md mb-8 w-80 hover:shadow-card hover:scale-[1.01] duration-200 bg-white
+        ${props.className} 
+        ${isSelected() && "border-card-green border-4 relative"}
+      `}
       onClick={() => {
         shoppingAction();
       }}

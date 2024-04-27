@@ -12,7 +12,8 @@ const ShoppingHome = (props: Props) => {
       <Bouton
         btnTexte={"Choisir mes recettes"}
         btnAction={() => props.setVisibleRecipeContainer(true)}
-        className="!text-white !text-xl hover:!border-white hover:!border after:!bg-green"
+        className="!text-white !text-xl hover:!border-white hover:!border"
+        afterClassName="!bg-green"
       ></Bouton>
     </div>
   );

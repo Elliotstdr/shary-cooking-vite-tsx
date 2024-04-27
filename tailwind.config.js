@@ -12,6 +12,7 @@ export default {
         home: "0px 1px 10px 0px rgba(0, 0, 0, 0.35)",
         nav: "0px 2px 20px 0px rgba(0, 0, 0, 0.4)",
         searchbar: "0px 1px 10px 0px rgba(0, 0, 0, 0.3)",
+        card: "0px 1px 10px 0px rgba(0, 0, 0, 0.75)",
       },
       width: {
         unset: "unset",
@@ -19,11 +20,15 @@ export default {
       animation: {
         loader: "rotation 1s linear infinite",
         "reverse-loader": "rotation 0.5s linear infinite reverse",
+        navbar: "navbar 0.6s ease forwards",
       },
       keyframes: {
         rotation: {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
+        },
+        navbar: {
+          to: { width: "100%" },
         },
       },
     },
@@ -48,6 +53,7 @@ export default {
       white: "#ffffff",
       skeleton: "#dcdedf",
       "card-green": "#008000",
+      "card-red": "red",
       search: "#dee2e6",
       picto: "#8a8a8a",
       gris: "grey",

@@ -146,8 +146,8 @@ const ModalLogin = (props: Props) => {
                 {...field}
                 toggleMask
                 placeholder={"Mot de passe"}
-                className={isEqualPassword ? "equal" : "nonequal"}
-                inputClassName="w-64"
+                className={`border-2 rounded-md ${isEqualPassword ? "border-card-green" : "border-card-red"}`}
+                inputClassName="w-64 !rounded-md !border-none"
                 feedback={false}
                 onChange={(e) => {
                   field.onChange(e.target.value);

@@ -91,11 +91,11 @@ const RecipeCardBottom = (props: Props) => {
             <div className="my-8">
               Etes vous sur de vouloir supprimer cette recette ?
             </div>
-            <div className="flex justify-center">
-              <Bouton type="normal" btnAction={() => deleteRecipe()} className="mr-4">
+            <div className="flex justify-center gap-4">
+              <Bouton type="normal" btnAction={() => deleteRecipe()}>
                 Oui
               </Bouton>
-              <Bouton type="normal" btnAction={() => setWantToDelete(false)} className="mr-4">
+              <Bouton type="normal" btnAction={() => setWantToDelete(false)}>
                 Non
               </Bouton>
             </div>

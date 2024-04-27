@@ -21,7 +21,7 @@
   color: #f4f1ef;
   border: 2px solid #f4f1ef;
 }
-.bouton:hover:before {
+.bouton.slide:hover .before {
   width: 100% !important;
 }
 .bouton svg {
@@ -29,7 +29,7 @@
   width: 1.5rem;
   height: 1.5rem;
 }
-.bouton.slide:after {
+.bouton.slide .after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -40,7 +40,7 @@
   border-radius: 10rem;
   z-index: -2;
 }
-.bouton.slide:before {
+.bouton.slide .before {
   content: "";
   position: absolute;
   bottom: 0;

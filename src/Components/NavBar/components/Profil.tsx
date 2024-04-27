@@ -1,6 +1,5 @@
 import { logOut } from "../../../Store/Reducers/authReducer";
-import { GiKnifeFork, GiCook } from "react-icons/gi";
-import Bouton from "../../ui/Bouton/Bouton";
+import { GiCook } from "react-icons/gi";
 import { useRef, useState } from "react";
 import { useOutsideAlerter } from "../../../Hooks/useOutsideAlerter.hook";
 import { useNavigate } from "react-router-dom";
@@ -18,11 +17,8 @@ const Profil = () => {
 
   return (
     <>
-      <Bouton className="font-dilgante px-4 w-48 my-2 tablet:w-unset tablet:my-0 desktop:px-0" btnAction={() => navigate("/create")}>
-        <GiKnifeFork></GiKnifeFork>Créer une recette
-      </Bouton>
       <div
-        className="cursor-pointer absolute top-8 right-8 flex tablet:relative tablet:right-0 tablet:top-0"
+        className="cursor-pointer absolute top-8 right-12 flex tablet:relative tablet:right-0 tablet:top-0"
         ref={wrapperRef}
         onMouseEnter={() => setShowParamMenu(true)}
         onMouseLeave={() => setShowParamMenu(false)}

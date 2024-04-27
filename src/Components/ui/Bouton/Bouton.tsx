@@ -7,6 +7,8 @@ interface Props {
   btnAction?: React.MouseEventHandler<HTMLButtonElement>,
   children?: any,
   btnTexte?: string
+  afterClassName?: string
+  beforeClassName?: string
 }
 
 const Bouton = (props: Props) => {
@@ -15,8 +17,10 @@ const Bouton = (props: Props) => {
       className={`bouton ${props.className} ${props.type}`}
       onClick={props.btnAction}
     >
+      <div className={`before ${props.beforeClassName || ""}`}></div>
       {props.children}
       {props.btnTexte}
+      <div className={`after ${props.afterClassName || ""}`}></div>
     </button>
   );
 };

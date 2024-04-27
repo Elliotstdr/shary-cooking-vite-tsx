@@ -15,7 +15,7 @@ const ShoppingContainer = (props: Props) => {
 
   return (
     <div className="flex flex-col mx-2 w-full laptop:w-7/12">
-      <div className="flex flex-col justify-center tablet:flex-row">
+      <div className="flex flex-col justify-center tablet:flex-row gap-4">
         <h2 className="my-4 font-bold text-2xl">
           Mes recettes pour la liste de course
         </h2>
@@ -23,7 +23,7 @@ const ShoppingContainer = (props: Props) => {
           type={"normal"}
           btnTexte={"Modifier"}
           btnAction={() => props.setVisibleRecipeContainer(true)}
-          className="h-8 ml-4 self-center"
+          className="!h-8 self-center"
         >
           <BiEditAlt className="font-bold"></BiEditAlt>
         </Bouton>

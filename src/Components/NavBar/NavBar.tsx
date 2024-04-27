@@ -2,9 +2,13 @@ import Nav from "./components/Nav";
 import { useScreenSize } from "../../Hooks/useScreenSize.hook";
 import Profil from "./components/Profil";
 import NavMobile from "./components/NavMobile";
+import Bouton from "../ui/Bouton/Bouton";
+import { GiKnifeFork } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const screenSize = useScreenSize()
+  const navigate = useNavigate();
 
   return (
     <div id="navbar" className="font-dilgante flex flex-col items-start justify-around pt-2 pb-4 shadow-home pl-8 tablet:flex-row tablet:items-center tablet:px-0 tablet:py-8">
@@ -12,6 +16,9 @@ const NavBar = () => {
         ? <Nav className="h-12"></Nav>
         : <NavMobile></NavMobile>
       }
+      <Bouton className="font-dilgante px-4 w-48 my-2 tablet:w-unset tablet:my-0 desktop:px-0" btnAction={() => navigate("/create")}>
+        <GiKnifeFork></GiKnifeFork>Créer une recette
+      </Bouton>
       <Profil></Profil>
     </div>
   );

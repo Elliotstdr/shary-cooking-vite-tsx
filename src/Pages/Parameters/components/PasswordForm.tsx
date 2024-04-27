@@ -58,8 +58,8 @@ const PasswordForm = () => {
   };
 
   return (
-    <form className="flex-center flex-col m-8" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex items-center flex-col mb-4">
+    <form className="flex-center flex-col m-8 gap-4" onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Précédent mot de passe</h4>
         <Controller
           name="oldPassword"
@@ -83,7 +83,7 @@ const PasswordForm = () => {
         />
         {getFormErrorMessage("oldPassword")}
       </div>
-      <div className="flex items-center flex-col mb-4">
+      <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Nouveau mot de passe</h4>
         <Controller
           name="password"
@@ -127,7 +127,8 @@ const PasswordForm = () => {
               autoComplete="new-password"
               {...field}
               placeholder={"Mot de passe"}
-              className={isEqualPassword ? "equal" : "nonequal"}
+              className={`border-2 rounded-md ${isEqualPassword ? "border-card-green" : "border-card-red"}`}
+              inputClassName="w-60 !rounded-md !border-none"
               feedback={false}
               onChange={(e) => {
                 field.onChange(e.target.value);
@@ -136,7 +137,6 @@ const PasswordForm = () => {
                   e.target.value === getValues("password")
                 );
               }}
-              inputClassName="w-60"
             />
           )}
         />
@@ -145,7 +145,7 @@ const PasswordForm = () => {
       {isSubmitting ? (
         <Loader></Loader>
       ) : (
-        <Bouton className="w-40 self-center mt-8">Valider mes modifications</Bouton>
+        <Bouton>Valider mes modifications</Bouton>
       )}
     </form>
   );

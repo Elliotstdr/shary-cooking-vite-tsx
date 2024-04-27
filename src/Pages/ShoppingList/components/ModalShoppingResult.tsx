@@ -27,10 +27,10 @@ const ModalShoppingResult = (props: Props) => {
           autoResize
           value={stringShopping}
           onChange={(e) => setStringShopping(e.target.value)}
-          className="resize-y !my-2 w-10/12"
+          className="resize-y !my-6 w-10/12"
         ></InputTextarea>
         <Bouton
-          className={`mt-4 ${greenButton && "!border-card-green !bg-card-green !text-white"}`}
+          className={greenButton ? "!border-card-green !bg-card-green !text-white" : ""}
           btnAction={() => {
             navigator.clipboard.writeText(stringShopping);
             setGreenButton(true);

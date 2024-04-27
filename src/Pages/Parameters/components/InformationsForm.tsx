@@ -67,8 +67,8 @@ const InformationsForm = () => {
   };
 
   return (
-    <form className="flex-center flex-col m-8" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex items-center flex-col mb-4">
+    <form className="flex-center flex-col m-8 gap-4" onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Photo</h4>
         {auth.userConnected?.imageUrl && (
           <div className="w-60 h-40 overflow-hidden flex-center m-2 rounded-md">
@@ -86,7 +86,7 @@ const InformationsForm = () => {
           headerClassName="w-60 rounded-md border !border-search"
         />
       </div>
-      <div className="flex items-center flex-col mb-4">
+      <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Prénom</h4>
         <InputText
           {...register("name", { required: true })}
@@ -95,7 +95,7 @@ const InformationsForm = () => {
         />
         {errors.name && <small className="p-error">Le prénom est obligatoire</small>}
       </div>
-      <div className="flex items-center flex-col mb-4">
+      <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Nom</h4>
         <InputText
           {...register("lastname", { required: true })}
@@ -117,7 +117,7 @@ const InformationsForm = () => {
       {isSubmitting ? (
         <Loader></Loader>
       ) : (
-        <Bouton className="w-40 self-center mt-8">Valider mes modifications</Bouton>
+        <Bouton>Valider mes modifications</Bouton>
       )}
     </form>
   );

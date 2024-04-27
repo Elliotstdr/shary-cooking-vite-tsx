@@ -16,9 +16,8 @@ const Modal = (props: Props) => {
       appendTo={document.getElementById("app")}
       header={props.header}
       visible={props.visible}
-      style={{ width: "fit-content", height: "fit-content" }}
       onHide={() => props.setVisible(false)}
-      className={props.className}
+      className={props.className + " w-fit h-fit"}
       contentClassName={props.contentClassName}
     >
       {props.children}

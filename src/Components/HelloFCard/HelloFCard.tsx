@@ -47,7 +47,7 @@ const HelloFCard = (props: Props) => {
             fillRecipeForm(props.recipe);
             setVisibleRecipeForm(true)
           }}
-          className="self-center after:!bg-white"
+          className="self-center"
         ></Bouton>
       </div>
       {visibleRecipeForm && filledRecipe && (

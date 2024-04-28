@@ -6,9 +6,9 @@ import { errorToast } from "../../../Services/functions";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../../Modal/Modal";
-import Bouton from "../../ui/Bouton/Bouton";
+import Bouton from "../../ui/Bouton";
 import { editRecipeInRecipes, removeRecipeInRecipes } from "../../../Store/Reducers/recipeReducer";
-import CreateRecipeContainer from "../../CreateRecipeContainer/CreateRecipeContainer";
+import RecipeCreationContainer from "../../RecipeCreationContainer/RecipeCreationContainer";
 
 type Props = {
   recipeItem: Recipe,
@@ -109,10 +109,10 @@ const RecipeCardBottom = (props: Props) => {
           header={"Modifier ma recette"}
           className="min-w-[70%] max-w-[90%]"
         >
-          <CreateRecipeContainer
+          <RecipeCreationContainer
             recipe={props.recipeItem}
             setVisibleModif={setVisibleModif}
-          ></CreateRecipeContainer>
+          ></RecipeCreationContainer>
         </Modal>
       )}
     </div>

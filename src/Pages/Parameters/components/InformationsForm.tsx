@@ -1,9 +1,9 @@
 import { InputText } from "primereact/inputtext";
-import Loader from "../../../Components/ui/Loader/loader";
-import Bouton from "../../../Components/ui/Bouton/Bouton";
+import Loader from "../../../Components/ui/loader";
+import Bouton from "../../../Components/ui/Bouton";
 import { errorToast, successToast } from "../../../Services/functions";
 import { fetchPut } from "../../../Hooks/api.hook";
-import ImageUpload from "../../../Components/ui/ImageUpload/ImageUpload";
+import ImageUpload from "../../../Components/ui/ImageUpload";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import image from "../../assets/white-hat.png";
-import BugReport from "../Modal/BugReport/BugReport";
+import ModalBugReport from "../Modal/ModalBugReport";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -35,10 +35,10 @@ const Footer = () => {
       <img src={image} alt="" className="size-32 object-cover" />
 
       {reportBugModal && (
-        <BugReport
+        <ModalBugReport
           reportBugModal={reportBugModal}
           setReportBugModal={setReportBugModal}
-        ></BugReport>
+        ></ModalBugReport>
       )}
     </div>
   );

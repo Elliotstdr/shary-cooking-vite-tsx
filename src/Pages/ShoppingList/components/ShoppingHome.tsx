@@ -1,4 +1,4 @@
-import Bouton from "../../../Components/ui/Bouton/Bouton";
+import Bouton from "../../../Components/ui/Bouton";
 import image from "../../../assets/HCDarkOp.jpg";
 
 type Props = {

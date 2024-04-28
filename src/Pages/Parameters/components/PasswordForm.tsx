@@ -1,6 +1,6 @@
 import { Controller, useForm } from "react-hook-form";
-import Loader from "../../../Components/ui/Loader/loader";
-import Bouton from "../../../Components/ui/Bouton/Bouton";
+import Loader from "../../../Components/ui/loader";
+import Bouton from "../../../Components/ui/Bouton";
 import { errorToast, successToast } from "../../../Services/functions";
 import { fetchPost } from "../../../Hooks/api.hook";
 import { useSelector } from "react-redux";

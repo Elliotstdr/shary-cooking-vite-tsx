@@ -3,17 +3,17 @@ import { Controller, useForm } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
 import { Divider } from "primereact/divider";
 import { useDispatch, useSelector } from "react-redux";
-import ImageUpload from "../ui/ImageUpload/ImageUpload";
+import ImageUpload from "../ui/ImageUpload";
 import { fetchPost, fetchPut } from "../../Hooks/api.hook";
 import { errorToast, successToast } from "../../Services/functions";
 import StepsCreation from "./components/StepsCreation";
-import Loader from "../ui/Loader/loader";
+import Loader from "../ui/loader";
 import { editRecipeInRecipes, updateRecipe } from "../../Store/Reducers/recipeReducer";
 import { checkIngredients, checkSteps, defaultValues } from "../../Services/createRecipeFunctions";
 import IngredientsCreation from "./components/IngredientsCreation";
 import Regimes from "./components/Regimes";
 import Types from "./components/Types";
-import Bouton from "../ui/Bouton/Bouton";
+import Bouton from "../ui/Bouton";
 
 type Props = {
   recipe?: Recipe,
@@ -36,7 +36,7 @@ type Values = {
   fromHellof?: boolean
 }
 
-const CreateRecipeContainer = (props: Props) => {
+const RecipeCreationContainer = (props: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
   const recipe = useSelector((state: RootState) => state.recipe);
   const dispatch = useDispatch();
@@ -313,4 +313,4 @@ const CreateRecipeContainer = (props: Props) => {
   );
 };
 
-export default CreateRecipeContainer;
+export default RecipeCreationContainer;

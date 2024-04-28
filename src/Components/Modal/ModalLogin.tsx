@@ -1,14 +1,14 @@
 import React from "react";
 import { InputText } from "primereact/inputtext";
-import Modal from "../Modal";
+import Modal from "./Modal";
 import { useDispatch } from "react-redux";
 import { Password } from "primereact/password";
 import { Controller, useForm } from "react-hook-form";
-import Loader from "../../ui/Loader/loader";
-import Bouton from "../../ui/Bouton/Bouton";
-import { errorToast } from "../../../Services/functions";
-import { fetchPost } from "../../../Hooks/api.hook";
-import { updateAuth } from "../../../Store/Reducers/authReducer";
+import Loader from "../ui/loader";
+import Bouton from "../ui/Bouton";
+import { errorToast } from "../../Services/functions";
+import { fetchPost } from "../../Hooks/api.hook";
+import { updateAuth } from "../../Store/Reducers/authReducer";
 
 interface Props {
   visible: boolean,

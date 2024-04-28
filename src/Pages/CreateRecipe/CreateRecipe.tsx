@@ -1,9 +1,9 @@
-import CreateRecipeContainer from "../../Components/CreateRecipeContainer/CreateRecipeContainer";
+import RecipeCreationContainer from "../../Components/RecipeCreationContainer/RecipeCreationContainer";
 
 const CreateRecipe = () => {
 
   return (
-    <CreateRecipeContainer></CreateRecipeContainer>
+    <RecipeCreationContainer></RecipeCreationContainer>
   );
 };
 

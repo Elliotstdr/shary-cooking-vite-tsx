@@ -1,7 +1,7 @@
 import { InputTextarea } from "primereact/inputtextarea";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import Bouton from "../../ui/Bouton/Bouton";
+import Bouton from "../../ui/Bouton";
 
 interface Props {
   stepsList: Step[],

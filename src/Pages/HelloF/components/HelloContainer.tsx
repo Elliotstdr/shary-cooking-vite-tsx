@@ -1,5 +1,5 @@
 import HelloFCard from "../../../Components/HelloFCard/HelloFCard";
-import Loader from "../../../Components/ui/Loader/loader";
+import Loader from "../../../Components/ui/loader";
 
 type Props = {
   value: string

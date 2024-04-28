@@ -1,6 +1,6 @@
 import Modal from "../../../Components/Modal/Modal";
 import RecipeContainer from "../../../Components/RecipeContainer/RecipeContainer";
-import Bouton from "../../../Components/ui/Bouton/Bouton";
+import Bouton from "../../../Components/ui/Bouton";
 
 type Props = {
   visible: boolean,

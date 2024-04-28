@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import RecipeCardDetail from "../RecipeCardDetail/RecipeCardDetail";
 import { useDispatch, useSelector } from "react-redux";
-import SlideIn from "../ui/SlideIn/SlideIn";
+import SlideIn from "../ui/SlideIn";
 import { addRecipeInChosenRecipes, removeRecipeInChosenRecipes } from "../../Store/Reducers/recipeReducer";
 import RecipeCardTop from "./components/RecipeCardTop";
 import RecipeCardMiddle from "./components/RecipeCardMiddle";

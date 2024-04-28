@@ -1,5 +1,5 @@
 import Ingredient from "./Ingredient";
-import Bouton from "../../ui/Bouton/Bouton";
+import Bouton from "../../ui/Bouton";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";

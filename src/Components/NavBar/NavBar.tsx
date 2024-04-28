@@ -2,7 +2,7 @@ import Nav from "./components/Nav";
 import { useScreenSize } from "../../Hooks/useScreenSize.hook";
 import Profil from "./components/Profil";
 import NavMobile from "./components/NavMobile";
-import Bouton from "../ui/Bouton/Bouton";
+import Bouton from "../ui/Bouton";
 import { GiKnifeFork } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 

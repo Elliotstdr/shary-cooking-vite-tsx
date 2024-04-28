@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Bouton from "../../../Components/ui/Bouton/Bouton";
+import Bouton from "../../../Components/ui/Bouton";
 
 type Props = {
   image: string

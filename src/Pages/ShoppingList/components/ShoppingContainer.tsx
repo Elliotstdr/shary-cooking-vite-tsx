@@ -1,5 +1,5 @@
 import { BiEditAlt } from "react-icons/bi";
-import Bouton from "../../../Components/ui/Bouton/Bouton";
+import Bouton from "../../../Components/ui/Bouton";
 import ShoppingListCard from "../../../Components/ShoppingListCard/ShoppingListCard";
 import { useSelector } from "react-redux";
 import ModalShoppingResult from "./ModalShoppingResult";

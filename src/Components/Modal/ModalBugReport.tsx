@@ -1,22 +1,22 @@
 import React, { useState } from "react";
-import Modal from "../Modal";
+import Modal from "./Modal";
 import { useForm } from "react-hook-form";
 import { InputTextarea } from "primereact/inputtextarea";
-import Loader from "../../ui/Loader/loader";
-import Bouton from "../../ui/Bouton/Bouton";
+import Loader from "../ui/loader";
+import Bouton from "../ui/Bouton";
 import { InputText } from "primereact/inputtext";
-import ImageUpload from "../../ui/ImageUpload/ImageUpload";
-import { errorToast } from "../../../Services/functions";
+import ImageUpload from "../ui/ImageUpload";
+import { errorToast } from "../../Services/functions";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
-import { fetchPost } from "../../../Hooks/api.hook";
+import { fetchPost } from "../../Hooks/api.hook";
 
 type Props = {
   reportBugModal: boolean,
   setReportBugModal: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-const BugReport = (props: Props) => {
+const ModalBugReport = (props: Props) => {
   const [successView, setSuccessView] = useState(false);
   const auth = useSelector((state: RootState) => state.auth);
 
@@ -99,4 +99,4 @@ const BugReport = (props: Props) => {
   );
 };
 
-export default BugReport;
+export default ModalBugReport;

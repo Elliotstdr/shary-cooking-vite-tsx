@@ -1,5 +1,5 @@
 import { InputText } from "primereact/inputtext";
-import Bouton from "../../../Components/ui/Bouton/Bouton";
+import Bouton from "../../../Components/ui/Bouton";
 import { useEffect } from "react";
 import { fetchPost } from "../../../Hooks/api.hook";
 

@@ -3,7 +3,7 @@ import Modal from "../../../Components/Modal/Modal";
 import { useState } from "react";
 import { exportRecipe } from "../../../Services/functions";
 import { useSelector } from "react-redux";
-import Bouton from "../../../Components/ui/Bouton/Bouton";
+import Bouton from "../../../Components/ui/Bouton";
 
 type Props = {
   visible: boolean,

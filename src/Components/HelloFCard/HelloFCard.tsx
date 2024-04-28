@@ -1,9 +1,9 @@
-import Bouton from "../ui/Bouton/Bouton";
+import Bouton from "../ui/Bouton";
 import { fillIngredient, findRegime, findType, getTime } from "../../Services/hfFunctions";
 import { useState } from "react";
 import Modal from "../Modal/Modal";
 import default2 from "/src/assets/default2.jpg";
-import CreateRecipeContainer from "../CreateRecipeContainer/CreateRecipeContainer";
+import RecipeCreationContainer from "../RecipeCreationContainer/RecipeCreationContainer";
 
 type Props = {
   recipe: HFRecipe
@@ -55,10 +55,10 @@ const HelloFCard = (props: Props) => {
           visible={visibleRecipeForm}
           setVisible={setVisibleRecipeForm}
         >
-          <CreateRecipeContainer
+          <RecipeCreationContainer
             HFFillRecipe={filledRecipe}
             setVisibleModif={setVisibleRecipeForm}
-          ></CreateRecipeContainer>
+          ></RecipeCreationContainer>
         </Modal>
       )}
     </>

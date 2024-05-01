@@ -72,8 +72,9 @@
 
 .p-error {
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #e24c4c;
+  margin: 0.25rem 0;
 }
 
 .p-text-secondary {

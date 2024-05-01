@@ -1,22 +1,17 @@
 import { useState } from "react";
 import HelloSearch from "./components/HelloSearch";
 import HelloContainer from "./components/HelloContainer";
+import { useFetchHellofData } from "../../Hooks/fetchHellofData";
 
 const HelloF = () => {
-  const [value, setValue] = useState("")
-  const [data, setData] = useState<HFRecipe[]>([])
+  const [query, setQuery] = useState("")
+
+  const data = useFetchHellofData(query)
 
   return (
     <div id="hellof" className="m-20 flex flex-col items-center gap-8">
-      <HelloSearch
-        value={value}
-        setValue={setValue}
-        setData={setData}
-      ></HelloSearch>
-      <HelloContainer
-        value={value}
-        data={data}
-      ></HelloContainer>
+      <HelloSearch setQuery={setQuery}></HelloSearch>
+      <HelloContainer isSearchEmpty={query.length === 0} data={data}></HelloContainer>
     </div>
   );
 };

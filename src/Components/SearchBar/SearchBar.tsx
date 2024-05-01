@@ -26,8 +26,22 @@ const SearchBar = () => {
   const [visibleMobile, setVisibleMobile] = useState(false);
 
   useEffect(() => {
+    if (
+      (!search.regime || search.regime?.length === 0) &&
+      (!search.type || search.type?.length === 0) &&
+      (!search.time) &&
+      (!search.ingredient || search.ingredient?.length === 0) &&
+      !search.boxMine && !search.boxFavorites &&
+      search.keyword === ""
+    ) {
+      dispatch(updateSearch({ isSearch: false }))
+      dispatch(updateRecipe({ filteredRecipes: recipe.recipes }))
+      return
+    }
+
+    if (recipe.recipes.length === 0) return
+
     let tempRecipes = recipe.recipes;
-    if (tempRecipes.length === 0) return
 
     if (search.boxFavorites) {
       tempRecipes = tempRecipes.filter((recipe) =>
@@ -66,20 +80,8 @@ const SearchBar = () => {
       tempRecipes = tempRecipes.filter((recipe) => filterByTime(recipe.time));
     }
 
-    if (
-      (!search.regime || search.regime?.length === 0) &&
-      (!search.type || search.type?.length === 0) &&
-      (!search.time) &&
-      (!search.ingredient || search.ingredient?.length === 0) &&
-      !search.boxMine && !search.boxFavorites &&
-      search.keyword === ""
-    ) {
-      dispatch(updateSearch({ isSearch: false }))
-      dispatch(updateRecipe({ filteredRecipes: recipe.recipes }))
-    } else {
-      dispatch(updateSearch({ isSearch: true }))
-      dispatch(updateRecipe({ filteredRecipes: tempRecipes }))
-    }
+    dispatch(updateSearch({ isSearch: true }))
+    dispatch(updateRecipe({ filteredRecipes: tempRecipes }))
   }, [
     search.regime, search.type, search.keyword, search.time, search.ingredient,
     search.boxFavorites, search.boxMine, recipe.recipes

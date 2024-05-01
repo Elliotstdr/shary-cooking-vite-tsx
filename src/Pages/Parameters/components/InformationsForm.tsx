@@ -57,11 +57,14 @@ const InformationsForm = () => {
       dispatch(updateAuth({ token: response.data.token }));
     }
 
-    const tempArray = { ...auth.userConnected };
-    tempArray.email = data.email;
-    tempArray.name = data.name;
-    tempArray.lastname = data.lastname;
-    tempArray.imageUrl = response.data?.imageUrl ?? null;
+    const tempArray = {
+      ...auth.userConnected,
+      email: data.email,
+      name: data.name,
+      lastname: data.lastname,
+      imageUrl: response.data?.imageUrl || null
+    };
+
     dispatch(updateAuth({ userConnected: tempArray }));
     successToast("Votre profil a bien été mis à jour");
   };

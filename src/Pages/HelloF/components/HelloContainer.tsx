@@ -2,7 +2,7 @@ import HelloFCard from "../../../Components/HelloFCard/HelloFCard";
 import Loader from "../../../Components/ui/loader";
 
 type Props = {
-  value: string
+  isSearchEmpty: boolean
   data: HFRecipe[]
 }
 
@@ -16,7 +16,7 @@ const HelloContainer = (props: Props) => {
             key={x.id}
           ></HelloFCard>
         ))
-        : props.value.length === 0
+        : props.isSearchEmpty
           ? <Loader className="my-24"></Loader>
           : <span className="my-40 text-xl font-bold">
             Malheureusement je ne trouve rien qui corresponde à votre recherche...

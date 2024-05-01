@@ -1,7 +1,7 @@
-import { InputTextarea } from "primereact/inputtextarea";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Bouton from "../../ui/Bouton";
+import { AutosizeTextarea } from "@/Components/ui/AutosizeTextarea";
 
 interface Props {
   stepsList: Step[],
@@ -14,8 +14,7 @@ const StepsCreation = (props: Props) => {
       <div className="flex flex-col w-11/12 laptop:w-150 gap-4">
         {props.stepsList.map((step, index) => (
           <div className="flex w-full relative" key={index}>
-            <InputTextarea
-              autoResize
+            <AutosizeTextarea
               placeholder="Description de l'étape"
               className="!w-full"
               value={step.description}
@@ -29,6 +28,7 @@ const StepsCreation = (props: Props) => {
                   } else return x
                 }))
               }}
+              minHeight={60}
             />
             {step.stepIndex !== 1 && (
               <RiDeleteBin6Line

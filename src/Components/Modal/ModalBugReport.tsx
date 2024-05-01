@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import { useForm } from "react-hook-form";
-import { InputTextarea } from "primereact/inputtextarea";
 import Loader from "../ui/loader";
 import Bouton from "../ui/Bouton";
-import { InputText } from "primereact/inputtext";
 import ImageUpload from "../ui/ImageUpload";
 import { errorToast } from "../../Services/functions";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { fetchPost } from "../../Hooks/api.hook";
+import { Input } from "../ui/input";
+// import { Textarea } from "../ui/textarea";
+import { AutosizeTextarea } from "../ui/AutosizeTextarea";
 
 type Props = {
   reportBugModal: boolean,
@@ -58,7 +59,7 @@ const ModalBugReport = (props: Props) => {
         <form className="flex items-center flex-col p-4 mt-4" onSubmit={handleSubmit(onSubmit)}>
           <div className="w-full mb-8 tablet:w-2/3">
             <h4 className="font-bold my-2">Intitulé du problème :</h4>
-            <InputText
+            <Input
               {...register("title", { required: true })}
               placeholder="Problème quand je clique sur le bouton ..."
               className="!w-full"
@@ -67,11 +68,10 @@ const ModalBugReport = (props: Props) => {
           </div>
           <div className="w-full mb-8 tablet:w-2/3">
             <h4 className="font-bold my-2">Description :</h4>
-            <InputTextarea
+            <AutosizeTextarea
               {...register("message", { required: true })}
               placeholder="Où? Quand? Comment?"
               className="!w-full"
-              autoResize
             />
             {errors.message && <small className="p-error">La description est obligatoire</small>}
           </div>

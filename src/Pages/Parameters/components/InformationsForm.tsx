@@ -1,4 +1,3 @@
-import { InputText } from "primereact/inputtext";
 import Loader from "../../../Components/ui/loader";
 import Bouton from "../../../Components/ui/Bouton";
 import { errorToast, successToast } from "../../../Services/functions";
@@ -8,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { updateAuth } from "../../../Store/Reducers/authReducer";
+import { Input } from "@/Components/ui/input";
 
 const InformationsForm = () => {
   const auth = useSelector((state: RootState) => state.auth);
@@ -91,30 +91,30 @@ const InformationsForm = () => {
       </div>
       <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Prénom</h4>
-        <InputText
+        <Input
           {...register("name", { required: true })}
           placeholder="Fanny"
           className="w-60"
-        />
+        ></Input>
         {errors.name && <small className="p-error">Le prénom est obligatoire</small>}
       </div>
       <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Nom</h4>
-        <InputText
+        <Input
           {...register("lastname", { required: true })}
           placeholder="Lefebvre"
           className="w-60"
-        />
+        ></Input>
         {errors.lastname && <small className="p-error">Le nom est obligatoire</small>}
       </div>
       <div className="flex items-center flex-col mb-4">
         <h4 className="my-2 font-bold">Adresse email</h4>
-        <InputText
+        <Input
           type="email"
           {...register("email", { required: true })}
           placeholder="Adresse email"
           className="w-60"
-        />
+        ></Input>
         {errors.email && <small className="p-error">L'email est obligatoire</small>}
       </div>
       {isSubmitting ? (

@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { MultiSelect } from "primereact/multiselect";
 import { useDispatch, useSelector } from "react-redux";
-import { InputText } from "primereact/inputtext";
-import { Dropdown } from "primereact/dropdown";
 import { GrPowerReset } from "react-icons/gr";
-import { Checkbox } from "primereact/checkbox";
 import { resetSearch, updateSearch } from "../../Store/Reducers/searchReducer";
 import {
   fillAvailableIngredientsOnly,
@@ -16,6 +13,8 @@ import {
 } from "../../Services/searchBarFunctions";
 import { updateRecipe } from "../../Store/Reducers/recipeReducer";
 import { useScreenSize } from "../../Hooks/useScreenSize.hook";
+import { Input } from "../ui/input";
+import Dropdown from "../ui/Dropdown";
 
 const SearchBar = () => {
   const screenSize = useScreenSize()
@@ -102,11 +101,12 @@ const SearchBar = () => {
         ${visibleMobile || screenSize.width > 1100 ? "visible-transition" : "hidden-transition"}
       `}>
         <div className="flex flex-col justify-evenly gap-4 desktop:flex-row desktop:gap-8">
-          <InputText
+          <Input
             placeholder="Tomates farcies, ..."
             value={search.keyword}
             onChange={(e) => dispatch(updateSearch({ keyword: e.target.value }))}
-          ></InputText>
+            className="w-44 border-0 border-b rounded-none"
+          ></Input>
           <MultiSelect
             showClear
             value={search.regime}
@@ -124,11 +124,11 @@ const SearchBar = () => {
             placeholder="Type de plat"
           ></MultiSelect>
           <Dropdown
-            showClear
-            value={search.time}
-            onChange={(e) => dispatch(updateSearch({ time: e.value }))}
-            options={timeList}
+            // showClear
+            onChange={(e) => dispatch(updateSearch({ time: e }))}
+            items={timeList}
             placeholder="Temps"
+            className="w-44 border-0 border-b rounded-none"
           ></Dropdown>
           <MultiSelect
             showClear
@@ -144,17 +144,21 @@ const SearchBar = () => {
         </div>
         <div className="w-full flex flex-col items-start gap-4 desktop:h-6 desktop:flex-row">
           <div className="flex items-center">
-            <Checkbox
-              onChange={(e) => dispatch(updateSearch({ boxMine: e.checked || false }))}
+            <Input
+              type="checkbox"
+              onChange={(e) => dispatch(updateSearch({ boxMine: e.target.checked }))}
               checked={search.boxMine}
-            ></Checkbox>
+              className="size-4 accent-orange"
+            ></Input>
             <span className="mr-4 ml-1 text-sm">Mes recettes</span>
           </div>
           <div className="flex items-center">
-            <Checkbox
-              onChange={(e) => dispatch(updateSearch({ boxFavorites: e.checked || false }))}
+            <Input
+              type="checkbox"
+              onChange={(e) => dispatch(updateSearch({ boxFavorites: e.target.checked }))}
               checked={search.boxFavorites}
-            ></Checkbox>
+              className="size-4 accent-orange"
+            ></Input>
             <span className="mr-4 ml-1 text-sm">Mes favoris</span>
           </div>
           {search.isSearch &&

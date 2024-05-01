@@ -1,28 +1,17 @@
-import { useState } from "react";
-import { SelectButton } from "primereact/selectbutton";
 import InformationsForm from "./components/InformationsForm";
 import PasswordForm from "./components/PasswordForm";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs"
 
 const Parameters = () => {
-  const items = [
-    { name: 'Informations personnelles', value: 1 },
-    { name: 'Mot de passe', value: 2 },
-  ];
-
-  const [value, setValue] = useState<1 | 2>(1)
-
   return (
-    <div id="params">
-      <SelectButton
-        value={value}
-        onChange={(e) => e.value && setValue(e.value)}
-        optionLabel="name"
-        options={items}
-        className="mt-16"
-      ></SelectButton>
-      {value === 1 && <InformationsForm />}
-      {value === 2 && <PasswordForm />}
-    </div>
+    <Tabs defaultValue="account" className="mt-16" id="params">
+      <TabsList>
+        <TabsTrigger value="account">Informations personnelles</TabsTrigger>
+        <TabsTrigger value="password">Mot de passe</TabsTrigger>
+      </TabsList>
+      <TabsContent value="account"><InformationsForm /></TabsContent>
+      <TabsContent value="password"><PasswordForm /></TabsContent>
+    </Tabs>
   );
 };
 

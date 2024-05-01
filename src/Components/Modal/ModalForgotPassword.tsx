@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { InputText } from "primereact/inputtext";
 import Modal from "./Modal";
 import { useDispatch } from "react-redux";
-import { Password } from "primereact/password";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Loader from "../ui/loader";
 import { useState } from "react";
 import Bouton from "../ui/Bouton";
 import { errorToast, successToast } from "../../Services/functions";
 import { fetchPost } from "../../Hooks/api.hook";
 import { updateAuth } from "../../Store/Reducers/authReducer";
+import { Input } from "../ui/input";
+import { PasswordInput } from "../ui/PasswordInput";
 
 interface Props {
   visible: boolean,
@@ -39,7 +39,7 @@ const ModalForgotPassword = (props: Props) => {
     !props.visible && setIsLoging(false);
   }, [props.visible]);
   // variables du formulaire
-  const { getValues, handleSubmit, control, register, reset } = useForm({
+  const { getValues, handleSubmit, register, reset } = useForm({
     defaultValues,
   });
 
@@ -119,7 +119,7 @@ const ModalForgotPassword = (props: Props) => {
           <>
             <div className="flex items-center flex-col">
               <h4 className="font-bold mb-2 mt-4">Adresse email</h4>
-              <InputText
+              <Input
                 type="email"
                 {...register("email")}
                 placeholder="Adresse email"
@@ -138,35 +138,18 @@ const ModalForgotPassword = (props: Props) => {
           <>
             <div className="flex items-center flex-col">
               <h4 className="font-bold mb-2 mt-4">Clé de réinitialisation :</h4>
-              <Controller
-                name="resetKey"
-                control={control}
-                render={({ field }) => (
-                  <Password
-                    {...field}
-                    toggleMask
-                    feedback={false}
-                    autoComplete="new-password"
-                    placeholder="Clé de réinitialisation"
-                    inputClassName="w-64"
-                  />
-                )}
+              <PasswordInput
+                {...register("resetKey")}
+                placeholder="Clé de réinitialisation"
+                className="w-64"
               />
             </div>
             <div className="flex items-center flex-col">
-              <h4 className="font-bold mb-2 mt-4">Nouveau mot de passe</h4>
-              <Controller
-                name="newPassword"
-                control={control}
-                render={({ field }) => (
-                  <Password
-                    {...field}
-                    toggleMask
-                    autoComplete="new-password"
-                    placeholder="mot de passe"
-                    inputClassName="w-64"
-                  />
-                )}
+              <h4 className="font-bold mb-2 mt-4">Nouveau mot de passe :</h4>
+              <PasswordInput
+                {...register("newPassword")}
+                placeholder="Mot de passe"
+                className="w-64"
               />
             </div>
             <div

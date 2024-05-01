@@ -1,11 +1,11 @@
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Loader from "../../../Components/ui/loader";
 import Bouton from "../../../Components/ui/Bouton";
 import { errorToast, successToast } from "../../../Services/functions";
 import { fetchPost } from "../../../Hooks/api.hook";
 import { useSelector } from "react-redux";
 import { ReactNode, useState } from "react";
-import { Password } from "primereact/password";
+import { PasswordInput } from "@/Components/ui/PasswordInput";
 
 type FormProps = {
   password: string,
@@ -25,7 +25,7 @@ const PasswordForm = () => {
   };
 
   const {
-    control,
+    register,
     formState: { errors, isSubmitting },
     reset,
     handleSubmit,
@@ -61,84 +61,51 @@ const PasswordForm = () => {
     <form className="flex-center flex-col m-8 gap-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Précédent mot de passe</h4>
-        <Controller
-          name="oldPassword"
-          control={control}
-          rules={{
-            required:
-              getValues("password").length > 0
-                ? "L'ancien mot de passe est obligatoire"
-                : false,
-          }}
-          render={({ field }) => (
-            <Password
-              toggleMask
-              autoComplete="new-password"
-              {...field}
-              placeholder={"Ancien mot de passe"}
-              feedback={false}
-              inputClassName="w-60"
-            />
-          )}
+        <PasswordInput
+          {...register("oldPassword", {
+            required: getValues("password").length > 0
+              ? "L'ancien mot de passe est obligatoire"
+              : false,
+          })}
+          placeholder="Ancien mot de passe"
+          className="w-60"
         />
         {getFormErrorMessage("oldPassword")}
       </div>
       <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Nouveau mot de passe</h4>
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <Password
-              toggleMask
-              autoComplete="new-password"
-              {...field}
-              placeholder={"Mot de passe"}
-              onChange={(e) => {
-                field.onChange(e.target.value);
-                setIsEqualPassword(
-                  getValues("confirmPassword").length > 0 &&
-                  e.target.value === getValues("confirmPassword")
-                );
-              }}
-              inputClassName="w-60"
-            />
-          )}
+        <PasswordInput
+          {...register("password")}
+          placeholder="Mot de passe"
+          onChange={(e) => {
+            setIsEqualPassword(
+              getValues("confirmPassword").length > 0 &&
+              e.target.value === getValues("confirmPassword")
+            );
+          }}
+          className="w-60"
         />
       </div>
       <div className="flex items-center flex-col mb-4">
         <h4 className="my-2 font-bold">Confirmer le mot de passe</h4>
-        <Controller
-          name="confirmPassword"
-          control={control}
-          rules={{
-            required:
-              getValues("password").length > 0
-                ? "Veuillez confirmer le nouveau mot de passe"
-                : false,
+        <PasswordInput
+          {...register("oldPassword", {
+            required: getValues("password").length > 0
+              ? "Veuillez confirmer le nouveau mot de passe"
+              : false,
             validate: (value) =>
               value === getValues("password") ||
               getValues("password") === "" ||
               "Les mots de passe ne sont pas identiques",
+          })}
+          placeholder="Mot de passe"
+          className={`w-60 border rounded-md ${isEqualPassword ? "border-card-green" : "border-card-red"}`}
+          onChange={(e) => {
+            setIsEqualPassword(
+              getValues("password").length > 0 &&
+              e.target.value === getValues("password")
+            );
           }}
-          render={({ field }) => (
-            <Password
-              toggleMask
-              autoComplete="new-password"
-              {...field}
-              placeholder={"Mot de passe"}
-              className={`border-2 rounded-md ${isEqualPassword ? "border-card-green" : "border-card-red"}`}
-              inputClassName="w-60 !rounded-md !border-none"
-              feedback={false}
-              onChange={(e) => {
-                field.onChange(e.target.value);
-                setIsEqualPassword(
-                  getValues("password").length > 0 &&
-                  e.target.value === getValues("password")
-                );
-              }}
-            />
-          )}
         />
         {getFormErrorMessage("confirmPassword")}
       </div>

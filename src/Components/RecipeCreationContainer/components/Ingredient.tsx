@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { InputText } from "primereact/inputtext";
-import { Dropdown } from "primereact/dropdown";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { AutoComplete, AutoCompleteCompleteEvent } from "primereact/autocomplete";
@@ -8,6 +6,9 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { BiMoveVertical } from "react-icons/bi";
 import { AiOutlineStop } from "react-icons/ai";
+import { Input } from "@/Components/ui/input";
+import { floatAllowedKey } from "@/Services/createRecipeFunctions";
+import Dropdown from "@/Components/ui/Dropdown";
 
 interface Props {
   ingredientList: FormIngredient[],
@@ -89,11 +90,15 @@ const Ingredient = (props: Props) => {
         tooltipOptions={{ position: "top" }}
         inputClassName="w-28 tablet:w-60 !m-1"
       ></AutoComplete>
-      <InputText
+      <Input
         placeholder="3, 2.5..."
         className="w-16 tablet:w-40 !m-1"
         value={props.ingredient.quantity}
-        keyfilter="num"
+        onKeyDown={(e) => {
+          if (!floatAllowedKey.includes(e.key)) {
+            e.preventDefault()
+          }
+        }}
         onChange={(e) => {
           props.setIngredientList(props.ingredientList.map((x) => {
             if (x.id === props.ingredient.id) {
@@ -104,17 +109,14 @@ const Ingredient = (props: Props) => {
             } else return x
           }))
         }}
-        tooltip={
+        title={
           props.ingredient.id === 1
             ? "Pour les décimaux utilisez le point et non la virgule"
             : undefined
         }
-        tooltipOptions={{ position: "top" }}
       />
       <Dropdown
-        value={props.ingredient.unit}
-        options={secondaryTables.units ?? []}
-        optionLabel="label"
+        items={secondaryTables.units ?? []}
         placeholder="kg, unité..."
         className="w-24 tablet:w-40 !m-1"
         onChange={(e) => {
@@ -122,8 +124,8 @@ const Ingredient = (props: Props) => {
             if (x.id === props.ingredient.id) {
               return {
                 ...x,
-                unit: e.target.value,
-                quantity: (e.target.value as Unit).label === "un peu" ? "1" : x.quantity
+                unit: e,
+                quantity: e.label === "un peu" ? "1" : x.quantity
               }
             } else return x
           }))

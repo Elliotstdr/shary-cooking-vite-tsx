@@ -2,11 +2,11 @@ import { useState } from "react";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import RecipeCardDetail from "../RecipeCardDetail/RecipeCardDetail";
 import { useDispatch, useSelector } from "react-redux";
-import SlideIn from "../ui/SlideIn";
 import { addRecipeInChosenRecipes, removeRecipeInChosenRecipes } from "../../Store/Reducers/recipeReducer";
 import RecipeCardTop from "./components/RecipeCardTop";
 import RecipeCardMiddle from "./components/RecipeCardMiddle";
 import RecipeCardBottom from "./components/RecipeCardBottom";
+import { Sheet, SheetContent } from "../ui/sheet";
 
 interface Props {
   recipeItem: Recipe,
@@ -64,15 +64,13 @@ const RecipeCard = (props: Props) => {
         recipeItem={props.recipeItem}
       ></RecipeCardBottom>
       {visibleDetail && (
-        <SlideIn
-          setVisible={setVisibleDetail}
-          visible={visibleDetail}
-          className="!w-11/12 laptop:!w-2/3"
-        >
-          <RecipeCardDetail
-            recipeDetail={props.recipeItem}
-          ></RecipeCardDetail>
-        </SlideIn>
+        <Sheet open={visibleDetail} onOpenChange={() => setVisibleDetail(!visibleDetail)}>
+          <SheetContent side="left" className="w-11/12 laptop:w-2/3">
+            <RecipeCardDetail
+              recipeDetail={props.recipeItem}
+            ></RecipeCardDetail>
+          </SheetContent>
+        </Sheet>
       )}
     </div>
   );

@@ -1,14 +1,14 @@
 import React from "react";
-import { InputText } from "primereact/inputtext";
 import Modal from "./Modal";
 import { useDispatch } from "react-redux";
-import { Password } from "primereact/password";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Loader from "../ui/loader";
 import Bouton from "../ui/Bouton";
 import { errorToast } from "../../Services/functions";
 import { fetchPost } from "../../Hooks/api.hook";
 import { updateAuth } from "../../Store/Reducers/authReducer";
+import { Input } from "../ui/input";
+import { PasswordInput } from "../ui/PasswordInput";
 
 interface Props {
   visible: boolean,
@@ -21,7 +21,6 @@ const ModalLogin = (props: Props) => {
   const dispatch = useDispatch();
 
   const {
-    control,
     getValues,
     register,
     formState: { errors, isSubmitting },
@@ -69,33 +68,22 @@ const ModalLogin = (props: Props) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex items-center flex-col">
           <h4 className="font-bold mb-2 mt-4">Adresse email</h4>
-          <InputText
+          <Input
             type="email"
             {...register("email", { required: true })}
             placeholder="Adresse email"
             className="w-64"
-          ></InputText>
+          ></Input>
           {errors.email && <small className="p-error">L'email est obligatoire</small>}
         </div>
         <div className="flex items-center flex-col">
           <h4 className="font-bold mb-2 mt-4">Mot de passe</h4>
-          <Controller
-            name="password"
-            control={control}
-            rules={{
-              required: "Le mot de passe est obligatoire",
-            }}
-            render={({ field }) => (
-              <Password
-                {...field}
-                toggleMask
-                placeholder="Mot de passe"
-                inputClassName="w-64"
-                feedback={false}
-              />
-            )}
+          <PasswordInput
+            {...register("password", { required: true })}
+            placeholder="Mot de passe"
+            className="w-64"
           />
-          {errors.password && <small className="p-error">{errors.password.message}</small>}
+          {errors.password && <small className="p-error">Le mot de passe est obligatoire</small>}
         </div>
         <div
           className="cursor-pointer underline text-right text-sm p-2"

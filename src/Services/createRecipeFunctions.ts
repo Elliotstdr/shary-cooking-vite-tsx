@@ -1,5 +1,8 @@
 import { store } from "../Store/store";
 
+export const intergerAllowedKey = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Backspace"]
+export const floatAllowedKey = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "Backspace"]
+
 export const defaultValues = () => {
   const secondaryTables = store.getState().secondaryTables
 

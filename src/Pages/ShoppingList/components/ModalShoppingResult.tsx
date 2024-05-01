@@ -1,9 +1,9 @@
-import { InputTextarea } from "primereact/inputtextarea";
 import Modal from "../../../Components/Modal/Modal";
 import { useState } from "react";
 import { exportRecipe } from "../../../Services/functions";
 import { useSelector } from "react-redux";
 import Bouton from "../../../Components/ui/Bouton";
+import { AutosizeTextarea } from "@/Components/ui/AutosizeTextarea";
 
 type Props = {
   visible: boolean,
@@ -23,12 +23,11 @@ const ModalShoppingResult = (props: Props) => {
       className={"w-11/12 tablet:w-unset tablet:min-w-[40%]"}
     >
       <div className="flex items-center flex-col">
-        <InputTextarea
-          autoResize
+        <AutosizeTextarea
           value={stringShopping}
           onChange={(e) => setStringShopping(e.target.value)}
           className="resize-y !my-6 w-10/12"
-        ></InputTextarea>
+        ></AutosizeTextarea>
         <Bouton
           className={greenButton ? "!border-card-green !bg-card-green !text-white" : ""}
           btnAction={() => {

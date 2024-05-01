@@ -1,4 +1,4 @@
-import { InputText } from "primereact/inputtext";
+import { Input } from "@/Components/ui/input";
 import Bouton from "../../../Components/ui/Bouton";
 import { useState } from "react";
 
@@ -12,7 +12,7 @@ const HelloSearch = (props: Props) => {
   return (
     <div className="flex gap-4 relative">
       <div className="pi pi-search absolute text-gris left-2 top-1/2 -translate-y-1/2"></div>
-      <InputText
+      <Input
         type="text"
         autoFocus
         value={inputValue}

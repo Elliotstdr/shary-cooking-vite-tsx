@@ -2,7 +2,8 @@
 import plugin from "tailwindcss/plugin";
 
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ["./src/**/*.{ts,tsx}"],
+  prefix: "",
   theme: {
     extend: {
       gridTemplateColumns: {
@@ -34,6 +35,8 @@ export default {
         loader: "rotation 1s linear infinite",
         "reverse-loader": "rotation 0.5s linear infinite reverse",
         navbar: "navbar 0.6s ease forwards",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
       keyframes: {
         rotation: {
@@ -42,6 +45,54 @@ export default {
         },
         navbar: {
           to: { width: "100%" },
+        },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "var(--ring)",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
         },
       },
     },
@@ -71,11 +122,20 @@ export default {
       picto: "#8a8a8a",
       gris: "grey",
       transparent: "transparent",
+      icon: "#6c757d",
+      black: "black",
     },
     lineHeight: {
       12: "3rem",
       16: "4rem",
       20: "5rem",
+    },
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
     },
   },
   plugins: [
@@ -119,5 +179,6 @@ export default {
       };
       addUtilities(newUtilities, ["responsive", "hover"]);
     }),
+    require("tailwindcss-animate"),
   ],
 };

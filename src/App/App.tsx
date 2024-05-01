@@ -15,6 +15,7 @@ import { errorToast } from "../Services/functions";
 import { updateSecondaryTables } from "../Store/Reducers/secondaryTablesReducer";
 import NavBar from "../Components/NavBar/NavBar";
 import Footer from "../Components/Footer/Footer";
+import { Toaster } from "@/Components/ui/toaster";
 
 const App = () => {
   const isInterceptorActive = useAxiosInterceptors();
@@ -53,6 +54,7 @@ const App = () => {
   return (
     <div id="app">
       <BrowserRouter>
+        <Toaster></Toaster>
         <Toast ref={toast}></Toast>
         {auth.isConnected && <NavBar></NavBar>}
         {isInterceptorActive &&

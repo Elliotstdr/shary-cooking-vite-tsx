@@ -1,15 +1,15 @@
-import React from "react";
-import { InputText } from "primereact/inputtext";
+import React, { useEffect } from "react";
 import Modal from "./Modal";
 import { useDispatch } from "react-redux";
-import { Password } from "primereact/password";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Loader from "../ui/loader";
 import { useState } from "react";
 import Bouton from "../ui/Bouton";
 import { errorToast } from "../../Services/functions";
 import { fetchPost } from "../../Hooks/api.hook";
 import { updateAuth } from "../../Store/Reducers/authReducer";
+import { Input } from "../ui/input";
+import { PasswordInput } from "../ui/PasswordInput";
 
 interface Props {
   visible: boolean,
@@ -22,9 +22,9 @@ const ModalLogin = (props: Props) => {
   const [isEqualPassword, setIsEqualPassword] = useState(false);
 
   const {
-    control,
     getValues,
     register,
+    watch,
     formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm({
@@ -64,6 +64,14 @@ const ModalLogin = (props: Props) => {
     }));
   };
 
+  useEffect(() => {
+    setIsEqualPassword(
+      getValues("password").length > 0 &&
+      getValues("confirmpassword").length > 0 &&
+      getValues("password") === getValues("confirmpassword")
+    );
+  }, [watch('password'), watch('confirmpassword')]);
+
   return (
     <Modal
       header="Création de compte"
@@ -74,7 +82,7 @@ const ModalLogin = (props: Props) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex items-center flex-col">
           <h4 className="font-bold mb-2 mt-4">Prénom</h4>
-          <InputText
+          <Input
             {...register("name", { required: true })}
             placeholder="Prénom"
             className="w-64"
@@ -83,7 +91,7 @@ const ModalLogin = (props: Props) => {
         </div>
         <div className="flex items-center flex-col">
           <h4 className="font-bold mb-2 mt-4">Nom</h4>
-          <InputText
+          <Input
             {...register("lastname", { required: true })}
             placeholder="Nom"
             className="w-64"
@@ -92,7 +100,7 @@ const ModalLogin = (props: Props) => {
         </div>
         <div className="flex items-center flex-col">
           <h4 className="font-bold mb-2 mt-4">Adresse email</h4>
-          <InputText
+          <Input
             type="email"
             {...register("email", { required: true })}
             placeholder="Adresse email"
@@ -102,86 +110,37 @@ const ModalLogin = (props: Props) => {
         </div>
         <div className="flex items-center flex-col">
           <h4 className="font-bold mb-2 mt-4">Mot de passe</h4>
-          <Controller
-            name="password"
-            control={control}
-            rules={{
+          <PasswordInput
+            {...register("password", {
               required: "Le mot de passe est obligatoire",
-              minLength: {
-                value: 4,
-                message: "Le mot de passe doit faire au moins 4 caractères",
-              },
-            }}
-            render={({ field }) => (
-              <Password
-                {...field}
-                toggleMask
-                placeholder="Mot de passe"
-                inputClassName="w-64"
-                onChange={(e) => {
-                  field.onChange(e.target.value);
-                  setIsEqualPassword(
-                    getValues("confirmpassword").length > 0 &&
-                    e.target.value === getValues("confirmpassword")
-                  );
-                }}
-              />
-            )}
+              minLength: { value: 4, message: "Le mot de passe doit faire au moins 4 caractères" }
+            })}
+            placeholder="Mot de passe"
+            className="w-64"
           />
           {errors.password && <small className="p-error">{errors.password.message}</small>}
         </div>
         <div className="flex items-center flex-col">
           <h4 className="font-bold mb-2 mt-4">Confirmer le mot de passe</h4>
-          <Controller
-            name="confirmpassword"
-            control={control}
-            rules={{
+          <PasswordInput
+            {...register("confirmpassword", {
               required: "Veuillez confirmer le mot de passe",
               validate: (value) => {
                 return value === getValues("password");
               },
-            }}
-            render={({ field }) => (
-              <Password
-                {...field}
-                toggleMask
-                placeholder={"Mot de passe"}
-                className={`border-2 rounded-md ${isEqualPassword ? "border-card-green" : "border-card-red"}`}
-                inputClassName="w-64 !rounded-md !border-none"
-                feedback={false}
-                onChange={(e) => {
-                  field.onChange(e.target.value);
-                  setIsEqualPassword(
-                    getValues("password").length > 0 &&
-                    e.target.value === getValues("password")
-                  );
-                }}
-              />
-            )}
+            })}
+            placeholder="Mot de passe"
+            className={`w-64 border rounded-md ${isEqualPassword ? "border-card-green" : "border-card-red"}`}
           />
           {errors.confirmpassword && <small className="p-error">{errors.confirmpassword.message}</small>}
         </div>
         <div className="flex items-center flex-col">
           <h4 className="font-bold mb-2 mt-4">{"Clé secrète"}</h4>
-          <Controller
-            name="secretKey"
-            control={control}
-            rules={{
-              required: "La clé secrète est obligatoire",
-            }}
-            render={({ field }) => (
-              <Password
-                {...field}
-                toggleMask
-                placeholder={"Clé secrète"}
-                inputClassName="w-64"
-                feedback={false}
-                tooltip={
-                  "Cette clé doit vous être fournie par le créateur du site."
-                }
-                tooltipOptions={{ position: "top" }}
-              />
-            )}
+          <PasswordInput
+            {...register("secretKey", { required: "La clé secrète est obligatoire" })}
+            placeholder="Clé secrète"
+            className="w-64"
+            title="Cette clé doit vous être fournie par le créateur du site."
           />
           {errors.secretKey && <small className="p-error">{errors.secretKey.message}</small>}
         </div>

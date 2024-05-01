@@ -137,7 +137,7 @@ const ModalForgotPassword = (props: Props) => {
         ) : (
           <>
             <div className="flex items-center flex-col">
-              <h4 className="font-bold mb-2 mt-4">Clé de réinitialisation :</h4>
+              <h4 className="font-bold mb-2 mt-4">Clé de réinitialisation</h4>
               <Controller
                 name="resetKey"
                 control={control}

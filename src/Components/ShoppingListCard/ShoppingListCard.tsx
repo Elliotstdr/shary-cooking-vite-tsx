@@ -35,11 +35,11 @@ const ShoppingListCard = (props: Props) => {
       <RecipePicture
         url={props.recipe.imageUrl}
         isFromHellof={props.recipe.fromHellof}
-        className="rounded-t-lg w-full h-64 object-cover laptop:w-80 laptop:h-48 laptop:rounded-bl-xl laptop:rounded-tr-none"
+        className="rounded-t-lg w-full h-64 object-cover laptop:w-72 laptop:h-48 laptop:rounded-bl-xl laptop:rounded-tr-none"
       ></RecipePicture>
       <div className="flex flex-col p-6 grow justify-between laptop:py-8">
         <div className="flex flex-col items-center justify-between mt-2 mb-8 laptop:m-0 laptop:flex-row">
-          <div className="text-xl mb-4 font-bold max-w-[70%] line-clamp-2 laptop:line-clamp-1 laptop:m-0">
+          <div className="text-xl mb-4 font-bold line-clamp-2 text-left laptop:line-clamp-1 laptop:m-0 laptop:max-w-[70%]">
             {props.recipe.title}
           </div>
           <div>

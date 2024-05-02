@@ -71,6 +71,7 @@ export default {
       picto: "#8a8a8a",
       gris: "grey",
       transparent: "transparent",
+      icon: "#6c757d",
     },
     lineHeight: {
       12: "3rem",

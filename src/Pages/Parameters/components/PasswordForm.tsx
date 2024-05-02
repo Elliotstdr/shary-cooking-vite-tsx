@@ -1,11 +1,11 @@
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Loader from "../../../Components/ui/loader";
 import Bouton from "../../../Components/ui/Bouton";
 import { errorToast, successToast } from "../../../Services/functions";
 import { fetchPost } from "../../../Hooks/api.hook";
 import { useSelector } from "react-redux";
-import { ReactNode, useState } from "react";
-import { Password } from "primereact/password";
+import { useEffect, useState } from "react";
+import { PasswordInput } from "../../../Components/ui/PasswordInput";
 
 type FormProps = {
   password: string,
@@ -15,7 +15,6 @@ type FormProps = {
 
 const PasswordForm = () => {
   const auth = useSelector((state: RootState) => state.auth);
-
   const [isEqualPassword, setIsEqualPassword] = useState(false);
 
   const defaultValues: FormProps = {
@@ -25,18 +24,13 @@ const PasswordForm = () => {
   };
 
   const {
-    control,
+    register,
+    watch,
     formState: { errors, isSubmitting },
     reset,
     handleSubmit,
     getValues,
   } = useForm({ defaultValues });
-
-  const getFormErrorMessage = (name: keyof FormProps) => {
-    return (
-      errors[name] && <small className="p-error">{errors[name]?.message as ReactNode}</small>
-    );
-  };
 
   const onSubmit = async () => {
     const data = getValues();
@@ -57,90 +51,49 @@ const PasswordForm = () => {
     successToast("Votre mot de passe a bien été mis à jour");
   };
 
+  useEffect(() => {
+    setIsEqualPassword(
+      getValues("password").length > 0 &&
+      getValues("confirmPassword").length > 0 &&
+      getValues("password") === getValues("confirmPassword")
+    );
+  }, [watch('password'), watch('confirmPassword')]);
+
+  useEffect(() => {
+    console.log(isEqualPassword)
+  }, [isEqualPassword]);
+
   return (
     <form className="flex-center flex-col m-8 gap-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Précédent mot de passe</h4>
-        <Controller
-          name="oldPassword"
-          control={control}
-          rules={{
-            required:
-              getValues("password").length > 0
-                ? "L'ancien mot de passe est obligatoire"
-                : false,
-          }}
-          render={({ field }) => (
-            <Password
-              toggleMask
-              autoComplete="new-password"
-              {...field}
-              placeholder={"Ancien mot de passe"}
-              feedback={false}
-              inputClassName="w-60"
-            />
-          )}
-        />
-        {getFormErrorMessage("oldPassword")}
+        <PasswordInput
+          {...register("oldPassword", { required: "L'ancien mot de passe est obligatoire" })}
+          placeholder="Ancien mot de passe"
+          className="w-60"
+        ></PasswordInput>
+        {errors.oldPassword && <small className="p-error">{errors.oldPassword.message}</small>}
       </div>
       <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Nouveau mot de passe</h4>
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <Password
-              toggleMask
-              autoComplete="new-password"
-              {...field}
-              placeholder={"Mot de passe"}
-              onChange={(e) => {
-                field.onChange(e.target.value);
-                setIsEqualPassword(
-                  getValues("confirmPassword").length > 0 &&
-                  e.target.value === getValues("confirmPassword")
-                );
-              }}
-              inputClassName="w-60"
-            />
-          )}
-        />
+        <PasswordInput
+          {...register("password", { required: "Le nouveau mot de passe est obligatoire" })}
+          placeholder="Mot de passe"
+          className="w-60"
+        ></PasswordInput>
+        {errors.password && <small className="p-error">{errors.password.message}</small>}
       </div>
       <div className="flex items-center flex-col mb-4">
         <h4 className="my-2 font-bold">Confirmer le mot de passe</h4>
-        <Controller
-          name="confirmPassword"
-          control={control}
-          rules={{
-            required:
-              getValues("password").length > 0
-                ? "Veuillez confirmer le nouveau mot de passe"
-                : false,
-            validate: (value) =>
-              value === getValues("password") ||
-              getValues("password") === "" ||
-              "Les mots de passe ne sont pas identiques",
-          }}
-          render={({ field }) => (
-            <Password
-              toggleMask
-              autoComplete="new-password"
-              {...field}
-              placeholder={"Mot de passe"}
-              className={`border-2 rounded-md ${isEqualPassword ? "border-card-green" : "border-card-red"}`}
-              inputClassName="w-60 !rounded-md !border-none"
-              feedback={false}
-              onChange={(e) => {
-                field.onChange(e.target.value);
-                setIsEqualPassword(
-                  getValues("password").length > 0 &&
-                  e.target.value === getValues("password")
-                );
-              }}
-            />
-          )}
-        />
-        {getFormErrorMessage("confirmPassword")}
+        <PasswordInput
+          {...register("confirmPassword", {
+            required: "Veuillez confirmer le nouveau mot de passe",
+            validate: (value) => value === getValues("password")
+          })}
+          placeholder="Mot de passe"
+          className={`w-60 border rounded-md ${isEqualPassword ? "!border-card-green" : "!border-card-red"}`}
+        ></PasswordInput>
+        {errors.confirmPassword && <small className="p-error">{errors.confirmPassword.message}</small>}
       </div>
       {isSubmitting ? (
         <Loader></Loader>

@@ -1,4 +1,4 @@
-import { Divider } from "primereact/divider";
+import { Separator } from "../../ui/Separator";
 
 type Props = {
   steps: Step[]
@@ -14,7 +14,7 @@ const RecipeDetailSteps = ({ steps }: Props) => {
             <div className="flex-center text-3xl size-16 rounded-full font-bold text-orange border-2 border-orange">
               {index + 1}
             </div>
-            <Divider className="!w-1/2 before:!border-t-orange"></Divider>
+            <Separator className="border-t-orange"></Separator>
             <div className="w-11/12 self-center bg-fond p-4 my-2 rounded-lg text-left" key={index}>
               {step.description}
             </div>

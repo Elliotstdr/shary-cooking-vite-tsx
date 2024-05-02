@@ -1,27 +1,27 @@
-import { Skeleton } from 'primereact/skeleton';
+import { Skeleton } from "../ui/Skeleton";
 
 const CardSkeleton = () => {
   return (
     <div className="flex flex-col w-80 mb-8">
-      <Skeleton width="20rem" height="12rem" className="m-2 bg-skeleton"></Skeleton>
+      <Skeleton className="m-2 bg-skeleton w-80 h-48"></Skeleton>
       <div className="flex items-center">
-        <Skeleton size="2rem" shape="circle" className="m-2 bg-skeleton"></Skeleton>
-        <Skeleton width="5rem" className="m-2 bg-skeleton"></Skeleton>
+        <Skeleton className="m-2 bg-skeleton size-8" type="round"></Skeleton>
+        <Skeleton className="m-2 bg-skeleton w-20 h-4"></Skeleton>
       </div>
-      <Skeleton width="10rem" className="self-center m-2 bg-skeleton"></Skeleton>
+      <Skeleton className="self-center m-2 bg-skeleton w-40 h-4"></Skeleton>
       <div className="flex items-center">
-        <Skeleton size="1rem" shape="circle" className="m-2 bg-skeleton"></Skeleton>
-        <Skeleton width="5rem" className="m-2 bg-skeleton"></Skeleton>
-      </div>
-      <div className="flex items-center">
-        <Skeleton size="1rem" shape="circle" className="m-2 bg-skeleton"></Skeleton>
-        <Skeleton width="5rem" className="m-2 bg-skeleton"></Skeleton>
+        <Skeleton className="m-2 bg-skeleton size-4" type="round"></Skeleton>
+        <Skeleton className="m-2 bg-skeleton w-20 h-4"></Skeleton>
       </div>
       <div className="flex items-center">
-        <Skeleton size="1rem" shape="circle" className="m-2 bg-skeleton"></Skeleton>
-        <Skeleton width="5rem" className="m-2 bg-skeleton"></Skeleton>
+        <Skeleton className="m-2 bg-skeleton size-4" type="round"></Skeleton>
+        <Skeleton className="m-2 bg-skeleton w-20 h-4"></Skeleton>
       </div>
-      <Skeleton size="2rem" shape="circle" className="self-center mt-16 m-2 bg-skeleton"></Skeleton>
+      <div className="flex items-center">
+        <Skeleton className="m-2 bg-skeleton size-4" type="round"></Skeleton>
+        <Skeleton className="m-2 bg-skeleton w-20 h-4"></Skeleton>
+      </div>
+      <Skeleton className="self-center m-2 mt-16 bg-skeleton size-8" type="round"></Skeleton>
     </div>
   );
 };

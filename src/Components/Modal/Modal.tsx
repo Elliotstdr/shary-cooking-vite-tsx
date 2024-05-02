@@ -2,12 +2,12 @@ import React, { ReactNode } from "react";
 import { Dialog } from "primereact/dialog";
 
 interface Props {
-  visible: boolean,//
-  setVisible: React.Dispatch<React.SetStateAction<boolean>>,//
-  header?: string | ReactNode,//
-  className?: string,//
+  visible: boolean,
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  header?: string | ReactNode,
+  className?: string,
   children: any,
-  contentClassName?: string //
+  contentClassName?: string
 }
 
 const Modal = (props: Props) => {

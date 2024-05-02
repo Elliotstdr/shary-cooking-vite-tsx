@@ -1,7 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { InputText } from "primereact/inputtext";
-import { Divider } from "primereact/divider";
 import { useDispatch, useSelector } from "react-redux";
 import ImageUpload from "../ui/ImageUpload";
 import { fetchPost, fetchPut } from "../../Hooks/api.hook";
@@ -14,6 +13,7 @@ import IngredientsCreation from "./components/IngredientsCreation";
 import Regimes from "./components/Regimes";
 import Types from "./components/Types";
 import Bouton from "../ui/Bouton";
+import { Separator } from "../ui/Separator";
 
 type Props = {
   recipe?: Recipe,
@@ -264,7 +264,7 @@ const RecipeCreationContainer = (props: Props) => {
         regimeId={getValues('regime') || 1}
         setRegimeId={(newId) => setValue('regime', newId)}
       ></Regimes>
-      <Divider className="self-center !w-1/2"></Divider>
+      <Separator></Separator>
       <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Ingrédients</h4>
         <Controller
@@ -282,7 +282,7 @@ const RecipeCreationContainer = (props: Props) => {
         />
         {errors.ingredients && <small className="p-error">{errors.ingredients.message}</small>}
       </div>
-      <Divider className="self-center !w-1/2"></Divider>
+      <Separator></Separator>
       <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Etapes</h4>
         <Controller
@@ -300,7 +300,7 @@ const RecipeCreationContainer = (props: Props) => {
         />
         {errors.steps && <small className="p-error">{errors.steps.message}</small>}
       </div>
-      <Divider className="self-center !w-1/2"></Divider>
+      <Separator></Separator>
       {isSubmitting ? (
         <Loader></Loader>
       ) : (

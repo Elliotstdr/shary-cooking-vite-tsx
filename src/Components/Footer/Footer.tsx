@@ -9,7 +9,7 @@ const Footer = () => {
 
   return (
     <div id="footer" className="font-dilgante w-full py-4 bg-green text-white flex items-center justify-around relative laptop:p-8">
-      <img src={image} alt="" className=" invertY size-32 object-cover" />
+      <img src={image} alt="" className=" invertY size-24 object-cover tablet:size-32" />
       <div className="flex flex-col gap-8 justify-around flex-grow-[0.5] laptop:gap-12">
         <h1 className="text-3xl tablet:text-4xl !leading-12">Shary Cooking</h1>
         <div className="flex flex-col gap-4 justify-around laptop:flex-row">
@@ -32,7 +32,7 @@ const Footer = () => {
           <span className="cursor-pointer text-sm mobile:text-base">Mentions légales</span>
         </div>
       </div>
-      <img src={image} alt="" className="size-32 object-cover" />
+      <img src={image} alt="" className="size-24 object-cover tablet:size-32" />
 
       {reportBugModal && (
         <ModalBugReport

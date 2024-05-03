@@ -40,7 +40,7 @@ const ShoppingContainer = (props: Props) => {
         type={"normal"}
         btnTexte={"Créer ma liste de course"}
         btnAction={() => setVisibleList(true)}
-        className="self-center"
+        className="self-center my-4"
       ></Bouton>
       {visibleList && (
         <ModalShoppingResult

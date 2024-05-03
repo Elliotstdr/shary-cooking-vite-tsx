@@ -67,3 +67,10 @@ code {
     border-radius: 0px !important;
   }
 }
+
+@media (max-width: 500px) {
+  .p-selectbutton .p-button {
+    font-size: 0.875rem !important;
+    padding: 0.75rem !important;
+  }
+}

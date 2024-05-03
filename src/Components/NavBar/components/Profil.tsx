@@ -39,7 +39,13 @@ const Profil = () => {
           ></GiCook>
         )}
         <div className={`absolute -right-14 top-12 w-40 bg-white text-green rounded-xl z-50 ${showParamMenu ? "flex flex-col" : "hidden"}`}>
-          <span onClick={() => navigate("/param")} className="p-2 rounded-xl text-lg hover:bg-orange hover:text-white">Mon profil</span>
+          <span
+            onClick={() => {
+              setShowParamMenu(!showParamMenu)
+              navigate("/param")
+            }}
+            className="p-2 rounded-xl text-lg hover:bg-orange hover:text-white"
+          >Mon profil</span>
           <span
             className="p-2 rounded-xl text-lg hover:bg-orange hover:text-white"
             onClick={() => {

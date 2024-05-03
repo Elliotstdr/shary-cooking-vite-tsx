@@ -20,7 +20,7 @@ const ModalShoppingResult = (props: Props) => {
       visible={props.visible}
       setVisible={props.setVisible}
       header={"Ma liste"}
-      className={"w-11/12 tablet:w-unset tablet:min-w-[40%]"}
+      className={"!w-11/12 tablet:!w-unset tablet:!min-w-[40%]"}
     >
       <div className="flex items-center flex-col">
         <InputTextarea

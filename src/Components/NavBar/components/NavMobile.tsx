@@ -17,7 +17,10 @@ const NavMobile = () => {
         <div className="pi pi-bars mr-1"></div>
         Menu
       </div>
-      <Nav className={`absolute w-56 z-50 bg-white rounded-md text-left flex flex-col m-0 py-2 transition-300 ${visibleMobile ? "visible-transition" : "hidden-transition"}`}></Nav>
+      <Nav
+        className={`absolute w-56 z-50 bg-white rounded-md text-left flex flex-col m-0 py-2 transition-300 ${visibleMobile ? "visible-transition" : "hidden-transition"}`}
+        setVisibleMobile={setVisibleMobile}
+      ></Nav>
     </div>
   );
 };

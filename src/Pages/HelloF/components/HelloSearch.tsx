@@ -10,7 +10,7 @@ const HelloSearch = (props: Props) => {
   const [inputValue, setInputValue] = useState("");
 
   return (
-    <div className="flex gap-4 relative">
+    <div className="flex gap-4 relative items-center">
       <div className="pi pi-search absolute text-gris left-2 top-1/2 -translate-y-1/2"></div>
       <InputText
         type="text"
@@ -22,7 +22,7 @@ const HelloSearch = (props: Props) => {
             props.setQuery(inputValue)
           }
         }}
-        className="!pl-8"
+        className="w-60 !pl-8 tablet:w-unset"
       />
       <Bouton
         btnAction={() => props.setQuery(inputValue)}

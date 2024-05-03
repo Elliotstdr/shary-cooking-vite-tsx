@@ -208,7 +208,7 @@ const RecipeCreationContainer = (props: Props) => {
           setIsRestored(true);
           fillForm({ ...recipe.savedForm })
         }}
-        className="underline py-8 px-4 cursor-pointer absolute left-0 -top-8"
+        className="underline py-8 px-4 cursor-pointer absolute left-0 -top-12 tablet:-top-8"
       > Restaurer le précedent formulaire</a>}
       {!props.HFFillRecipe && !props.recipe?.fromHellof &&
         <div className="flex items-center flex-col">

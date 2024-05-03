@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "./Modal";
 import { useForm } from "react-hook-form";
 import { InputTextarea } from "primereact/inputtextarea";
-import Loader from "../ui/loader";
+import Loader from "../ui/Loader";
 import Bouton from "../ui/Bouton";
 import { InputText } from "primereact/inputtext";
 import ImageUpload from "../ui/ImageUpload";

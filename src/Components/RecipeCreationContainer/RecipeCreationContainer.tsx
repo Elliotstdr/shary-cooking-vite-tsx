@@ -6,7 +6,7 @@ import ImageUpload from "../ui/ImageUpload";
 import { fetchPost, fetchPut } from "../../Hooks/api.hook";
 import { errorToast, successToast } from "../../Services/functions";
 import StepsCreation from "./components/StepsCreation";
-import Loader from "../ui/loader";
+import Loader from "../ui/Loader";
 import { editRecipeInRecipes, updateRecipe } from "../../Store/Reducers/recipeReducer";
 import { checkIngredients, checkSteps, defaultValues } from "../../Services/createRecipeFunctions";
 import IngredientsCreation from "./components/IngredientsCreation";

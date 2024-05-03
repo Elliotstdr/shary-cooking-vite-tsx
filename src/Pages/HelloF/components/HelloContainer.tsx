@@ -1,5 +1,5 @@
 import HelloFCard from "../../../Components/HelloFCard/HelloFCard";
-import Loader from "../../../Components/ui/loader";
+import Loader from "../../../Components/ui/Loader";
 
 type Props = {
   isSearchEmpty: boolean

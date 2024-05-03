@@ -1,5 +1,5 @@
 import { InputText } from "primereact/inputtext";
-import Loader from "../../../Components/ui/Loader";
+import Loader from "../../../Components/ui/loader";
 import Bouton from "../../../Components/ui/Bouton";
 import { errorToast, successToast } from "../../../Services/functions";
 import { fetchPut } from "../../../Hooks/api.hook";

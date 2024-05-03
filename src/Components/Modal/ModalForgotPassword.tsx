@@ -3,7 +3,7 @@ import { InputText } from "primereact/inputtext";
 import Modal from "./Modal";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import Loader from "../ui/Loader";
+import Loader from "../ui/loader";
 import { useState } from "react";
 import Bouton from "../ui/Bouton";
 import { errorToast, successToast } from "../../Services/functions";

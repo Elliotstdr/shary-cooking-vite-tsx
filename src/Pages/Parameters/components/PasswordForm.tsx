@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import Loader from "../../../Components/ui/Loader";
+import Loader from "../../../Components/ui/loader";
 import Bouton from "../../../Components/ui/Bouton";
 import { errorToast, successToast } from "../../../Services/functions";
 import { fetchPost } from "../../../Hooks/api.hook";

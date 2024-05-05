@@ -7,8 +7,10 @@ import { store } from "../Store/store";
  * @param { string } url
  * @return { FetchGetReturn<T> }
  */
-export const useFetchGet = <T extends object | object[]> (url: string): UseFetchGetResponse<T> => {
-  const [data, setData] = useState<T|null>(null);
+export const useFetchGet = <T extends object | object[]>(
+  url: string
+): UseFetchGetResponse<T> => {
+  const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState("");
   const [loaded, setLoaded] = useState(false);
   const token = store.getState().auth.token;
@@ -39,7 +41,7 @@ export const fetchDelete = async (url: string): Promise<FetchResponse> => {
   let data = null;
   let error = null;
   const token = store.getState().auth.token;
-  
+
   await axios
     .delete(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, {
       headers: token
@@ -57,9 +59,9 @@ export const fetchDelete = async (url: string): Promise<FetchResponse> => {
 };
 
 export const fetchPost = async (
-  url: string, 
-  payload: any, 
-  forcedToken: string|null = null
+  url: string,
+  payload: any,
+  forcedToken: string | null = null
 ): Promise<FetchResponse> => {
   let data: any = null;
   let error: any = null;
@@ -77,19 +79,22 @@ export const fetchPost = async (
           },
     })
     .then((response: AxiosResponse) => {
-      data = response.data
+      data = response.data;
     })
     .catch((e: AxiosError) => (error = e));
   return { data, error };
 };
 
-export const fetchPut = async (url: string, payload: any): Promise<FetchResponse> => {
-  let data = null;
+export const fetchGet = async (
+  url: string,
+  forcedToken: string | null = null
+): Promise<FetchResponse> => {
+  let data: any = null;
   let error: any = null;
-  const token = store.getState().auth.token
+  const token = forcedToken ?? store.getState().auth.token;
 
   await axios
-    .put(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, payload, {
+    .get(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, {
       headers: token
         ? {
             accept: "application/json",
@@ -100,7 +105,33 @@ export const fetchPut = async (url: string, payload: any): Promise<FetchResponse
           },
     })
     .then((response: AxiosResponse) => {
-      data = response.data
+      data = response.data;
+    })
+    .catch((e: AxiosError) => (error = e));
+  return { data, error };
+};
+
+export const fetchPut = async (
+  url: string,
+  payload: any
+): Promise<FetchResponse> => {
+  let data = null;
+  let error: any = null;
+  const token = store.getState().auth.token;
+
+  await axios
+    .patch(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, payload, {
+      headers: token
+        ? {
+            accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        : {
+            accept: "application/json",
+          },
+    })
+    .then((response: AxiosResponse) => {
+      data = response.data;
     })
     .catch((e: AxiosError) => (error = e));
   return { data, error };

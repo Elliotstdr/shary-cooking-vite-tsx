@@ -7,7 +7,7 @@ import Loader from "../ui/loader";
 import { useState } from "react";
 import Bouton from "../ui/Bouton";
 import { errorToast } from "../../Services/functions";
-import { fetchPost } from "../../Hooks/api.hook";
+import { fetchGet, fetchPost } from "../../Hooks/api.hook";
 import { updateAuth } from "../../Store/Reducers/authReducer";
 import { PasswordInput } from "../ui/PasswordInput";
 
@@ -41,26 +41,19 @@ const ModalLogin = (props: Props) => {
   const onSubmit = async () => {
     const data = getValues();
 
-    const response = await fetchPost(`/users/createAccount`, data);
+    const response = await fetchPost(`/auth/signup`, data);
     if (response.error) {
       errorToast(response.error?.response?.data?.detail ?? "");
       return;
     }
 
-    const dataForToken = {
-      email: data.email,
-      password: data.password,
-    };
-    const subResponse = await fetchPost(`/auth`, dataForToken);
-    if (subResponse.error) {
-      errorToast("Une erreur est survenue");
-      return;
-    }
+    const subResponse = await fetchGet(`/users/me`, response.data.access_token);
+
     dispatch(updateAuth({
       isConnected: true,
-      userConnected: response.data,
-      token: subResponse.data.token,
-      refreshToken: subResponse.data.refresh_token,
+      userConnected: subResponse.data,
+      token: response.data.access_token,
+      refreshToken: response.data.refresh_token,
     }));
   };
 

@@ -44,7 +44,7 @@ const InformationsForm = () => {
     if (!auth.userConnected) return;
     const data = setFields();
 
-    const response = await fetchPut(`/users/${auth.userConnected.id}`, data);
+    const response = await fetchPut(`/users`, data);
     if (response.error || !response.data) {
       errorToast(
         response.error?.response?.data?.detail?.includes("visiteur")

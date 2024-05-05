@@ -27,11 +27,8 @@ const RecipeCardBottom = (props: Props) => {
 
   const allowActions = props.recipeItem.postedByUser.id === auth.userConnected?.id && window.location.pathname !== "/shop"
 
-  const addToFavorites = async (actionType: string) => {
-    const response = await fetchPost(
-      `/recipes/${props.recipeItem.id}/users/${auth.userConnected?.id}`,
-      { action: actionType }
-    );
+  const addToFavorites = async (actionType: "save" | "unsave") => {
+    const response = await fetchPost(`/recipes/${actionType}/${props.recipeItem.id}`, {});
     if (response.error) {
       errorToast("Une erreur est survenue");
       return;
@@ -55,12 +52,12 @@ const RecipeCardBottom = (props: Props) => {
       <div className="cursor-pointer">
         {isFavorite ? (
           <AiFillStar
-            onClick={() => addToFavorites("delete")}
+            onClick={() => addToFavorites("unsave")}
             className="text-orange size-8"
           ></AiFillStar>
         ) : (
           <AiOutlineStar
-            onClick={() => addToFavorites("add")}
+            onClick={() => addToFavorites("save")}
             className="text-orange size-8"
           ></AiOutlineStar>
         )}

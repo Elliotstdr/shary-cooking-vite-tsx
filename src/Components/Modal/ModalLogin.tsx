@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import Loader from "../ui/loader";
 import Bouton from "../ui/Bouton";
 import { errorToast } from "../../Services/functions";
-import { fetchPost } from "../../Hooks/api.hook";
+import { fetchGet, fetchPost } from "../../Hooks/api.hook";
 import { updateAuth } from "../../Store/Reducers/authReducer";
 import { PasswordInput } from "../ui/PasswordInput";
 
@@ -35,16 +35,15 @@ const ModalLogin = (props: Props) => {
   const onSubmit = async () => {
     const data = getValues();
 
-    const response = await fetchPost(`/auth`, data);
-    if (response.error || !response.data?.token) {
+    const response = await fetchPost(`/auth/signin`, data);
+    if (response.error || !response.data?.access_token) {
       errorToast("L'authentification a échoué");
       return;
     }
 
-    const subResponse = await fetchPost(
-      `/users/by_email`,
-      {},
-      response.data.token
+    const subResponse = await fetchGet(
+      `/users/me`,
+      response.data.access_token
     );
     if (subResponse.error) {
       errorToast("L'authentification a échoué");
@@ -52,7 +51,7 @@ const ModalLogin = (props: Props) => {
     }
     dispatch(updateAuth({
       isConnected: true,
-      token: response.data.token,
+      token: response.data.access_token,
       refreshToken: response.data.refresh_token,
       userConnected: subResponse.data,
     }));

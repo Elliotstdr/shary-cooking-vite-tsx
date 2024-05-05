@@ -8,7 +8,7 @@ const HomeTopRecipes = () => {
   const screenSize = useScreenSize()
   const auth = useSelector((state: RootState) => state.auth);
 
-  const topRecipes = useFetchGet<Recipe[]>(auth.isConnected ? "/topRecipes/recipes" : "");
+  const topRecipes = useFetchGet<Recipe[]>(auth.isConnected ? "/recipes/top/recipes" : "");
 
   return (
     <div className="bg-white">

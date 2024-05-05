@@ -37,7 +37,7 @@ const PasswordForm = () => {
 
     if (!auth.userConnected || !data.password || !data.oldPassword || !data.confirmPassword || !isEqualPassword) return;
 
-    const response = await fetchPost(`/users/edit_password/${auth.userConnected.id}`, data);
+    const response = await fetchPost(`/users/editPassword/${auth.userConnected.id}`, data);
     if (response.error || !response.data) {
       errorToast(
         response.error?.response?.data?.detail?.includes("visiteur")

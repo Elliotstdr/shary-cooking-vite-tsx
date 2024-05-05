@@ -35,9 +35,9 @@ export const useAxiosInterceptors = () => {
             try {
               // Tentative de rafraîchir le token JWT en envoyant une requête POST au point de terminaison de rafraîchissement du token
               const refreshTokenResponse = await axios.post(
-                `${import.meta.env.VITE_BASE_URL_API}/api/token/refresh`,
+                `${import.meta.env.VITE_BASE_URL_API}/api/auth/refresh`,
                 {
-                  refresh_token: store.getState().auth.refreshToken
+                  refresh_token: store.getState().auth.refreshToken,
                 }
               );
 
@@ -45,15 +45,17 @@ export const useAxiosInterceptors = () => {
               const newToken = refreshTokenResponse.data.token;
 
               // Mise à jour du token JWT dans le store Redux
-              store.dispatch(updateAuth({
-                token: newToken,
-              }));
+              store.dispatch(
+                updateAuth({
+                  token: newToken,
+                })
+              );
 
               // Mise à jour du token JWT dans l'en-tête de la requête d'origine
               originalRequest.headers.Authorization = `Bearer ${newToken}`;
 
               // Appel de toutes les fonctions de rappel en attente pour rejouer les requêtes avec le nouveau token JWT
-              refreshSubscribers.forEach(callback => callback(newToken));
+              refreshSubscribers.forEach((callback) => callback(newToken));
 
               // Réinitialisation de la liste des fonctions de rappel après avoir traité toutes les requêtes en attente
               refreshSubscribers = [];
@@ -71,8 +73,8 @@ export const useAxiosInterceptors = () => {
             }
           } else {
             // Si une opération de rafraîchissement est déjà en cours, mise en file d'attente de la requête d'origine dans la liste des fonctions de rappel
-            return new Promise(resolve => {
-              refreshSubscribers.push(token => {
+            return new Promise((resolve) => {
+              refreshSubscribers.push((token) => {
                 originalRequest.headers.Authorization = `Bearer ${token}`;
                 resolve(axios(originalRequest));
               });

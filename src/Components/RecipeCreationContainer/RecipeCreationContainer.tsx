@@ -37,7 +37,6 @@ type Values = {
 }
 
 const RecipeCreationContainer = (props: Props) => {
-  const auth = useSelector((state: RootState) => state.auth);
   const recipe = useSelector((state: RootState) => state.recipe);
   const dispatch = useDispatch();
 
@@ -99,18 +98,17 @@ const RecipeCreationContainer = (props: Props) => {
   const setFields = () => {
     const data = {
       ...getValues(),
-      type: `/api/types/${getValues('type')}`,
-      regime: `/api/regimes/${getValues('regime')}`,
+      typeId: getValues('type'),
+      regimeId: getValues('regime'),
       number: Number(getValues("number")),
-      ingredients: getValues('ingredients').map((ingredient: FormIngredient) => {
+      Steps: getValues('steps'),
+      Ingredients: getValues('ingredients').map((ingredient: FormIngredient) => {
         return {
           label: ingredient.label,
           quantity: Number(ingredient.quantity),
-          unit: `/api/units/${ingredient?.unit?.id}`
+          unitId: ingredient?.unit?.id
         }
       }),
-      createdAt: new Date(),
-      postedByUser: `/api/users/${auth.userConnected?.id}`,
       image: getValues('image')
         ? getValues('image')
         : props.HFFillRecipe

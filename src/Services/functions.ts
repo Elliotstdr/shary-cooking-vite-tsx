@@ -1,26 +1,33 @@
 import { store } from "../Store/store";
 
 interface ExtendedIngredient extends Ingredient {
-  type: string
+  type: string;
 }
 export const exportRecipe = (chosenRecipes: Array<RecipeShopping>) => {
-  const data = store.getState().secondaryTables.ingData
-  if(!data) return ""
+  const data = store.getState().secondaryTables.ingData;
+  const types = store.getState().secondaryTables.ingTypes;
+
+  const typesMap = new Map();
+  types?.forEach((x) => typesMap.set(x.id, x.label));
+
+  if (!data) return "";
 
   let ingredientList: Array<Ingredient> = [];
   const finalList: Array<ExtendedIngredient> = [];
 
   const tempArray = chosenRecipes.map((recipe: RecipeShopping) => {
     if (recipe.multiplyer) {
-      const updatedIngredients = recipe.ingredients.map((element: Ingredient) => {
-        const updatedElement = { ...element };
-        updatedElement.quantity = recipe.multiplyer
-          ? updatedElement.quantity * recipe.multiplyer
-          : updatedElement.quantity;
+      const updatedIngredients = recipe.ingredients.map(
+        (element: Ingredient) => {
+          const updatedElement = { ...element };
+          updatedElement.quantity = recipe.multiplyer
+            ? updatedElement.quantity * recipe.multiplyer
+            : updatedElement.quantity;
 
-        if(updatedElement.quantity === 0.99) updatedElement.quantity = 1
-        return updatedElement;
-      });
+          if (updatedElement.quantity === 0.99) updatedElement.quantity = 1;
+          return updatedElement;
+        }
+      );
 
       return {
         ...recipe,
@@ -32,7 +39,8 @@ export const exportRecipe = (chosenRecipes: Array<RecipeShopping>) => {
   });
 
   tempArray.forEach(
-    (recipe: Recipe) => (ingredientList = ingredientList.concat(recipe.ingredients))
+    (recipe: Recipe) =>
+      (ingredientList = ingredientList.concat(recipe.ingredients))
   );
 
   ingredientList.forEach((ingredient) => {
@@ -62,9 +70,9 @@ export const exportRecipe = (chosenRecipes: Array<RecipeShopping>) => {
       );
 
       const type = elementInBase
-        ? elementInBase.type.label
-        : "unknown"
-      finalList.push({...ingredient, type});
+        ? typesMap.get(elementInBase.ingredientTypeId)
+        : "unknown";
+      finalList.push({ ...ingredient, type });
     }
   });
 
@@ -74,9 +82,11 @@ export const exportRecipe = (chosenRecipes: Array<RecipeShopping>) => {
       .sort((a, b) => a.type.localeCompare(b.type))
       .forEach((element) => {
         let elementString = "";
-        if(element.unit.label !== "un peu") elementString += element.quantity + " "
-        if(element.unit.label !== "unité") elementString += element.unit.label + " de "
-        elementString += element.label.toLowerCase() + " \n"
+        if (element.unit.label !== "un peu")
+          elementString += element.quantity + " ";
+        if (element.unit.label !== "unité")
+          elementString += element.unit.label + " de ";
+        elementString += element.label.toLowerCase() + " \n";
         shoppingList += elementString;
       });
   }

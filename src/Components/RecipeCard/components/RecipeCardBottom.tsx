@@ -21,7 +21,7 @@ const RecipeCardBottom = (props: Props) => {
   const [visibleModif, setVisibleModif] = useState(false);
   const [isFavorite, setIsFavorite] = useState(
     props.recipeItem.savedByUsers?.some(
-      (user) => user.id === auth.userConnected?.id
+      (user) => user.userId === auth.userConnected?.id
     )
   );
 

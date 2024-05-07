@@ -3,7 +3,6 @@ import Loader from "../../../Components/ui/loader";
 import Bouton from "../../../Components/ui/Bouton";
 import { errorToast, successToast } from "../../../Services/functions";
 import { fetchPost } from "../../../Hooks/api.hook";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { PasswordInput } from "../../../Components/ui/PasswordInput";
 
@@ -14,7 +13,6 @@ type FormProps = {
 }
 
 const PasswordForm = () => {
-  const auth = useSelector((state: RootState) => state.auth);
   const [isEqualPassword, setIsEqualPassword] = useState(false);
 
   const defaultValues: FormProps = {
@@ -35,10 +33,10 @@ const PasswordForm = () => {
   const onSubmit = async () => {
     const data = getValues();
 
-    if (!auth.userConnected || !data.password || !data.oldPassword || !data.confirmPassword || !isEqualPassword) return;
+    if (!data.password || !data.oldPassword || !data.confirmPassword || !isEqualPassword) return;
 
-    const response = await fetchPost(`/users/editPassword/${auth.userConnected.id}`, data);
-    if (response.error || !response.data) {
+    const response = await fetchPost(`/users/editPassword`, data);
+    if (response.error) {
       errorToast(
         response.error?.response?.data?.detail?.includes("visiteur")
           ? response.error.response.data.detail
@@ -58,10 +56,6 @@ const PasswordForm = () => {
       getValues("password") === getValues("confirmPassword")
     );
   }, [watch('password'), watch('confirmPassword')]);
-
-  useEffect(() => {
-    console.log(isEqualPassword)
-  }, [isEqualPassword]);
 
   return (
     <form className="flex-center flex-col m-8 gap-4" onSubmit={handleSubmit(onSubmit)}>

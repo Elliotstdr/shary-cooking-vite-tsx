@@ -46,7 +46,7 @@ const SearchBar = () => {
     if (search.boxFavorites) {
       tempRecipes = tempRecipes.filter((recipe) =>
         recipe.savedByUsers.some(
-          (element: RestrictedUser) => element.id === auth.userConnected?.id
+          (element) => element.userId === auth.userConnected?.id
         )
       );
     }

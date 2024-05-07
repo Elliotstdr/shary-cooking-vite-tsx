@@ -25,7 +25,7 @@ export const useAxiosInterceptors = () => {
         const status = error.response?.status;
 
         // Vérification si le statut est 401 et le message est "Expired JWT Token"
-        if (status === 401 && message === "Expired JWT Token") {
+        if (status === 401 && message === "Unauthorized") {
           const originalRequest = error.config; // Sauvegarde de la requête d'origine
 
           // Vérification si aucune opération de rafraîchissement du token n'est déjà en cours
@@ -42,7 +42,7 @@ export const useAxiosInterceptors = () => {
               );
 
               // Extraction du nouveau token JWT de la réponse
-              const newToken = refreshTokenResponse.data.token;
+              const newToken = refreshTokenResponse.data.access_token;
 
               // Mise à jour du token JWT dans le store Redux
               store.dispatch(

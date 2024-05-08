@@ -39,42 +39,40 @@ const RecipeCard = (props: Props) => {
   }
 
   return (
-    <div
-      className={`
+    <>
+      <div
+        className={`
         laptop:min-h-[95%] rounded-md mb-8 w-80 hover:shadow-card hover:scale-[1.01] duration-200 bg-white
         ${props.className} 
         ${isSelected() && "border-card-green border-4 relative rounded-[0.65rem]"}
       `}
-      onClick={() => {
-        shoppingAction();
-      }}
-    >
-      {isSelected() && (
-        <BsFillCheckCircleFill className="absolute-centering size-20 text-card-green"></BsFillCheckCircleFill>
-      )}
-      <RecipeCardTop
-        setVisibleDetail={setVisibleDetail}
-        recipeItem={props.recipeItem}
-      ></RecipeCardTop>
-      <RecipeCardMiddle
-        setVisibleDetail={setVisibleDetail}
-        recipeItem={props.recipeItem}
-      ></RecipeCardMiddle>
-      <RecipeCardBottom
-        recipeItem={props.recipeItem}
-      ></RecipeCardBottom>
+        onClick={() => {
+          shoppingAction();
+        }}
+      >
+        {isSelected() && (
+          <BsFillCheckCircleFill className="absolute-centering size-20 text-card-green"></BsFillCheckCircleFill>
+        )}
+        <RecipeCardTop
+          setVisibleDetail={setVisibleDetail}
+          recipeItem={props.recipeItem}
+        ></RecipeCardTop>
+        <RecipeCardMiddle
+          setVisibleDetail={setVisibleDetail}
+          recipeItem={props.recipeItem}
+        ></RecipeCardMiddle>
+        <RecipeCardBottom
+          recipeItem={props.recipeItem}
+        ></RecipeCardBottom>
+      </div>
       {visibleDetail && (
-        <SlideIn
-          setVisible={setVisibleDetail}
-          visible={visibleDetail}
-          className="!w-11/12 laptop:!w-2/3"
-        >
+        <SlideIn visible={visibleDetail} setVisible={setVisibleDetail}>
           <RecipeCardDetail
             recipeDetail={props.recipeItem}
           ></RecipeCardDetail>
         </SlideIn>
       )}
-    </div>
+    </>
   );
 };
 

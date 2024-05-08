@@ -11,6 +11,7 @@ import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReduc
 
 const RecipeContainer = () => {
   const recipe = useSelector((state: RootState) => state.recipe);
+  const search = useSelector((state: RootState) => state.search);
   const recipesData = useFetchGet<Recipe[]>("/recipes");
   const screenSize = useScreenSize()
   const dispatch = useDispatch()
@@ -46,22 +47,20 @@ const RecipeContainer = () => {
     <div className={`flex flex-col ${window.location.pathname === "/shop" ? "w-full" : ""}`} ref={ref} id="recipes">
       <SearchBar></SearchBar>
       <div className="grid grid-cols-home justify-center gap-x-12 py-8 px-4 desktop:py-12 desktop:px-32">
-        {recipe.filteredRecipes ? (
-          recipe.filteredRecipes.length > 0 ? (
-            [...recipe.filteredRecipes]
-              .sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
-              .slice(first, first + rows)
-              .map((recipe) => (
-                <RecipeCard
-                  key={recipe.id}
-                  recipeItem={recipe}
-                ></RecipeCard>
-              ))
-          ) : (
-            <span className="text-xl my-24">
-              {"Je n'ai aucune recette à vous afficher malheureusement ..."}
-            </span>
-          )
+        {recipe.filteredRecipes && recipe.filteredRecipes.length > 0 ? (
+          [...recipe.filteredRecipes]
+            .sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
+            .slice(first, first + rows)
+            .map((recipe) => (
+              <RecipeCard
+                key={recipe.id}
+                recipeItem={recipe}
+              ></RecipeCard>
+            ))
+        ) : search.isSearch ? (
+          <span className="text-xl my-24">
+            {"Je n'ai aucune recette à vous afficher malheureusement ..."}
+          </span>
         ) : (
           <>
             <CardSkeleton></CardSkeleton>

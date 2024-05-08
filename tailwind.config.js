@@ -34,6 +34,7 @@ export default {
         loader: "rotation 1s linear infinite",
         "reverse-loader": "rotation 0.5s linear infinite reverse",
         navbar: "navbar 0.6s ease forwards",
+        sidebar: "sidebar 0.3s ease-in-out forwards",
       },
       keyframes: {
         rotation: {
@@ -42,6 +43,10 @@ export default {
         },
         navbar: {
           to: { width: "100%" },
+        },
+        sidebar: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0)" },
         },
       },
     },

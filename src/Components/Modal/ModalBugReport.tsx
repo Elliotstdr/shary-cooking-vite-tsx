@@ -39,7 +39,7 @@ const ModalBugReport = (props: Props) => {
     data.append('message', getValues('message'))
     data.append('title', getValues('title'))
 
-    const response = await fetchPost(`/users/sendReport`, data, null, true);
+    const response = await fetchPost(`/mail/sendReport`, data, null, true);
     if (response.error) {
       errorToast("Une erreur est survenue lors de l'envoi du mail");
       return;

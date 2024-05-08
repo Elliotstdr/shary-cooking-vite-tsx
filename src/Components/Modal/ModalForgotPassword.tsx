@@ -73,7 +73,7 @@ const ModalForgotPassword = (props: Props) => {
   };
 
   const sendMail = async (data: Partial<Values>) => {
-    const response = await fetchPost(`/users/mailReset`, data);
+    const response = await fetchPost(`/mail/mailReset`, data);
     setIsLoging(false);
     if (response.error) {
       errorToast("Une erreur est survenue");
@@ -109,7 +109,7 @@ const ModalForgotPassword = (props: Props) => {
       isConnected: true,
       token: response.data.access_token ?? null,
       refreshToken: response.data.refresh_token ?? null,
-      userConnected: resetedUser.data.user ?? null,
+      userConnected: resetedUser.data ?? null,
     }));
   };
 

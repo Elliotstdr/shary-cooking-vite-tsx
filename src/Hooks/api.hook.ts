@@ -61,7 +61,8 @@ export const fetchDelete = async (url: string): Promise<FetchResponse> => {
 export const fetchPost = async (
   url: string,
   payload: any,
-  forcedToken: string | null = null
+  forcedToken: string | null = null,
+  multipart = false
 ): Promise<FetchResponse> => {
   let data: any = null;
   let error: any = null;
@@ -71,11 +72,11 @@ export const fetchPost = async (
     .post(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, payload, {
       headers: token
         ? {
-            accept: "application/json",
+            accept: multipart ? "multipart/form-data" : "application/json",
             Authorization: `Bearer ${token}`,
           }
         : {
-            accept: "application/json",
+            accept: multipart ? "multipart/form-data" : "application/json",
           },
     })
     .then((response: AxiosResponse) => {
@@ -113,7 +114,8 @@ export const fetchGet = async (
 
 export const fetchPut = async (
   url: string,
-  payload: any
+  payload: any,
+  multipart = false
 ): Promise<FetchResponse> => {
   let data = null;
   let error: any = null;
@@ -123,11 +125,11 @@ export const fetchPut = async (
     .patch(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, payload, {
       headers: token
         ? {
-            accept: "application/json",
+            accept: multipart ? "multipart/form-data" : "application/json",
             Authorization: `Bearer ${token}`,
           }
         : {
-            accept: "application/json",
+            accept: multipart ? "multipart/form-data" : "application/json",
           },
     })
     .then((response: AxiosResponse) => {

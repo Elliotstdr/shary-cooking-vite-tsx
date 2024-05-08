@@ -37,6 +37,7 @@ type Values = {
 }
 
 const RecipeCreationContainer = (props: Props) => {
+  const [file, setFile] = useState<any>(null);
   const recipe = useSelector((state: RootState) => state.recipe);
   const dispatch = useDispatch();
 
@@ -67,6 +68,7 @@ const RecipeCreationContainer = (props: Props) => {
     const watchedValues = watch((values) => {
       if (isFilled || (JSON.stringify(values) === JSON.stringify(defaultValues()))) return
 
+      delete values.image
       dispatch(updateRecipe({
         savedForm: {
           ...values,
@@ -96,33 +98,25 @@ const RecipeCreationContainer = (props: Props) => {
   }
 
   const setFields = () => {
-    const data = {
-      ...getValues(),
+    const data: any = {
+      title: getValues('title'),
+      time: getValues('time'),
+      number: Number(getValues("number")),
       typeId: getValues('type'),
       regimeId: getValues('regime'),
-      number: Number(getValues("number")),
-      Steps: getValues('steps'),
-      Ingredients: getValues('ingredients').map((ingredient: FormIngredient) => {
+      steps: getValues('steps'),
+      ingredients: getValues('ingredients').map((ingredient: FormIngredient) => {
         return {
           label: ingredient.label,
           quantity: Number(ingredient.quantity),
           unitId: ingredient?.unit?.id
         }
       }),
-      image: getValues('image')
-        ? getValues('image')
-        : props.HFFillRecipe
-          ? props.HFFillRecipe.image
-          : null
     };
 
-    if (props.recipe) {
-      data.id = props.recipe.id;
-    }
-
-    if (!props.recipe) {
-      data.fromHellof = !!props.HFFillRecipe
-    }
+    if (props.recipe) data.id = props.recipe.id;
+    if (!props.recipe) data.fromHellof = !!props.HFFillRecipe
+    if (props.HFFillRecipe) data.imageUrl = props.HFFillRecipe.image
 
     return data;
   };
@@ -138,6 +132,7 @@ const RecipeCreationContainer = (props: Props) => {
     } else {
       await createRecipeFunction();
     }
+    setFile(null)
   };
 
   const createRecipeFunction = async () => {
@@ -147,6 +142,10 @@ const RecipeCreationContainer = (props: Props) => {
     if (response.error) {
       errorToast(errorMessage(response.error));
       return;
+    }
+
+    if (getValues('image')) {
+      await addPicture(response.data.id)
     }
 
     if (props.setVisibleModif) {
@@ -169,9 +168,25 @@ const RecipeCreationContainer = (props: Props) => {
       errorToast(errorMessage(response.error));
       return;
     }
+
+    if (getValues('image')) {
+      const imageUrl = await addPicture(props.recipe.id)
+      response.data.imageUrl = imageUrl
+    }
+
     props.setVisibleModif(false)
     dispatch(editRecipeInRecipes(response.data))
   };
+
+  const addPicture = async (recipeId: number) => {
+    const formData = new FormData()
+    formData.append('file', getValues('image') as any);
+
+    const response = await fetchPost(`/recipes/${recipeId}/addPicture`, formData);
+    if (response.error) return null;
+
+    return response.data
+  }
 
   const deletePicture = async () => {
     if (!props.recipe) return
@@ -184,7 +199,7 @@ const RecipeCreationContainer = (props: Props) => {
     }
 
     successToast("Image supprimée")
-    dispatch(editRecipeInRecipes(response.data))
+    dispatch(editRecipeInRecipes({ ...props.recipe, imageUrl: "" }))
   }
 
   const errorMessage = (error: any) => {
@@ -213,7 +228,8 @@ const RecipeCreationContainer = (props: Props) => {
           <h4 className="mb-2 mt-5 font-bold">Photo :</h4>
           <ImageUpload
             {...register("image")}
-            image={getValues('image')}
+            file={file}
+            setFile={setFile}
             setImage={(image) => setValue('image', image)}
           />
           {props?.recipe?.imageUrl &&

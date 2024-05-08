@@ -6,19 +6,19 @@ import { fetchPut } from "../../../Hooks/api.hook";
 import ImageUpload from "../../../Components/ui/ImageUpload";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 import { updateAuth } from "../../../Store/Reducers/authReducer";
+import { useState } from "react";
 
 const InformationsForm = () => {
+  const [file, setFile] = useState<any>(null);
   const auth = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
-  const [image, setImage] = useState(null);
 
   const defaultValues: any = {
     name: auth.userConnected?.name,
     lastname: auth.userConnected?.lastname,
     email: auth.userConnected?.email,
-    image: null,
+    file: null,
   };
 
   const {
@@ -26,25 +26,26 @@ const InformationsForm = () => {
     formState: { errors, isSubmitting },
     handleSubmit,
     getValues,
+    setValue,
   } = useForm({ defaultValues });
 
   const setFields = () => {
     const data = getValues();
+    const formData = new FormData()
+
     for (const key in data) {
-      if (!data[key] || data[key]?.length === 0) {
-        delete data[key];
+      if (data[key] || data[key]?.length > 0) {
+        formData.append(key, data[key]);
       }
     }
-    if (image) data.image = image;
-
-    return data;
+    return formData;
   };
 
   const onSubmit = async () => {
     if (!auth.userConnected) return;
-    const data = setFields();
+    const formData = setFields();
 
-    const response = await fetchPut(`/users`, data);
+    const response = await fetchPut(`/users`, formData, true);
     if (response.error || !response.data) {
       errorToast(
         response.error?.response?.data?.detail?.includes("visiteur")
@@ -59,12 +60,13 @@ const InformationsForm = () => {
 
     const tempArray = {
       ...auth.userConnected,
-      email: data.email,
-      name: data.name,
-      lastname: data.lastname,
+      email: getValues('email'),
+      name: getValues('name'),
+      lastname: getValues('lastname'),
       imageUrl: response.data?.imageUrl || null
     };
 
+    setFile(null)
     dispatch(updateAuth({ userConnected: tempArray }));
     successToast("Votre profil a bien été mis à jour");
   };
@@ -83,9 +85,10 @@ const InformationsForm = () => {
           </div>
         )}
         <ImageUpload
-          {...register("image")}
-          image={image}
-          setImage={setImage}
+          {...register("file")}
+          file={file}
+          setFile={setFile}
+          setImage={(image) => setValue('file', image)}
           headerClassName="w-60 rounded-md border !border-search"
         />
       </div>

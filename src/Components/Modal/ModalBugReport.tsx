@@ -8,7 +8,6 @@ import { InputText } from "primereact/inputtext";
 import ImageUpload from "../ui/ImageUpload";
 import { errorToast } from "../../Services/functions";
 import { BsFillCheckCircleFill } from "react-icons/bs";
-import { useSelector } from "react-redux";
 import { fetchPost } from "../../Hooks/api.hook";
 
 type Props = {
@@ -17,8 +16,8 @@ type Props = {
 }
 
 const ModalBugReport = (props: Props) => {
+  const [file, setFile] = useState<any>(null);
   const [successView, setSuccessView] = useState(false);
-  const auth = useSelector((state: RootState) => state.auth);
 
   const {
     register,
@@ -35,15 +34,17 @@ const ModalBugReport = (props: Props) => {
   });
 
   const onSubmit = async () => {
-    const response = await fetchPost(`/users/sendReport`, {
-      ...getValues(),
-      firstname: auth.userConnected?.name,
-      lastname: auth.userConnected?.lastname
-    });
+    const data = new FormData()
+    data.append('image', getValues('image') as any)
+    data.append('message', getValues('message'))
+    data.append('title', getValues('title'))
+
+    const response = await fetchPost(`/users/sendReport`, data, null, true);
     if (response.error) {
       errorToast("Une erreur est survenue lors de l'envoi du mail");
       return;
     }
+    setFile(null)
     setSuccessView(true);
   };
 
@@ -79,7 +80,8 @@ const ModalBugReport = (props: Props) => {
             <h4 className="font-bold my-2">Capture d'écran :</h4>
             <ImageUpload
               {...register("image")}
-              image={getValues('image')}
+              file={file}
+              setFile={setFile}
               setImage={(image) => setValue('image', image)}
             />
           </div>

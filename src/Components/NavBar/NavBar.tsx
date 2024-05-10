@@ -5,8 +5,9 @@ import NavMobile from "./components/NavMobile";
 import Bouton from "../ui/Bouton";
 import { GiKnifeFork } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
-const NavBar = () => {
+const NavBar = React.memo(() => {
   const screenSize = useScreenSize()
   const navigate = useNavigate();
 
@@ -22,6 +23,6 @@ const NavBar = () => {
       <Profil></Profil>
     </div>
   );
-};
+});
 
 export default NavBar;

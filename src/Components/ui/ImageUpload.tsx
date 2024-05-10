@@ -1,13 +1,13 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
 type Props = {
   setImage: React.Dispatch<React.SetStateAction<any>>,
-  headerClassName?: string
-  file: any
+  file: any,
+  id: string,
   setFile: React.Dispatch<React.SetStateAction<any>>,
 }
 
-const ImageUpload = (props: Props) => {
+const ImageUpload = forwardRef((props: Props, ref: any) => {
   const handleFileChange = (e: any) => {
     const file = e.target.files[0]
     props.setImage(file);
@@ -17,14 +17,15 @@ const ImageUpload = (props: Props) => {
     <div className="bg-white flex-center flex-col gap-4 rounded-md py-2 min-w-60 font-semibold border border-search">
       <div className="flex-center gap-2">
         <div className="pi pi-plus"></div>
-        <label htmlFor={"file" + new Date().getTime().toString()} className="cursor-pointer">
+        <label htmlFor={props.id} className="cursor-pointer">
           {props.file ? "Modifier l'image" : "Ajouter une image"}
         </label>
         <input
           type="file"
-          id={"file" + new Date().getTime().toString()}
+          id={props.id}
           className="hidden"
           onChange={handleFileChange}
+          ref={ref}
         />
       </div>
       {props.file && <div className="flex gap-4 px-4 items-center text-sm">
@@ -33,7 +34,7 @@ const ImageUpload = (props: Props) => {
       </div>}
     </div>
   );
-};
+});
 
 export default ImageUpload;
 

@@ -83,6 +83,7 @@ const ModalBugReport = (props: Props) => {
               file={file}
               setFile={setFile}
               setImage={(image) => setValue('image', image)}
+              id='bugUpld'
             />
           </div>
           <div>

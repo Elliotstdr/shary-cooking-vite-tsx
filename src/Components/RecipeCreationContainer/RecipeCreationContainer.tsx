@@ -231,6 +231,7 @@ const RecipeCreationContainer = (props: Props) => {
             file={file}
             setFile={setFile}
             setImage={(image) => setValue('image', image)}
+            id='recipeUpld'
           />
           {props?.recipe?.imageUrl &&
             <a onClick={() => deletePicture()} className="underline py-8 px-4 cursor-pointer">

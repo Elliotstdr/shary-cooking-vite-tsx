@@ -76,7 +76,7 @@ const InformationsForm = () => {
       <div className="flex items-center flex-col">
         <h4 className="my-2 font-bold">Photo</h4>
         {auth.userConnected?.imageUrl && (
-          <div className=" max-w-60 overflow-hidden flex-center m-2 rounded-md">
+          <div className="max-w-60 max-h-40 overflow-hidden flex-center m-2 rounded-md">
             <img
               src={import.meta.env.VITE_BASE_URL_API + auth.userConnected.imageUrl}
               alt="Fond news"

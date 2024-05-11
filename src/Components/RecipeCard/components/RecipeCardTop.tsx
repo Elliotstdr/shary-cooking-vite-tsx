@@ -17,12 +17,12 @@ const RecipeCardTop = (props: Props) => {
       <div className="font-bold text-picto relative flex justify-end">
         <span className="absolute mt-4 mr-8 py-1 px-8 text-gris bg-white rounded-md"> {props.recipeItem.type.label} </span>
       </div>
-      <div className="cursor-pointer h-48">
+      <div className="cursor-pointer h-40 tablet:h-48">
         {isVisibleIntersection &&
           <RecipePicture
             url={props.recipeItem.imageUrl}
             isFromHellof={props.recipeItem.fromHellof}
-            className="w-full h-48 object-cover font-bold rounded-t-md"
+            className="size-full object-cover font-bold rounded-t-md"
           ></RecipePicture>
         }
       </div>

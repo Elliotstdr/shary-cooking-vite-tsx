@@ -15,7 +15,7 @@ const Bouton = (props: Props) => {
     <button
       className={`
         group cursor-pointer overflow-hidden whitespace-nowrap border-2 border-green flex-center px-6 rounded-full text-green duration-300 transition-all 
-        relative z-1 font-bold min-w-fit h-10 text-sm tablet:h-12 tablet:text-base hover:text-fond hover:border-fond
+        relative z-1 font-bold min-w-fit h-10 text-sm tablet:h-12 tablet:text-base hover:text-fond
         ${props.type === "normal" ? "bg-transparent duration-500 hover:bg-green hover:text-white" : ""}
         ${props.className} 
       `}

@@ -1,6 +1,6 @@
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { PiTrash } from "react-icons/pi";
 import { fetchDelete, fetchPost } from "../../../Hooks/api.hook";
 import { errorToast } from "../../../Services/functions";
 import { useState } from "react";
@@ -53,12 +53,12 @@ const RecipeCardBottom = (props: Props) => {
         {isFavorite ? (
           <AiFillStar
             onClick={() => addToFavorites("unsave")}
-            className="text-orange size-8"
+            className="text-orange size-[30px]"
           ></AiFillStar>
         ) : (
           <AiOutlineStar
             onClick={() => addToFavorites("save")}
-            className="text-orange size-8"
+            className="text-orange size-[30px]"
           ></AiOutlineStar>
         )}
       </div>
@@ -72,10 +72,10 @@ const RecipeCardBottom = (props: Props) => {
       )}
       {allowActions && (
         <div className="cursor-pointer">
-          <RiDeleteBin6Line
-            className="text-green size-8"
+          <PiTrash
+            className="text-green size-[30px]"
             onClick={() => setWantToDelete(true)}
-          ></RiDeleteBin6Line>
+          ></PiTrash>
         </div>
       )}
       {wantToDelete && (

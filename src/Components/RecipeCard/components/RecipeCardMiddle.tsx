@@ -14,7 +14,7 @@ const RecipeCardMiddle = (props: Props) => {
 
   return (
     <div
-      className="flex flex-col h-62 py-4 pl-4 items-start"
+      className="flex flex-col h-44 py-4 pl-4 items-start tablet:h-62"
       onClick={() => window.location.pathname !== "/shop" && props.setVisibleDetail(true)}
       ref={intersectionRef}
     >
@@ -33,20 +33,16 @@ const RecipeCardMiddle = (props: Props) => {
         )}
         <span>Créée par {props.recipeItem.postedByUser.name}</span>
       </div>
-      <div className="cursor-pointer text-green my-6 mx-2 text-2xl line-clamp-2 self-center">{props.recipeItem.title}</div>
-      <div>
+      <div className="cursor-pointer text-green m-2 text-2xl line-clamp-1 self-center tablet:line-clamp-2 tablet:my-6">{props.recipeItem.title}</div>
+      <div className="flex flex-col">
         <span className="flex items-center">
           <GiKnifeFork className="mx-2"></GiKnifeFork>
           {props.recipeItem.regime.label}
         </span>
-      </div>
-      <div>
         <span className="flex items-center">
           <BsPeople className="mx-2"></BsPeople>
           {props.recipeItem.number} personnes
         </span>
-      </div>
-      <div>
         <span className="flex items-center">
           <BiTimer className="mx-2"></BiTimer>
           {timeToString(props.recipeItem.time)}

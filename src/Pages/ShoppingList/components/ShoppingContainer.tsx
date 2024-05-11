@@ -14,14 +14,14 @@ const ShoppingContainer = (props: Props) => {
   const [visibleList, setVisibleList] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-col mx-2 w-full laptop:w-7/12">
-      <div className="flex flex-col justify-center tablet:flex-row gap-4">
-        <h2 className="my-4 font-bold text-2xl">
+    <div className="flex flex-col mx-2 w-full laptop:w-7/12 gap-4 my-4 min-h-[60vh]">
+      <div className="flex flex-col justify-center gap-4 laptop:flex-row">
+        <h2 className="font-bold text-2xl">
           Mes recettes pour la liste de course
         </h2>
         <Bouton
-          type={"normal"}
-          btnTexte={"Modifier"}
+          type="normal"
+          btnTexte="Modifier"
           btnAction={() => props.setVisibleRecipeContainer(true)}
           className="!h-8 self-center"
         >
@@ -40,7 +40,7 @@ const ShoppingContainer = (props: Props) => {
         type={"normal"}
         btnTexte={"Créer ma liste de course"}
         btnAction={() => setVisibleList(true)}
-        className="self-center my-4"
+        className="self-center"
       ></Bouton>
       {visibleList && (
         <ModalShoppingResult

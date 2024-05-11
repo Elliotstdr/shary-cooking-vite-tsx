@@ -13,7 +13,7 @@ const SlideIn = (props: Props) => {
       onClick={() => props.setVisible(false)}
     >
       <div
-        className="flex flex-col py-8 relative w-[95%] laptop:w-2/3 bg-white overflow-y-scroll h-full animate-sidebar"
+        className="flex flex-col py-4 relative w-[95%] laptop:w-2/3 bg-white overflow-y-scroll h-full animate-sidebar"
         onClick={(e) => e.stopPropagation()}
       >
         <div

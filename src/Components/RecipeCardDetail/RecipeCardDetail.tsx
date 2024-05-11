@@ -14,8 +14,8 @@ const RecipeCardDetail = (props: Props) => {
   const recipeDetail = props.recipeDetail;
 
   return (
-    <div className="flex-center flex-col text-lg whitespace-pre-line gap-6">
-      <div className="flex-center w-11/12 max-h-96 overflow-hidden rounded-lg my-4 mx-8">
+    <div className="flex-center flex-col text-lg whitespace-pre-line gap-8 px-4 py-8 laptop:p-8">
+      <div className="flex-center w-full max-h-96 overflow-hidden rounded-lg">
         <RecipePicture
           url={recipeDetail.imageUrl}
           isFromHellof={recipeDetail.fromHellof}

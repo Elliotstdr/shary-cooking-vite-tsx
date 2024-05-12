@@ -17,14 +17,14 @@ const Nav = (props: Props) => {
         to={to}
         className={
           (nav) => (nav.isActive
-            ? "my-2 mx-5 w-fit relative after:content-[''] after:h-1 after:w-0 after:bg-orange after:absolute after:rounded-lg after:left-1/2 after:-translate-x-1/2 after:animate-navbar"
+            ? "my-2 mx-5 w-fit relative after:content-[''] after:h-1 after:w-0 after:bg-orange after:absolute after:rounded-lg after:left-1/2 after:-translate-x-1/2 after:animate-navbar after:bottom-[2px] nav:after:bottom-[-5px]"
             : "my-2 mx-5 w-fit"
           )}
         onClick={() => {
           if (props.setVisibleMobile) props.setVisibleMobile(false)
         }}
       >
-        <li className={`text-green cursor-pointer duration-200 text-[1.1rem] w-fit nav:text-[1.4rem]`}>
+        <li className={`text-green cursor-pointer duration-200 w-fit text-[1.4rem]`}>
           <strong>{text}</strong>
         </li>
       </NavLink>

@@ -34,7 +34,6 @@ export default {
         loader: "rotation 1s linear infinite",
         "reverse-loader": "rotation 0.5s linear infinite reverse",
         navbar: "navbar 0.6s ease forwards",
-        sidebar: "sidebar 0.3s ease-in-out forwards",
       },
       keyframes: {
         rotation: {
@@ -43,10 +42,6 @@ export default {
         },
         navbar: {
           to: { width: "100%" },
-        },
-        sidebar: {
-          "0%": { transform: "translateX(-100%)" },
-          "100%": { transform: "translateX(0)" },
         },
       },
     },
@@ -96,12 +91,22 @@ export default {
         ".visible-transition": {
           visibility: "visible",
           opacity: "1",
-          "max-height": "50rem",
+          "max-height": "30rem",
         },
         ".hidden-transition": {
           visibility: "hidden",
           opacity: "0",
           "max-height": "0",
+        },
+        ".visible-slide": {
+          visibility: "visible",
+          transform: "translateX(0)",
+          "background-color": "rgb(0, 0, 0, 0.5)",
+        },
+        ".hidden-slide": {
+          visibility: "hidden",
+          transform: "translateX(-50%)",
+          "background-color": "rgb(0, 0, 0, 0)",
         },
         ".flex-center": {
           display: "flex",

@@ -65,13 +65,11 @@ const RecipeCard = (props: Props) => {
           recipeItem={props.recipeItem}
         ></RecipeCardBottom>
       </div>
-      {visibleDetail && (
-        <SlideIn visible={visibleDetail} setVisible={setVisibleDetail}>
-          <RecipeCardDetail
-            recipeDetail={props.recipeItem}
-          ></RecipeCardDetail>
-        </SlideIn>
-      )}
+      <SlideIn visible={visibleDetail} setVisible={setVisibleDetail}>
+        <RecipeCardDetail
+          recipeDetail={props.recipeItem}
+        ></RecipeCardDetail>
+      </SlideIn>
     </>
   );
 };

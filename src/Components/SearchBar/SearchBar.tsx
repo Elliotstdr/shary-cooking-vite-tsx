@@ -97,7 +97,7 @@ const SearchBar = () => {
         Filtrer
       </div>
       <div className={`
-        flex justify-center flex-col gap-4 px-4 transition-300 relative rounded-xl 
+        flex justify-center flex-col gap-4 px-4 transition-300 relative rounded-xl overflow-y-hidden
         desktop:shadow-searchbar mx-auto desktop:gap-6 desktop:px-6 desktop:py-4 desktop:bg-white 
         ${visibleMobile || screenSize.width > 1100 ? "visible-transition" : "hidden-transition"}
       `}>

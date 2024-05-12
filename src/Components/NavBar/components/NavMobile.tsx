@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useOutsideAlerter } from "../../../Hooks/useOutsideAlerter.hook";
 import Nav from "./Nav";
+import SlideIn from "../../ui/SlideIn";
 
 const NavMobile = () => {
   const [visibleMobile, setVisibleMobile] = useState(false);
@@ -17,10 +18,16 @@ const NavMobile = () => {
         <div className="pi pi-bars mr-1"></div>
         Menu
       </div>
-      <Nav
-        className={`absolute w-56 z-50 bg-white rounded-md text-left flex flex-col m-0 py-2 transition-300 ${visibleMobile ? "visible-transition" : "hidden-transition"}`}
-        setVisibleMobile={setVisibleMobile}
-      ></Nav>
+      <SlideIn
+        visible={visibleMobile}
+        setVisible={setVisibleMobile}
+        contentClassName="!w-fit"
+      >
+        <Nav
+          className="flex flex-col py-4 mr-16 mb-16"
+          setVisibleMobile={setVisibleMobile}
+        ></Nav>
+      </SlideIn>
     </div>
   );
 };

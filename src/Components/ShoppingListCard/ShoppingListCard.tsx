@@ -93,13 +93,11 @@ const ShoppingListCard = (props: Props) => {
           </div>
         </div>
       </div>
-      {visibleDetail && (
-        <SlideIn visible={visibleDetail} setVisible={setVisibleDetail}>
-          <RecipeCardDetail
-            recipeDetail={props.recipe}
-          ></RecipeCardDetail>
-        </SlideIn>
-      )}
+      <SlideIn visible={visibleDetail} setVisible={setVisibleDetail}>
+        <RecipeCardDetail
+          recipeDetail={props.recipe}
+        ></RecipeCardDetail>
+      </SlideIn>
     </>
   );
 };

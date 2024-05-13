@@ -210,7 +210,7 @@ const RecipeCreationContainer = (props: Props) => {
 
   return (
     <form
-      className={`flex flex-col gap-4 my-12 mx-4 relative ${isFilled && "mt-0"}`}
+      className={`flex flex-col gap-4 my-12 relative ${isFilled && "mt-0"}`}
       onSubmit={handleSubmit(onSubmit)}
       ref={ref}
       id="create"

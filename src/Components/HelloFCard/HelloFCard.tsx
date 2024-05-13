@@ -54,6 +54,9 @@ const HelloFCard = (props: Props) => {
         <Modal
           visible={visibleRecipeForm}
           setVisible={setVisibleRecipeForm}
+          className="min-w-[70%] max-w-[98%]"
+          headerClassName="!py-2"
+          contentClassName="!px-2 tablet:!px-4"
         >
           <RecipeCreationContainer
             HFFillRecipe={filledRecipe}

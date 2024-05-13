@@ -103,8 +103,10 @@ const RecipeCardBottom = (props: Props) => {
         <Modal
           visible={visibleModif}
           setVisible={setVisibleModif}
-          header={"Modifier ma recette"}
-          className="min-w-[70%] max-w-[90%]"
+          header="Modifier ma recette"
+          className="min-w-[70%] max-w-[98%]"
+          headerClassName="!py-2"
+          contentClassName="!px-2 tablet:!px-4"
         >
           <RecipeCreationContainer
             recipe={props.recipeItem}

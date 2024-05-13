@@ -11,7 +11,7 @@ interface Props {
 const StepsCreation = (props: Props) => {
   return (
     <>
-      <div className="flex flex-col w-11/12 laptop:w-150 gap-4">
+      <div className="flex flex-col w-full laptop:w-150 gap-4">
         {props.stepsList.map((step, index) => (
           <div className="flex w-full relative" key={index}>
             <InputTextarea
@@ -30,9 +30,9 @@ const StepsCreation = (props: Props) => {
                 }))
               }}
             />
-            {step.stepIndex !== 1 && (
+            {step.stepIndex !== 1 ? (
               <RiDeleteBin6Line
-                className="absolute cursor-pointer -right-12 size-6 text-green self-center"
+                className="ml-2 cursor-pointer size-6 text-green self-center"
                 onClick={(e: any) => {
                   e.preventDefault();
                   props.setStepsList(props.stepsList.filter((x) =>
@@ -40,6 +40,8 @@ const StepsCreation = (props: Props) => {
                   ))
                 }}
               ></RiDeleteBin6Line>
+            ) : (
+              <div className="ml-2 size-6 self-center"></div>
             )}
           </div>
         ))}

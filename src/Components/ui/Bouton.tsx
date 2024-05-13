@@ -2,7 +2,7 @@ import React from "react";
 
 interface Props {
   className?: string,
-  type?: "slide" | "normal",
+  type?: "slide" | "normal" | "nav",
   btnAction?: React.MouseEventHandler<HTMLButtonElement>,
   children?: any,
   btnTexte?: string
@@ -10,34 +10,32 @@ interface Props {
   beforeClassName?: string
 }
 
-const Bouton = (props: Props) => {
+const Bouton = ({ className = "", type = "slide", btnAction, children, btnTexte, afterClassName = "", beforeClassName = "" }: Props) => {
   return (
     <button
       className={`
-        group cursor-pointer overflow-hidden whitespace-nowrap border-2 border-green flex-center px-6 rounded-full text-green duration-300 transition-all 
-        relative z-1 font-bold min-w-fit h-10 text-sm tablet:h-12 tablet:text-base hover:text-fond
-        ${props.type === "normal" ? "bg-transparent duration-500 hover:bg-green hover:text-white" : ""}
-        ${props.className} 
+        group cursor-pointer overflow-hidden whitespace-nowrap border-2 border-green flex-center px-6 rounded-full duration-300 transition-all 
+        relative z-1 font-bold min-w-fit h-10 text-sm tablet:h-12 tablet:text-base
+        ${type === "nav" ? "text-white hover:text-green" : "text-green hover:text-fond"}
+        ${type === "normal" ? "bg-transparent duration-500 hover:bg-green" : ""}
+        ${className} 
       `}
-      onClick={props.btnAction}
+      onClick={btnAction}
     >
       <div className={`
-        ${props.beforeClassName || ""} 
-        ${props.type === "slide" ? "absolute bottom-0 left-0 w-0 h-full bg-green duration-500 transition-all rounded-full -z-1 group-hover:!w-full" : ""}
+        ${beforeClassName} 
+        ${type !== "normal" ? "absolute bottom-0 left-0 w-0 h-full duration-500 transition-all rounded-full -z-1 group-hover:!w-full" : ""}
+        ${type === "slide" ? "bg-green" : type === "nav" ? "bg-fond" : ""}
       `}></div>
-      {props.children}
-      {props.btnTexte}
+      {children}
+      {btnTexte}
       <div className={`
-        ${props.afterClassName || ""}
-        ${props.type === "slide" ? "absolute bottom-0 left-0 size-full bg-transparent rounded-full -z-2" : ""}
+        ${afterClassName}
+        ${type !== "normal" ? "absolute bottom-0 left-0 size-full rounded-full -z-2" : ""}
+        ${type === "slide" ? "bg-transparent" : type === "nav" ? "bg-green" : ""}
       `}></div>
     </button>
   );
-};
-
-Bouton.defaultProps = {
-  type: "slide",
-  className: "",
 };
 
 export default Bouton;

@@ -15,15 +15,16 @@ const ModalChooseRecipe = (props: Props) => {
       header={
         <div className="flex-center">
           <Bouton
-            type={"normal"}
-            btnTexte={"Valider"}
+            type="normal"
+            btnTexte="Valider"
             btnAction={() => props.setVisible(false)}
             className="!bg-white !rounded-xl hover:!text-green"
           ></Bouton>
         </div>
       }
-      className="!w-full"
+      className="!w-full !max-h-[94%]"
       contentClassName="flex items-center flex-col !bg-fond !pb-16 !px-2"
+      headerClassName="!p-2"
     >
       <>
         <RecipeContainer></RecipeContainer>

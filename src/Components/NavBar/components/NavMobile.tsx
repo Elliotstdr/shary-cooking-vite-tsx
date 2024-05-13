@@ -24,7 +24,7 @@ const NavMobile = () => {
         contentClassName="!w-fit"
       >
         <Nav
-          className="flex flex-col py-4 mr-4"
+          className="flex flex-col mr-4"
           setVisibleMobile={setVisibleMobile}
         ></Nav>
       </SlideIn>

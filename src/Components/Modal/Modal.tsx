@@ -8,6 +8,7 @@ interface Props {
   className?: string,
   children: any,
   contentClassName?: string
+  headerClassName?: string
 }
 
 const Modal = (props: Props) => {
@@ -18,7 +19,8 @@ const Modal = (props: Props) => {
       visible={props.visible}
       onHide={() => props.setVisible(false)}
       className={props.className + " w-fit h-fit"}
-      contentClassName={props.contentClassName}
+      contentClassName={props.contentClassName || ""}
+      headerClassName={props.headerClassName || ""}
     >
       {props.children}
     </Dialog>

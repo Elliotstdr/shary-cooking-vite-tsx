@@ -15,16 +15,18 @@ const SlideIn = (props: Props) => {
     >
       <div
         className={
-          `flex flex-col py-4 relative w-[48%] laptop:w-1/3 bg-white overflow-y-scroll h-full 
+          `flex flex-col relative w-[48%] laptop:w-1/3 bg-white h-full 
           ${props.contentClassName || ""}
         `}
         onClick={(e) => e.stopPropagation()}
       >
         <div
-          className="pi pi-times cursor-pointer absolute top-4 right-4 hover:opacity-75 transition-all font-bold"
+          className="pi pi-times cursor-pointer self-end hover:opacity-75 transition-all font-bold p-4"
           onClick={() => props.setVisible(false)}
         ></div>
-        {props.children}
+        <div className="size-full overflow-y-scroll">
+          {props.children}
+        </div>
       </div>
     </div>
   );

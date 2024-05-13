@@ -15,7 +15,7 @@ const RecipeDetailSteps = ({ steps }: Props) => {
               {index + 1}
             </div>
             <Separator className="border-t-orange"></Separator>
-            <div className="self-center bg-fond p-4 rounded-lg text-left" key={index}>
+            <div className="self-center bg-fond p-4 rounded-lg text-left w-11/12 laptop:w-150" key={index}>
               {step.description}
             </div>
           </div>

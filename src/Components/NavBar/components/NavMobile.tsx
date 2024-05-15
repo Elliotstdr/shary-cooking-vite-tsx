@@ -12,7 +12,7 @@ const NavMobile = () => {
   return (
     <div className="w-40 relative" ref={menuRef}>
       <div
-        className="flex items-center cursor-pointer p-4 pb-2 text-xl font-bold !font-apple"
+        className="flex items-center cursor-pointer text-xl font-bold !font-apple"
         onClick={() => setVisibleMobile(!visibleMobile)}
       >
         <div className="pi pi-bars mr-1"></div>

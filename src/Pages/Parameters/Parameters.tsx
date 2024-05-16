@@ -1,27 +1,26 @@
 import { useState } from "react";
-import { SelectButton } from "primereact/selectbutton";
+import { TabMenu } from "primereact/tabmenu";
 import InformationsForm from "./components/InformationsForm";
 import PasswordForm from "./components/PasswordForm";
 
 const Parameters = () => {
   const items = [
-    { name: 'Informations personnelles', value: 1 },
-    { name: 'Mot de passe', value: 2 },
+    { label: 'Informations' },
+    { label: 'Mot de passe' },
   ];
 
-  const [value, setValue] = useState<1 | 2>(1)
+  const [value, setValue] = useState(0)
 
   return (
     <div id="params">
-      <SelectButton
-        value={value}
-        onChange={(e) => e.value && setValue(e.value)}
-        optionLabel="name"
-        options={items}
-        className="mt-16"
-      ></SelectButton>
-      {value === 1 && <InformationsForm />}
-      {value === 2 && <PasswordForm />}
+      <TabMenu
+        activeIndex={value}
+        onTabChange={(e) => setValue(e.index)}
+        model={items}
+        className="mt-8 w-fit mx-auto"
+      ></TabMenu>
+      {value === 0 && <InformationsForm />}
+      {value === 1 && <PasswordForm />}
     </div>
   );
 };

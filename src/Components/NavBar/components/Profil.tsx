@@ -18,7 +18,7 @@ const Profil = () => {
   return (
     <>
       <div
-        className="cursor-pointer absolute top-8 right-12 flex tablet:relative tablet:right-0 tablet:top-0"
+        className="cursor-pointer absolute top-6 right-12 flex tablet:relative tablet:right-0 tablet:top-0"
         ref={wrapperRef}
         onMouseEnter={() => setShowParamMenu(true)}
         onMouseLeave={() => setShowParamMenu(false)}

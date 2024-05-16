@@ -88,6 +88,9 @@ export default {
           top: "50%",
           transform: "translate(-50%, -50%)",
         },
+        ".unset": {
+          position: "unset",
+        },
         ".visible-transition": {
           visibility: "visible",
           opacity: "1",

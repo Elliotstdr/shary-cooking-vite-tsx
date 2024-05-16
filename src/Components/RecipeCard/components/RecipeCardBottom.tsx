@@ -6,9 +6,9 @@ import { errorToast } from "../../../Services/functions";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../../Modal/Modal";
-import Bouton from "../../ui/Bouton";
 import { editRecipeInRecipes, removeRecipeInRecipes } from "../../../Store/Reducers/recipeReducer";
 import RecipeCreationContainer from "../../RecipeCreationContainer/RecipeCreationContainer";
+import ModalDeleteConfirm from "../../Modal/ModalDeleteConfirm";
 
 type Props = {
   recipeItem: Recipe,
@@ -79,25 +79,11 @@ const RecipeCardBottom = (props: Props) => {
         </div>
       )}
       {wantToDelete && (
-        <Modal
-          visible={wantToDelete}
-          setVisible={setWantToDelete}
-          header={"Suppression de recette"}
-        >
-          <div>
-            <div className="my-8">
-              Etes vous sur de vouloir supprimer cette recette ?
-            </div>
-            <div className="flex justify-center gap-4">
-              <Bouton type="normal" btnAction={() => deleteRecipe()}>
-                Oui
-              </Bouton>
-              <Bouton type="normal" btnAction={() => setWantToDelete(false)}>
-                Non
-              </Bouton>
-            </div>
-          </div>
-        </Modal>
+        <ModalDeleteConfirm
+          wantToDelete={wantToDelete}
+          setWantToDelete={setWantToDelete}
+          deleteAction={deleteRecipe}
+        ></ModalDeleteConfirm>
       )}
       {visibleModif && (
         <Modal

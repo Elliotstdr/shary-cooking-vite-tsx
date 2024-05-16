@@ -3,9 +3,7 @@ import { MultiSelect } from "primereact/multiselect";
 import { useDispatch, useSelector } from "react-redux";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
-import { GrPowerReset } from "react-icons/gr";
-import { Checkbox } from "primereact/checkbox";
-import { resetSearch, updateSearch } from "../../Store/Reducers/searchReducer";
+import { updateSearch } from "../../Store/Reducers/searchReducer";
 import {
   fillAvailableIngredientsOnly,
   fillAvailableRegimesOnly,
@@ -16,6 +14,7 @@ import {
 } from "../../Services/searchBarFunctions";
 import { updateRecipe } from "../../Store/Reducers/recipeReducer";
 import { useScreenSize } from "../../Hooks/useScreenSize.hook";
+import SearchCheckBoxes from "./SearchCheckBoxes";
 
 const SearchBar = () => {
   const screenSize = useScreenSize()
@@ -99,7 +98,7 @@ const SearchBar = () => {
       <div className={`
         flex justify-center flex-col gap-4 px-4 transition-300 relative rounded-xl overflow-y-hidden
         desktop:shadow-searchbar mx-auto desktop:gap-6 desktop:px-6 desktop:py-4 desktop:bg-white 
-        ${visibleMobile || screenSize.width > 1100 ? "visible-transition" : "hidden-transition"}
+        ${visibleMobile || screenSize.width >= 1100 ? "visible-transition" : "hidden-transition"}
       `}>
         <div className="flex flex-col justify-evenly gap-4 desktop:flex-row desktop:gap-8">
           <InputText
@@ -142,32 +141,10 @@ const SearchBar = () => {
             selectedItemsLabel={search.ingredient?.length + " éléments choisis"}
           ></MultiSelect>
         </div>
-        <div className="w-full flex flex-col items-start gap-4 desktop:h-6 desktop:flex-row">
-          <div className="flex items-center">
-            <Checkbox
-              onChange={(e) => dispatch(updateSearch({ boxMine: e.checked || false }))}
-              checked={search.boxMine}
-            ></Checkbox>
-            <span className="mr-4 ml-1 text-sm">Mes recettes</span>
-          </div>
-          <div className="flex items-center">
-            <Checkbox
-              onChange={(e) => dispatch(updateSearch({ boxFavorites: e.checked || false }))}
-              checked={search.boxFavorites}
-            ></Checkbox>
-            <span className="mr-4 ml-1 text-sm">Mes favoris</span>
-          </div>
-          {search.isSearch &&
-            <GrPowerReset
-              className="reset ml-4 cursor-pointer text-orange self-center size-8 desktop:size-6"
-              onClick={() => {
-                dispatch(resetSearch())
-              }}
-            ></GrPowerReset>
-          }
-        </div>
+        {screenSize.width >= 1100 && <SearchCheckBoxes></SearchCheckBoxes>}
       </div>
-    </div>
+      {screenSize.width < 1100 && <SearchCheckBoxes className="justify-center my-2"></SearchCheckBoxes>}
+    </div >
   );
 };
 

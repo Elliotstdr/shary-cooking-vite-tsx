@@ -14,9 +14,9 @@ const Bouton = ({ className = "", type = "slide", btnAction, children, btnTexte,
   return (
     <button
       className={`
-        group cursor-pointer overflow-hidden whitespace-nowrap border-2 flex-center px-6 rounded-full duration-300 transition-all 
+        group cursor-pointer overflow-hidden whitespace-nowrap border-2 border-green flex-center px-6 rounded-full duration-300 transition-all 
         relative z-1 font-bold min-w-fit h-10 text-sm tablet:h-12 tablet:text-base
-        ${type === "nav" ? "text-white hover:text-green border-transparent hover:border-green" : "text-green hover:text-fond border-green"}
+        ${type === "nav" ? "text-white hover:text-green shadow-btn" : "text-green hover:text-fond"}
         ${type === "normal" ? "bg-transparent duration-500 hover:bg-green" : ""}
         ${className} 
       `}

@@ -13,6 +13,7 @@ export default {
         nav: "0px 2px 20px 0px rgba(0, 0, 0, 0.4)",
         searchbar: "0px 1px 10px 0px rgba(0, 0, 0, 0.3)",
         card: "0px 1px 10px 0px rgba(0, 0, 0, 0.75)",
+        btn: "inset 0 0 0 2px #263a29",
       },
       width: {
         unset: "unset",

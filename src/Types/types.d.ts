@@ -138,3 +138,29 @@ type HFYieldsIngredient = {
   amount: number | null;
   unit: string;
 };
+
+type DefaultProduct = {
+  id: number;
+  name: string;
+  userId: number;
+};
+
+type List = {
+  id: number;
+  name: string;
+  userId: number;
+  content: string;
+  selectedRecipes: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type ListContent = {
+  name: string;
+  selected: boolean;
+};
+
+type ListRecipes = {
+  id: number;
+  title: string;
+};

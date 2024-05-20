@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 const initialState: RecipeState = {
-  chosenRecipes: [],
   savedForm: null,
   recipes: [],
   filteredRecipes: null
@@ -31,18 +30,6 @@ export const recipeSlice = createSlice({
         })
       };
     },
-    removeRecipeInChosenRecipes: (state, action: PayloadAction<Recipe>) => {
-      return {
-        ...state,
-        chosenRecipes: [...state.chosenRecipes].filter((x) => x.id !== action.payload.id),
-      };
-    },
-    addRecipeInChosenRecipes: (state, action: PayloadAction<Recipe>) => {
-      return {
-        ...state,
-        chosenRecipes: [...state.chosenRecipes, action.payload],
-      };
-    }
   }
 })
 
@@ -50,7 +37,5 @@ export const {
   updateRecipe,
   removeRecipeInRecipes,
   editRecipeInRecipes,
-  removeRecipeInChosenRecipes,
-  addRecipeInChosenRecipes
 } = recipeSlice.actions
 export default recipeSlice.reducer;

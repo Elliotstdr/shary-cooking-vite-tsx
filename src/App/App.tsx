@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Accueil from "../Pages/Accueil/Accueil";
-import ShoppingList from "../Pages/ShoppingList/ShoppingList";
+// import ShoppingList from "../Pages/ShoppingList/ShoppingList";
 import Parameters from "../Pages/Parameters/Parameters";
 import CreateRecipe from "../Pages/CreateRecipe/CreateRecipe";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,7 @@ import { errorToast } from "../Services/functions";
 import { updateSecondaryTables } from "../Store/Reducers/secondaryTablesReducer";
 import NavBar from "../Components/NavBar/NavBar";
 import Footer from "../Components/Footer/Footer";
+import Shopping from "../Pages/Shopping/Shopping";
 
 const App = () => {
   const isInterceptorActive = useAxiosInterceptors();
@@ -61,7 +62,7 @@ const App = () => {
             {auth.isConnected && (
               <>
                 <Route path="/all" element={<Recipes />}></Route>
-                <Route path="/shop" element={<ShoppingList />}></Route>
+                <Route path="/shop" element={<Shopping />}></Route>
                 <Route path="/param" element={<Parameters />}></Route>
                 <Route path="/create" element={<CreateRecipe />}></Route>
                 <Route path="/hf" element={<HelloF />}></Route>

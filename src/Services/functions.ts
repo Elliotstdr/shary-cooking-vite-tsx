@@ -1,49 +1,73 @@
 import { store } from "../Store/store";
 
-interface ExtendedIngredient extends Ingredient {
+type ExtendedIngredient = Ingredient & {
   type: string;
-}
-export const exportRecipe = (chosenRecipes: Array<RecipeShopping>) => {
-  const data = store.getState().secondaryTables.ingData;
-  const types = store.getState().secondaryTables.ingTypes;
+};
 
-  const typesMap = new Map();
-  types?.forEach((x) => typesMap.set(x.id, x.label));
-
-  if (!data) return "";
-
+export const formatShoppingData = (chosenRecipes: RecipeShopping[]) => {
   let ingredientList: Array<Ingredient> = [];
-  const finalList: Array<ExtendedIngredient> = [];
 
-  const tempArray = chosenRecipes.map((recipe: RecipeShopping) => {
-    if (recipe.multiplyer) {
-      const updatedIngredients = recipe.ingredients.map(
-        (element: Ingredient) => {
-          const updatedElement = { ...element };
-          updatedElement.quantity = recipe.multiplyer
-            ? updatedElement.quantity * recipe.multiplyer
-            : updatedElement.quantity;
-
-          if (updatedElement.quantity === 0.99) updatedElement.quantity = 1;
-          return updatedElement;
-        }
-      );
-
-      return {
-        ...recipe,
-        ingredients: updatedIngredients,
-      };
-    } else {
-      return recipe;
-    }
-  });
+  const tempArray = recipesWithMultipliedQuantity(chosenRecipes);
 
   tempArray.forEach(
     (recipe: Recipe) =>
       (ingredientList = ingredientList.concat(recipe.ingredients))
   );
 
-  ingredientList.forEach((ingredient) => {
+  let finalList = groupIngredientsByType(ingredientList);
+
+  if (finalList.length === 0) return [];
+
+  finalList = finalList.sort((a, b) => a.type.localeCompare(b.type));
+
+  const content: ListContent[] = finalList.map((x) => {
+    let elementString = "";
+    if (x.unit.label !== "un peu") elementString += x.quantity + " ";
+    if (x.unit.label !== "unité") elementString += x.unit.label + " de ";
+    elementString += x.label.toLowerCase();
+
+    return {
+      name: elementString,
+      selected: false,
+    };
+  });
+
+  return content;
+};
+
+const recipesWithMultipliedQuantity = (
+  recipes: RecipeShopping[]
+): RecipeShopping[] => {
+  return recipes.map((recipe: RecipeShopping) => {
+    const updatedIngredients = recipe.ingredients.map((element: Ingredient) => {
+      const newElement = { ...element };
+      newElement.quantity = newElement.quantity * (recipe.multiplyer || 1);
+
+      if (newElement.quantity === 0.99) newElement.quantity = 1;
+      return newElement;
+    });
+
+    return {
+      ...recipe,
+      ingredients: updatedIngredients,
+    };
+  });
+};
+
+const groupIngredientsByType = (
+  ingredients: Ingredient[]
+): ExtendedIngredient[] => {
+  const data = store.getState().secondaryTables.ingData;
+  const types = store.getState().secondaryTables.ingTypes;
+
+  const typesMap = new Map();
+  types?.forEach((x) => typesMap.set(x.id, x.label));
+
+  const finalList: Array<ExtendedIngredient> = [];
+
+  if (!data) return [];
+
+  ingredients.forEach((ingredient) => {
     let isIn = false;
     finalList.forEach((element, index) => {
       if (
@@ -76,22 +100,7 @@ export const exportRecipe = (chosenRecipes: Array<RecipeShopping>) => {
     }
   });
 
-  let shoppingList = "";
-  if (finalList.length > 0) {
-    finalList
-      .sort((a, b) => a.type.localeCompare(b.type))
-      .forEach((element) => {
-        let elementString = "";
-        if (element.unit.label !== "un peu")
-          elementString += element.quantity + " ";
-        if (element.unit.label !== "unité")
-          elementString += element.unit.label + " de ";
-        elementString += element.label.toLowerCase() + " \n";
-        shoppingList += elementString;
-      });
-  }
-
-  return shoppingList;
+  return finalList;
 };
 
 export const timeToString = (time: string) => {
@@ -114,6 +123,22 @@ export const timeToString = (time: string) => {
   } else {
     return minutes + " minutes";
   }
+};
+
+/**
+ * Retourne une date string au format MM-YYYY
+ * @param date
+ * @returns string
+ */
+export const formatDate = (date: Date) => {
+  const newDate = new Date(date);
+  const monthKey = `${newDate.getDate().toString().padStart(2, "0")}-${(
+    newDate.getMonth() + 1
+  )
+    .toString()
+    .padStart(2, "0")}-${newDate.getFullYear()}`;
+
+  return monthKey;
 };
 
 export const successToast = (message: string, summary: string = "Succès") => {

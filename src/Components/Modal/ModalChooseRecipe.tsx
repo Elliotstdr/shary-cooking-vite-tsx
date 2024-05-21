@@ -74,14 +74,16 @@ const ModalChooseRecipe = (props: Props) => {
       headerClassName="!p-2"
     >
       <div className="flex flex-wrap justify-center gap-8 py-4 tablet:p-12 tablet:gap-x-12">
-        {(recipe.recipes as Recipe[]).map((recipe) => (
-          <ShoppingListCard
-            recipe={recipe}
-            selectedRecipes={selectedRecipes}
-            setSelectedRecipes={setSelectedRecipes}
-            key={recipe.id}
-          ></ShoppingListCard>
-        ))}
+        {([...recipe.recipes] as Recipe[])
+          .sort((a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf())
+          .map((recipe) => (
+            <ShoppingListCard
+              recipe={recipe}
+              selectedRecipes={selectedRecipes}
+              setSelectedRecipes={setSelectedRecipes}
+              key={recipe.id}
+            ></ShoppingListCard>
+          ))}
       </div>
     </Modal>
   );

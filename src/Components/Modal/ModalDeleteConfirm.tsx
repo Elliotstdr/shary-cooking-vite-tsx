@@ -13,6 +13,7 @@ const ModalDeleteConfirm = ({ wantToDelete, setWantToDelete, deleteAction }: Pro
       visible={wantToDelete}
       setVisible={setWantToDelete}
       header={"Confirmer la suppression"}
+      headerClassName="!p-2"
     >
       <div>
         <div className="my-8">

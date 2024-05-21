@@ -42,4 +42,5 @@ type SearchState = {
 type ShoppingState = {
   lists: List[];
   defaultProduct: DefaultProduct[];
+  selectedList: List | null;
 };

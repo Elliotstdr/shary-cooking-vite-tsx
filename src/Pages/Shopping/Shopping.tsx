@@ -29,7 +29,8 @@ const Shopping = () => {
 
     dispatch(updateShopping({
       lists: lists.data || [],
-      defaultProduct: defaultProducts.data || []
+      defaultProduct: defaultProducts.data || [],
+      selectedList: lists.data && lists.data?.length > 0 ? lists.data[0] : null
     }))
   }, [lists.loaded, defaultProducts.loaded]);
 
@@ -45,7 +46,7 @@ const Shopping = () => {
     <div
       id="shopping"
       className={`
-        flex flex-col my-8 mx-4 min-h-[60vh] tablet:m-12 nav:mx-[10%] nav:justify-center
+        flex flex-col my-8 mx-4 min-h-[60vh] tablet:m-12 nav:mx-[7%] nav:justify-center
         ${shopping.lists.length === 0 ? 'items-center' : ''}
       `}
     >

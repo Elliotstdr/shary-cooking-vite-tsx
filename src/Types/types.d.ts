@@ -149,8 +149,8 @@ type List = {
   id: number;
   name: string;
   userId: number;
-  content: string;
-  selectedRecipes: string;
+  content: ListContent[];
+  selectedRecipes: ListRecipes[];
   createdAt: Date;
   updatedAt: Date;
 };

@@ -2,21 +2,29 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
 import ShoppingListCard from "../ShoppingListCard/ShoppingListCard";
 import Bouton from "../ui/Bouton";
-import { useState } from "react";
-import { fetchPost } from "../../Hooks/api.hook";
+import { useEffect, useState } from "react";
+import { fetchPost, useFetchGet } from "../../Hooks/api.hook";
 import { errorToast, formatShoppingData } from "../../Services/functions";
-import { addList } from "../../Store/Reducers/shoppingReducer";
+import { addList, updateSelectedList } from "../../Store/Reducers/shoppingReducer";
+import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
 
 type Props = {
   visible: boolean,
   setVisible: React.Dispatch<React.SetStateAction<boolean>>,
-  setSelectedListId?: React.Dispatch<React.SetStateAction<number>>,
 }
 
 const ModalChooseRecipe = (props: Props) => {
   const dispatch = useDispatch()
   const recipe = useSelector((state: RootState) => state.recipe);
   const [selectedRecipes, setSelectedRecipes] = useState<RecipeShopping[]>([]);
+  const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
+
+  useEffect(() => {
+    ingredientData.loaded && ingredientData.data &&
+      dispatch(updateSecondaryTables({
+        ingData: ingredientData.data
+      }))
+  }, [ingredientData.loaded, ingredientData.data])
 
   const createList = async () => {
     if (selectedRecipes.length === 0) return
@@ -32,8 +40,8 @@ const ModalChooseRecipe = (props: Props) => {
 
     const data = {
       name: "Liste",
-      content: JSON.stringify(content),
-      selectedRecipes: JSON.stringify(recipes)
+      content: content,
+      selectedRecipes: recipes
     }
 
     const res = await fetchPost('/list', data)
@@ -42,8 +50,8 @@ const ModalChooseRecipe = (props: Props) => {
       return
     }
 
-    props.setSelectedListId && res.data?.id && props.setSelectedListId(res.data.id)
     props.setVisible(false)
+    dispatch(updateSelectedList(res.data))
     dispatch(addList(res.data))
   }
 

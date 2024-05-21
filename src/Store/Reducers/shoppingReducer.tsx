@@ -3,7 +3,8 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 // shopping reducer
 const initialState: ShoppingState = {
   lists: [],
-  defaultProduct: []
+  defaultProduct: [],
+  selectedList: null
 }
 
 export const shoppingSlice = createSlice({
@@ -14,6 +15,18 @@ export const shoppingSlice = createSlice({
       return {
         ...state,
         ...action.payload
+      };
+    },
+    updateSelectedList: (state, action: PayloadAction<List>) => {
+      return {
+        ...state,
+        selectedList: action.payload
+      };
+    },
+    initSelectedList: (state) => {
+      return {
+        ...state,
+        selectedList: state.lists[0] || null
       };
     },
     removeList: (state, action: PayloadAction<List>) => {
@@ -54,5 +67,14 @@ export const shoppingSlice = createSlice({
   },
 })
 
-export const { updateShopping, removeList, addList, removeProduct, addProduct, editList } = shoppingSlice.actions
+export const {
+  updateShopping,
+  updateSelectedList,
+  initSelectedList,
+  removeList,
+  addList,
+  removeProduct,
+  addProduct,
+  editList
+} = shoppingSlice.actions
 export default shoppingSlice.reducer

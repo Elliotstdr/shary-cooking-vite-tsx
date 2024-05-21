@@ -17,6 +17,7 @@ const CreateDefaultProduct = () => {
       return
     }
 
+    setInputValue("")
     dispatch(addProduct(res.data))
   }
 
@@ -27,18 +28,12 @@ const CreateDefaultProduct = () => {
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            createDefaultProduct(inputValue)
-            setInputValue("")
-          }
+          if (e.key === 'Enter') createDefaultProduct(inputValue)
         }}
         className="w-48 h-10"
       />
       <Bouton
-        btnAction={() => {
-          createDefaultProduct(inputValue)
-          setInputValue("")
-        }}
+        btnAction={() => createDefaultProduct(inputValue)}
         btnTexte="Créer"
         type="normal"
         className="rounded-lg !h-10 !px-3 !text-sm"

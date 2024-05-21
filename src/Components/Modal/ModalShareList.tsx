@@ -1,9 +1,9 @@
 import { Dropdown } from "primereact/dropdown";
-import Modal from "../../Modal/Modal";
-import { fetchPost, useFetchGet } from "../../../Hooks/api.hook";
-import Bouton from "../../ui/Bouton";
+import Modal from "../Modal/Modal";
+import { fetchPost, useFetchGet } from "../../Hooks/api.hook";
+import Bouton from "../ui/Bouton";
 import { useState } from "react";
-import { errorToast, successToast } from "../../../Services/functions";
+import { errorToast, successToast } from "../../Services/functions";
 import { useSelector } from "react-redux";
 import { GiCook } from "react-icons/gi";
 

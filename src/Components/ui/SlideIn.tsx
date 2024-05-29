@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 
 type Props = {
   visible: boolean,
@@ -8,9 +9,9 @@ type Props = {
 }
 
 const SlideIn = (props: Props) => {
-  return (
+  return ReactDOM.createPortal(
     <div
-      className={`z-[1100] fixed top-0 left-0 h-full w-[200%] transition-300 ${props.visible ? 'visible-slide' : 'hidden-slide'}`}
+      className={`z-[1100] fixed top-0 left-0 h-full w-[200%] ${props.visible ? 'block animate-slide-to-right' : 'hidden'}`}
       onClick={() => props.setVisible(false)}
     >
       <div
@@ -28,7 +29,8 @@ const SlideIn = (props: Props) => {
           {props.children}
         </div>
       </div>
-    </div>
+    </div>,
+    document.getElementById("root") as Element
   );
 };
 

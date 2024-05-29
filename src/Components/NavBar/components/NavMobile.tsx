@@ -18,16 +18,16 @@ const NavMobile = () => {
         <div className="pi pi-bars mr-1"></div>
         Menu
       </div>
-      <SlideIn
+      {visibleMobile && <SlideIn
         visible={visibleMobile}
         setVisible={setVisibleMobile}
         contentClassName="!w-fit"
       >
         <Nav
-          className="flex flex-col mr-4"
+          className="flex flex-col mr-4 font-dilgante"
           setVisibleMobile={setVisibleMobile}
         ></Nav>
-      </SlideIn>
+      </SlideIn>}
     </div>
   );
 };

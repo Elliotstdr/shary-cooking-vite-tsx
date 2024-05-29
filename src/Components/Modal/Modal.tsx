@@ -14,7 +14,7 @@ interface Props {
 const Modal = (props: Props) => {
   return (
     <Dialog
-      appendTo={document.getElementById("app")}
+      appendTo={document.getElementById("root")}
       header={props.header}
       visible={props.visible}
       onHide={() => props.setVisible(false)}

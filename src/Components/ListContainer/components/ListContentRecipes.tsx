@@ -30,9 +30,9 @@ const ListContentRecipes = ({ showRecipes, setShowRecipes }: Props) => {
           >{x.title}</div>
         )}
       </div>
-      <SlideIn visible={!!selectedDetail} setVisible={() => setSelectedDetail(null)}>
-        {selectedDetail && <RecipeCardDetail recipeDetail={selectedDetail}></RecipeCardDetail>}
-      </SlideIn>
+      {selectedDetail && <SlideIn visible={!!selectedDetail} setVisible={() => setSelectedDetail(null)}>
+        <RecipeCardDetail recipeDetail={selectedDetail}></RecipeCardDetail>
+      </SlideIn>}
     </>
   );
 };

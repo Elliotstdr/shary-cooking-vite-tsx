@@ -5,10 +5,10 @@ import { fetchDelete, fetchPost } from "../../../Hooks/api.hook";
 import { errorToast } from "../../../Services/functions";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "../../Modal/Modal";
 import { editRecipeInRecipes, removeRecipeInRecipes } from "../../../Store/Reducers/recipeReducer";
 import RecipeCreationContainer from "../RecipeCreationContainer";
 import ModalDeleteConfirm from "../../Modal/ModalDeleteConfirm";
+import { Dialog } from "primereact/dialog";
 
 type Props = {
   recipeItem: Recipe,
@@ -86,9 +86,9 @@ const RecipeCardBottom = (props: Props) => {
         ></ModalDeleteConfirm>
       )}
       {visibleModif && (
-        <Modal
+        <Dialog
           visible={visibleModif}
-          setVisible={setVisibleModif}
+          onHide={() => setVisibleModif(false)}
           header="Modifier ma recette"
           className="min-w-[70%] max-w-[98%]"
           headerClassName="!py-2"
@@ -98,7 +98,7 @@ const RecipeCardBottom = (props: Props) => {
             recipe={props.recipeItem}
             setVisibleModif={setVisibleModif}
           ></RecipeCreationContainer>
-        </Modal>
+        </Dialog>
       )}
     </div>
   );

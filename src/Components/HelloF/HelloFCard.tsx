@@ -1,9 +1,9 @@
 import Bouton from "../ui/Bouton";
 import { fillIngredient, findRegime, findType, getTime } from "../../Services/hfFunctions";
 import { useState } from "react";
-import Modal from "../Modal/Modal";
 import default2 from "/src/assets/default2.jpg";
 import RecipeCreationContainer from "../Recipe/RecipeCreationContainer";
+import { Dialog } from "primereact/dialog";
 
 type Props = {
   recipe: HFRecipe
@@ -50,9 +50,9 @@ const HelloFCard = (props: Props) => {
         >Ajouter au site</Bouton>
       </div>
       {visibleRecipeForm && filledRecipe && (
-        <Modal
+        <Dialog
           visible={visibleRecipeForm}
-          setVisible={setVisibleRecipeForm}
+          onHide={() => setVisibleRecipeForm(false)}
           className="min-w-[70%] max-w-[98%]"
           headerClassName="!py-2"
           contentClassName="!px-2 tablet:!px-4"
@@ -61,7 +61,7 @@ const HelloFCard = (props: Props) => {
             HFFillRecipe={filledRecipe}
             setVisibleModif={setVisibleRecipeForm}
           ></RecipeCreationContainer>
-        </Modal>
+        </Dialog>
       )}
     </>
   );

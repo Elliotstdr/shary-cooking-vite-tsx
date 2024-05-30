@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "./Modal";
 import ShoppingListCard from "../Shopping/ShoppingListCard";
 import { useEffect, useState } from "react";
 import { fetchPost, useFetchGet } from "../../Hooks/api.hook";
@@ -8,6 +7,7 @@ import { formatShoppingData } from "../../Services/shoppingFunctions";
 import { addList, updateSelectedList } from "../../Store/Reducers/shoppingReducer";
 import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
 import SimpleButton from "../ui/SimpleButton";
+import { Dialog } from "primereact/dialog";
 
 type Props = {
   visible: boolean,
@@ -57,9 +57,12 @@ const ModalChooseRecipe = (props: Props) => {
   }
 
   return (
-    <Modal
+    <Dialog
       visible={props.visible}
-      setVisible={props.setVisible}
+      onHide={() => props.setVisible(false)}
+      className="w-full !max-h-[94%] laptop:w-11/12"
+      contentClassName="flex items-center flex-col !bg-fond !pb-16 !px-2"
+      headerClassName="!p-2"
       header={
         <div className="flex-center">
           <SimpleButton
@@ -69,9 +72,6 @@ const ModalChooseRecipe = (props: Props) => {
           ></SimpleButton>
         </div>
       }
-      className="!w-full !max-h-[94%] laptop:!w-11/12"
-      contentClassName="flex items-center flex-col !bg-fond !pb-16 !px-2"
-      headerClassName="!p-2"
     >
       <div className="flex flex-wrap justify-center gap-8 py-4 tablet:p-12 tablet:gap-x-12">
         {([...recipe.recipes] as Recipe[])
@@ -85,7 +85,7 @@ const ModalChooseRecipe = (props: Props) => {
             ></ShoppingListCard>
           ))}
       </div>
-    </Modal>
+    </Dialog>
   );
 };
 

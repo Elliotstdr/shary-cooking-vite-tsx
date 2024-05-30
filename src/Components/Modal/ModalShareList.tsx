@@ -1,11 +1,11 @@
 import { Dropdown } from "primereact/dropdown";
-import Modal from "../Modal/Modal";
 import { fetchPost, useFetchGet } from "../../Hooks/api.hook";
 import Bouton from "../ui/Bouton";
 import { useState } from "react";
 import { errorToast, successToast } from "../../Services/functions";
 import { useSelector } from "react-redux";
 import { GiCook } from "react-icons/gi";
+import { Dialog } from "primereact/dialog";
 
 type Props = {
   visibleModalShare: boolean,
@@ -60,9 +60,9 @@ const ModalShareList = ({ visibleModalShare, setVisibleModalShare, listId }: Pro
   }
 
   return (
-    <Modal
+    <Dialog
       visible={visibleModalShare}
-      setVisible={setVisibleModalShare}
+      onHide={() => setVisibleModalShare(false)}
       headerClassName="!p-2"
       contentClassName="!px-2 laptop:!px-4"
     >
@@ -78,7 +78,7 @@ const ModalShareList = ({ visibleModalShare, setVisibleModalShare, listId }: Pro
         ></Dropdown>
         <Bouton btnAction={() => share()}>Partager</Bouton>
       </div>
-    </Modal>
+    </Dialog>
   );
 };
 

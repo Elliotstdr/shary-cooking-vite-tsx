@@ -1,6 +1,5 @@
 import React from "react";
 import { InputText } from "primereact/inputtext";
-import Modal from "./Modal";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import Loader from "../ui/loader";
@@ -9,6 +8,7 @@ import { errorToast } from "../../Services/functions";
 import { fetchGet, fetchPost } from "../../Hooks/api.hook";
 import { updateAuth } from "../../Store/Reducers/authReducer";
 import { PasswordInput } from "../ui/PasswordInput";
+import { Dialog } from "primereact/dialog";
 
 interface Props {
   visible: boolean,
@@ -58,11 +58,11 @@ const ModalLogin = (props: Props) => {
   };
 
   return (
-    <Modal
+    <Dialog
       header="Connexion"
       visible={props.visible}
-      setVisible={props.setVisible}
-      className={"modal !w-11/12 tablet:!w-80"}
+      onHide={() => props.setVisible(false)}
+      className="w-11/12 tablet:w-80"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex items-center flex-col">
@@ -97,7 +97,7 @@ const ModalLogin = (props: Props) => {
           {isSubmitting ? <Loader /> : <Bouton>Se connecter</Bouton>}
         </div>
       </form>
-    </Modal>
+    </Dialog>
   );
 };
 

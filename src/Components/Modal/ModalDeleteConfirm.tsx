@@ -1,5 +1,5 @@
+import { Dialog } from "primereact/dialog";
 import SimpleButton from "../ui/SimpleButton";
-import Modal from "./Modal";
 
 type Props = {
   wantToDelete: boolean,
@@ -9,10 +9,10 @@ type Props = {
 
 const ModalDeleteConfirm = ({ wantToDelete, setWantToDelete, deleteAction }: Props) => {
   return (
-    <Modal
+    <Dialog
       visible={wantToDelete}
-      setVisible={setWantToDelete}
-      header={"Confirmer la suppression"}
+      onHide={() => setWantToDelete(false)}
+      header="Confirmer la suppression"
       headerClassName="!p-2"
     >
       <div>
@@ -28,7 +28,7 @@ const ModalDeleteConfirm = ({ wantToDelete, setWantToDelete, deleteAction }: Pro
           </SimpleButton>
         </div>
       </div>
-    </Modal>
+    </Dialog>
   );
 };
 

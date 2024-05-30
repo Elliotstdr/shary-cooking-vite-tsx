@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Modal from "./Modal";
 import { useForm } from "react-hook-form";
 import { InputTextarea } from "primereact/inputtextarea";
 import Loader from "../ui/loader";
@@ -9,6 +8,7 @@ import ImageUpload from "../ui/ImageUpload";
 import { errorToast } from "../../Services/functions";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { fetchPost } from "../../Hooks/api.hook";
+import { Dialog } from "primereact/dialog";
 
 type Props = {
   reportBugModal: boolean,
@@ -49,11 +49,11 @@ const ModalBugReport = (props: Props) => {
   };
 
   return (
-    <Modal
+    <Dialog
       header="Report de bug"
       visible={props.reportBugModal}
-      setVisible={props.setReportBugModal}
-      className={"!w-11/12 tablet:!w-160"}
+      onHide={() => props.setReportBugModal(false)}
+      className="w-11/12 tablet:w-160"
     >
       {!successView ? (
         <form className="flex items-center flex-col p-4 mt-4" onSubmit={handleSubmit(onSubmit)}>
@@ -98,7 +98,7 @@ const ModalBugReport = (props: Props) => {
           <BsFillCheckCircleFill className="size-20 text-card-green"></BsFillCheckCircleFill>
         </div>
       )}
-    </Modal>
+    </Dialog>
   );
 };
 

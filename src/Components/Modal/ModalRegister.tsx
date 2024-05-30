@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { InputText } from "primereact/inputtext";
-import Modal from "./Modal";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import Loader from "../ui/loader";
@@ -10,6 +9,7 @@ import { errorToast } from "../../Services/functions";
 import { fetchGet, fetchPost } from "../../Hooks/api.hook";
 import { updateAuth } from "../../Store/Reducers/authReducer";
 import { PasswordInput } from "../ui/PasswordInput";
+import { Dialog } from "primereact/dialog";
 
 interface Props {
   visible: boolean,
@@ -66,11 +66,11 @@ const ModalLogin = (props: Props) => {
   }, [watch('password'), watch('confirmpassword')]);
 
   return (
-    <Modal
+    <Dialog
       header="Création de compte"
       visible={props.visible}
-      setVisible={props.setVisible}
-      className={"!w-11/12 tablet:!w-120"}
+      onHide={() => props.setVisible(false)}
+      className="w-11/12 tablet:w-120"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex items-center flex-col">
@@ -143,7 +143,7 @@ const ModalLogin = (props: Props) => {
           {isSubmitting ? <Loader /> : <Bouton>Créer un compte</Bouton>}
         </div>
       </form>
-    </Modal>
+    </Dialog>
   );
 };
 

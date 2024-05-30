@@ -1,16 +1,12 @@
-import { useState, useRef } from "react";
-import { useOutsideAlerter } from "../../../Hooks/useOutsideAlerter.hook";
+import { useState } from "react";
 import Nav from "./Nav";
 import SlideIn from "../../ui/SlideIn";
 
 const NavMobile = () => {
   const [visibleMobile, setVisibleMobile] = useState(false);
 
-  const menuRef = useRef(null);
-  useOutsideAlerter(menuRef, () => setVisibleMobile(false));
-
   return (
-    <div className="w-40 relative" ref={menuRef}>
+    <div className="w-40 relative">
       <div
         className="flex items-center cursor-pointer text-xl font-bold !font-apple"
         onClick={() => setVisibleMobile(!visibleMobile)}

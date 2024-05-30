@@ -19,13 +19,11 @@ const Login = () => {
         </div>
         <div className="flex flex-col gap-4 mb-4 w-48">
           <Bouton
-            btnTexte={"Se connecter"}
             btnAction={() => setVisibleModalLogin(true)}
-          ></Bouton>
+          >Se connecter</Bouton>
           <Bouton
-            btnTexte={"Créer un compte"}
             btnAction={() => setVisibleModalRegister(true)}
-          ></Bouton>
+          >Créer un compte</Bouton>
         </div>
       </div>
 

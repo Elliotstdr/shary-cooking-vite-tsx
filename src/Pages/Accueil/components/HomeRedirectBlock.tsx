@@ -21,10 +21,7 @@ const HomeRedirectBlock = (props: Props) => {
       />
       <div className="flex items-center flex-col mx-12 w-full tablet:w-1/2">
         <span className="w-11/12 mb-6 text-xl tablet:text-2xl">{props.text}</span>
-        <Bouton
-          btnTexte={props.btnText}
-          btnAction={() => navigate(props.to)}
-        ></Bouton>
+        <Bouton btnAction={() => navigate(props.to)}>{props.btnText}</Bouton>
       </div>
     </div>
   );

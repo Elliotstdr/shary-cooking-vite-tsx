@@ -18,11 +18,7 @@ const NavBar = React.memo(() => {
         : <NavMobile></NavMobile>
       }
       <div className="flex gap-12">
-        <Bouton
-          type="nav"
-          className="font-dilgante px-4 w-48 my-2 tablet:w-unset tablet:my-0"
-          btnAction={() => navigate("/create")}
-        >
+        <Bouton type="nav" btnAction={() => navigate("/create")}>
           <GiKnifeFork className="bouton-svg"></GiKnifeFork>Créer une recette
         </Bouton>
         <Profil></Profil>

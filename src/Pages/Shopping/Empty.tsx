@@ -11,10 +11,9 @@ const Empty = () => {
       <div className="w-160 h-100 my-20 flex-center relative">
         <img src={image} alt="background shopping" className="absolute size-full object-cover rounded-lg" />
         <Bouton
-          btnTexte={"Créer une liste de courses"}
           btnAction={() => setVisibleChooseRecipe(true)}
           type="nav"
-        ></Bouton>
+        >Créer une liste de courses</Bouton>
       </div>
       {visibleChooseRecipe &&
         <ModalChooseRecipe

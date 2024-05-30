@@ -42,13 +42,12 @@ const HelloFCard = (props: Props) => {
         />
         <div className="p-4 font-bold">{props.recipe.name}</div>
         <Bouton
-          btnTexte="Ajouter au site"
           btnAction={() => {
             fillRecipeForm(props.recipe);
             setVisibleRecipeForm(true)
           }}
           className="self-center"
-        ></Bouton>
+        >Ajouter au site</Bouton>
       </div>
       {visibleRecipeForm && filledRecipe && (
         <Modal

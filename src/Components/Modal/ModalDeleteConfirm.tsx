@@ -1,4 +1,4 @@
-import Bouton from "../ui/Bouton";
+import SimpleButton from "../ui/SimpleButton";
 import Modal from "./Modal";
 
 type Props = {
@@ -20,12 +20,12 @@ const ModalDeleteConfirm = ({ wantToDelete, setWantToDelete, deleteAction }: Pro
           Etes vous sur de vouloir supprimer cette entité ?
         </div>
         <div className="flex justify-center gap-4">
-          <Bouton type="normal" btnAction={() => deleteAction()}>
+          <SimpleButton btnAction={() => deleteAction()}>
             Oui
-          </Bouton>
-          <Bouton type="normal" btnAction={() => setWantToDelete(false)}>
+          </SimpleButton>
+          <SimpleButton btnAction={() => setWantToDelete(false)}>
             Non
-          </Bouton>
+          </SimpleButton>
         </div>
       </div>
     </Modal>

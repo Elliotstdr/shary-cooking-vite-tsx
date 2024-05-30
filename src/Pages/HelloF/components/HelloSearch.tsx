@@ -1,6 +1,6 @@
 import { InputText } from "primereact/inputtext";
-import Bouton from "../../../Components/ui/Bouton";
 import { useState } from "react";
+import SimpleButton from "../../../Components/ui/SimpleButton";
 
 type Props = {
   setQuery: React.Dispatch<React.SetStateAction<string>>,
@@ -24,11 +24,10 @@ const HelloSearch = (props: Props) => {
         }}
         className="w-60 !pl-8 tablet:w-unset"
       />
-      <Bouton
+      <SimpleButton
         btnAction={() => props.setQuery(inputValue)}
         btnTexte="Valider"
-        type="normal"
-      ></Bouton>
+      ></SimpleButton>
     </div>
   );
 };

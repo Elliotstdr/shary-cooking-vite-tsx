@@ -1,11 +1,11 @@
 import Ingredient from "./Ingredient";
-import Bouton from "../../ui/Bouton";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useFetchGet } from "../../../Hooks/api.hook";
 import { useMemo } from "react";
 import { getLastId } from "../../../Services/createRecipeFunctions";
+import SimpleButton from "../../ui/SimpleButton";
 
 type Props = {
   ingredientList: FormIngredient[],
@@ -59,8 +59,7 @@ const IngredientsCreation = ({ ingredientList, setIngredientList }: Props) => {
           </SortableContext>
         </DndContext>
       </div>
-      <Bouton
-        type={"normal"}
+      <SimpleButton
         btnAction={(e) => {
           e.preventDefault();
           const lastId = getLastId(ingredientList)
@@ -78,7 +77,7 @@ const IngredientsCreation = ({ ingredientList, setIngredientList }: Props) => {
       >
         <AiOutlinePlusCircle className="bouton-svg" />
         Ajouter un ingrédient
-      </Bouton>
+      </SimpleButton>
     </>
   );
 };

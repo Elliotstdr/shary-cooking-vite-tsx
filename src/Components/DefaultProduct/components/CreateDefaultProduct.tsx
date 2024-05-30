@@ -1,10 +1,10 @@
 import { InputText } from "primereact/inputtext";
-import Bouton from "../../ui/Bouton";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { fetchPost } from "../../../Hooks/api.hook";
 import { errorToast } from "../../../Services/functions";
 import { addProduct } from "../../../Store/Reducers/shoppingReducer";
+import SimpleButton from "../../ui/SimpleButton";
 
 const CreateDefaultProduct = () => {
   const dispatch = useDispatch()
@@ -32,12 +32,11 @@ const CreateDefaultProduct = () => {
         }}
         className="w-48 h-10"
       />
-      <Bouton
+      <SimpleButton
         btnAction={() => createDefaultProduct(inputValue)}
         btnTexte="Créer"
-        type="normal"
         className="rounded-lg !h-10 !px-3 !text-sm"
-      ></Bouton>
+      ></SimpleButton>
     </div>
   );
 };

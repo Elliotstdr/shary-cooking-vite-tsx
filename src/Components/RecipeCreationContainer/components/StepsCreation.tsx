@@ -1,7 +1,7 @@
 import { InputTextarea } from "primereact/inputtextarea";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import Bouton from "../../ui/Bouton";
+import SimpleButton from "../../ui/SimpleButton";
 
 interface Props {
   stepsList: Step[],
@@ -46,8 +46,7 @@ const StepsCreation = (props: Props) => {
           </div>
         ))}
       </div>
-      <Bouton
-        type={"normal"}
+      <SimpleButton
         btnAction={(e) => {
           e.preventDefault();
           props.setStepsList([
@@ -63,7 +62,7 @@ const StepsCreation = (props: Props) => {
       >
         <AiOutlinePlusCircle className="bouton-svg" />
         Ajouter une étape
-      </Bouton>
+      </SimpleButton>
     </>
   );
 };

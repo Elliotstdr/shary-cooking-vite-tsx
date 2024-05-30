@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
 import ShoppingListCard from "../ShoppingListCard/ShoppingListCard";
-import Bouton from "../ui/Bouton";
 import { useEffect, useState } from "react";
 import { fetchPost, useFetchGet } from "../../Hooks/api.hook";
 import { errorToast, formatShoppingData } from "../../Services/functions";
 import { addList, updateSelectedList } from "../../Store/Reducers/shoppingReducer";
 import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
+import SimpleButton from "../ui/SimpleButton";
 
 type Props = {
   visible: boolean,
@@ -61,12 +61,11 @@ const ModalChooseRecipe = (props: Props) => {
       setVisible={props.setVisible}
       header={
         <div className="flex-center">
-          <Bouton
-            type="normal"
+          <SimpleButton
             btnTexte="Valider"
             btnAction={() => createList()}
             className="!bg-white !rounded-xl hover:!text-green"
-          ></Bouton>
+          ></SimpleButton>
         </div>
       }
       className="!w-full !max-h-[94%] laptop:!w-11/12"

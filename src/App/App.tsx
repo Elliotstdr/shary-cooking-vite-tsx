@@ -1,21 +1,20 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Accueil from "../Pages/Accueil/Accueil";
-// import ShoppingList from "../Pages/ShoppingList/ShoppingList";
-import Parameters from "../Pages/Parameters/Parameters";
-import CreateRecipe from "../Pages/CreateRecipe/CreateRecipe";
+import Accueil from "../Pages/Accueil";
+import Parameters from "../Pages/Parameters";
+import CreateRecipe from "../Pages/CreateRecipe";
+import Shopping from "../Pages/Shopping";
+import Recipes from "../Pages/Recipes";
+import HelloF from "../Pages/HelloF";
+import NavBar from "../Components/NavBar/NavBar";
+import Footer from "../Components/Footer/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import { Toast } from "primereact/toast";
-import Recipes from "../Pages/Recipes/Recipes";
 import { useAxiosInterceptors } from "../Hooks/useAxiosInterceptor.hook";
 import { logOut, updateAuth } from "../Store/Reducers/authReducer";
-import HelloF from "../Pages/HelloF/HelloF";
 import { useFetchGet } from "../Hooks/api.hook";
 import { errorToast } from "../Services/functions";
 import { updateSecondaryTables } from "../Store/Reducers/secondaryTablesReducer";
-import NavBar from "../Components/NavBar/NavBar";
-import Footer from "../Components/Footer/Footer";
-import Shopping from "../Pages/Shopping/Shopping";
 
 const App = () => {
   const isInterceptorActive = useAxiosInterceptors();

@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
-import ShoppingListCard from "../ShoppingListCard/ShoppingListCard";
+import ShoppingListCard from "../Shopping/ShoppingListCard";
 import { useEffect, useState } from "react";
 import { fetchPost, useFetchGet } from "../../Hooks/api.hook";
-import { errorToast, formatShoppingData } from "../../Services/functions";
+import { errorToast } from "../../Services/functions";
+import { formatShoppingData } from "../../Services/shoppingFunctions";
 import { addList, updateSelectedList } from "../../Store/Reducers/shoppingReducer";
 import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
 import SimpleButton from "../ui/SimpleButton";

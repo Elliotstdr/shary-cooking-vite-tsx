@@ -5,7 +5,7 @@ import { useState } from "react";
 import { errorToast, successToast } from "../../Services/functions";
 import { useSelector } from "react-redux";
 import { GiCook } from "react-icons/gi";
-import { Dialog } from "primereact/dialog";
+import Modal from "../ui/Modal";
 
 type Props = {
   visibleModalShare: boolean,
@@ -60,10 +60,10 @@ const ModalShareList = ({ visibleModalShare, setVisibleModalShare, listId }: Pro
   }
 
   return (
-    <Dialog
+    <Modal
       visible={visibleModalShare}
-      onHide={() => setVisibleModalShare(false)}
-      headerClassName="!p-2"
+      setVisible={setVisibleModalShare}
+      headerClassName="!p-4"
       contentClassName="!px-2 laptop:!px-4"
     >
       <div className="flex-center gap-4 mt-8">
@@ -78,7 +78,7 @@ const ModalShareList = ({ visibleModalShare, setVisibleModalShare, listId }: Pro
         ></Dropdown>
         <Bouton btnAction={() => share()}>Partager</Bouton>
       </div>
-    </Dialog>
+    </Modal>
   );
 };
 

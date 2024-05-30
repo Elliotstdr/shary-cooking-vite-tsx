@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import RecipeCreationContainer from "../RecipeCreationContainer";
-import { Dialog } from "primereact/dialog";
+import Modal from "../../ui/Modal";
 
 type Props = {
   editable: boolean
@@ -26,19 +26,19 @@ const RecipeDetailTitle = ({ editable, recipe }: Props) => {
         )}
       </h2>
       {visibleModif && recipe && (
-        <Dialog
+        <Modal
           visible={visibleModif}
-          onHide={() => setVisibleModif(false)}
+          setVisible={setVisibleModif}
           header="Modifier ma recette"
           className="min-w-[70%] max-w-[98%]"
-          headerClassName="!py-2"
+          headerClassName="!p-4"
           contentClassName="!px-2 tablet:!px-4"
         >
           <RecipeCreationContainer
             recipe={recipe}
             setVisibleModif={setVisibleModif}
           ></RecipeCreationContainer>
-        </Dialog>
+        </Modal>
       )}
     </>
   );

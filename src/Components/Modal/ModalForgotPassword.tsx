@@ -9,7 +9,7 @@ import { errorToast, successToast } from "../../Services/functions";
 import { fetchPost } from "../../Hooks/api.hook";
 import { updateAuth } from "../../Store/Reducers/authReducer";
 import { PasswordInput } from "../ui/PasswordInput";
-import { Dialog } from "primereact/dialog";
+import Modal from "../ui/Modal";
 
 interface Props {
   visible: boolean,
@@ -114,10 +114,10 @@ const ModalForgotPassword = (props: Props) => {
   };
 
   return (
-    <Dialog
+    <Modal
       header="Connexion"
       visible={props.visible}
-      onHide={() => props.setVisible(false)}
+      setVisible={props.setVisible}
       className="w-11/12 tablet:w-80"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -171,7 +171,7 @@ const ModalForgotPassword = (props: Props) => {
           </>
         )}
       </form>
-    </Dialog>
+    </Modal>
   );
 };
 

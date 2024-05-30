@@ -8,7 +8,7 @@ import { errorToast } from "../../Services/functions";
 import { fetchGet, fetchPost } from "../../Hooks/api.hook";
 import { updateAuth } from "../../Store/Reducers/authReducer";
 import { PasswordInput } from "../ui/PasswordInput";
-import { Dialog } from "primereact/dialog";
+import Modal from "../ui/Modal";
 
 interface Props {
   visible: boolean,
@@ -58,10 +58,10 @@ const ModalLogin = (props: Props) => {
   };
 
   return (
-    <Dialog
+    <Modal
       header="Connexion"
       visible={props.visible}
-      onHide={() => props.setVisible(false)}
+      setVisible={props.setVisible}
       className="w-11/12 tablet:w-80"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -97,7 +97,7 @@ const ModalLogin = (props: Props) => {
           {isSubmitting ? <Loader /> : <Bouton>Se connecter</Bouton>}
         </div>
       </form>
-    </Dialog>
+    </Modal>
   );
 };
 

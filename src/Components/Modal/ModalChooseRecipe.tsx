@@ -7,7 +7,7 @@ import { formatShoppingData } from "../../Services/shoppingFunctions";
 import { addList, updateSelectedList } from "../../Store/Reducers/shoppingReducer";
 import { updateSecondaryTables } from "../../Store/Reducers/secondaryTablesReducer";
 import SimpleButton from "../ui/SimpleButton";
-import { Dialog } from "primereact/dialog";
+import Modal from "../ui/Modal";
 
 type Props = {
   visible: boolean,
@@ -57,12 +57,12 @@ const ModalChooseRecipe = (props: Props) => {
   }
 
   return (
-    <Dialog
+    <Modal
       visible={props.visible}
-      onHide={() => props.setVisible(false)}
+      setVisible={props.setVisible}
       className="w-full !max-h-[94%] laptop:w-11/12"
-      contentClassName="flex items-center flex-col !bg-fond !pb-16 !px-2"
-      headerClassName="!p-2"
+      contentClassName="items-center !bg-fond !pb-16 !px-2"
+      headerClassName="!py-2 px-4"
       header={
         <div className="flex-center">
           <SimpleButton
@@ -85,7 +85,7 @@ const ModalChooseRecipe = (props: Props) => {
             ></ShoppingListCard>
           ))}
       </div>
-    </Dialog>
+    </Modal>
   );
 };
 

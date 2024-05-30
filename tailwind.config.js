@@ -36,6 +36,8 @@ export default {
         "reverse-loader": "rotation 0.5s linear infinite reverse",
         navbar: "navbar 0.6s ease forwards",
         "slide-to-right": "slide-to-right 0.3s ease forwards",
+        scale: "scale 0.2s ease forwards",
+        "bg-black": "bg-black 0.2s ease forwards",
       },
       keyframes: {
         rotation: {
@@ -53,6 +55,22 @@ export default {
           "100%": {
             transform: "translateX(0)",
             "background-color": "rgb(0, 0, 0, 0.5)",
+          },
+        },
+        scale: {
+          "0%": {
+            transform: "scale(0.7)",
+          },
+          "100%": {
+            transform: "scale(1)",
+          },
+        },
+        "bg-black": {
+          "0%": {
+            "background-color": "rgb(0, 0, 0, 0)",
+          },
+          "100%": {
+            "background-color": "rgb(0, 0, 0, 0.4)",
           },
         },
       },

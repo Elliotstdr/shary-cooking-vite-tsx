@@ -8,7 +8,7 @@ import ImageUpload from "../ui/ImageUpload";
 import { errorToast } from "../../Services/functions";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { fetchPost } from "../../Hooks/api.hook";
-import { Dialog } from "primereact/dialog";
+import Modal from "../ui/Modal";
 
 type Props = {
   reportBugModal: boolean,
@@ -49,10 +49,10 @@ const ModalBugReport = (props: Props) => {
   };
 
   return (
-    <Dialog
+    <Modal
       header="Report de bug"
       visible={props.reportBugModal}
-      onHide={() => props.setReportBugModal(false)}
+      setVisible={props.setReportBugModal}
       className="w-11/12 tablet:w-160"
     >
       {!successView ? (
@@ -98,7 +98,7 @@ const ModalBugReport = (props: Props) => {
           <BsFillCheckCircleFill className="size-20 text-card-green"></BsFillCheckCircleFill>
         </div>
       )}
-    </Dialog>
+    </Modal>
   );
 };
 

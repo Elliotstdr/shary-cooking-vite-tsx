@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { editRecipeInRecipes, removeRecipeInRecipes } from "../../../Store/Reducers/recipeReducer";
 import RecipeCreationContainer from "../RecipeCreationContainer";
 import ModalDeleteConfirm from "../../Modal/ModalDeleteConfirm";
-import { Dialog } from "primereact/dialog";
+import Modal from "../../ui/Modal";
 
 type Props = {
   recipeItem: Recipe,
@@ -86,19 +86,19 @@ const RecipeCardBottom = (props: Props) => {
         ></ModalDeleteConfirm>
       )}
       {visibleModif && (
-        <Dialog
+        <Modal
           visible={visibleModif}
-          onHide={() => setVisibleModif(false)}
+          setVisible={setVisibleModif}
           header="Modifier ma recette"
           className="min-w-[70%] max-w-[98%]"
-          headerClassName="!py-2"
+          headerClassName="!p-4"
           contentClassName="!px-2 tablet:!px-4"
         >
           <RecipeCreationContainer
             recipe={props.recipeItem}
             setVisibleModif={setVisibleModif}
           ></RecipeCreationContainer>
-        </Dialog>
+        </Modal>
       )}
     </div>
   );

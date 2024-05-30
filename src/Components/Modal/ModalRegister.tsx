@@ -9,7 +9,7 @@ import { errorToast } from "../../Services/functions";
 import { fetchGet, fetchPost } from "../../Hooks/api.hook";
 import { updateAuth } from "../../Store/Reducers/authReducer";
 import { PasswordInput } from "../ui/PasswordInput";
-import { Dialog } from "primereact/dialog";
+import Modal from "../ui/Modal";
 
 interface Props {
   visible: boolean,
@@ -66,10 +66,10 @@ const ModalLogin = (props: Props) => {
   }, [watch('password'), watch('confirmpassword')]);
 
   return (
-    <Dialog
+    <Modal
       header="Création de compte"
       visible={props.visible}
-      onHide={() => props.setVisible(false)}
+      setVisible={props.setVisible}
       className="w-11/12 tablet:w-120"
     >
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -143,7 +143,7 @@ const ModalLogin = (props: Props) => {
           {isSubmitting ? <Loader /> : <Bouton>Créer un compte</Bouton>}
         </div>
       </form>
-    </Dialog>
+    </Modal>
   );
 };
 

@@ -7,7 +7,9 @@ import { store } from "./Store/store";
 import "./theme.css"
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import { registerSW } from 'virtual:pwa-register'
 
+registerSW({ immediate: true })
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <Provider store={store}>

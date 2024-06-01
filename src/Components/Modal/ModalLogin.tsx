@@ -64,7 +64,7 @@ const ModalLogin = (props: Props) => {
       setVisible={props.setVisible}
       className="w-11/12 tablet:w-80"
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <div className="flex items-center flex-col">
           <h4 className="font-bold mb-2 mt-4">Adresse email</h4>
           <InputText

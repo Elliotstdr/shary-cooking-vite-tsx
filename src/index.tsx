@@ -17,6 +17,13 @@ const updateSW = registerSW({
   },
 });
 
+addEventListener('visibilitychange', function () {
+  if (document.visibilityState === 'visible') {
+    console.log('APP resumed');
+    updateSW();
+  }
+});
+
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <Provider store={store}>

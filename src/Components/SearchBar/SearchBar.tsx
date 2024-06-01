@@ -143,7 +143,7 @@ const SearchBar = () => {
         </div>
         {screenSize.width >= 1100 && <SearchCheckBoxes></SearchCheckBoxes>}
       </div>
-      {screenSize.width < 1100 && <SearchCheckBoxes className="justify-center my-2"></SearchCheckBoxes>}
+      {screenSize.width < 1100 && <SearchCheckBoxes className={`justify-center ${visibleMobile ? "my-2" : ""}`}></SearchCheckBoxes>}
     </div >
   );
 };

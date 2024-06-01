@@ -9,7 +9,7 @@ const HelloF = () => {
   const data = useFetchHellofData(query)
 
   return (
-    <div id="hellof" className="m-20 flex flex-col items-center gap-8">
+    <div id="hellof" className="m-12 flex flex-col items-center gap-8 desktop:mt-20">
       <HelloSearch setQuery={setQuery}></HelloSearch>
       <HelloContainer isSearchEmpty={query.length === 0} data={data}></HelloContainer>
     </div>

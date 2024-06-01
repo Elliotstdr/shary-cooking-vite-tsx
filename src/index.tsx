@@ -9,7 +9,14 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { registerSW } from 'virtual:pwa-register'
 
-registerSW({ immediate: true })
+const updateSW = registerSW({
+  onNeedRefresh() {
+    if (confirm("Nouveau contenu disponible. Recharger?")) {
+      updateSW(true);
+    }
+  },
+});
+
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <Provider store={store}>

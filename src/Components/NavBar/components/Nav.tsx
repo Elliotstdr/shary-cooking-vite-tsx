@@ -33,7 +33,7 @@ const Nav = (props: Props) => {
 
   return (
     <ul className={`flex ${props.className}`}>
-      <NavItem to="/" text="Accueilk"></NavItem>
+      <NavItem to="/" text="Accueil"></NavItem>
       <NavItem to="/all" text="Galerie"></NavItem>
       <NavItem to="/shop" text="Ma liste de courses"></NavItem>
       <NavItem to="/hf" text="Hello Fresh"></NavItem>

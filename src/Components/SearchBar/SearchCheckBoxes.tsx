@@ -1,4 +1,4 @@
-import { Checkbox } from "primereact/checkbox";
+import Checkbox from "../ui/Checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import { resetSearch, updateSearch } from "../../Store/Reducers/searchReducer";
 import { GrPowerReset } from "react-icons/gr";
@@ -15,14 +15,14 @@ const SearchCheckBoxes = ({ className = "" }: Props) => {
     <div className={`w-full flex gap-4 h-6 ${className}`}>
       <div className="flex items-center">
         <Checkbox
-          onChange={(e) => dispatch(updateSearch({ boxMine: e.checked || false }))}
+          onClick={(e) => dispatch(updateSearch({ boxMine: e.checked || false }))}
           checked={search.boxMine}
         ></Checkbox>
         <span className="ml-1 text-sm">Mes recettes</span>
       </div>
       <div className="flex items-center">
         <Checkbox
-          onChange={(e) => dispatch(updateSearch({ boxFavorites: e.checked || false }))}
+          onClick={(e) => dispatch(updateSearch({ boxFavorites: e.checked || false }))}
           checked={search.boxFavorites}
         ></Checkbox>
         <span className="ml-1 text-sm">Mes favoris</span>

@@ -1,4 +1,4 @@
-import { Checkbox } from "primereact/checkbox";
+import Checkbox from "../../ui/Checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSelectedList } from "../../../Store/Reducers/shoppingReducer";
 

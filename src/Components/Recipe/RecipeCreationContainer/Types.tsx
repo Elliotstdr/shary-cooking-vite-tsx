@@ -1,4 +1,4 @@
-import { RadioButton } from "primereact/radiobutton";
+import RadioButton from "../../ui/RadioButton";
 import { useSelector } from "react-redux";
 
 type Props = {
@@ -17,7 +17,7 @@ const Types = (props: Props) => {
           <div className="m-4" key={index}>
             <RadioButton
               checked={type.id === props.typeId}
-              onChange={() => props.setTypeId(type.id)}
+              onClick={() => props.setTypeId(type.id)}
               className="mr-1"
             />
             <label>{type.label}</label>

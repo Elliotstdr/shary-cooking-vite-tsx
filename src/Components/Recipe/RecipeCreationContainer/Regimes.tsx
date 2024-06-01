@@ -1,4 +1,4 @@
-import { RadioButton } from "primereact/radiobutton";
+import RadioButton from "../../ui/RadioButton";
 import { regimeTooltips } from "../../../Services/recipeFunctions";
 import { useSelector } from "react-redux";
 
@@ -18,9 +18,8 @@ const Regimes = (props: Props) => {
           <div className="m-4" key={index}>
             <RadioButton
               checked={regime.id === props.regimeId}
-              onChange={() => props.setRegimeId(regime.id)}
-              tooltip={regimeTooltips[index]}
-              tooltipOptions={{ position: "bottom" }}
+              onClick={() => props.setRegimeId(regime.id)}
+              title={regimeTooltips[index]}
               className="mr-1"
             />
             <label>{regime.label}</label>

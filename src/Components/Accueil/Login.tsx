@@ -15,7 +15,7 @@ const Login = () => {
       <img src={image} alt="background home" className="size-full object-cover absolute" />
       <div className="flex-center flex-col z-50 shadow-searchbar bg-fond p-6 rounded-lg mx-4 tablet:mx-0">
         <div className="text-green mb-12">
-          <h1 className="font-bold text-4xl my-6">Bienvenue sur Shary Cookingg !</h1>
+          <h1 className="font-bold text-4xl my-6">Bienvenue sur Shary Cooking !</h1>
         </div>
         <div className="flex flex-col gap-4 mb-4 w-48">
           <Bouton

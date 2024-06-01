@@ -15,6 +15,7 @@ import {
 import { updateRecipe } from "../../Store/Reducers/recipeReducer";
 import { useScreenSize } from "../../Hooks/useScreenSize.hook";
 import SearchCheckBoxes from "./SearchCheckBoxes";
+import { DESKTOP } from "../../Services/mediaQueries";
 
 const SearchBar = () => {
   const screenSize = useScreenSize()
@@ -98,7 +99,7 @@ const SearchBar = () => {
       <div className={`
         flex justify-center flex-col gap-4 px-4 transition-300 relative rounded-xl overflow-y-hidden
         desktop:shadow-searchbar mx-auto desktop:gap-6 desktop:px-6 desktop:py-4 desktop:bg-white 
-        ${visibleMobile || screenSize.width >= 1100 ? "visible-transition" : "hidden-transition"}
+        ${visibleMobile || screenSize.width >= DESKTOP ? "visible-transition" : "hidden-transition"}
       `}>
         <div className="flex flex-col justify-evenly gap-4 desktop:flex-row desktop:gap-8">
           <InputText
@@ -141,9 +142,9 @@ const SearchBar = () => {
             selectedItemsLabel={search.ingredient?.length + " éléments choisis"}
           ></MultiSelect>
         </div>
-        {screenSize.width >= 1100 && <SearchCheckBoxes></SearchCheckBoxes>}
+        {screenSize.width >= DESKTOP && <SearchCheckBoxes></SearchCheckBoxes>}
       </div>
-      {screenSize.width < 1100 && <SearchCheckBoxes className={`justify-center ${visibleMobile ? "my-2" : ""}`}></SearchCheckBoxes>}
+      {screenSize.width < DESKTOP && <SearchCheckBoxes className={`justify-center ${visibleMobile ? "my-2" : ""}`}></SearchCheckBoxes>}
     </div >
   );
 };

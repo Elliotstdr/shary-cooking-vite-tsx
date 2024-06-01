@@ -11,7 +11,7 @@ interface Props {
 const StepsCreation = (props: Props) => {
   return (
     <>
-      <div className="flex flex-col w-full laptop:w-150 gap-4">
+      <div className="flex flex-col w-11/12 laptop:w-150 gap-4">
         {props.stepsList.map((step, index) => (
           <div className="flex w-full relative" key={index}>
             <InputTextarea
@@ -41,7 +41,7 @@ const StepsCreation = (props: Props) => {
                 }}
               ></RiDeleteBin6Line>
             ) : (
-              <div className="ml-2 size-6 self-center"></div>
+              props.stepsList.length > 1 && <div className="ml-2 size-6 self-center"></div>
             )}
           </div>
         ))}

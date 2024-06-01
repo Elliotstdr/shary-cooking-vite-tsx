@@ -9,6 +9,7 @@ import Empty from "../Components/Shopping/Empty";
 import { useScreenSize } from "../Hooks/useScreenSize.hook";
 import { TabMenu } from "primereact/tabmenu";
 import { updateRecipe } from "../Store/Reducers/recipeReducer";
+import { NAV } from "../Services/mediaQueries";
 
 const Shopping = () => {
   const dispatch = useDispatch()
@@ -52,7 +53,7 @@ const Shopping = () => {
     >
       {shopping.lists.length > 0
         ? (
-          screenSize.width >= 990 ? (
+          screenSize.width >= NAV ? (
             <div className="flex w-full">
               <ListsContainer></ListsContainer>
               <Divider layout="vertical" className="!mt-10"></Divider>

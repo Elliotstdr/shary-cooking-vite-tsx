@@ -18,7 +18,7 @@ const Profil = () => {
   return (
     <>
       <div
-        className="cursor-pointer absolute top-6 right-12 flex tablet:relative tablet:right-0 tablet:top-0"
+        className="cursor-pointer flex relative"
         ref={wrapperRef}
         onMouseEnter={() => setShowParamMenu(true)}
         onMouseLeave={() => setShowParamMenu(false)}
@@ -38,7 +38,7 @@ const Profil = () => {
             onClick={() => setShowParamMenu(!showParamMenu)}
           ></GiCook>
         )}
-        <div className={`absolute -right-14 top-12 w-40 bg-white text-green rounded-xl z-50 ${showParamMenu ? "flex flex-col" : "hidden"}`}>
+        <div className={`absolute -right-10 top-12 w-40 bg-white text-green rounded-xl z-50 ${showParamMenu ? "flex flex-col" : "hidden"}`}>
           <span
             onClick={() => {
               setShowParamMenu(!showParamMenu)

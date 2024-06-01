@@ -87,7 +87,7 @@ export default {
       tablet: "650px",
       laptop: "900px",
       desktop: "1100px",
-      nav: "990px",
+      nav: "1030px",
     },
     colors: {
       green: "#263a29",
@@ -103,6 +103,9 @@ export default {
       transparent: "transparent",
       icon: "#6c757d",
       black: "black",
+      "input-grey": "#495057",
+      "border-grey": "#ced4da",
+      tooltip: "#495057",
     },
     lineHeight: {
       12: "3rem",

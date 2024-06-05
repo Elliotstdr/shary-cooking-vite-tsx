@@ -9,7 +9,6 @@ type RootState = {
 type AuthState = {
   isConnected: boolean;
   token: string | null;
-  refreshToken: string | null;
   userConnected: User | null;
   toast: MutableRefObject<null> | null;
 };

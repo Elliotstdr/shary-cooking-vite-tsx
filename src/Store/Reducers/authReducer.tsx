@@ -3,7 +3,6 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 const initialState: AuthState = {
   isConnected: false,
   token: null,
-  refreshToken: null,
   userConnected: null,
   toast: null,
 };

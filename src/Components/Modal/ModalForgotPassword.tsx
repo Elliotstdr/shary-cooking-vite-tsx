@@ -96,7 +96,8 @@ const ModalForgotPassword = (props: Props) => {
     const response = await fetchPost('/auth/signin', {
       email: data.email,
       password: data.newPassword
-    })
+    }, false, true)
+
     setIsLoging(false);
     if (response.error || !response.data) {
       errorToast(response.error?.response?.data?.detail ?? "");
@@ -108,7 +109,6 @@ const ModalForgotPassword = (props: Props) => {
     dispatch(updateAuth({
       isConnected: true,
       token: response.data.access_token ?? null,
-      refreshToken: response.data.refresh_token ?? null,
       userConnected: resetedUser.data ?? null,
     }));
   };

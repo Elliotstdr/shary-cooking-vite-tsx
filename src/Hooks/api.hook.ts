@@ -18,16 +18,7 @@ export const useFetchGet = <T extends object | object[]>(
   useEffect(() => {
     url &&
       axios
-        .get(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, {
-          headers: token
-            ? {
-                accept: "application/json",
-                Authorization: `Bearer ${token}`,
-              }
-            : {
-                accept: "application/json",
-              },
-        })
+        .get(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, headers(token))
         .then((response: AxiosResponse) => {
           setData(response.data);
         })
@@ -43,16 +34,7 @@ export const fetchDelete = async (url: string): Promise<FetchResponse> => {
   const token = store.getState().auth.token;
 
   await axios
-    .delete(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, {
-      headers: token
-        ? {
-            accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          }
-        : {
-            accept: "application/json",
-          },
-    })
+    .delete(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, headers(token))
     .then((response) => (data = response.data))
     .catch((e) => (error = e));
   return { data, error };
@@ -61,24 +43,19 @@ export const fetchDelete = async (url: string): Promise<FetchResponse> => {
 export const fetchPost = async (
   url: string,
   payload: any,
-  forcedToken: string | null = null,
-  multipart = false
+  multipart = false,
+  withCredentials = false
 ): Promise<FetchResponse> => {
   let data: any = null;
   let error: any = null;
-  const token = forcedToken ?? store.getState().auth.token;
+  const token = store.getState().auth.token;
 
   await axios
-    .post(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, payload, {
-      headers: token
-        ? {
-            accept: multipart ? "multipart/form-data" : "application/json",
-            Authorization: `Bearer ${token}`,
-          }
-        : {
-            accept: multipart ? "multipart/form-data" : "application/json",
-          },
-    })
+    .post(
+      `${import.meta.env.VITE_BASE_URL_API}/api${url}`,
+      payload,
+      headers(token, multipart, withCredentials)
+    )
     .then((response: AxiosResponse) => {
       data = response.data;
     })
@@ -95,16 +72,7 @@ export const fetchGet = async (
   const token = forcedToken ?? store.getState().auth.token;
 
   await axios
-    .get(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, {
-      headers: token
-        ? {
-            accept: "application/json",
-            Authorization: `Bearer ${token}`,
-          }
-        : {
-            accept: "application/json",
-          },
-    })
+    .get(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, headers(token))
     .then((response: AxiosResponse) => {
       data = response.data;
     })
@@ -122,19 +90,32 @@ export const fetchPut = async (
   const token = store.getState().auth.token;
 
   await axios
-    .patch(`${import.meta.env.VITE_BASE_URL_API}/api${url}`, payload, {
-      headers: token
-        ? {
-            accept: multipart ? "multipart/form-data" : "application/json",
-            Authorization: `Bearer ${token}`,
-          }
-        : {
-            accept: multipart ? "multipart/form-data" : "application/json",
-          },
-    })
+    .patch(
+      `${import.meta.env.VITE_BASE_URL_API}/api${url}`,
+      payload,
+      headers(token, multipart)
+    )
     .then((response: AxiosResponse) => {
       data = response.data;
     })
     .catch((e: AxiosError) => (error = e));
   return { data, error };
+};
+
+const headers = (
+  token: string | null,
+  multipart: boolean = false,
+  withCredentials: boolean = false
+) => {
+  return {
+    headers: token
+      ? {
+          accept: multipart ? "multipart/form-data" : "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      : {
+          accept: multipart ? "multipart/form-data" : "application/json",
+        },
+    withCredentials: withCredentials,
+  };
 };

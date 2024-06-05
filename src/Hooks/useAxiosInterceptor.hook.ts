@@ -2,6 +2,7 @@ import axios from "axios";
 import { store } from "../Store/store";
 import { logOut, updateAuth } from "../Store/Reducers/authReducer";
 import { useEffect, useState } from "react";
+import { fetchPost } from "./api.hook";
 
 type RefreshSubscriber = (newToken: string) => void;
 
@@ -34,15 +35,10 @@ export const useAxiosInterceptors = () => {
 
             try {
               // Tentative de rafraîchir le token JWT en envoyant une requête POST au point de terminaison de rafraîchissement du token
-              const refreshTokenResponse = await axios.post(
-                `${import.meta.env.VITE_BASE_URL_API}/api/auth/refresh`,
-                {
-                  refresh_token: store.getState().auth.refreshToken,
-                }
-              );
+              const res = await fetchPost("/auth/refresh", {}, false, true);
 
               // Extraction du nouveau token JWT de la réponse
-              const newToken = refreshTokenResponse.data.access_token;
+              const newToken = res.data.access_token;
 
               // Mise à jour du token JWT dans le store Redux
               store.dispatch(

@@ -41,7 +41,7 @@ const ModalLogin = (props: Props) => {
   const onSubmit = async () => {
     const data = getValues();
 
-    const response = await fetchPost(`/auth/signup`, data);
+    const response = await fetchPost(`/auth/signup`, data, false, true);
     if (response.error) {
       errorToast(response.error?.response?.data?.detail ?? "");
       return;
@@ -53,7 +53,6 @@ const ModalLogin = (props: Props) => {
       isConnected: true,
       userConnected: subResponse.data,
       token: response.data.access_token,
-      refreshToken: response.data.refresh_token,
     }));
   };
 

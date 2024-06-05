@@ -35,7 +35,7 @@ const ModalLogin = (props: Props) => {
   const onSubmit = async () => {
     const data = getValues();
 
-    const response = await fetchPost(`/auth/signin`, data);
+    const response = await fetchPost(`/auth/signin`, data, false, true);
     if (response.error || !response.data?.access_token) {
       errorToast("L'authentification a échoué");
       return;
@@ -52,7 +52,6 @@ const ModalLogin = (props: Props) => {
     dispatch(updateAuth({
       isConnected: true,
       token: response.data.access_token,
-      refreshToken: response.data.refresh_token,
       userConnected: subResponse.data,
     }));
   };

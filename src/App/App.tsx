@@ -24,6 +24,14 @@ const App = () => {
   const staticData = useFetchGet<Partial<SecondaryState>>("/retrieveStaticData")
 
   useEffect(() => {
+    if (window.location.hostname.startsWith('www.')) {
+      const newHostname = window.location.hostname.replace('www.', '');
+      const newURL = `https://${newHostname}${window.location.pathname}${window.location.search}`;
+      window.location.replace(newURL);
+    }
+  }, []);
+
+  useEffect(() => {
     if (!auth.isConnected && window.location.pathname !== "/") window.location.replace("/")
   }, [auth.isConnected])
 

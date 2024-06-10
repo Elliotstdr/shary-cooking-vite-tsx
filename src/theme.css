@@ -260,6 +260,7 @@
   border: 0 none;
   border-radius: 6px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  z-index: 1200 !important;
 }
 .p-dropdown-panel .p-dropdown-header {
   padding: 0.75rem 1.25rem;

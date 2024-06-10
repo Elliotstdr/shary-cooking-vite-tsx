@@ -144,7 +144,7 @@ const RecipeCreationContainer = (props: Props) => {
       return;
     }
 
-    if (getValues('image')) {
+    if (getValues('image') && getValues('image')?.length !== 0) {
       await addPicture(response.data.id)
     }
 
@@ -169,7 +169,7 @@ const RecipeCreationContainer = (props: Props) => {
       return;
     }
 
-    if (getValues('image')) {
+    if (getValues('image') && getValues('image')?.length !== 0) {
       const imageUrl = await addPicture(props.recipe.id)
       response.data.imageUrl = imageUrl
     }

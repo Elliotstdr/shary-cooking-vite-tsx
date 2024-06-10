@@ -4,6 +4,16 @@ type ExtendedIngredient = Ingredient & {
   type: string;
 };
 
+export const arrayUniqueSortedByLabel = (array: any[]) => {
+  return array
+    .filter(
+      (value, index, self) =>
+        index ===
+        self.findIndex((t) => JSON.stringify(t) === JSON.stringify(value))
+    )
+    .sort((a, b) => a.label - b.label);
+};
+
 export const formatShoppingData = (chosenRecipes: RecipeShopping[]) => {
   let ingredientList: Array<Ingredient> = [];
 

@@ -1,14 +1,20 @@
 import { timeToString } from "../../../Services/functions";
 import { GiKnifeFork } from "react-icons/gi";
-import { BsPeople } from "react-icons/bs";
 import { BiTimer } from "react-icons/bi";
 import { BiAward } from "react-icons/bi";
+import { Dropdown } from "primereact/dropdown";
 
 type Props = {
-  recipeDetail: Recipe
+  recipeDetail: Recipe,
+  multiplyer: number,
+  setMultiplyer: React.Dispatch<React.SetStateAction<number>>
 }
 
-const RecipeDetailRecap = ({ recipeDetail }: Props) => {
+const RecipeDetailRecap = ({ recipeDetail, multiplyer, setMultiplyer }: Props) => {
+  const multiplyerOptions = Array.from(
+    new Set([1, 2, 3, 4, 6, 8, recipeDetail.number])
+  ).sort((a, b) => a - b)
+
   return (
     <>
       <div className="flex items-center">
@@ -25,9 +31,22 @@ const RecipeDetailRecap = ({ recipeDetail }: Props) => {
         <div className="flex items-center font-bold">
           <BiTimer className="mr-1"></BiTimer> {timeToString(recipeDetail.time)}
         </div>
-        <div className="flex items-center font-bold">
-          <BsPeople className="mr-1"></BsPeople> {recipeDetail.number} personnes
-        </div>
+        <Dropdown
+          value={multiplyer}
+          options={multiplyerOptions}
+          onChange={(e) => setMultiplyer(e.value)}
+          className="!border-0"
+          itemTemplate={(e) =>
+            <div className="text-lg">
+              {`${e} personne${e !== 1 ? "s" : ""}`}
+            </div>
+          }
+          valueTemplate={(e) =>
+            <div className="font-bold text-lg">
+              {`${e} personne${e !== 1 ? "s" : ""}`}
+            </div>
+          }
+        ></Dropdown>
         <div className="flex items-center font-bold">
           <GiKnifeFork className="mr-1"></GiKnifeFork> {recipeDetail.type?.label}
         </div>

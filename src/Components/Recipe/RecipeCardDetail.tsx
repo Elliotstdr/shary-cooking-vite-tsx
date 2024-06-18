@@ -4,14 +4,15 @@ import RecipeDetailIngredients from "./RecipeCardDetail/RecipeDetailIngredients"
 import RecipeDetailSteps from "./RecipeCardDetail/RecipeDetailSteps";
 import RecipeDetailTitle from "./RecipeCardDetail/RecipeDetailTitle";
 import RecipeDetailRecap from "./RecipeCardDetail/RecipeDetailRecap";
+import { useState } from "react";
 
 interface Props {
   recipeDetail: Recipe,
 }
 
-const RecipeCardDetail = (props: Props) => {
+const RecipeCardDetail = ({ recipeDetail }: Props) => {
   const auth = useSelector((state: RootState) => state.auth);
-  const recipeDetail = props.recipeDetail;
+  const [multiplyer, setMultiplyer] = useState(recipeDetail.number);
 
   return (
     <div className="flex-center flex-col text-lg whitespace-pre-line gap-8 px-4 laptop:px-8">
@@ -28,9 +29,12 @@ const RecipeCardDetail = (props: Props) => {
       ></RecipeDetailTitle>
       <RecipeDetailRecap
         recipeDetail={recipeDetail}
+        multiplyer={multiplyer}
+        setMultiplyer={setMultiplyer}
       ></RecipeDetailRecap>
       <RecipeDetailIngredients
         ingredients={recipeDetail.ingredients}
+        ratio={multiplyer / recipeDetail.number}
       ></RecipeDetailIngredients>
       <RecipeDetailSteps
         steps={recipeDetail.steps}

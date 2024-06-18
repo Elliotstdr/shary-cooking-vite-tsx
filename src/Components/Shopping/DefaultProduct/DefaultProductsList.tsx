@@ -23,7 +23,11 @@ const DefaultProductsList = () => {
     if (!selectedList) return
 
     const newContent = [...selectedList.content]
-    newContent.unshift({ name: item.name, selected: false })
+    newContent.unshift({
+      name: item.name,
+      selected: false,
+      fromRecipe: false
+    })
 
     dispatch(updateSelectedList({
       ...selectedList,

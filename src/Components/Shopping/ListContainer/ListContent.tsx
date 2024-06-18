@@ -5,6 +5,7 @@ import ListContentActions from "./ListContentActions";
 import ListContentIngredient from "./ListContentIngredient";
 import ListContentRecipes from "./ListContentRecipes";
 import { editList } from "../../../Store/Reducers/shoppingReducer";
+import ListContentInput from "./ListContentInput";
 
 const ListContent = () => {
   const dispatch = useDispatch()
@@ -18,7 +19,10 @@ const ListContent = () => {
       return
     }
     const timer = setTimeout(async () => {
-      const res = await fetchPut(`/list/${selectedList.id}`, { content: selectedList.content })
+      const res = await fetchPut(`/list/${selectedList.id}`, {
+        content: selectedList.content,
+        selectedRecipes: selectedList.selectedRecipes
+      })
       if (res.error) return
 
       dispatch(editList(res.data))
@@ -35,6 +39,7 @@ const ListContent = () => {
         showRecipes={showRecipes}
         setShowRecipes={setShowRecipes}
       ></ListContentRecipes>
+      <ListContentInput></ListContentInput>
       {[...selectedList.content]
         .sort((a, b) => Number(a.selected) - Number(b.selected))
         .map((x) =>

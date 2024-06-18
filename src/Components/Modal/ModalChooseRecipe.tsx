@@ -12,12 +12,14 @@ import Modal from "../ui/Modal";
 type Props = {
   visible: boolean,
   setVisible: React.Dispatch<React.SetStateAction<boolean>>,
+  currentRecipes?: RecipeShopping[]
 }
 
 const ModalChooseRecipe = (props: Props) => {
   const dispatch = useDispatch()
   const recipe = useSelector((state: RootState) => state.recipe);
-  const [selectedRecipes, setSelectedRecipes] = useState<RecipeShopping[]>([]);
+  const selectedList = useSelector((state: RootState) => state.shopping.selectedList);
+  const [selectedRecipes, setSelectedRecipes] = useState<RecipeShopping[]>(props.currentRecipes || []);
   const ingredientData = useFetchGet<IngredientData[]>("/ingredient_datas");
 
   useEffect(() => {
@@ -43,6 +45,19 @@ const ModalChooseRecipe = (props: Props) => {
       name: "Liste",
       content: content,
       selectedRecipes: recipes
+    }
+
+    if (props.currentRecipes && selectedList) {
+      dispatch(updateSelectedList({
+        ...selectedList,
+        content: [
+          ...selectedList.content.filter((x) => !x.fromRecipe),
+          ...content
+        ],
+        selectedRecipes: recipes
+      }))
+      props.setVisible(false)
+      return;
     }
 
     const res = await fetchPost('/list', data)

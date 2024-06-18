@@ -158,6 +158,7 @@ type List = {
 type ListContent = {
   name: string;
   selected: boolean;
+  fromRecipe: boolean;
 };
 
 type ListRecipes = {

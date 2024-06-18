@@ -1,17 +1,8 @@
 import { store } from "../Store/store";
+import { getIngredientFullName } from "./pluralService";
 
 type ExtendedIngredient = Ingredient & {
   type: string;
-};
-
-export const arrayUniqueSortedByLabel = (array: any[]) => {
-  return array
-    .filter(
-      (value, index, self) =>
-        index ===
-        self.findIndex((t) => JSON.stringify(t) === JSON.stringify(value))
-    )
-    .sort((a, b) => a.label - b.label);
 };
 
 export const formatShoppingData = (chosenRecipes: RecipeShopping[]) => {
@@ -30,19 +21,15 @@ export const formatShoppingData = (chosenRecipes: RecipeShopping[]) => {
 
   finalList = finalList.sort((a, b) => a.type.localeCompare(b.type));
 
-  const content: ListContent[] = finalList.map((x) => {
-    let elementString = "";
-    if (x.unit.label !== "un peu") elementString += x.quantity + " ";
-    if (x.unit.label !== "unité") elementString += x.unit.label + " de ";
-    elementString += x.label.toLowerCase();
+  return finalList.map((x) => {
+    const ingredientFullName = getIngredientFullName(x);
 
     return {
-      name: elementString,
+      name: ingredientFullName.quantity + ingredientFullName.name,
       selected: false,
+      fromRecipe: true,
     };
   });
-
-  return content;
 };
 
 const recipesWithMultipliedQuantity = (

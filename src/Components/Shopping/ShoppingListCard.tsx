@@ -5,7 +5,6 @@ import { Dropdown } from "primereact/dropdown";
 import { timeToString } from "../../Services/functions";
 import RecipePicture from "../Recipe/RecipePicture";
 import React, { useState } from "react";
-import { arrayUniqueSortedByLabel } from "../../Services/shoppingFunctions";
 
 interface Props {
   recipe: RecipeShopping,
@@ -14,18 +13,11 @@ interface Props {
 }
 
 const ShoppingListCard = (props: Props) => {
-  const [multiplyer, setMultiplyer] = useState({
-    label: props.recipe.number
-  });
-  const multiplyerOptions = [
-    { label: 1 },
-    { label: 2 },
-    { label: 3 },
-    { label: 4 },
-    { label: 6 },
-    { label: 8 },
-    { label: props.recipe.number }
-  ];
+  const [multiplyer, setMultiplyer] = useState(props.recipe.number);
+
+  const multiplyerOptions = Array.from(
+    new Set([1, 2, 3, 4, 6, 8, props.recipe.number])
+  ).sort((a, b) => a - b)
 
   const modifyRecipeList = (multiplyer: number) => {
     const tempArray: RecipeShopping[] = [];
@@ -52,7 +44,7 @@ const ShoppingListCard = (props: Props) => {
       ) {
         props.setSelectedRecipes((prev) => [
           ...prev,
-          { ...props.recipe, multiplyer: multiplyer.label / props.recipe.number }
+          { ...props.recipe, multiplyer: multiplyer / props.recipe.number }
         ])
       } else {
         props.setSelectedRecipes((prev) => [...prev].filter((x) => x.id !== props.recipe.id))
@@ -109,11 +101,10 @@ const ShoppingListCard = (props: Props) => {
           </div>
           <Dropdown
             value={multiplyer}
-            options={arrayUniqueSortedByLabel(multiplyerOptions)}
-            optionLabel="label"
+            options={multiplyerOptions}
             onChange={(e) => {
               setMultiplyer(e.value)
-              isSelected() && modifyRecipeList(e.value.label / props.recipe.number);
+              isSelected() && modifyRecipeList(parseFloat((e.value / props.recipe.number).toFixed(1)));
             }}
             onClick={(e) => e.stopPropagation()}
           ></Dropdown>

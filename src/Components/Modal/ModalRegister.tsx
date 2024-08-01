@@ -34,7 +34,7 @@ const ModalLogin = (props: Props) => {
       email: "",
       password: "",
       confirmpassword: "",
-      secretKey: "",
+      // secretKey: "",
     }
   });
 
@@ -127,7 +127,7 @@ const ModalLogin = (props: Props) => {
           ></PasswordInput>
           {errors.confirmpassword && <small className="p-error">{errors.confirmpassword.message}</small>}
         </div>
-        <div className="flex items-center flex-col">
+        {/* <div className="flex items-center flex-col">
           <h4 className="font-bold mb-2 mt-4">{"Clé secrète"}</h4>
           <PasswordInput
             {...register("secretKey", { required: "La clé secrète est obligatoire" })}
@@ -137,7 +137,7 @@ const ModalLogin = (props: Props) => {
             tooltipOptions={{ position: "top" }}
           ></PasswordInput>
           {errors.secretKey && <small className="p-error">{errors.secretKey.message}</small>}
-        </div>
+        </div> */}
         <div className="mt-8 flex justify-center">
           {isSubmitting ? <Loader /> : <Bouton>Créer un compte</Bouton>}
         </div>
